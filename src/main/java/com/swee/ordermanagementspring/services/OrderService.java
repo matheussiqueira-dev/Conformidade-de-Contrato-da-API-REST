@@ -105,7 +105,7 @@ public class OrderService {
             Product product = productRepository.findById(itemDto.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + itemDto.getProductId()));
 
-            OrderItem item = new OrderItem(order, product, itemDto.getQuantity(), product.getPrice() * itemDto.getQuantity());
+            OrderItem item = new OrderItem(order, product, itemDto.getQuantity(), product.getPrice());
             items.add(item);
         }
 
