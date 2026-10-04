@@ -11,7 +11,7 @@ Criado/planejado por **Matheus Siqueira** em 04/10/2026. Implementação da prim
 - `Order` possui associação `seller_id` e índice para consultas futuras. A coluna é anulável exclusivamente para conservar pedidos anteriores sem atribuir autoria fictícia.
 - Testes unitários cobrem autoria derivada, principal ausente e conta removida; testes de persistência verificam o vínculo após recarga do banco.
 - `GlobalExceptionHandler` responde 403 para conta removida, sem vazar o motivo interno; `ErrorResponseTest` verifica status e corpo.
-- Os 23 testes Node de contrato passaram. Maven/JVM local não conseguiu executar a suíte Java nesta sessão por `AccessDeniedException` ao abrir dependências JAR; validação Java/HTTP no CI ainda é necessária. Ver [relatório desta fatia](../../../reports/execucoes/run-2026-10-04-autoria-pedido.md).
+- Os 23 testes Node de contrato passaram localmente. O [CI #20](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104) aprovou 15 testes Java, 23 de contrato, 3 de cliente, 12 HTTP, 2 E2E e build. Maven/JVM local foi bloqueado por `AccessDeniedException` ao abrir dependências JAR; veja [relatório desta fatia](../../../reports/execucoes/run-2026-10-04-autoria-pedido.md).
 
 Ainda faltam a migração versionada de `seller_id`, consultas/projeções exclusivas do vendedor, testes HTTP com dois vendedores e revisão de Gabriel. Esta fatia não conclui SEC-01.
 
