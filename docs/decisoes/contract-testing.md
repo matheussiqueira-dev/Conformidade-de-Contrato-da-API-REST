@@ -1,5 +1,7 @@
 # Spike de contrato — 03/10/2026
 
+Atualizacao de 04/10: sessao HttpOnly/CSRF confirmada e contrato v3 adicionado, preservando a v2. Schema oficial agora e versionado e validado com adaptacao explicita Ajv #1745; codigo de autenticacao, Next e suites HTTP/E2E adicionados. Estado e evidencia atual em [execucao-sessao.md](../execucao-sessao.md). As secoes abaixo documentam o diagnostico historico da v2.
+
 ## Resultado
 
 O contrato-alvo inicial possui 10 paths e 11 operações (GET e PUT em metas).
