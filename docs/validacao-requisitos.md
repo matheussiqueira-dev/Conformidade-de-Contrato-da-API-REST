@@ -37,7 +37,7 @@ Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, tes
 | PEN-03 | Qual metodo de custo sera usado por entrada/lote? | Matheus + Gabriel | RF-14, BD, relatorio financeiro. |
 | PEN-04 | Como devolucao fisica afeta estoque, realizado e custo? | Matheus + Allan | RF-08, RF-10, RF-13, RF-14. |
 | PEN-05 | Qual precisao decimal e arredondamento serao usados para dinheiro? | Matheus + Gabriel | RF-07, RNF-03. |
-| PEN-06 | Qual stack de frontend, sessao e E2E sera adotada? | Gabriel + Matheus | UI-01 a UI-05. |
+| PEN-06 | Next.js + sessao no Spring com cookie HttpOnly confirmados por Matheus em 04/10; E2E Playwright proposto e setup ainda pendente. | Gabriel + Matheus | Implementar ARQ-01/API-01 antes de UI-01 a UI-05; ver `docs/decisoes/arquitetura-frontend-sessao.md`. |
 | PEN-07 | Professores aceitam grupo de quatro, escopo ampliado e prazo interno? | Matheus | Planejamento e entrega final. |
 
 ## Validacao por requisito
