@@ -6,7 +6,9 @@ Atualizado em 04/10/2026 por **Matheus Siqueira**. Quadro: https://trello.com/b/
 
 Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. A primeira fatia de autoria do pedido também está em andamento. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI da autoria aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104). Resultado atual: 15 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E = 55 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
 
-Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheiro decimal, migração e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheiro decimal, migração de banco real e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+
+Fase seguinte iniciada: Matheus implementou V1/V2 Flyway para esquema vazio e vínculo de vendedor, documentou DER/dicionário e guia de adoção controlada. O [CI #22 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37200555926) executou 17 testes Java e inicializou a API com Hibernate `validate` sobre V1/V2 em PostgreSQL 18. Migração de banco real e conversão monetária permanecem pendentes; detalhes em [BD-02](cards/FwvkkAdG.md).
 
 ## Como usar os registros
 
