@@ -19,6 +19,17 @@ test('2020-12 tuple keywords are executed', () => {
 test('all target schema locations compile and validate against 2020-12', () => {
   assert.deepEqual(validateDocument(document).findings, []);
 });
+
+test('session login response rejects token fields and CSRF response requires the exact header', () => {
+  const login = compileProjection(document, 'AuthResponse');
+  const user = performance().seller;
+  assert.equal(login({ user }), true);
+  assert.equal(login({ user, accessToken: 'forbidden' }), false);
+  const csrf = compileProjection(document, 'CsrfResponse');
+  assert.equal(csrf({ headerName: 'X-CSRF-TOKEN', token: 'masked' }), true);
+  assert.equal(csrf({ headerName: 'Authorization', token: 'masked' }), false);
+  assert.equal(csrf({ headerName: 'X-CSRF-TOKEN', token: '' }), false);
+});
 test('seller projection accepts valid sample and rejects sensitive fields at both levels', () => {
   const validate = compileProjection(document, 'SellerPerformance');
   assert.equal(validate(performance()), true);
