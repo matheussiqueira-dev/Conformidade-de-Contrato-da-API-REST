@@ -1,7 +1,9 @@
-param([switch]$HttpOnly, [switch]$Frontend)
+param([switch]$HttpOnly, [switch]$Frontend, [switch]$Preview)
 $ErrorActionPreference = 'Stop'
 $projectDirectory = Split-Path $PSScriptRoot -Parent
 $apiProcess = $null
+$webProcess = $null
+if ($Preview) { $Frontend = $true }
 $composeStarted = $false
 $previousIsolatedFlag = $env:A3_CONTRACT_ISOLATED
 $previousTestPassword = $env:A3_TEST_PASSWORD
@@ -72,12 +74,22 @@ try {
             if ($LASTEXITCODE -ne 0) { throw 'Instalacao do navegador de teste falhou.' }
             & npm.cmd run test:e2e
             if ($LASTEXITCODE -ne 0) { throw 'E2E de sessao/proxy falhou.' }
+            if ($Preview) {
+                $nodeExecutable = (Get-Command node.exe -ErrorAction Stop).Source
+                $nextExecutable = Join-Path $PWD 'node_modules/next/dist/bin/next'
+                $webProcess = Start-Process -FilePath $nodeExecutable -ArgumentList @(('"' + $nextExecutable + '"'), 'start', '--hostname', '127.0.0.1') -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $outputDirectory 'web-stdout.log') -RedirectStandardError (Join-Path $outputDirectory 'web-stderr.log')
+                Write-Host 'Preview: http://127.0.0.1:3000'
+                Write-Host 'Contas sinteticas: manager@example.test / seller@example.test'
+                Write-Host ('Senha temporaria de ambas as contas: ' + $env:A3_TEST_PASSWORD)
+                Read-Host 'Pressione Enter para encerrar o preview e o banco descartavel' | Out-Null
+            }
         } finally { Pop-Location }
     }
 } finally {
     $env:A3_CONTRACT_ISOLATED = $previousIsolatedFlag
     $env:A3_TEST_PASSWORD = $previousTestPassword
     $env:BACKEND_ORIGIN = $previousBackendOrigin
+    if ($webProcess -and -not $webProcess.HasExited) { Stop-Process -Id $webProcess.Id -Force }
     if ($apiProcess -and -not $apiProcess.HasExited) { Stop-Process -Id $apiProcess.Id -Force }
     if ($composeStarted) {
         & docker compose -f docker-compose.test.yml -p a3-tests down
