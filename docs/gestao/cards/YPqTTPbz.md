@@ -1,5 +1,9 @@
 # [Matheus] BD-01 · DER, dicionário e análise de normalização
 
+## Atualização da fase de 04/10/2026 — implementação parcial
+
+**Implementador: Matheus Siqueira.** Matheus derivou das entidades JPA e das migrações um [dicionário e DER lógico](../../bd/dicionario-dados.md) das sete tabelas atuais, com PK/FK, cardinalidades, tipos relevantes e limites do modelo legado. Estoque, metas, custo e `NUMERIC` foram marcados como futuros. Estado: **Em andamento**, aguardando revisão de Allan, confirmação da rubrica e aprofundamento da análise de normalização antes de fechar o card.
+
 Atualização: 04/10/2026. Card: https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o
 
 ## Responsabilidades e crédito
