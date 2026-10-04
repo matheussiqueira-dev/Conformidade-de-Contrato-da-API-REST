@@ -80,6 +80,14 @@ jobs:
           curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
           node scripts/http-contract.mjs
           node scripts/http-session.mjs
+          cd frontend
+          npm ci --no-audit --no-fund
+          npm test
+          BACKEND_ORIGIN=http://127.0.0.1:18080 npm run build
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+          cd ..
+          node scripts/ci-evidence.mjs
 
       - name: Preserve test reports
         if: always()
@@ -91,3 +99,6 @@ jobs:
             target/api-ci.log
             reports/contrato/spike-2026-10-04/
             reports/contrato/session-2026-10-04/
+            frontend/package-lock.json
+            frontend/test-results/
+            frontend/playwright-report/
