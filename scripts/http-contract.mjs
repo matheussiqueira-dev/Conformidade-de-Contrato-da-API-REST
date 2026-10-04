@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { checkResponse } from './response-contract.mjs';
 import { loadOfficialSchema, validateDocument } from './validate-contract.mjs';
+import { sessionClient } from './session-client.mjs';
 
 if (process.env.A3_CONTRACT_ISOLATED !== '1') {
   throw new Error('Run scripts/test-contract.ps1: HTTP writes require the disposable database runner.');
@@ -14,10 +15,8 @@ const results = [];
 let liveContract;
 const directory = new URL('../reports/contrato/spike-2026-10-04/', import.meta.url);
 mkdirSync(directory, { recursive: true });
-async function request(path, method = 'GET', body) {
-  const response = await fetch(origin + path, { method, redirect: 'error', signal: AbortSignal.timeout(10000), headers: { 'Content-Type': 'application/json' }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
-  return { status: response.status, body: await response.json() };
-}
+const client = sessionClient(origin);
+const request = client.request;
 function validateResponse(path, method, response) {
   const result = checkResponse(baseline, path, method, response);
   assert.ok(result.valid, JSON.stringify(result.errors));
@@ -47,6 +46,8 @@ await run('Live OpenAPI documents 400/404 error schemas and validates with offic
   writeFileSync(new URL('openapi-runtime-errors.json', directory), JSON.stringify(liveContract, null, 2) + '\n');
 });
 await run('GET products matches baseline response schema', async () => {
+  const login = await client.login('manager@example.test', process.env.A3_TEST_PASSWORD);
+  assert.equal(login.status, 200);
   const response = await request('/products'); assert.equal(response.status, 200);
   validateResponse('/products', 'get', response);
 });
@@ -76,7 +77,8 @@ await run('Missing product returns 404', async () => {
 const report = { scope: 'baseline-http-isolated-database', timestamp: new Date().toISOString(), results,
   contract: 'baseline-errors-openapi-2026-10-04.json',
   contractGaps: ['Error documentation scope: POST /products 400 and GET /products/{id} 404 only.'],
-  excluded: ['Planned login, 401/403 and role-specific projections require API-01 implementation.'] };
+  excluded: ['Seller projections, sales, inventory and goals require the dedicated domain endpoints.'],
+  authentication: 'Manager session; CSRF token on mutations.' };
 writeFileSync(new URL('http-swagger-errors-v1.json', directory), JSON.stringify(report, null, 2) + '\n');
 console.log(JSON.stringify(report, null, 2));
 process.exitCode = results.some(result => !result.passed) ? 1 : 0;

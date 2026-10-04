@@ -1,6 +1,8 @@
 # Validacao dos requisitos
 
-Data: 03/10/2026.
+Data: 04/10/2026. Atualização: Matheus Siqueira.
+
+Rodada atual: sessão e acesso executados em Java/HTTP/Chromium no CI 37177644692, com 52 verificações aprovadas e build Next. Detalhes em `docs/execucao-sessao.md` e `reports/execucoes/run-2026-10-04-sessao-nextjs.md`. Referências a leitura sem execução abaixo descrevem a etapa documental inicial, não o estado técnico atual. Revisão humana do conjunto permanece pendente; autoria/metas/estoque e quatro telas não foram implementados.
 
 Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, testes e implementacao. Esta validacao foi feita por leitura do backend local, README, direcao criativa, guia visual e revisao do Trello. Nao houve execucao HTTP ou validacao de banco em runtime nesta etapa.
 
@@ -32,24 +34,24 @@ Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, tes
 
 | ID | Pergunta | Responsavel sugerido | Bloqueia |
 | --- | --- | --- | --- |
-| PEN-01 | Quem pode conceder desconto, qual limite e como auditar? | Matheus + Gabriel | RF-07, RF-15, criterios de aceitacao. |
-| PEN-02 | Quem pode alterar/cancelar pedido criado por outro vendedor? | Matheus + Allan | RF-06, RF-13, seguranca. |
-| PEN-03 | Qual metodo de custo sera usado por entrada/lote? | Matheus + Gabriel | RF-14, BD, relatorio financeiro. |
-| PEN-04 | Como devolucao fisica afeta estoque, realizado e custo? | Matheus + Allan | RF-08, RF-10, RF-13, RF-14. |
-| PEN-05 | Qual precisao decimal e arredondamento serao usados para dinheiro? | Matheus + Gabriel | RF-07, RNF-03. |
-| PEN-06 | Next.js + sessao no Spring com cookie HttpOnly confirmados por Matheus em 04/10; E2E Playwright proposto e setup ainda pendente. | Gabriel + Matheus | Implementar ARQ-01/API-01 antes de UI-01 a UI-05; ver `docs/decisoes/arquitetura-frontend-sessao.md`. |
+| PEN-01 | Somente gerente concede desconto, confirmado em 04/10. Limite numerico e auditoria detalhada ainda pendentes. | Matheus + Gabriel | RF-07, RF-15, criterios de aceitacao. |
+| PEN-02 | Somente gerente cancela pedido alheio, confirmado em 04/10. Edicao de pedido alheio ainda pendente. | Matheus + Allan | RF-06, RF-13, seguranca. |
+| PEN-03 | Custo medio ponderado confirmado em 04/10. | Matheus + Gabriel | Implementar RF-14, BD, relatorio financeiro. |
+| PEN-04 | Conferencia fisica obrigatoria antes de repor estoque, confirmada em 04/10. | Matheus + Allan | Implementar RF-08, RF-10, RF-13, RF-14. |
+| PEN-05 | Dinheiro com 2 casas e HALF_UP confirmado em 04/10. | Matheus + Gabriel | Migracao monetaria de RF-07, RNF-03. |
+| PEN-06 | Next.js + sessão HttpOnly implementados por Matheus, executados com sucesso em Java/HTTP/browser. Falta revisão nominal da equipe e preview Windows. | Gabriel + Matheus | QA-08; integrar UI-02 a UI-05 depois do domínio. |
 | PEN-07 | Professores aceitam grupo de quatro, escopo ampliado e prazo interno? | Matheus | Planejamento e entrega final. |
 
 ## Validacao por requisito
 
 | Requisito | Verificacao feita | Situacao |
 | --- | --- | --- |
-| RF-01 Autenticacao | Codigo local nao possui Spring Security ou sessao. | Alvo confirmado; pendente de implementacao. |
-| RF-02 Autorizacao | Nao ha restricao por perfil nas rotas atuais. | Alvo confirmado; pendente. |
+| RF-01 Autenticacao | Spring Security, usuários persistidos, sessão e CSRF implementados e testados por Matheus. | Java/HTTP/E2E aprovados no CI; revisão humana em QA-08. |
+| RF-02 Autorizacao | Rotas legadas exigem gerente; usuario atual aceita ambos os perfis. | Parcial; projecoes dedicadas de vendedor pendentes. |
 | RF-03 Clientes | CRUD e subtipos existem. | Requisito observado; precisa testes e contrato. |
 | RF-04 Produtos | CRUD e subtipos existem. | Requisito observado; estoque/custo sao extensoes. |
 | RF-05 Pedidos | Criacao com cliente novo/existente existe. | Requisito observado; validar total e erros. |
-| RF-06 Vendedor por sessao | Nao existe usuario autenticado. | Alvo confirmado. |
+| RF-06 Vendedor por sessao | Identidade autenticada disponivel; autoria ainda nao integrada ao pedido. | Pendente de dominio. |
 | RF-07 Calculo monetario | Risco estatico identificado em preco/quantidade. | Requer teste de reproducao antes de declarar defeito executado. |
 | RF-08 Pagamento | Processamento simulado existe. | Parcial; falta estorno/idempotencia. |
 | RF-09 Metas | Nao existe dominio de metas. | Alvo confirmado. |
@@ -59,7 +61,7 @@ Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, tes
 | RF-13 Estoque | Produto nao possui saldo/reserva. | Alvo confirmado. |
 | RF-14 Custos | Produto possui preco, mas nao custo por lote. | Alvo confirmado. |
 | RF-15 Vender | Pedido existe na API; fluxo de interface nao existe. | Parcial. |
-| RF-16 Interface | Nao existe frontend no projeto local. | Alvo confirmado. |
+| RF-16 Interface | Next.js com login, recuperacao de sessao e logout adicionados. | Parcial; quatro areas de dominio pendentes. |
 
 ## Riscos de validacao
 

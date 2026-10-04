@@ -4,7 +4,7 @@ Data: 04/10/2026. Estado: escolha de frontend/autenticação confirmada por Math
 
 ## Decisão confirmada
 
-Frontend em Next.js. Sessão mantida no Spring, identificada por cookie HttpOnly. A API permanece responsável por autenticação, autorização por perfil e autoria dos pedidos. Login/frontend não estão implementados nesta rodada de contrato.
+Frontend em Next.js. Sessão mantida no Spring, identificada por cookie HttpOnly. A API permanece responsável por autenticação, autorização por perfil e autoria dos pedidos. A continuação adicionou código de autenticação e interface de acesso; aceite e pendências estão em [execucao-sessao.md](../execucao-sessao.md). Autoria de pedidos e áreas de domínio seguem pendentes.
 
 ## Direção de integração
 
@@ -17,7 +17,7 @@ Frontend em Next.js. Sessão mantida no Spring, identificada por cookie HttpOnly
 
 ## Impacto no contrato
 
-A v2 planejada usa Bearer como hipótese anterior. Preservar a v2; criar uma v3 antes de implementar API-01, substituindo Bearer por esquema cookie/sessão e documentando obtenção de CSRF, login, usuário atual e logout. Atualizar a auditoria que hoje exige bearerAuth. Não reclassificar as rotas planejadas como implementadas até testes HTTP com sessão real.
+A v2 planejada usa Bearer como hipótese anterior e foi preservada. A v3 de 04/10 usa cookie/sessão e documenta CSRF, login, usuário atual e logout. A auditoria verifica sessão/CSRF na v3 e ainda valida a v2 arquivada. As rotas de domínio continuam planejadas.
 
 ## Aceite da implementação futura
 

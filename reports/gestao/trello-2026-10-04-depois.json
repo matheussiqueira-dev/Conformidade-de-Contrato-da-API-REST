@@ -1,0 +1,2173 @@
+{
+  "lists": [
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7",
+      "name": "Referências",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab905f6ee18a401db90a4c0",
+          "name": "LINKS IMPORTANTES",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Equipe.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus publicou código, decisões, relatórios HTTP e capturas da sessão na branch de revisão; o CI 37177644692 terminou com sucesso. Os documentos de referência serão incluídos em docs/referencias nesta sincronização.\n\n## Próximo passo\nUsar o índice docs/gestao/README.md como entrada. Distinguir manual antigo de decisões aprovadas e conferir a branch antes de demonstrar.\n\n## Estado e aceite\nReferências. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/3MmXle4G.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/3MmXle4G/44-links-importantes",
+          "shortUrl": "https://trello.com/c/3MmXle4G",
+          "closed": false,
+          "complete": false,
+          "position": 0.5,
+          "lastActivityAt": "2026-10-04T05:07:02.402Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            },
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            },
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            },
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b299d15a201136e4ad",
+          "name": "[Matheus] Escopo do projeto e SUT",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Francisco.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nO SUT agora inclui autenticação Spring, painel de acesso Next e testes reais. As quatro áreas de negócio permanecem planejadas; gateway e hospedagem pública continuam fora do MVP.\n\n## Próximo passo\nConsolidar docs/escopo.md a partir dos requisitos e obter revisão de Francisco. Registrar confirmação docente separadamente de aprovação do usuário.\n\n## Estado e aceite\nReferências. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/XBAVHAk6.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/XBAVHAk6/1-matheus-escopo-do-projeto-e-sut",
+          "shortUrl": "https://trello.com/c/XBAVHAk6",
+          "closed": false,
+          "complete": false,
+          "position": 1,
+          "lastActivityAt": "2026-10-04T05:07:03.450Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b7e96916900fd84740",
+          "name": "[Francisco] Critérios de avaliação (100 pts)",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nForam produzidas evidências técnicas reutilizáveis para a rubrica; não foi produzida uma matriz que comprove os 14 critérios completos.\n\n## Próximo passo\nFrancisco deve transcrever cada critério do enunciado, relacionar arquivo/run, indicar lacuna e revisor. Não converter 52 testes automatizados em 30 casos acadêmicos sem catálogo.\n\n## Estado e aceite\nReferências. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/JRbuRtZg.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/JRbuRtZg/2-francisco-crit%C3%A9rios-de-avalia%C3%A7%C3%A3o-100-pts",
+          "shortUrl": "https://trello.com/c/JRbuRtZg",
+          "closed": false,
+          "complete": false,
+          "position": 2,
+          "lastActivityAt": "2026-10-04T05:07:04.447Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3bb0ef983702ef19a08",
+          "name": "[Gabriel] Stack técnica proposta",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nStack executada: Java 25, Boot 4.1.0, PostgreSQL 18; Next 16.3.8, React 19.3.0, Playwright 1.63.0; Ajv 8.20.0. Build e suítes passaram no CI. Locks versionados.\n\n## Próximo passo\nGabriel deve revisar dependências, árvore Maven e limites da compatibilidade; preservar versões do lock e documentar qualquer atualização com novo build.\n\n## Estado e aceite\nReferências. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/X9UQOOgN.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/X9UQOOgN/3-gabriel-stack-t%C3%A9cnica-proposta",
+          "shortUrl": "https://trello.com/c/X9UQOOgN",
+          "closed": false,
+          "complete": false,
+          "position": 3,
+          "lastActivityAt": "2026-10-04T05:07:05.438Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d",
+      "name": "Backlog",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41b41ddbcbd88dc88c3",
+          "name": "[Gabriel] 21 · Apresentação e demonstração ao vivo",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nRunner -Preview permite demonstrar somente login, sessão e logout com banco descartável. Não houve ensaio da equipe comprovado nesta rodada.\n\n## Próximo passo\nGabriel: criar roteiro com comandos, papéis dos quatro integrantes e contingência. Ensaiar após QA-08, demonstrar falha de senha e proteção por perfil sem abrir dados reais.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/PJe5BNT8.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/PJe5BNT8/24-gabriel-21-apresenta%C3%A7%C3%A3o-e-demonstra%C3%A7%C3%A3o-ao-vivo",
+          "shortUrl": "https://trello.com/c/PJe5BNT8",
+          "closed": false,
+          "complete": false,
+          "position": 17,
+          "lastActivityAt": "2026-10-04T05:07:44.482Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-28T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e4218b3d1385884551e9",
+          "name": "[Francisco] Slides da apresentação",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nCapturas reais do acesso e evidência CI disponíveis; slides ainda não foram produzidos.\n\n## Próximo passo\nFrancisco: montar slides com problema, método, arquitetura, defeito antes/depois e limites; citar Matheus como implementador da rodada. Não apresentar dashboards planejados como funcionais.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/qQvIlw5q.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/qQvIlw5q/32-francisco-slides-da-apresenta%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/qQvIlw5q",
+          "closed": false,
+          "complete": false,
+          "position": 81937,
+          "lastActivityAt": "2026-10-04T05:07:48.167Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e423eb428e829f96a3d8",
+          "name": "[Francisco] Plano B da demo (gravação de contingência)",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nNão existe gravação de contingência comprovada. Runner isolado e capturas podem compor o pacote.\n\n## Próximo passo\nFrancisco: gravar roteiro aprovado após ensaio, ocultar senha temporária; incluir commit, comandos, artefatos e instrução de recuperação. Verificar reprodução offline do vídeo.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/JTx8I4eB.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/JTx8I4eB/33-francisco-plano-b-da-demo-grava%C3%A7%C3%A3o-de-conting%C3%AAncia",
+          "shortUrl": "https://trello.com/c/JTx8I4eB",
+          "closed": false,
+          "complete": false,
+          "position": 98321,
+          "lastActivityAt": "2026-10-04T05:07:49.290Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e42423818e62b587b3bf",
+          "name": "[Matheus] Checklist de entrega final (conferência dos 14 critérios)",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Francisco.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nBase técnica publicada na branch de revisão; nenhum envio final ou aprovação docente foi realizado por esta automação.\n\n## Próximo passo\nMatheus: usar matriz da rubrica para conferir 14 critérios e dez entregáveis; registrar revisores e comprovante apenas após submissão humana real.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/1mNWyLTq.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/1mNWyLTq/34-matheus-checklist-de-entrega-final-confer%C3%AAncia-dos-14-crit%C3%A9rios",
+          "shortUrl": "https://trello.com/c/1mNWyLTq",
+          "closed": false,
+          "complete": false,
+          "position": 114705,
+          "lastActivityAt": "2026-10-04T05:07:50.624Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-29T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903176a58a684cf707cc4",
+          "name": "[Allan] BD-03 · Consultas SQL, views e análise de índices",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nNão foram entregues views de metas/estoque nem planos EXPLAIN. O domínio necessário ainda falta.\n\n## Próximo passo\nAllan: usar massa e resultados conhecidos; criar SQL de realizado após pagamentos/estornos, comparar índices com EXPLAIN ANALYZE e impedir soma duplicada por joins.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/9luJhlJy.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/9luJhlJy/37-allan-bd-03-consultas-sql-views-e-an%C3%A1lise-de-%C3%ADndices",
+          "shortUrl": "https://trello.com/c/9luJhlJy",
+          "closed": false,
+          "complete": false,
+          "position": 163857,
+          "lastActivityAt": "2026-10-04T05:07:57.772Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031f09d683c86c1a22bc",
+          "name": "[Allan] QA-05 · Medição de desempenho RNF-03",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nNão existe medição de RNF-03 nesta execução; tempos dos testes não são latência da API.\n\n## Próximo passo\nAllan: definir operação, volume, aquecimento, concorrência, duração e percentis antes do ensaio; salvar amostras e ambiente. Não afirmar capacidade produtiva a partir do container CI.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/Ob9F07Rn.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/Ob9F07Rn/42-allan-qa-05-medi%C3%A7%C3%A3o-de-desempenho-rnf-03",
+          "shortUrl": "https://trello.com/c/Ob9F07Rn",
+          "closed": false,
+          "complete": false,
+          "position": 245777,
+          "lastActivityAt": "2026-10-04T05:08:05.321Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90320e08c1127dff1a095",
+          "name": "[Gabriel] QA-06 · Geração de testes de contrato com Schemathesis",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nSuíte determinística usa Node/Ajv; Schemathesis ainda não foi instalado/executado como evidência.\n\n## Próximo passo\nGabriel: fazer spike limitado ao OpenAPI implementado e sessão/CSRF, fixar seed e massa descartável; classificar achados e reduzir exemplo mínimo. Não gerar contra rotas apenas planejadas.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/71ixgS6n.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/71ixgS6n/43-gabriel-qa-06-gera%C3%A7%C3%A3o-de-testes-de-contrato-com-schemathesis",
+          "shortUrl": "https://trello.com/c/71ixgS6n",
+          "closed": false,
+          "complete": false,
+          "position": 262161,
+          "lastActivityAt": "2026-10-04T05:08:06.408Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d4899330163a2ebd30",
+          "name": "[Matheus] API-02 · Metas mensais, distribuição e realizado",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nContrato-alvo descreve metas/distribuição; endpoints e consultas ainda não foram implementados. Base de sessão já existe.\n\n## Próximo passo\nMatheus: após decimal/autoria/pagamento, modelar mês e vendedor, validar soma de distribuição, calcular confirmado menos estornado e tratar meta zero. Testar período e fuso; garantir vendedor somente próprio resultado.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/9OrNNT1y.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/9OrNNT1y/50-matheus-api-02-metas-mensais-distribui%C3%A7%C3%A3o-e-realizado",
+          "shortUrl": "https://trello.com/c/9OrNNT1y",
+          "closed": false,
+          "complete": false,
+          "position": 294929,
+          "lastActivityAt": "2026-10-04T05:08:09.695Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d619562df2731fef69",
+          "name": "[Gabriel] API-03 · Estoque: reserva, saída e cancelamento atômicos",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nReserva, saldo e movimentos não existem na implementação atual. Sessão já pode fornecer o usuário autenticado.\n\n## Próximo passo\nGabriel: modelar saldo físico/reservado e transações; reservar ao criar, baixar ao pagar, liberar ao cancelar. Allan testa duas requisições pela última unidade e rollback; associar FK/autoria e eventos idempotentes.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/nEt4hNMG.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/nEt4hNMG/51-gabriel-api-03-estoque-reserva-sa%C3%ADda-e-cancelamento-at%C3%B4micos",
+          "shortUrl": "https://trello.com/c/nEt4hNMG",
+          "closed": false,
+          "complete": false,
+          "position": 311313,
+          "lastActivityAt": "2026-10-04T05:08:10.940Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d8484d511c773d9585",
+          "name": "[Matheus] API-04 · Entradas de estoque e custo histórico do gerente",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus aprovou custo médio ponderado; nenhuma entrada/custo histórico foi implementada nesta rodada.\n\n## Próximo passo\nMatheus: após modelo de estoque e decimal, registrar entrada positiva, custo e autor gerente; calcular média ponderada e preservar custo atribuído da venda. Rejeitar negativo e reposição por estorno sem conferência física.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/Bm4Z8HVX.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/Bm4Z8HVX/52-matheus-api-04-entradas-de-estoque-e-custo-hist%C3%B3rico-do-gerente",
+          "shortUrl": "https://trello.com/c/Bm4Z8HVX",
+          "closed": false,
+          "complete": false,
+          "position": 327697,
+          "lastActivityAt": "2026-10-04T05:08:11.927Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d9ccaf81310048b739",
+          "name": "[Gabriel] API-05 · Histórico do cliente e atendimento compartilhado",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nRotas legadas de cliente são restritas ao gerente por segurança; histórico compartilhado restrito para vendedor ainda falta.\n\n## Próximo passo\nGabriel: criar DTO específico de atendimento com campos permitidos, paginação e histórico mínimo; provar ausência de custo/margem/colegas em JSON e testar acesso indireto por ID. Depende de autoria SEC-01.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/FrFkwHnJ.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/FrFkwHnJ/53-gabriel-api-05-hist%C3%B3rico-do-cliente-e-atendimento-compartilhado",
+          "shortUrl": "https://trello.com/c/FrFkwHnJ",
+          "closed": false,
+          "complete": false,
+          "position": 344081,
+          "lastActivityAt": "2026-10-04T05:08:13.272Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0dafcecab46e0544fd4",
+          "name": "[Gabriel] API-06 · Confirmar pagamento, estorno e efeitos consistentes",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nCódigo legado de pagamentos existe, mas efeitos consistentes sobre reserva, realizado e estorno não foram entregues.\n\n## Próximo passo\nGabriel: definir estados e evento idempotente, validar transições, transacionar pagamento/pedido/estoque, testar repetição e rollback. Estorno financeiro não repõe físico; conferência vem em etapa separada.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/MUxkT9NS.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/MUxkT9NS/54-gabriel-api-06-confirmar-pagamento-estorno-e-efeitos-consistentes",
+          "shortUrl": "https://trello.com/c/MUxkT9NS",
+          "closed": false,
+          "complete": false,
+          "position": 360465,
+          "lastActivityAt": "2026-10-04T05:08:14.576Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0ddc525a2de60a496dc",
+          "name": "[Matheus] UI-02 · Gestão: loja, equipe, metas e alerta de estoque",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nTela Gestão ainda não existe; painel atual é somente acesso/sessão.\n\n## Próximo passo\nMatheus: integrar API-02 e indicadores confirmados; incluir loja/equipe/metas/alerta, estados vazio/erro/loading e gerente obrigatório. Evitar números fictícios; testar vendedor impedido e soma sem duplicidade.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/1nef0V1n.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/1nef0V1n/56-matheus-ui-02-gest%C3%A3o-loja-equipe-metas-e-alerta-de-estoque",
+          "shortUrl": "https://trello.com/c/1nef0V1n",
+          "closed": false,
+          "complete": false,
+          "position": 393233,
+          "lastActivityAt": "2026-10-04T05:08:18.328Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0de9b507639470ca5dd",
+          "name": "[Matheus] UI-03 · Meu desempenho: meta e vendas do próprio vendedor",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nTela Meu desempenho ainda não existe; perfil do usuário já chega via /auth/me.\n\n## Próximo passo\nMatheus: consumir projeção exclusiva do vendedor após API-02/SEC-01; exibir sem meta quando zero, período e confirmado menos estornado. Testar JSON sem colegas/custos e expiração de sessão.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/vSFg74kp.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/vSFg74kp/57-matheus-ui-03-meu-desempenho-meta-e-vendas-do-pr%C3%B3prio-vendedor",
+          "shortUrl": "https://trello.com/c/vSFg74kp",
+          "closed": false,
+          "complete": false,
+          "position": 409617,
+          "lastActivityAt": "2026-10-04T05:08:19.332Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e07e2ad8b33d5f30d7",
+          "name": "[Matheus] UI-04 · Vender: Cliente → Produtos → Pagamento",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nFluxo Cliente→Produtos→Pagamento ainda não foi implementado na UI. Endpoint legado não deve ser usado pelo vendedor.\n\n## Próximo passo\nMatheus: integrar DTO de atendimento, reserva e pagamento; preservar autoria na sessão, tratar produto esgotado e duplo clique. Não enviar sellerId como fonte de verdade nem simular pagamento real.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/MlqruKBN.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/MlqruKBN/58-matheus-ui-04-vender-cliente-%E2%86%92-produtos-%E2%86%92-pagamento",
+          "shortUrl": "https://trello.com/c/MlqruKBN",
+          "closed": false,
+          "complete": false,
+          "position": 426001,
+          "lastActivityAt": "2026-10-04T05:08:20.734Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e190b3cc0f83d2170e",
+          "name": "[Matheus] UI-05 · Estoque administrativo: saldo, reserva, custo e preço",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nTela administrativa de estoque ainda não existe; custo médio aprovado é regra futura.\n\n## Próximo passo\nMatheus: após API-03/04, exibir físico/reservado/disponível/custo/preço e formulário de entrada só gerente. Rejeitar negativos, preservar histórico e mostrar erro de conflito; Allan revisa permissão.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/wfIF8udO.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/wfIF8udO/59-matheus-ui-05-estoque-administrativo-saldo-reserva-custo-e-pre%C3%A7o",
+          "shortUrl": "https://trello.com/c/wfIF8udO",
+          "closed": false,
+          "complete": false,
+          "position": 442385,
+          "lastActivityAt": "2026-10-04T05:08:21.849Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e25e2fa1640d04d53c",
+          "name": "[Allan] QA-07 · Aceitação das quatro telas e regressão por perfil",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nDois E2E comprovam acesso e erro de senha; não testam as quatro áreas. Capturas reais estão versionadas.\n\n## Próximo passo\nAllan: ampliar Playwright após cada tela/endpoints, validar loading/erro/vazio/teclado e perfis em desktop/mobile; vincular CA e guardar screenshot sanitizado. Executar zoom 200% antes de declarar acessibilidade.\n\n## Estado e aceite\nBacklog. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/vctQv8R5.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/vctQv8R5/60-allan-qa-07-aceita%C3%A7%C3%A3o-das-quatro-telas-e-regress%C3%A3o-por-perfil",
+          "shortUrl": "https://trello.com/c/vctQv8R5",
+          "closed": false,
+          "complete": false,
+          "position": 458769,
+          "lastActivityAt": "2026-10-04T05:08:23.169Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5",
+      "name": "A fazer",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3d73465a9aee6abf828",
+          "name": "[Francisco] 05 · Plano de Qualidade de Software",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nRequisitos, critérios e plano de testes já existem; o Plano de Qualidade de 11 itens ainda não foi entregue.\n\n## Próximo passo\nFrancisco: escrever docs/plano-qualidade.md com riscos, procedimentos, responsáveis e critérios de saída. Tratar percentuais históricos como metas propostas, anexar evidências da sessão e solicitar revisão de Allan.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/LSD2pMwn.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/LSD2pMwn/8-francisco-05-plano-de-qualidade-de-software",
+          "shortUrl": "https://trello.com/c/LSD2pMwn",
+          "closed": false,
+          "complete": false,
+          "position": 1,
+          "lastActivityAt": "2026-10-04T05:07:08.255Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dbc727bf260d5c23a3",
+          "name": "[Allan] 06 · Análise de risco das funcionalidades",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Francisco.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nRiscos concretos conhecidos: dinheiro em Double, autoria ausente, rotas legadas restritas a gerente, estoque e metas ainda sem implementação. Cookie/CSRF já possuem testes.\n\n## Próximo passo\nAllan: criar matriz por RF, probabilidade e impacto justificados; priorizar falsificação de vendedor, última unidade e repetição de pagamento. Relacionar CT e mitigação, sem alegar concorrência já testada.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/a5gxnQvi.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/a5gxnQvi/9-allan-06-an%C3%A1lise-de-risco-das-funcionalidades",
+          "shortUrl": "https://trello.com/c/a5gxnQvi",
+          "closed": false,
+          "complete": false,
+          "position": 2,
+          "lastActivityAt": "2026-10-04T05:07:10.775Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e131cc8e1cda39e54f",
+          "name": "[Allan] 08 · Revisão técnica formal (inspeção)",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nCódigo de sessão e interface de acesso estão disponíveis para inspeção formal; aprovação de equipe não foi registrada nesta execução.\n\n## Próximo passo\nAllan: reunir requisitos, arquitetura, código, casos e docs; usar QA-08 para revisão da sessão, registrar participantes/achados em ata e retestar correções. Não confundir inspeção automática com reunião humana.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/MI9ATjxD.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/MI9ATjxD/11-allan-08-revis%C3%A3o-t%C3%A9cnica-formal-inspe%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/MI9ATjxD",
+          "closed": false,
+          "complete": false,
+          "position": 4,
+          "lastActivityAt": "2026-10-04T05:07:13.410Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e52da2e90775b05e66",
+          "name": "[Allan] 09 · Análise estática (antes × depois)",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nBuild e testes passaram, mas não existem resultados comparáveis de análise estática antes/depois nesta entrega.\n\n## Próximo passo\nAllan: fixar ferramenta, versão e ruleset; executar no baseline e evolução com manifestos separados, triagem e denominadores. Incluir frontend em análise própria, sem inventar melhoria porcentual.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/VXXKixWS.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/VXXKixWS/12-allan-09-an%C3%A1lise-est%C3%A1tica-antes-%C3%97-depois",
+          "shortUrl": "https://trello.com/c/VXXKixWS",
+          "closed": false,
+          "complete": false,
+          "position": 5,
+          "lastActivityAt": "2026-10-04T05:07:16.568Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-20T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e8207a721dd82efed3",
+          "name": "[Allan] 10 · Catálogo de casos de teste (≥30)",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nHá 52 verificações automatizadas aprovadas em camadas diferentes; o catálogo acadêmico de pelo menos 30 casos completos ainda precisa ser consolidado.\n\n## Próximo passo\nAllan: criar docs/catalogo-casos.md com ID, RF/CA, precondição, massa, passos, esperado, técnica e evidência. Reusar CT-MONEY-002; não contar a mesma execução duas vezes nem prometer rotas futuras.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/Z8XcjCam.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/Z8XcjCam/13-allan-10-cat%C3%A1logo-de-casos-de-teste-%E2%89%A530",
+          "shortUrl": "https://trello.com/c/Z8XcjCam",
+          "closed": false,
+          "complete": false,
+          "position": 6,
+          "lastActivityAt": "2026-10-04T05:07:19.076Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f4b3e9bb679475adfb",
+          "name": "[Gabriel] 12 · Testes caixa-branca e cobertura (JaCoCo)",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\n12 testes Java passaram; contagem de testes não prova cobertura JaCoCo ou análise de caminhos.\n\n## Próximo passo\nGabriel: instrumentar JaCoCo, salvar HTML/XML por commit e analisar três métodos escolhidos com decisão/ramo/grafo. Separar cobertura JVM da UI e justificar lacunas.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/9EKvdzHs.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/9EKvdzHs/15-gabriel-12-testes-caixa-branca-e-cobertura-jacoco",
+          "shortUrl": "https://trello.com/c/9EKvdzHs",
+          "closed": false,
+          "complete": false,
+          "position": 8,
+          "lastActivityAt": "2026-10-04T05:07:24.465Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4108e5d4fb76b719235",
+          "name": "[Matheus] 18 · Métricas e avaliação dos atributos de qualidade",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nContagens verificadas: 12 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E = 52. Não há medição p95, cobertura ou usabilidade global comprovada.\n\n## Próximo passo\nMatheus: criar manifesto com data/commit/ambiente/denominador; separar aprovação de testes e cobertura de requisitos. Não extrapolar dois E2E de acesso às quatro telas.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/zIsf4wjO.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/zIsf4wjO/21-matheus-18-m%C3%A9tricas-e-avalia%C3%A7%C3%A3o-dos-atributos-de-qualidade",
+          "shortUrl": "https://trello.com/c/zIsf4wjO",
+          "closed": false,
+          "complete": false,
+          "position": 14,
+          "lastActivityAt": "2026-10-04T05:07:36.250Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-22T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41414062b22e8936053",
+          "name": "[Francisco] 19 · Segurança, privacidade e ética",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus implementou BCrypt, cookie HttpOnly/SameSite, CSRF e bloqueio do vendedor nos DTOs legados. Contas CI sintéticas; traces desabilitados.\n\n## Próximo passo\nFrancisco: documentar finalidade dos dados, retenção, massa sintética e riscos residuais. Tratar provisionamento, limitação de login e ambiente HTTPS como pendências, sem declarar segurança completa.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/VQvMapdo.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/VQvMapdo/22-francisco-19-seguran%C3%A7a-privacidade-e-%C3%A9tica",
+          "shortUrl": "https://trello.com/c/VQvMapdo",
+          "closed": false,
+          "complete": false,
+          "position": 15,
+          "lastActivityAt": "2026-10-04T05:07:38.516Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-20T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c417b39a171271f1f26c",
+          "name": "[Francisco] 20 · Relatórios e relatório técnico final",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nRelatórios por rodada, resultados HTTP e duas capturas já estão versionados. Relatório final acadêmico ainda não existe.\n\n## Próximo passo\nFrancisco: consolidar índice dos entregáveis, evidências por critério e limitações. Identificar autoria real Matheus e distinguir aprovação do usuário de revisão docente.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/tWeVAYyZ.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/tWeVAYyZ/23-francisco-20-relat%C3%B3rios-e-relat%C3%B3rio-t%C3%A9cnico-final",
+          "shortUrl": "https://trello.com/c/tWeVAYyZ",
+          "closed": false,
+          "complete": false,
+          "position": 16,
+          "lastActivityAt": "2026-10-04T05:07:43.333Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ac1dee8ae24c6bb7830bf53",
+          "name": "[Francisco] DOC-01 · Consolidar rubrica, rastreabilidade e autoria",
+          "description": "## Briefing — 04/10/2026\nCriação/planejamento: **Matheus Siqueira**.\nResponsável pela execução: **Francisco**. Revisor: **Allan**.\nComplexidade: 3 pontos (estimativa). Estado: A fazer; implementação futura.\n\nComo integrante, quero evidências ligadas aos critérios acadêmicos para entender o que foi entregue, quem implementou e o que ainda falta.\n\n## Situação e necessidade\nMatheus publicou documentação técnica e nesta rodada prepara briefings dos 64 cards. Rubrica completa, catálogo de 30 casos, atas e confirmação docente ainda exigem consolidação humana.\n\n## Dependências\nCritérios de 100 pontos; Catálogo de pelo menos 30 casos; cards 00; relatórios publicados. Reusar cards existentes, sem duplicar seus entregáveis.\n\n## Execução e aceite\nT1 (até 2h); T2 (até 3h); T3 (até 2h); T4 (até 2h).\nVerificar sucesso, erro e limite definidos no briefing; publicar resultado sanitizado, revisão nominal e docs antes de concluir.\n\n## Briefing completo\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/DOC-01.md\n\nContém arquivos, passos de até 4 h, três cenários Dado/Quando/Então, comandos, recuperação e Definition of Done.",
+          "url": "https://trello.com/c/qT7awxOR/64-francisco-doc-01-consolidar-rubrica-rastreabilidade-e-autoria",
+          "shortUrl": "https://trello.com/c/qT7awxOR",
+          "closed": false,
+          "complete": false,
+          "position": 4097,
+          "lastActivityAt": "2026-10-04T05:20:19.639Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ac1dee64d495ec2ee854e4f",
+          "name": "[Allan] QA-08 · Revisar sessão e reproduzir preview no Windows",
+          "description": "## Briefing — 04/10/2026\nCriação/planejamento: **Matheus Siqueira**.\nResponsável pela execução: **Allan**. Revisor: **Matheus**.\nComplexidade: 3 pontos (estimativa). Estado: A fazer; implementação futura.\n\nComo integrante, quero reproduzir o acesso real e revisar suas limitações para poder demonstrar o sistema sem depender de relato.\n\n## Situação e necessidade\nCI 37177644692 passou com 52 verificações. Matheus implementou sessão/acesso e inspecionou duas capturas. Preview interativo no Windows e reflow a 200% ainda não foram executados como evidência.\n\n## Dependências\nAPI-01/ARQ-01/CI entregues para revisão; Windows com JDK 25, Node compatível e Docker Desktop.\n\n## Execução e aceite\nT1 (até 2h); T2 (até 2h); T3 (até 2h); T4 (até 1h).\nVerificar sucesso, erro e limite definidos no briefing; publicar resultado sanitizado, revisão nominal e docs antes de concluir.\n\n## Briefing completo\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/QA-08.md\n\nContém arquivos, passos de até 4 h, três cenários Dado/Quando/Então, comandos, recuperação e Definition of Done.",
+          "url": "https://trello.com/c/PQ5Aikvp/63-allan-qa-08-revisar-sess%C3%A3o-e-reproduzir-preview-no-windows",
+          "shortUrl": "https://trello.com/c/PQ5Aikvp",
+          "closed": false,
+          "complete": false,
+          "position": 8194,
+          "lastActivityAt": "2026-10-04T05:20:10.231Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ac1dee504a25b203543e3d3",
+          "name": "[Matheus] SEC-01 · Vincular autoria do pedido à sessão",
+          "description": "## Briefing — 04/10/2026\nCriação/planejamento: **Matheus Siqueira**.\nResponsável pela execução: **Matheus**. Revisor: **Gabriel**.\nComplexidade: 5 pontos (estimativa). Estado: A fazer; implementação futura.\n\nComo vendedor, quero pedidos atribuídos à minha conta autenticada para impedir falsificação de autoria e acesso a vendas de colegas.\n\n## Situação e necessidade\nSessão e perfis foram implementados por Matheus Siqueira. Order ainda não vincula o usuário autenticado; endpoints de vendedor são planejados, e rotas legadas permanecem só para gerente.\n\n## Dependências\nAPI-01 base entregue; BD-01/BD-02 para FK/migração; DOM-01 para regras de pedido alheio.\n\n## Execução e aceite\nT1 (até 2h); T2 (até 4h); T3 (até 4h); T4 (até 3h).\nVerificar sucesso, erro e limite definidos no briefing; publicar resultado sanitizado, revisão nominal e docs antes de concluir.\n\n## Briefing completo\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/SEC-01.md\n\nContém arquivos, passos de até 4 h, três cenários Dado/Quando/Então, comandos, recuperação e Definition of Done.",
+          "url": "https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o",
+          "shortUrl": "https://trello.com/c/uBQH1dMy",
+          "closed": false,
+          "complete": false,
+          "position": 16388,
+          "lastActivityAt": "2026-10-04T05:19:59.463Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ac1dee45a7d36cb52b4b8c7",
+          "name": "[Gabriel] DOM-02 · Migrar dinheiro para BigDecimal e NUMERIC",
+          "description": "## Briefing — 04/10/2026\nCriação/planejamento: **Matheus Siqueira**.\nResponsável pela execução: **Gabriel**. Revisor: **Allan**.\nComplexidade: 5 pontos (estimativa). Estado: A fazer; implementação futura.\n\nComo gerente, quero valores monetários exatos para que pedido, pagamento e custo não acumulem erro de ponto flutuante.\n\n## Situação e necessidade\nQuantidade já multiplica uma única vez, mas entidades/DTOs legados usam Double. Matheus aprovou duas casas decimais e HALF_UP; esta migração ainda não foi implementada.\n\n## Dependências\nDOM-01 aprovado; BD-02 para migration; QA-04 como regressão.\n\n## Execução e aceite\nT1 (até 2h); T2 (até 4h); T3 (até 4h); T4 (até 3h).\nVerificar sucesso, erro e limite definidos no briefing; publicar resultado sanitizado, revisão nominal e docs antes de concluir.\n\n## Briefing completo\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/DOM-02.md\n\nContém arquivos, passos de até 4 h, três cenários Dado/Quando/Então, comandos, recuperação e Definition of Done.",
+          "url": "https://trello.com/c/HxWdN6Fv/61-gabriel-dom-02-migrar-dinheiro-para-bigdecimal-e-numeric",
+          "shortUrl": "https://trello.com/c/HxWdN6Fv",
+          "closed": false,
+          "complete": false,
+          "position": 32772,
+          "lastActivityAt": "2026-10-04T05:19:55.385Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41deba6166940e0fc57",
+          "name": "[Matheus] Templates padronizados (caso de teste, defeito, relatório)",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Francisco.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nExistem relatórios de execução e um padrão de briefing detalhado por card nesta atualização. Templates formais de caso/defeito/Issue ainda faltam.\n\n## Próximo passo\nMatheus: transformar exemplos em docs/templates com campos obrigatórios RF/CA/CT/run/commit, severidade e reteste; Francisco valida clareza com um caso completo.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/9DYSzP9j.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/9DYSzP9j/29-matheus-templates-padronizados-caso-de-teste-defeito-relat%C3%B3rio",
+          "shortUrl": "https://trello.com/c/9DYSzP9j",
+          "closed": false,
+          "complete": false,
+          "position": 32785,
+          "lastActivityAt": "2026-10-04T05:07:47.094Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903142e77adabbb3e059e",
+          "name": "[Matheus] BD-01 · DER, dicionário e análise de normalização",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nEntidade app_users acrescentada; modelo de autoria, metas e estoque ainda precisa de DER/dicionário.\n\n## Próximo passo\nMatheus: documentar PK/FK, cardinalidades e dependências funcionais do modelo atual; propor evolução separada, incluindo autoria e NUMERIC. Allan revisa integridade e evita modelar tabelas futuras como existentes.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/YPqTTPbz.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/YPqTTPbz",
+          "closed": false,
+          "complete": false,
+          "position": 131089,
+          "lastActivityAt": "2026-10-04T05:07:53.771Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90316f9a958c62c4904d9",
+          "name": "[Matheus] BD-02 · Migrações Flyway e integridade no PostgreSQL",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nBanco de teste create-drop é descartável; não existe trilha Flyway de migração produtiva entregue.\n\n## Próximo passo\nMatheus: gerar baseline do esquema, migração app_users e migração monetária validada em cópia sintética. Testar instalação limpa e atualização sem perder dados; documentar rollback e validação.\n\n## Estado e aceite\nA fazer. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/FwvkkAdG.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/FwvkkAdG/36-matheus-bd-02-migra%C3%A7%C3%B5es-flyway-e-integridade-no-postgresql",
+          "shortUrl": "https://trello.com/c/FwvkkAdG",
+          "closed": false,
+          "complete": false,
+          "position": 147473,
+          "lastActivityAt": "2026-10-04T05:07:56.251Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a3e5500a42c656ca53",
+      "name": "Em andamento",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f114d9d5311e2693c2",
+          "name": "[Gabriel] 11 · Testes caixa-preta de conformidade de contrato",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus entregou 23 testes de contrato/JSON Schema/políticas e 12 cenários HTTP reais. O alvo v3 valida 41 locais de schema e o baseline 71 sem findings.\n\n## Próximo passo\nGabriel/Allan: relacionar HTTP às três técnicas caixa-preta e ao catálogo; acrescentar negativos e novas rotas conforme implementadas. O alvo planejado não comprova implementação de estoque/metas.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/a9wQuRO0.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/a9wQuRO0/14-gabriel-11-testes-caixa-preta-de-conformidade-de-contrato",
+          "shortUrl": "https://trello.com/c/a9wQuRO0",
+          "closed": false,
+          "complete": false,
+          "position": 7,
+          "lastActivityAt": "2026-10-04T05:14:16.876Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f85eb27a791f6921e6",
+          "name": "[Gabriel] 13 · Níveis de teste: unitário, integração, sistema, aceitação",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nUnitários, integração PostgreSQL, HTTP e E2E de acesso executaram no CI. Aceitação das quatro áreas permanece futura.\n\n## Próximo passo\nGabriel: criar matriz por nível e requisito, referenciar runs sem duplicar casos; cada integrante reproduz um cenário. Só concluir após cobertura de domínio e revisão de Allan.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/CmRstOih.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/CmRstOih/16-gabriel-13-n%C3%ADveis-de-teste-unit%C3%A1rio-integra%C3%A7%C3%A3o-sistema-aceita%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/CmRstOih",
+          "closed": false,
+          "complete": false,
+          "position": 9,
+          "lastActivityAt": "2026-10-04T05:07:27.162Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3fd8f2fe5df0aef0f17",
+          "name": "[Matheus] 14 · Banco de Dados: modelo, integridade e persistência",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus adicionou app_users e testes de persistência/rollback ao banco descartável. DER ampliado, migrações e consultas de negócio ainda faltam.\n\n## Próximo passo\nCoordenar BD-01/02/03. Incluir usuário, autoria, metas e estoque no modelo, preservar histórico e testar constraints no PostgreSQL real. Confirmar rubrica docente antes de fechar a trilha.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/I4BYlFWv.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/I4BYlFWv/17-matheus-14-banco-de-dados-modelo-integridade-e-persist%C3%AAncia",
+          "shortUrl": "https://trello.com/c/I4BYlFWv",
+          "closed": false,
+          "complete": false,
+          "position": 10,
+          "lastActivityAt": "2026-10-04T05:07:29.724Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4039aab8c2608f5ba49",
+          "name": "[Allan] 16 · Gestão de defeitos",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nDefeito de multiplicação dupla reproduzido/corrigido; erro HTTP 500 com corpo 400 corrigido; incompatibilidade do validador OpenAPI tratada com adapter documentado.\n\n## Próximo passo\nAllan: consolidar registros com esperado/obtido, versão, reprodução, correção e reteste. Distinguir defeito de produto, ferramenta e funcionalidade não implementada.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/rXZu5aql.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/rXZu5aql/19-allan-16-gest%C3%A3o-de-defeitos",
+          "shortUrl": "https://trello.com/c/rXZu5aql",
+          "closed": false,
+          "complete": false,
+          "position": 12,
+          "lastActivityAt": "2026-10-04T05:07:31.890Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c40c172e090a3732437e",
+          "name": "[Matheus] 17 · Regressão e ciclo de melhoria contínua",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus demonstrou reprodução/correção/reteste do total e regressão de erros. Suites atuais passaram; evolução de sessão é escopo adicional.\n\n## Próximo passo\nConsolidar docs/melhoria-continua.md com antes/depois para mesmo caso, commits e limites. Allan revisa evidências; manter execução de domínio separada de baseline.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/cYHvKIHo.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/cYHvKIHo/20-matheus-17-regress%C3%A3o-e-ciclo-de-melhoria-cont%C3%ADnua",
+          "shortUrl": "https://trello.com/c/cYHvKIHo",
+          "closed": false,
+          "complete": false,
+          "position": 13,
+          "lastActivityAt": "2026-10-04T05:07:34.092Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0bb3438c11cfd4b1713",
+          "name": "[Francisco] UX-01 · Fonte visual, quatro áreas e estados da interface",
+          "description": "## Responsáveis e autoria\nContinuidade: Francisco. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nGuia e direção visual locais serão publicados como referências. Matheus executou acesso desktop/mobile e inspecionou capturas; guia das quatro áreas ainda orienta evolução.\n\n## Próximo passo\nFrancisco: criar docs/ui/guia-visual.md com estados e navegação por perfil, revisar labels/teclado/reflow e distinguir mockup de captura real. UX deve validar as próximas quatro telas.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/5uQbmzmm.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/5uQbmzmm/46-francisco-ux-01-fonte-visual-quatro-%C3%A1reas-e-estados-da-interface",
+          "shortUrl": "https://trello.com/c/5uQbmzmm",
+          "closed": false,
+          "complete": false,
+          "position": 49156,
+          "lastActivityAt": "2026-10-04T05:08:25.621Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031983ee5fe30448de53",
+          "name": "[Gabriel] QA-01 · Testes unitários das regras de negócio",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus adicionou regressões de quantidade/preço e erro genérico; suíte Java total passou com 12 testes, incluindo integração e sessão.\n\n## Próximo passo\nGabriel: completar regras monetárias, autoria, estoque e pagamento conforme cards de domínio; manter unitários sem banco e catalogar nomes de teste/CT. Não chamar 12 testes de 12 unitários.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/eQ7WLyPR.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/eQ7WLyPR/38-gabriel-qa-01-testes-unit%C3%A1rios-das-regras-de-neg%C3%B3cio",
+          "shortUrl": "https://trello.com/c/eQ7WLyPR",
+          "closed": false,
+          "complete": false,
+          "position": 180241,
+          "lastActivityAt": "2026-10-04T05:08:00.214Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-25T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031a850d8be9beed42ea",
+          "name": "[Matheus] QA-02 · Integração, constraints e rollback real",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus entregou testes JPA de total/preço histórico e contexto isolado; suíte Java 12 passou no CI. Constraints/rollback de estoque/autoria futura ainda faltam.\n\n## Próximo passo\nMatheus/Allan: revisar casos atuais e ampliar migrações e domínio conforme existirem; provar rollback em PostgreSQL real, persistência histórica e FKs. Não marcar todo QA-02 completo pela suíte atual.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/lUE8z32P.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/lUE8z32P/39-matheus-qa-02-integra%C3%A7%C3%A3o-constraints-e-rollback-real",
+          "shortUrl": "https://trello.com/c/lUE8z32P",
+          "closed": false,
+          "complete": false,
+          "position": 196625,
+          "lastActivityAt": "2026-10-04T05:19:39.800Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031c5ccf21c69c20f395",
+          "name": "[Allan] QA-03 · Testes de sistema HTTP e aceitação",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\n12 cenários HTTP de baseline/sessão e dois E2E de acesso aprovados; quatro telas de negócio ainda ausentes.\n\n## Próximo passo\nAllan: mapear CA→CT→run, reproduzir com runner isolado e ampliar somente sobre endpoints implementados. Verificar 401/403, reload/logout e falhas sem capturar credenciais.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/pY0i7PQQ.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/pY0i7PQQ/40-allan-qa-03-testes-de-sistema-http-e-aceita%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/pY0i7PQQ",
+          "closed": false,
+          "complete": false,
+          "position": 213009,
+          "lastActivityAt": "2026-10-04T05:08:04.237Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0dc92e88ee61855cf2f",
+          "name": "[Matheus] UI-01 · Implementar base visual e navegação por perfil",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus implementou base Next e painel real de acesso: login, recuperação de sessão, logout, erro acessível e layout desktop/mobile. Dois E2E e build passaram.\n\n## Próximo passo\nMatheus: finalizar navegação por perfil ao integrar telas de domínio; UX-01/QA-08 revisam teclado e 200% de zoom. Acesso entregue não equivale a Gestão/Vender/Estoque completos.\n\n## Estado e aceite\nEm andamento. Cumprir escopo e critérios antes de concluir.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/JHujvpfp.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/JHujvpfp/55-matheus-ui-01-implementar-base-visual-e-navega%C3%A7%C3%A3o-por-perfil",
+          "shortUrl": "https://trello.com/c/JHujvpfp",
+          "closed": false,
+          "complete": false,
+          "position": 376849,
+          "lastActivityAt": "2026-10-04T05:08:16.997Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a6f202173608d1720c",
+      "name": "Em revisão",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c400073a4a72a6b41051",
+          "name": "[Gabriel] 15 · Automação da suíte e pipeline de CI",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus entregou CI com Java/PostgreSQL, 23 testes de contrato, 3 cliente, 12 HTTP, build Next e 2 Chromium; lock frontend fixado, artefatos e screenshots sanitizados. CI 37177644692 aprovado.\n\n## Próximo passo\nGabriel revisa workflow e reproducibilidade, Allan executa QA-08. Reprovar pipeline se falha; não usar secrets produtivos no perfil contract. Coverage/estática continuam cards separados.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/aGnCboeK.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/aGnCboeK/18-gabriel-15-automa%C3%A7%C3%A3o-da-su%C3%ADte-e-pipeline-de-ci",
+          "shortUrl": "https://trello.com/c/aGnCboeK",
+          "closed": false,
+          "complete": false,
+          "position": 11,
+          "lastActivityAt": "2026-10-04T05:18:47.057Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41cc438b247d3821534",
+          "name": "[Gabriel] Spike: escolher ferramenta de contract testing",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus escolheu Node/Ajv 2020-12 determinístico, oficial OAS3.1 vendorizado e adapter limitado Ajv#1745; 23 testes e validações baseline/alvo passaram. Schemathesis é complemento futuro.\n\n## Próximo passo\nGabriel: revisar decisão, adapter e fixtures negativas, garantir referência quebrada e bypass de auth/CSRF falham. Não desabilitar unevaluatedProperties para mascarar erros.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/7WLb5mTB.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/7WLb5mTB/28-gabriel-spike-escolher-ferramenta-de-contract-testing",
+          "shortUrl": "https://trello.com/c/7WLb5mTB",
+          "closed": false,
+          "complete": false,
+          "position": 16401,
+          "lastActivityAt": "2026-10-04T05:08:34.109Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-07T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41f771e19f45f855872",
+          "name": "[Matheus] Ambiente reprodutível + seed de dados",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus entregou Docker PostgreSQL15432, perfil contract com guards, contas sintéticas e senha temporária só em memória; runners limpam processos próprios. CI comprovou ambiente isolado.\n\n## Próximo passo\nMatheus/Gabriel: reproduzir -Preview Windows em QA-08, confirmar porta e limpeza ao Enter/falha. Não rodar create-drop no banco normal; não copiar senha para docs.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/YBJ5YBeV.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/YBJ5YBeV/30-matheus-ambiente-reprodut%C3%ADvel-seed-de-dados",
+          "shortUrl": "https://trello.com/c/YBJ5YBeV",
+          "closed": false,
+          "complete": false,
+          "position": 49169,
+          "lastActivityAt": "2026-10-04T05:08:36.668Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d1d19613b15cf9c676",
+          "name": "[Gabriel] ARQ-01 · Decisão de stack e integração frontend/API",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus implementou decisão Next + Spring HttpOnly: rewrite mesmo domínio, BACKEND_ORIGIN no build, CSRF renovado e sem token em localStorage; integração real passou.\n\n## Próximo passo\nGabriel: revisar ADR, implantação HTTPS, expiração e limites do proxy. Allan reproduz E2E. Sessão em memória é base local/CI; hospedagem e escala continuam fora desta evidência.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/vhUnNujA.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/vhUnNujA/47-gabriel-arq-01-decis%C3%A3o-de-stack-e-integra%C3%A7%C3%A3o-frontend-api",
+          "shortUrl": "https://trello.com/c/vhUnNujA",
+          "closed": false,
+          "complete": false,
+          "position": 65540,
+          "lastActivityAt": "2026-10-04T05:14:01.222Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e420449a7ea369c0da32",
+          "name": "[Gabriel] README + execução em um comando",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus atualizou README e criou runners unitário/integração/contrato/frontend/preview. CI comprovou build e E2E; preview interativo Windows ainda precisa de validação humana.\n\n## Próximo passo\nGabriel: executar comandos da raiz Git order-management-api, registrar pré-requisitos e testar encerramento. Corrigir documentação ao encontrar diferença, com commit autofix e evidência.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/TKUhRGgt.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/TKUhRGgt/31-gabriel-readme-execu%C3%A7%C3%A3o-em-um-comando",
+          "shortUrl": "https://trello.com/c/TKUhRGgt",
+          "closed": false,
+          "complete": false,
+          "position": 65553,
+          "lastActivityAt": "2026-10-04T05:08:38.923Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-24T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d38d1a6c8c6ec397df",
+          "name": "[Gabriel] API-01 · Autenticação e autorização por gerente/vendedor",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nImplementação por Matheus Siqueira: AuthController, usuários persistidos, BCrypt, renovação do ID, contexto explícito, CSRF, cookie HttpOnly/SameSite e logout. Rotas legadas só para gerente; vendedor recebe 403.\n\n## Próximo passo\nGabriel revisa API-01 e Allan verifica QA-08. Falta autoria de pedido em SEC-01, provisionamento fora de CI e proteção operacional de login; estes limites não anulam a entrega de acesso, mas impedem chamar todo RF-06 concluído.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/ige94AvZ.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/ige94AvZ/49-gabriel-api-01-autentica%C3%A7%C3%A3o-e-autoriza%C3%A7%C3%A3o-por-gerente-vendedor",
+          "shortUrl": "https://trello.com/c/ige94AvZ",
+          "closed": false,
+          "complete": false,
+          "position": 278545,
+          "lastActivityAt": "2026-10-04T05:13:58.041Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c3a3760eb1cc355a29",
+          "name": "[Gabriel] 01 · Setup do repositório e ambiente",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus preparou wrapper, ambiente e workflow executáveis. Build Maven/Next e testes passaram no runner remoto; sandbox local tinha bloqueios de Java/rede documentados.\n\n## Próximo passo\nGabriel: validar setup Windows com JDK 25/Node/Docker e atualizar passos em QA-08. Não afirmar teste local completo com base no CI; revisar logs e branch publicados.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/MT77ib4r.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/MT77ib4r/4-gabriel-01-setup-do-reposit%C3%B3rio-e-ambiente",
+          "shortUrl": "https://trello.com/c/MT77ib4r",
+          "closed": false,
+          "complete": false,
+          "position": 140737488322560,
+          "lastActivityAt": "2026-10-04T05:19:42.287Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-04T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031e24ad3578843213f5",
+          "name": "[Allan] QA-04 · Reproduzir e tratar cálculo de total do pedido",
+          "description": "## Responsáveis e autoria\nContinuidade: Allan. Revisor: Matheus.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus reproduziu quantidade 2×preço100 com item erroneamente200; corrigiu buildItems para guardar100 unitário, subtotal200. Regressões de preço histórico/quantidade passaram.\n\n## Próximo passo\nAllan: revisar CT-MONEY-002 e histórico de persistência. DOM-02 tratará decimal separado; não confundir correção da multiplicação com migração Double→BigDecimal.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/UCbFIFXr.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/UCbFIFXr/41-allan-qa-04-reproduzir-e-tratar-c%C3%A1lculo-de-total-do-pedido",
+          "shortUrl": "https://trello.com/c/UCbFIFXr",
+          "closed": false,
+          "complete": false,
+          "position": 140737488338944,
+          "lastActivityAt": "2026-10-04T05:19:43.280Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-25T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c827f25bf6b621c7e0",
+          "name": "[Matheus] 02 · Definição do sistema e requisitos (≥10 RF, ≥5 RNF)",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus produziu requisitos versionados, separando baseline/evolução/interface. Sessão/acesso já implementados; autoria/metas/estoque permanecem alvos.\n\n## Próximo passo\nGabriel/Allan: revisar RF/RNF e links CA/CT, marcar trecho implementado e lacunas; alinhar com rubrica antes de considerar aprovado academicamente.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/FlbPAXNE.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/FlbPAXNE/5-matheus-02-defini%C3%A7%C3%A3o-do-sistema-e-requisitos-%E2%89%A510-rf-%E2%89%A55-rnf",
+          "shortUrl": "https://trello.com/c/FlbPAXNE",
+          "closed": false,
+          "complete": false,
+          "position": 140737488355328,
+          "lastActivityAt": "2026-10-04T05:08:46.663Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-07T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cb7e012403f08d5b70",
+          "name": "[Matheus] 03 · Validação dos requisitos",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus documentou validação e pendências; usuário aprovou stack/sessão, gerente no desconto/cancelamento alheio, dinheiro com 2 casas e HALF_UP, custo médio e conferência física.\n\n## Próximo passo\nRevisor: conferir cada decisão versus implementação/contrato; não presumir teto de desconto, edição alheia ou aprovação docente. Registrar responsáveis e respostas restantes.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/rfWqWzVR.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/rfWqWzVR/6-matheus-03-valida%C3%A7%C3%A3o-dos-requisitos",
+          "shortUrl": "https://trello.com/c/rfWqWzVR",
+          "closed": false,
+          "complete": false,
+          "position": 140737488371712,
+          "lastActivityAt": "2026-10-04T05:19:44.308Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-09T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41a28c5cf67a38e2f04",
+          "name": "[Gabriel] Extrair e versionar o contrato OpenAPI (baseline)",
+          "description": "## Responsáveis e autoria\nContinuidade: Gabriel. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus preservou baseline original, adicionou revisão de erros e alvo v2/v3; OAS3.1 oficial e 2020-12 validados, schemas 41/71 sem findings. Swagger declara cookie/CSRF/logout e erros reais.\n\n## Próximo passo\nGabriel: conferir exportação runtime e diffs; manter original imutável, marcar rotas planejadas e revisar contratos de erro. Comparar comportamento HTTP autenticado à versão implementada.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/haebO3FA.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/haebO3FA/27-gabriel-extrair-e-versionar-o-contrato-openapi-baseline",
+          "shortUrl": "https://trello.com/c/haebO3FA",
+          "closed": false,
+          "complete": false,
+          "position": 140737488379904,
+          "lastActivityAt": "2026-10-04T05:19:41.145Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cf3e5d0ca5ff96642e",
+          "name": "[Matheus] 04 · Critérios de aceitação por requisito",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus escreveu critérios por RF/RNF; testes de sessão já comprovam parte do acesso e proteção das rotas antigas.\n\n## Próximo passo\nGabriel: relacionar CA com resultados reais e separar cenários futuros de autoria, reserva, metas e quatro telas. Acrescentar erro/limite antes de implementar novos fluxos.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/NsbhF1uK.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/NsbhF1uK/7-matheus-04-crit%C3%A9rios-de-aceita%C3%A7%C3%A3o-por-requisito",
+          "shortUrl": "https://trello.com/c/NsbhF1uK",
+          "closed": false,
+          "complete": false,
+          "position": 140737488388096,
+          "lastActivityAt": "2026-10-04T05:08:49.367Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0ba124e86e59499e265",
+          "name": "[Matheus] PL-01 · Reestimar escopo, marcos e capacidade",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Francisco.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus planejou frentes/marcos e agora atualiza progresso e responsabilidades. Estimativas históricas70h e datas internas não são capacidade confirmada da equipe.\n\n## Próximo passo\nEquipe: revisar disponibilidade e sequência DOM-02→SEC-01→estoque/pagamento→metas→telas; executar trabalho documental em paralelo. Não prometer sprint sem capacidade combinada.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/T3zkhwHk.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/T3zkhwHk/45-matheus-pl-01-reestimar-escopo-marcos-e-capacidade",
+          "shortUrl": "https://trello.com/c/T3zkhwHk",
+          "closed": false,
+          "complete": false,
+          "position": 140737488404480,
+          "lastActivityAt": "2026-10-04T05:08:50.730Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d2f7b6e1b4482b39db",
+          "name": "[Matheus] DOM-01 · Decidir descontos, pedidos de terceiros e custos",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus aprovou e registrou gerente no desconto/cancelamento alheio, dinheiro com 2 casas e HALF_UP, custo médio ponderado e reposição somente após conferência física. Preço unitário já corrigido.\n\n## Próximo passo\nRevisar regras restantes: teto de desconto, edição alheia, auditoria, estados/idempotência e percentual. Implementar decisão aprovada nos cards de domínio; aprovação da regra não é código entregue.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/jf7xU6cz.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/jf7xU6cz/48-matheus-dom-01-decidir-descontos-pedidos-de-terceiros-e-custos",
+          "shortUrl": "https://trello.com/c/jf7xU6cz",
+          "closed": false,
+          "complete": false,
+          "position": 140737488420864,
+          "lastActivityAt": "2026-10-04T05:19:45.645Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dddb7dd712fb2420f8",
+          "name": "[Matheus] 07 · Plano de testes",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nMatheus criou plano com níveis, técnicas, massa sintética e rastreabilidade; execução atual tem52 testes aprovados. Segurança/acessoE2E agora reais; concorrência/metas futuras.\n\n## Próximo passo\nGabriel/Allan: revisar plano contra riscos e catálogo, incluir protocolo de performance/cobertura e novos fluxos conforme entregues; distinguir ambientes local/CI e limites das evidências.\n\n## Estado e aceite\nEm revisão. Entrega aguardando revisão nominal; não presumir aceite.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/1ZC4pKWK.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/1ZC4pKWK/10-matheus-07-plano-de-testes",
+          "shortUrl": "https://trello.com/c/1ZC4pKWK",
+          "closed": false,
+          "complete": false,
+          "position": 140737488437248,
+          "lastActivityAt": "2026-10-04T05:19:47.001Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a939738588bf64dfc4",
+      "name": "Concluído",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e419d69b83862a2ca84c",
+          "name": "[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Gabriel.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nStatus Concluído foi encontrado no quadro e preservado. Nesta rodada Matheus fez implementação de sessão/acesso e documentação, mesmo nos cards sob outros responsáveis.\n\n## Próximo passo\nGabriel: conferir acordo histórico; responsabilidades futuras são distribuídas nos títulos/briefings. Revisores continuam responsáveis pela validação, sem atribuir código desta rodada a quem apenas revisará.\n\n## Estado e aceite\nConcluído. Status humano anterior preservado; registrar as evidências faltantes no briefing.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/KKPfn6ES.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho",
+          "shortUrl": "https://trello.com/c/KKPfn6ES",
+          "closed": false,
+          "complete": true,
+          "position": 140737488355328,
+          "lastActivityAt": "2026-10-04T05:08:54.493Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-03T21:00:00.000Z",
+            "complete": true
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e418f58fd703419a3487",
+          "name": "[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)",
+          "description": "## Responsáveis e autoria\nContinuidade: Matheus. Revisor: Allan.\nImplementação dos avanços desta rodada: **Matheus Siqueira**; planejamento/documentação desta atualização também por Matheus. Escopo pendente ainda não foi implementado. Membros originais preservados.\n\n## Atualização 04/10/2026\nStatus Concluído foi encontrado no quadro e preservado como atualização humana anterior. Não foi localizado registro docente no repositório; não afirmamos que esta automação contatou professores.\n\n## Próximo passo\nMatheus/Francisco: anexar resposta recebida em docs/decisoes/alinhamento-docente.md, com grupo/prazo/rubricaBD/escopo. Preservar dados privados; apontar pendência documental até existir registro.\n\n## Estado e aceite\nConcluído. Status humano anterior preservado; registrar as evidências faltantes no briefing.\n\n## Documentação detalhada e histórico\nhttps://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/blob/a3-contract-validation/docs/gestao/cards/3lLw8iW9.md\n\nCI: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692",
+          "url": "https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador",
+          "shortUrl": "https://trello.com/c/3lLw8iW9",
+          "closed": false,
+          "complete": true,
+          "position": 140737488371712,
+          "lastActivityAt": "2026-10-04T05:08:55.473Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-03T21:00:00.000Z",
+            "complete": true
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    }
+  ],
+  "hasNextPage": false,
+  "nextCursor": null,
+  "board": {
+    "id": "ari:cloud:trello::board/workspace/670309078c0b18383642b7da/6ab7c0402cf9bc767660ee71",
+    "name": "Conformidade de Contrato da API REST"
+  }
+}

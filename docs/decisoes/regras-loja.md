@@ -1,8 +1,12 @@
 # Regras de dominio - Loja Gestao
 
-Data: 03/10/2026.
+Data: 04/10/2026. Registro e implementação técnica desta rodada: Matheus Siqueira.
 
 Este documento inicia o card DOM-01. As decisoes abaixo sao propostas para revisao da equipe. Nenhuma regra deve ser tratada como implementada enquanto nao houver codigo, testes e contrato correspondentes.
+
+## Confirmacoes de Matheus em 04/10/2026
+
+Confirmadas nesta sessao: somente gerente concede desconto e cancela pedido de outro vendedor; dinheiro com duas casas decimais e HALF_UP; custo medio ponderado; devolucao repoe estoque somente apos conferencia fisica. A aprovacao define o alvo e ainda requer implementacao, migracao e testes. Custo medio ponderado substitui a recomendacao anterior de FIFO. Nao foi aprovado um teto numerico de desconto nem permissao para vendedor editar pedido alheio.
 
 ## Decisoes propostas
 
@@ -25,12 +29,12 @@ Este documento inicia o card DOM-01. As decisoes abaixo sao propostas para revis
 
 | ID | Decisao | Opcao inicial recomendada | Motivo |
 | --- | --- | --- | --- |
-| PEND-DOM-01 | Quem altera desconto? | Somente gerente; vendedor apenas sem desconto ou ate limite zero inicial. | Reduz risco de margem e auditoria no MVP. |
+| PEND-DOM-01 | Quem altera desconto? | Somente gerente, confirmado por Matheus em 04/10. Teto numerico ainda nao definido. | Reduz risco de margem e auditoria no MVP. |
 | PEND-DOM-02 | Pedido de outro vendedor pode ser alterado? | Gerente pode alterar/cancelar; vendedor pode consultar historico permitido, mas nao alterar pedido alheio. | Protege autoria e evita conflito de comissao/meta. |
 | PEND-DOM-03 | Como registrar auditoria? | Registrar usuario, data/hora, operacao e antes/depois para desconto, cancelamento, estorno, entrada e preco. | Necessario para rastreabilidade e relatorio de qualidade. |
-| PEND-DOM-04 | Metodo de custo por venda. | FIFO por lote como primeira escolha; media ponderada apenas se a equipe preferir simplicidade contabil. | FIFO preserva lote e custo historico com clareza para testes. |
-| PEND-DOM-05 | Devolucao fisica. | Devolucao confirmada cria entrada vinculada ao pedido original e estorno reduz realizado. | Mantem estoque e meta consistentes. |
-| PEND-DOM-06 | Arredondamento. | Arredondar dinheiro em 2 casas no limite de persistencia/resposta; porcentagem com 1 casa. | Alinha com guia visual e testes. |
+| PEND-DOM-04 | Metodo de custo por venda. | Custo medio ponderado confirmado por Matheus em 04/10. | Preservar custo atribuido historico por venda; novas entradas nao recalculam vendas antigas. |
+| PEND-DOM-05 | Devolucao fisica. | Conferencia fisica obrigatoria antes da reposicao, confirmada por Matheus em 04/10. | Estorno financeiro sozinho nao repoe estoque. |
+| PEND-DOM-06 | Arredondamento. | Dinheiro com 2 casas e HALF_UP confirmado por Matheus em 04/10; percentual com 1 casa permanece proposta. | Migrar Double para BigDecimal e colunas NUMERIC antes de implementar calculos novos. |
 | PEND-DOM-07 | Idempotencia de pagamento/estorno. | Usar identificador de evento ou impedir transicao repetida do mesmo pagamento. | Evita duplicar realizado e saida de estoque. |
 | PEND-DOM-08 | Exclusao de pedidos/produtos. | Preferir cancelamento/inativacao em vez de delete fisico para dados que impactam historico. | Preserva evidencias e integridade. |
 
@@ -62,8 +66,8 @@ O enum atual de pedido nao possui `CANCELED` e o enum atual de pagamento nao pos
 
 ## Perguntas para revisao
 
-- A equipe aceita gerente como unico perfil com permissao de desconto no MVP?
-- A equipe prefere FIFO por lote ou media ponderada para custo?
+- Definir o teto numérico de desconto e o formato da auditoria; gerente como único perfil já foi aprovado por Matheus.
+- Implementar custo médio ponderado aprovado por Matheus; FIFO é referência histórica superada.
 - Sera criado status `CANCELED` para pedido e `REFUNDED` para pagamento?
 - O professor espera modelagem relacional detalhada de estoque/custo para a rubrica de Banco de Dados?
 - As decisoes de dominio serao aplicadas antes ou depois da exportacao do contrato baseline?
