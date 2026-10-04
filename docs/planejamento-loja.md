@@ -1,6 +1,10 @@
 # Planejamento Loja Gestao
 
-Data: 03/10/2026.
+Data: 04/10/2026. Atualização e implementação técnica desta rodada: Matheus Siqueira.
+
+## Progresso confirmado em 04/10
+
+Baseline e contrato preservados/validados; runners, CI, sessão Spring e painel de acesso Next executados com sucesso. O CI 37177644692 aprovou 52 verificações e build. Pendentes: BigDecimal/NUMERIC, autoria do pedido, estoque, metas, pagamentos consistentes e quatro telas. A tabela histórica de esforço/marcos abaixo é proposta a reestimar, não capacidade confirmada. Distribuição e estado atual de cada card: [índice de gestão](gestao/README.md). QA-08 documenta revisão humana e preview Windows; DOC-01 consolida rubrica/entregáveis.
 
 Este planejamento inicia o card PL-01 e organiza o caminho para as atividades do Matheus. As estimativas sao propostas de trabalho, sujeitas a revisao da equipe e dos professores.
 
@@ -8,12 +12,12 @@ Este planejamento inicia o card PL-01 e organiza o caminho para as atividades do
 
 | Linha | Objetivo | Estado |
 | --- | --- | --- |
-| B0 - baseline | Preservar API original e registrar contrato/ambiente. | Pendente de setup/execucao. |
+| B0 - baseline | Preservar API original e registrar contrato/ambiente. | Entregue para revisão; contrato e HTTP validados. |
 | Documentacao de qualidade | Requisitos, validacao, criterios de aceitacao, plano de testes e matriz. | Iniciado nesta revisao. |
 | Decisoes de dominio | Descontos, pedidos de terceiros, custo, devolucao, dinheiro e idempotencia. | Iniciado em `docs/decisoes/regras-loja.md`. |
-| Evolucao API/BD | Autenticacao, metas, estoque, custo historico e pagamento consistente. | Bloqueado por ARQ-01/API-01/DOM-01. |
-| Interface | Gestao, Meu desempenho, Vender e Estoque. | Bloqueada por UX-01, ARQ-01 e API-01. |
-| Evidencias | Testes, analise estatica, defeitos, metricas e relatorio final. | Depende de build e suite executavel. |
+| Evolucao API/BD | Autenticacao, metas, estoque, custo historico e pagamento consistente. | Sessão entregue; demais domínios pendentes de modelo/decimal/autoria. |
+| Interface | Gestao, Meu desempenho, Vender e Estoque. | Acesso entregue; telas dependem de APIs de domínio e UX. |
+| Evidencias | Testes, analise estatica, defeitos, metricas e relatorio final. | Testes/build executados; análise estática, métricas e relatório final pendentes. |
 
 ## Prioridade dos cards do Matheus
 
