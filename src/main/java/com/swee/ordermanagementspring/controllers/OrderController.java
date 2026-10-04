@@ -5,7 +5,9 @@ import com.swee.ordermanagementspring.dto.OrderRequestDTO;
 import com.swee.ordermanagementspring.dto.OrderResponseDTO;
 import com.swee.ordermanagementspring.dto.OrderStatusUpdateDTO;
 import com.swee.ordermanagementspring.services.OrderService;
+import com.swee.ordermanagementspring.security.AppPrincipal;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +36,9 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponseDTO insert(@Valid @RequestBody OrderRequestDTO dto) {
-        return OrderResponseDTO.from(service.insert(dto));
+    public OrderResponseDTO insert(@Valid @RequestBody OrderRequestDTO dto,
+                                   @AuthenticationPrincipal AppPrincipal principal) {
+        return OrderResponseDTO.from(service.insert(dto, principal));
     }
 
     @PutMapping("/{id}/status")
