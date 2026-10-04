@@ -1,0 +1,15 @@
+{
+  "name": "a3-contract-checks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/audit-contract.test.mjs scripts/validate-contract.test.mjs",
+    "contract": "node scripts/validate-contract.mjs",
+    "contract:http": "node scripts/http-contract.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  }
+}
