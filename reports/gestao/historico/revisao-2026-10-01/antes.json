@@ -1,0 +1,2090 @@
+{
+  "capturedAt": "2026-10-01",
+  "cards": [
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab905f6ee18a401db90a4c0",
+      "name": "LINKS IMPORTANTES",
+      "description": "**LINKS E INFORMAÇÕES IMPORTANTES SOBRE O PROJETO**\n\n‌\n\n- GOOGE DRIVE: [https://drive.google.com/drive/folders/13MA9KBPV3kl6OfPjHm4Dvj73PagR3Dj-?usp=sharing](https://drive.google.com/drive/folders/13MA9KBPV3kl6OfPjHm4Dvj73PagR3Dj-?usp=sharing \"smartCard-inline\")\n- REPOSITÓRIO GITHUB: [https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST.git](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST.git \"smartCard-inline\")\n\n‌\n\n‌\n\n:wrench: :hammer: **FERRAMENTAS E BENEFICIOS**\n\nAqui estão os links diretos oficiais para você clicar e fazer o resgate imediato de cada benefício:\n\n‌\n\n- 🎒 GitHub Student Developer Pack (e Copilot Pro):\n  Acesse a página de estudantes do [GitHub Education](https://github.com/education/students?locale=pt-br \"‌\") e clique em \"Get benefits\".\n\n‌\n\n- :telescope: Gemini For Students: Um ano de Gemini Plus + 400 GBs de armazenamento no Drive e outros beneficios de IA e do Google.\n  [https://gemini.google/students/](https://gemini.google/students/ \"smartCard-inline\")\n\n‌\n\n- 💻 IDEs da JetBrains (IntelliJ, PyCharm, etc.):\n  Inscreva-se diretamente no formulário do [Free JetBrains Student Pack](https://www.jetbrains.com/academy/student-pack/ \"‌\") utilizando o seu e-mail acadêmico.\n\n‌\n\n- 🧠 Microsoft Azure para Estudantes (US$ 100 em Créditos de IA):\n  Acesse o portal [Microsoft Azure for Students](https://azure.microsoft.com/pt-br/free/students \"‌\") e clique no botão \"Comece gratuitamente\" ou \"Start Free\".\n\n‌\n\n- 🗄️ Oracle Cloud Always Free (Servidores e Bancos de Dados):\n  Cadastre-se pela página oficial do programa institucional [Oracle Academy Cloud](https://academy.oracle.com/pt-br/solutions-cloud-program.html \"‌\").\n\n‌\n\n- ☁️ AWS Educate:\n  Solicite sua conta de aprendizado diretamente pelo portal [AWS Educate](https://aws.amazon.com/pt/education/awseducate/ \"‌\").\n\n‌\n\n- 🌐 Google Cloud for Education:\n  Consulte os requisitos e solicite cupons na página do [Google Cloud for Education](https://cloud.google.com/edu/students?hl=pt-BR \"‌\").",
+      "url": "https://trello.com/c/3MmXle4G/44-links-importantes",
+      "shortUrl": "https://trello.com/c/3MmXle4G",
+      "closed": false,
+      "complete": false,
+      "position": 0.5,
+      "lastActivityAt": "2026-09-27T12:18:51.469Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        },
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        },
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        },
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Referências",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b299d15a201136e4ad",
+      "name": "[Matheus] Escopo do projeto e SUT",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Francisco\n**Planejamento:** Referência contínua\n\n## Objetivo\nManter uma referência única do escopo do A3 na UNIFG: avaliar a conformidade de contrato da Order Management API nas disciplinas de Garantia da Qualidade de Software e Banco de Dados.\n\n## Como executar\n1. Usar o repositório oficial https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST; preservar referência/autoria da origem https://github.com/JkbSousa/order-management-api.\n2. Priorizar Bean Validation, DTOs/type, schemas de sucesso e erro 400/404/409/500, integridade e reprodução das evidências.\n3. Registrar separadamente exigências do enunciado, comportamento observado e melhorias propostas. A API possui 28 operações inventariadas no manual; confirmar após gerar o contrato.\n4. Trabalhar com quatro integrantes; o limite de três do enunciado é uma pendência docente, não a composição real da equipe. Planejar entrega em 30/11; confirmar a janela informada até 05/12/2026.\n5. Manter fora do núcleo: frontend, gateway financeiro real, autenticação completa e hospedagem pública. Pagamentos são simulados.\n\n## Entrega e evidência\ndocs/escopo.md e índice das fontes: Projeto- A3.pdf, plano recebido, manual v1.0 e versão do código.\n\n## Critérios de conclusão\n- [ ] Escopo e limites revisados.\n- [ ] Pendências acadêmicas vinculadas ao card de alinhamento.\n\n## Dependências\nCard 00 de alinhamento.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/XBAVHAk6/1-matheus-escopo-do-projeto-e-sut",
+      "shortUrl": "https://trello.com/c/XBAVHAk6",
+      "closed": false,
+      "complete": false,
+      "position": 1,
+      "lastActivityAt": "2026-09-27T11:50:25.609Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Referências",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b7e96916900fd84740",
+      "name": "[Francisco] Critérios de avaliação (100 pts)",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** Referência contínua\n\n## Objetivo\nUsar os 14 critérios da rubrica como mapa de evidências, sem perder de vista risco e dependências.\n\n## Como executar\n1. Registrar pesos: requisitos/CA 8; plano de qualidade 8; planejamento 8; caixa-preta 10; caixa-branca 10; risco 7; níveis 10; automação 12; estática/revisão 7; defeitos 5; métricas 7; melhoria 4; ética 2; documentação/apresentação 2. Total 100.\n2. Para cada critério, ligar card executor, arquivo, execução/commit, responsável e situação.\n3. Tratar mínimos: 10 RF, 5 RNF, 30 casos, 3 técnicas caixa-preta, níveis, automação e ao menos uma ferramenta estática.\n4. CI é recomendado no enunciado e adotado pela equipe; automação é obrigatória. Não inventar mínimos de cobertura ou quantidade de defeitos como exigência docente.\n\n## Entrega e evidência\ndocs/matriz-rubrica.md; conferência final no card Checklist de entrega.\n\n## Critérios de conclusão\n- [ ] 14 critérios mapeados sem lacunas.\n- [ ] Exigências e metas internas diferenciadas.\n\n## Dependências\nEnunciado, seções 4-25.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/JRbuRtZg/2-francisco-crit%C3%A9rios-de-avalia%C3%A7%C3%A3o-100-pts",
+      "shortUrl": "https://trello.com/c/JRbuRtZg",
+      "closed": false,
+      "complete": false,
+      "position": 2,
+      "lastActivityAt": "2026-09-27T11:51:16.138Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Referências",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3bb0ef983702ef19a08",
+      "name": "[Gabriel] Stack técnica proposta",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** Referência contínua\n\n## Objetivo\nFixar uma stack coerente e comprovada por build e teste mínimo.\n\n## Como executar\n1. Conferir pom.xml: Java 25, Boot 4.1.0 e springdoc 2.8.5 observados no manual. Registrar o que estiver efetivamente no commit atual.\n2. Validar uma versão springdoc compatível com Boot 4; documentar alterações mínimas sem apagar B0.\n3. Usar JUnit Jupiter nas versões resolvidas pelo Boot, Mockito/AssertJ, REST Assured e validador que suporte o dialeto OpenAPI adotado. Não fixar JUnit 5 por hábito.\n4. Usar PostgreSQL real em Testcontainers; H2 não substitui evidência de constraints e SQL do PostgreSQL.\n5. Configurar JaCoCo compatível com Java 25, Surefire/Failsafe, ao menos uma ferramenta estática e GitHub Actions. Flyway/SQL para BD; Schemathesis como complemento.\n6. Registrar versões/imagens exatas e comandos de verificação. Python é opcional para métricas ou testes HTTP externos; cobertura Java exige instrumentar a JVM.\n\n## Entrega e evidência\ndocs/decisoes/stack.md + árvore de dependências + log do build.\n\n## Critérios de conclusão\n- [ ] Build e teste mínimo executados.\n- [ ] Versões e limitações documentadas.\n\n## Dependências\nSetup e spike de contrato.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/X9UQOOgN/3-gabriel-stack-t%C3%A9cnica-proposta",
+      "shortUrl": "https://trello.com/c/X9UQOOgN",
+      "closed": false,
+      "complete": false,
+      "position": 3,
+      "lastActivityAt": "2026-09-27T11:51:56.661Z",
+      "startedAt": null,
+      "due": {
+        "date": null,
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Referências",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3d73465a9aee6abf828",
+      "name": "[Francisco] 05 · Plano de Qualidade de Software",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** 2026-10-11\n\n## Objetivo\nProduzir o Plano de Qualidade com os 11 itens da seção 4.2 (8 pontos).\n\n## Como executar\n1. Estruturar objetivos, atributos, critérios de aceitação, estratégia, níveis, ferramentas, responsabilidades, riscos, entrada, saída e aprovação/reprovação.\n2. Relacionar cada atributo aos RF/RNF e indicadores, evitando expressões vagas.\n3. Propor saída: critérios críticos aprovados, nenhum defeito crítico sem tratamento, pelo menos 95% de aprovação entre executados e todas as falhas triadas; mostrar bloqueados/não executados à parte.\n4. Documentar metas de instruções 85% e branches 80% em services/exceptions como propostas; justificar escopo e exceções.\n5. Revisar com os planos de testes, risco e rubrica e obter revisão de outro integrante.\n\n## Entrega e evidência\ndocs/plano-qualidade.md com revisão/commit e links para evidências planejadas.\n\n## Critérios de conclusão\n- [ ] 11 itens presentes.\n- [ ] Metas mensuráveis e riscos residuais explícitos.\n- [ ] Revisão cruzada concluída.\n\n## Dependências\nRequisitos, critérios e risco; marco M1.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/LSD2pMwn/8-francisco-05-plano-de-qualidade-de-software",
+      "shortUrl": "https://trello.com/c/LSD2pMwn",
+      "closed": false,
+      "complete": false,
+      "position": 1,
+      "lastActivityAt": "2026-09-27T11:51:57.742Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dbc727bf260d5c23a3",
+      "name": "[Allan] 06 · Análise de risco das funcionalidades",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Matheus\n**Revisor:** Francisco\n**Planejamento:** 2026-10-11\n\n## Objetivo\nDirecionar testes conforme probabilidade × impacto (seção 10, 7 pontos).\n\n## Como executar\n1. Inventariar operações e regras de pedidos, pagamentos, clientes, produtos e endereços.\n2. Usar escala 1-3 para probabilidade/impacto; registrar justificativa, produto P×I e prioridade.\n3. Começar com pedido/pagamento 3×3, cliente 2×3, produto/endereço 2×2; revisar com evidências.\n4. Ligar riscos a CTs: cálculo, rollback, pagamento duplicado/repetido, type e validação de dados.\n5. Revisar semanalmente após achados; justificar mais cenários nos riscos altos, não apenas mais testes repetidos.\n\n## Entrega e evidência\ndocs/matriz-risco.md com RF, CT, responsável, mitigação e revisão.\n\n## Critérios de conclusão\n- [ ] Todas as áreas avaliadas.\n- [ ] Riscos altos cobertos por casos e responsáveis.\n\n## Dependências\nRequisitos e inventário de operações.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/a5gxnQvi/9-allan-06-an%C3%A1lise-de-risco-das-funcionalidades",
+      "shortUrl": "https://trello.com/c/a5gxnQvi",
+      "closed": false,
+      "complete": false,
+      "position": 2,
+      "lastActivityAt": "2026-09-27T11:51:58.796Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dddb7dd712fb2420f8",
+      "name": "[Matheus] 07 · Plano de testes",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan; Francisco na organização\n**Revisor:** Gabriel\n**Planejamento:** 2026-10-11\n\n## Objetivo\nDefinir como testar e reproduzir resultados (seções 3/12/24.3, 8 pontos).\n\n## Como executar\n1. Descrever escopo e exclusões, níveis, técnicas, ambiente, versões, dados, cronograma e critérios de entrada/saída.\n2. Usar PostgreSQL em Testcontainers, fixtures sintéticas isoladas, porta aleatória e política de limpeza entre testes HTTP.\n3. Separar classes *Test/Surefire e *IT/Failsafe; tags são classificação e não bastam para descoberta.\n4. Definir que testes negativos enviam requests inválidos e validam a resposta; o filtro não deve barrar o request antes da API.\n5. Definir B0/B1/B2 e duas comparações: suíte ampliada na mesma API e mesma suíte entre versões do produto.\n6. Distribuir execução entre unitário, integração, sistema/aceitação e regressão; criar protocolo de performance separado.\n\n## Entrega e evidência\ndocs/plano-testes.md e mapa caso → nível → técnica → risco.\n\n## Critérios de conclusão\n- [ ] Estratégia reproduzível.\n- [ ] Dados, escopo, versões e seleção de testes definidos.\n- [ ] Revisão concluída.\n\n## Dependências\nCards de requisitos, risco e stack.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/1ZC4pKWK/10-matheus-07-plano-de-testes",
+      "shortUrl": "https://trello.com/c/1ZC4pKWK",
+      "closed": false,
+      "complete": false,
+      "position": 3,
+      "lastActivityAt": "2026-09-27T11:51:59.776Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e131cc8e1cda39e54f",
+      "name": "[Allan] 08 · Revisão técnica formal (inspeção)",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel como autor técnico; Matheus revisor; Francisco como escriba\n**Revisor:** Matheus\n**Planejamento:** 2026-10-18\n\n## Objetivo\nRealizar inspeção formal de requisitos, arquitetura, código, casos e documentação.\n\n## Como executar\n1. Distribuir material antes da reunião e definir moderador, autor, revisores e escriba.\n2. Usar checklist de clareza, rastreabilidade, validação, DTO/type, persistência e tratamento de exceções.\n3. Inspecionar o handler existente; não afirmar ausência de ControllerAdvice ou Bean Validation sem evidência.\n4. Registrar achados com ID, artefato/linha, descrição, severidade, prioridade e status. Separar constatação estática de hipótese de execução.\n5. Examinar cálculo de itens, corpo 400 com HTTP 500, mensagem genérica de integridade e validação ao associar endereço.\n6. Fechar ata com responsáveis e encaminhamento para triagem/testes.\n\n## Entrega e evidência\ndocs/atas/inspecao.md, checklist preenchido e links para achados.\n\n## Critérios de conclusão\n- [ ] Cinco tipos de artefato revisados.\n- [ ] Ata e achados verificáveis.\n- [ ] Sem registrar hipótese como bug reproduzido.\n\n## Dependências\nRascunhos de requisitos, contrato e catálogo.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/MI9ATjxD/11-allan-08-revis%C3%A3o-t%C3%A9cnica-formal-inspe%C3%A7%C3%A3o",
+      "shortUrl": "https://trello.com/c/MI9ATjxD",
+      "closed": false,
+      "complete": false,
+      "position": 4,
+      "lastActivityAt": "2026-09-27T11:52:00.705Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-18T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e52da2e90775b05e66",
+      "name": "[Allan] 09 · Análise estática (antes × depois)",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel na configuração; Francisco no relatório\n**Revisor:** Matheus\n**Planejamento:** 2026-11-20\n\n## Objetivo\nComparar análise estática inicial e final com configuração equivalente (seção 7).\n\n## Como executar\n1. Até 18/10 configurar ao menos uma ferramenta compatível: PMD; complementar com SpotBugs/Checkstyle/Sonar quando justificável.\n2. Fixar versão, regras, exclusões e escopo. Rodar sobre versão de referência identificada.\n3. Classificar possíveis bugs, duplicação, complexidade, estilo e manutenção; registrar falsos positivos e limites.\n4. Encaminhar achados confirmados para gestão de defeitos; não confundir alerta com vulnerabilidade comprovada.\n5. Após correções, rodar novamente com mesmas regras e explicar alterações de escopo.\n\n## Entrega e evidência\nreports/analise-estatica/antes e depois + docs/analise-estatica.md; logs, commits e configuração.\n\n## Critérios de conclusão\n- [ ] Baseline até S3 preservada.\n- [ ] Comparação final reproduzível.\n- [ ] Achados graves triados.\n\n## Dependências\nB0/B1, setup; final depende das correções.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/VXXKixWS/12-allan-09-an%C3%A1lise-est%C3%A1tica-antes-%C3%97-depois",
+      "shortUrl": "https://trello.com/c/VXXKixWS",
+      "closed": false,
+      "complete": false,
+      "position": 5,
+      "lastActivityAt": "2026-09-27T11:52:01.627Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-20T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e8207a721dd82efed3",
+      "name": "[Allan] 10 · Catálogo de casos de teste (≥30)",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Matheus; demais integrantes propõem casos\n**Revisor:** Gabriel\n**Planejamento:** 2026-10-18\n\n## Objetivo\nDetalhar catálogo mínimo de 30 casos, usando os 36 cenários do manual como ponto de partida.\n\n## Como executar\n1. Preencher ID, RF/RNF, objetivo, pré-condições, dados exatos, passos, esperado, obtido, status e evidência.\n2. Derivar pelo menos três técnicas: equivalência, limites e decisão; ligar risco e critérios.\n3. Incluir sucesso, negativos, CEP 7/8/9, type por subtipo, 404/409/405/415, erro 500 controlado, preço×quantidade e rollback.\n4. Começar com NÃO EXECUTADO; registrar obtido e evidência somente após rodar.\n5. Contar separadamente casos, métodos e invocações parametrizadas; não duplicar caso por também ser aceitação/regressão.\n6. Revisar lacunas por operação, status e variante, sem impor cota artificial de erros 500.\n\n## Entrega e evidência\ndocs/catalogo-casos.md ou planilha versionada; matriz RF→CA→CT→execução→defeito.\n\n## Critérios de conclusão\n- [ ] Pelo menos 30 casos completos.\n- [ ] Dados e esperado específicos.\n- [ ] Casos críticos revisados.\n\n## Dependências\nRequisitos/CA, matriz de risco, contrato e templates.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/Z8XcjCam/13-allan-10-cat%C3%A1logo-de-casos-de-teste-%E2%89%A530",
+      "shortUrl": "https://trello.com/c/Z8XcjCam",
+      "closed": false,
+      "complete": false,
+      "position": 6,
+      "lastActivityAt": "2026-09-27T11:52:02.608Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-18T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f114d9d5311e2693c2",
+      "name": "[Gabriel] 11 · Testes caixa-preta de conformidade de contrato",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan implementa cenários; Francisco revisa evidências\n**Revisor:** Matheus\n**Planejamento:** 2026-11-01\n\n## Objetivo\nValidar contrato via HTTP e demonstrar técnicas caixa-preta (seção 8, 10 pontos).\n\n## Como executar\n1. Usar contrato revisado fixo e ApiTestBase com porta aleatória/PostgreSQL; preparar um fluxo positivo e um negativo.\n2. Aplicar equivalência, limites e tabela de decisão com vínculo ao catálogo.\n3. Em entradas válidas validar request/response. Em entradas inválidas desabilitar apenas validação de request; conferir a resposta real, schema e ausência de gravação.\n4. Validar status HTTP, Content-Type, campos obrigatórios, nulidade e type/atributos específicos; incluir 400/404/409 e 405/415 aplicáveis.\n5. Provocar 500 por falha controlada no teste, nunca por endpoint exposto de falha; corpo.status deve coincidir com HTTP.\n6. Não usar o schema regenerado a cada teste como oráculo; nenhuma atualização automática para fazer teste passar.\n\n## Entrega e evidência\nsrc/test/java/.../api + relatórios e requests/responses sanitizados, ligados aos CTs.\n\n## Critérios de conclusão\n- [ ] 3 técnicas demonstráveis.\n- [ ] Validador não impede negativos.\n- [ ] Resultados rastreados e divergências triadas.\n\n## Dependências\nSpike, contrato, fixtures e catálogo; testes HTTP/aceitação complementam esta frente.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/a9wQuRO0/14-gabriel-11-testes-caixa-preta-de-conformidade-de-contrato",
+      "shortUrl": "https://trello.com/c/a9wQuRO0",
+      "closed": false,
+      "complete": false,
+      "position": 7,
+      "lastActivityAt": "2026-09-28T01:20:39.606Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-01T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f4b3e9bb679475adfb",
+      "name": "[Gabriel] 12 · Testes caixa-branca e cobertura (JaCoCo)",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus; Allan revisa cenários\n**Revisor:** Matheus\n**Planejamento:** 2026-11-15\n\n## Objetivo\nMedir cobertura real e analisar caminhos (seção 9, 10 pontos).\n\n## Como executar\n1. Medir antes de ampliar os testes; nunca chamar contextLoads de 0% sem relatório.\n2. Selecionar 3 métodos de risco/complexidade, por exemplo PaymentService.update, OrderService.insert e método do handler; desenhar fluxo, decisões e caminhos independentes.\n3. Instrumentar unitários e integração, conferir dados do JaCoCo e escopo services/exceptions.\n4. Criar casos para decisões não cobertas e asserções de resultado; não perseguir cobertura com testes vazios.\n5. Comparar ampliação de suíte sobre mesma API; comparar correções com suíte fixa separadamente.\n6. Registrar metas propostas 85% instruções e 80% branches, justificando lacunas e risco residual.\n\n## Entrega e evidência\nreports/cobertura/ com HTML/XML, grafos e interpretação em docs/caixa-branca.md.\n\n## Critérios de conclusão\n- [ ] Medições identificadas por versão.\n- [ ] 3 métodos analisados.\n- [ ] Lacunas e denominadores explicados.\n\n## Dependências\nCI/instrumentação e suíte; diagnóstico inicial até 08/11.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/9EKvdzHs/15-gabriel-12-testes-caixa-branca-e-cobertura-jacoco",
+      "shortUrl": "https://trello.com/c/9EKvdzHs",
+      "closed": false,
+      "complete": false,
+      "position": 8,
+      "lastActivityAt": "2026-09-28T01:20:40.676Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-15T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f85eb27a791f6921e6",
+      "name": "[Gabriel] 13 · Níveis de teste: unitário, integração, sistema, aceitação",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan e Matheus executam frentes; Francisco acompanha evidências\n**Revisor:** Allan\n**Planejamento:** 2026-11-08\n\n## Objetivo\nCoordenar cobertura dos níveis de teste sem concentrar toda implementação em um membro (seção 12, 10 pontos).\n\n## Como executar\n1. Usar os cards QA-01 (unitários), QA-02 (integração/rollback) e QA-03 (HTTP/aceitação) como executores; este é o card de consolidação.\n2. Manter matriz CT→nível→RF/CA e evidências.\n3. Unitários isolam serviços; integração usa PostgreSQL; sistema usa HTTP real; aceitação demonstra critérios de negócio.\n4. Reutilizar cenários de aceitação/sistema sem duplicar contagem; marcar regressão quando relacionado à correção.\n5. Conferir uma execução conjunta e detectar testes ignorados, duplicados ou não descobertos.\n\n## Entrega e evidência\ndocs/matriz-niveis.md + link da execução consolidada.\n\n## Critérios de conclusão\n- [ ] Todos os níveis com evidência.\n- [ ] Cards executores revisados.\n- [ ] Cada integrante explica ao menos um cenário.\n\n## Dependências\nQA-01/02/03, contrato, fixtures, CI e card 17.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/CmRstOih/16-gabriel-13-n%C3%ADveis-de-teste-unit%C3%A1rio-integra%C3%A7%C3%A3o-sistema-aceita%C3%A7%C3%A3o",
+      "shortUrl": "https://trello.com/c/CmRstOih",
+      "closed": false,
+      "complete": false,
+      "position": 9,
+      "lastActivityAt": "2026-09-27T11:52:06.041Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-08T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3fd8f2fe5df0aef0f17",
+      "name": "[Matheus] 14 · Banco de Dados: modelo, integridade e persistência",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan nos testes/consultas; Gabriel em JPA\n**Revisor:** Allan\n**Planejamento:** 2026-11-01\n\n## Objetivo\nCoordenar a trilha de Banco de Dados, condicionada à rubrica docente.\n\n## Como executar\n1. Confirmar exigências de BD no alinhamento; ajustar profundidade sem apresentar proposta como exigência.\n2. Consolidar BD-01 modelo/dicionário/normalização, BD-02 migrações/constraints e BD-03 consultas/views/índices.\n3. Conferir modelo físico com entidades: client_type, product_type e payment_type; não presumir dtype.\n4. Alinhar dinheiro em BigDecimal/NUMERIC e semântica de price antes de mudar schema/dados.\n5. Vincular evidências dos testes de integração QA-02; não executar o mesmo trabalho duas vezes.\n\n## Entrega e evidência\ndocs/bd/ com índice, DER, dicionário, decisões, SQL, migrações e testes vinculados.\n\n## Critérios de conclusão\n- [ ] Escopo docente registrado.\n- [ ] Subentregas revisadas.\n- [ ] Modelo, código e testes consistentes.\n\n## Dependências\nAlinhamento BD; BD-01/02/03 e QA-02.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/I4BYlFWv/17-matheus-14-banco-de-dados-modelo-integridade-e-persist%C3%AAncia",
+      "shortUrl": "https://trello.com/c/I4BYlFWv",
+      "closed": false,
+      "complete": false,
+      "position": 10,
+      "lastActivityAt": "2026-09-27T11:52:24.985Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-01T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c400073a4a72a6b41051",
+      "name": "[Gabriel] 15 · Automação da suíte e pipeline de CI",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** 2026-10-18\n\n## Objetivo\nEntregar automação cedo e expandir até S6 (automação 12 pontos; CI adotado pela equipe).\n\n## Como executar\n1. S1: executar build e teste mínimo no Actions, sem esperar toda a suíte.\n2. S2-S3: JDK e versões fixos, wrapper Maven, Docker e PostgreSQL Testcontainers; rodar em push e PR.\n3. Configurar Surefire (*Test) e Failsafe (*IT) com integration-test/verify; confirmar contagem esperada. Tags não substituem essa configuração.\n4. Instrumentar com JaCoCo e rodar ferramenta estática; salvar XML/HTML, logs e metadados mesmo em falhas.\n5. Executar ./mvnw verify no CI e .\\mvnw.cmd verify no Windows. Sem continue-on-error global que transforme regressão em sucesso.\n6. Separar diagnóstico inicial que pode falhar de critérios aprovados para entrega; incorporar casos novos até S6.\n\n## Entrega e evidência\n.github/workflows/ci.yml, pom.xml, configurações, link do run e documentação.\n\n## Critérios de conclusão\n- [ ] Pipeline mínimo S1 registrado.\n- [ ] verify descobre unitários e integração.\n- [ ] Falha real reprova e preserva artefatos.\n\n## Dependências\nSetup; spike e fixtures para ampliação.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/aGnCboeK/18-gabriel-15-automa%C3%A7%C3%A3o-da-su%C3%ADte-e-pipeline-de-ci",
+      "shortUrl": "https://trello.com/c/aGnCboeK",
+      "closed": false,
+      "complete": false,
+      "position": 11,
+      "lastActivityAt": "2026-09-28T01:20:20.028Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-18T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4039aab8c2608f5ba49",
+      "name": "[Allan] 16 · Gestão de defeitos",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Francisco organiza registros; responsáveis corrigem\n**Revisor:** Matheus\n**Planejamento:** 2026-11-15\n\n## Objetivo\nManter gestão contínua de defeitos desde a primeira inspeção (seção 15, 5 pontos).\n\n## Como executar\n1. Usar GitHub Issues como registro técnico e ligar a tarefa no Trello; não criar dois registros sem referência.\n2. Antes de abrir bug, reproduzir e classificar produto, teste, contrato ou ambiente; verificar duplicatas.\n3. Preencher os 13 campos: ID, título, descrição, passos, esperado, obtido, severidade, prioridade, evidência, responsável, status, correção e reteste.\n4. Aceitar achado documental/estático com artefato verificável; marcar hipótese de runtime até reprodução.\n5. Seguir registro→análise→correção→reteste→regressão→encerramento; fechar só com links.\n6. Não exigir número artificial de defeitos nem deixar defeitos abertos para parecer realista.\n\n## Entrega e evidência\nIssues e docs/relatorio-defeitos.md exportável; vínculos CT/run/PR.\n\n## Critérios de conclusão\n- [ ] Registros completos e sem duplicatas.\n- [ ] Severidade distinta de prioridade.\n- [ ] Reteste e regressão comprovados para encerrados.\n\n## Dependências\nTemplates; atividade contínua desde S2.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/rXZu5aql/19-allan-16-gest%C3%A3o-de-defeitos",
+      "shortUrl": "https://trello.com/c/rXZu5aql",
+      "closed": false,
+      "complete": false,
+      "position": 12,
+      "lastActivityAt": "2026-09-27T11:52:27.359Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-15T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c40c172e090a3732437e",
+      "name": "[Matheus] 17 · Regressão e ciclo de melhoria contínua",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel e Allan corrigem; Francisco consolida comparação\n**Revisor:** Gabriel\n**Planejamento:** 2026-11-15\n\n## Objetivo\nDemonstrar um ciclo completo de melhoria com comparação válida (seção 19, 4 pontos).\n\n## Como executar\n1. Preservar B0 original; separar B1 executável se forem necessários ajustes mínimos; identificar B2 melhorada.\n2. Priorizar defeitos por risco e registrar correções em PRs com revisão e teste que reproduz.\n3. Rodar caso original e regressão; manter falha original como evidência, sem alterar expectativa para esconder defeito.\n4. Executar mesma suíte nas versões comparadas e indicar quais mudanças contratuais impedem comparação direta.\n5. Medir cobertura, falhas, críticos abertos, complexidade e achados com escopo/regras iguais.\n6. Tratar risco residual explicitamente; não reservar 1-2 defeitos abertos por conveniência.\n\n## Entrega e evidência\ndocs/melhoria-continua.md + commits/tags, matriz antes/depois e runs.\n\n## Critérios de conclusão\n- [ ] Um ciclo completo rastreável.\n- [ ] Mesma suíte/escopo ou diferenças justificadas.\n- [ ] Nenhum resultado inventado.\n\n## Dependências\nGestão de defeitos, testes, cobertura e análise estática.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/cYHvKIHo/20-matheus-17-regress%C3%A3o-e-ciclo-de-melhoria-cont%C3%ADnua",
+      "shortUrl": "https://trello.com/c/cYHvKIHo",
+      "closed": false,
+      "complete": false,
+      "position": 13,
+      "lastActivityAt": "2026-09-27T11:52:28.390Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-15T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4108e5d4fb76b719235",
+      "name": "[Matheus] 18 · Métricas e avaliação dos atributos de qualidade",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Francisco na interpretação; Allan confere catálogo\n**Revisor:** Gabriel\n**Planejamento:** 2026-11-22\n\n## Objetivo\nColetar e interpretar indicadores (seções 16/17, 7 pontos).\n\n## Como executar\n1. Extrair testes de Surefire/Failsafe, cobertura JaCoCo, análise estática e defeitos confirmados; automatizar onde viável.\n2. Separar planejados, executados, aprovados, falhas, erros, ignorados e bloqueados; definir denominadores.\n3. Medir operações exercitadas/28 e coberturas por status/type; não confundir com cobertura de código.\n4. Para densidade, fixar KLOC de código principal e excluir documentação/duplicatas; não repetir 2,3 KLOC sem medir.\n5. Associar desempenho ao QA-05; manutenção à complexidade/duplicação; clareza aos erros; reprodução às execuções Windows/CI.\n6. Interpretar cada número com origem, suficiência, lacunas e risco; deixar não medido quando não houver execução.\n\n## Entrega e evidência\ndocs/metricas.md, dados CSV/JSON ou planilha, gráficos e manifesto de execuções.\n\n## Critérios de conclusão\n- [ ] Fórmulas/escopo explícitos.\n- [ ] Números recuperáveis da evidência.\n- [ ] Comparação validada.\n\n## Dependências\nRuns, defeitos, análise estática e QA-05.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/zIsf4wjO/21-matheus-18-m%C3%A9tricas-e-avalia%C3%A7%C3%A3o-dos-atributos-de-qualidade",
+      "shortUrl": "https://trello.com/c/zIsf4wjO",
+      "closed": false,
+      "complete": false,
+      "position": 14,
+      "lastActivityAt": "2026-09-27T11:52:29.387Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-22T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41414062b22e8936053",
+      "name": "[Francisco] 19 · Segurança, privacidade e ética",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus e Gabriel fornecem inspeções técnicas\n**Revisor:** Allan\n**Planejamento:** 2026-11-20\n\n## Objetivo\nAnalisar segurança, privacidade, ética e impacto de falhas (seção 18, 2 pontos).\n\n## Como executar\n1. Mapear dados tratados: documentos, e-mail, nascimento, PIX e cartão; usar somente dados sintéticos nas execuções.\n2. Conferir respostas e logs sem stack trace/SQL/detalhes internos; registrar achados comprovados com apoio técnico.\n3. Documentar credenciais externas ao código, acesso controlado ao ambiente e sanitização das evidências.\n4. Explicar impacto de cálculo errado, pedido pago indevidamente, perda de integridade e exposição de dados.\n5. Preservar autoria/licença da API e declarar auxílio de IA com revisão humana. Não afirmar certificação legal/financeira.\n6. Considerar impactos sociais e decisões injustas quando aplicáveis, justificando limites.\n\n## Entrega e evidência\ndocs/etica-seguranca.md + referências para achados/evidências sanitizadas.\n\n## Critérios de conclusão\n- [ ] Pergunta sobre falha grave respondida.\n- [ ] Riscos ligados ao sistema.\n- [ ] Texto revisado tecnicamente.\n\n## Dependências\nInventário do sistema, defeitos e evidências; execução local pode ocorrer em dupla.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/VQvMapdo/22-francisco-19-seguran%C3%A7a-privacidade-e-%C3%A9tica",
+      "shortUrl": "https://trello.com/c/VQvMapdo",
+      "closed": false,
+      "complete": false,
+      "position": 15,
+      "lastActivityAt": "2026-09-27T11:52:30.354Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-20T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c417b39a171271f1f26c",
+      "name": "[Francisco] 20 · Relatórios e relatório técnico final",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Todos entregam suas frentes\n**Revisor:** Matheus\n**Planejamento:** 2026-11-26\n\n## Objetivo\nConsolidar os relatórios sem substituir execução por narrativa.\n\n## Como executar\n1. Até 22/11 reunir rascunho completo: SUT, requisitos, processo, resultados, métricas, melhoria, ética, limites e conclusão.\n2. Integrar planos, catálogo, defeitos, estática, testes e métricas com links para commit/run.\n3. Separar observado, medido, hipótese, meta e pendência; remover números ilustrativos.\n4. Conferir tabelas, legendas, fontes, paginação e acesso aos arquivos.\n5. Revisar com outro integrante e congelar o pacote final em 26/11.\n\n## Entrega e evidência\ndocs/relatorio-final.md/PDF e índice dos dez entregáveis.\n\n## Critérios de conclusão\n- [ ] Fontes/evidências rastreáveis.\n- [ ] Todos revisaram sua frente.\n- [ ] Rascunho M3 e final identificados.\n\n## Dependências\nCards técnicos e métricas; não marcar concluído sem evidência recebida.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/tWeVAYyZ/23-francisco-20-relat%C3%B3rios-e-relat%C3%B3rio-t%C3%A9cnico-final",
+      "shortUrl": "https://trello.com/c/tWeVAYyZ",
+      "closed": false,
+      "complete": false,
+      "position": 16,
+      "lastActivityAt": "2026-09-27T11:52:31.324Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-26T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41b41ddbcbd88dc88c3",
+      "name": "[Gabriel] 21 · Apresentação e demonstração ao vivo",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Todos; Francisco coordena roteiro\n**Revisor:** Matheus\n**Planejamento:** 2026-11-28\n\n## Objetivo\nEnsaiar a demonstração ao vivo, com participação de todos (regra 25).\n\n## Como executar\n1. Preparar roteiro de 18 minutos, ajustável ao docente: contexto, arquitetura, teste, defeito, BD, métricas e riscos.\n2. Realizar dois ensaios em 24/11 e 28/11, incluindo execução em ambiente limpo.\n3. Alternar quem executa teste, cria caso, muda valor, provoca falha, abre cobertura e localiza defeito.\n4. Cada integrante explica RF/CA, técnica, risco e métrica; Francisco participa em máquina compartilhada ou sessão em dupla se necessário.\n5. Conferir comandos do wrapper, dados, versões, artefatos locais e acesso aos documentos.\n6. Registrar falhas do ensaio e corrigir antes da entrega.\n\n## Entrega e evidência\ndocs/roteiro-demo.md, registro dos dois ensaios e checklist individual.\n\n## Critérios de conclusão\n- [ ] Todos conseguem explicar e demonstrar.\n- [ ] Execução reproduzível.\n- [ ] Contingência testada sem substituir regra 25.\n\n## Dependências\nSlides, README, pacote final e plano B.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/PJe5BNT8/24-gabriel-21-apresenta%C3%A7%C3%A3o-e-demonstra%C3%A7%C3%A3o-ao-vivo",
+      "shortUrl": "https://trello.com/c/PJe5BNT8",
+      "closed": false,
+      "complete": false,
+      "position": 17,
+      "lastActivityAt": "2026-09-27T11:52:32.307Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-28T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41cc438b247d3821534",
+      "name": "[Gabriel] Spike: escolher ferramenta de contract testing",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** 2026-10-07\n\n## Objetivo\nProvar a abordagem de contrato em um protótipo curto.\n\n## Como executar\n1. Testar REST Assured para requisições e um validador compatível com a versão OpenAPI escolhida.\n2. Escolher uma operação; enviar payload válido e inválido e mostrar validação da resposta sem barrar o negativo.\n3. Verificar status, Content-Type, required, null e variante type; distinguir JSON Schema do contrato HTTP completo.\n4. Avaliar Schemathesis como complemento gerativo, não concorrente obrigatório do REST Assured.\n5. Registrar versões, esforço, limitações e decisão; limitar o spike e encaminhar bloqueios ao setup.\n\n## Entrega e evidência\ndocs/decisoes/contract-testing.md + protótipo, log e commit.\n\n## Critérios de conclusão\n- [ ] Um positivo e um negativo reais.\n- [ ] Compatibilidade de dialeto comprovada.\n- [ ] Decisão justificada.\n\n## Dependências\nContrato inicial e ambiente executável; não bloqueia CI mínimo.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/7WLb5mTB/28-gabriel-spike-escolher-ferramenta-de-contract-testing",
+      "shortUrl": "https://trello.com/c/7WLb5mTB",
+      "closed": false,
+      "complete": false,
+      "position": 16401,
+      "lastActivityAt": "2026-09-27T11:52:33.231Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-07T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41deba6166940e0fc57",
+      "name": "[Matheus] Templates padronizados (caso de teste, defeito, relatório)",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Francisco\n**Planejamento:** 2026-10-11\n\n## Objetivo\nPadronizar casos, defeitos, execuções e relatórios.\n\n## Como executar\n1. Criar template de CT com dez campos do enunciado e RF/CA, técnica, risco e nível.\n2. Criar template de defeito com os 13 campos exigidos, incluindo descrição e correção; separar severidade e prioridade.\n3. Criar manifesto de execução: run_id, data, commits API/testes, contrato/hash, ferramentas, SO, imagem BD, seed/dataset, comando e relatórios.\n4. Criar modelo de relatório com fontes, dados, interpretação e limitações.\n5. Preencher um exemplo didático marcado NÃO EXECUTADO e revisar.\n\n## Entrega e evidência\ndocs/templates/ + template de Issue no repositório.\n\n## Critérios de conclusão\n- [ ] Modelos completos.\n- [ ] Exemplo sem resultado fictício.\n- [ ] Equipe consegue reutilizar.\n\n## Dependências\nRequisitos e convenção de IDs.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/9DYSzP9j/29-matheus-templates-padronizados-caso-de-teste-defeito-relat%C3%B3rio",
+      "shortUrl": "https://trello.com/c/9DYSzP9j",
+      "closed": false,
+      "complete": false,
+      "position": 32785,
+      "lastActivityAt": "2026-09-27T11:52:34.279Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41f771e19f45f855872",
+      "name": "[Matheus] Ambiente reprodutível + seed de dados",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel; Allan valida uso\n**Revisor:** Gabriel\n**Planejamento:** 2026-10-18\n\n## Objetivo\nGarantir ambiente e dados reproduzíveis antes de ampliar a suíte.\n\n## Como executar\n1. Fixar PostgreSQL em Testcontainers e configuração de teste; não usar H2 como substituto de constraints reais.\n2. Criar fixtures/builder de cliente, produto, pedido e pagamento com dados sintéticos; capturar IDs criados.\n3. Separar migrações permanentes de seed de teste; preparar/resetar base por execução.\n4. Definir ciclo de vida do container compatível com contexto Spring. Teste HTTP não recebe rollback automático da thread do teste.\n5. Executar duas vezes e em ordem diferente para verificar isolamento; iniciar sem paralelismo.\n6. Documentar variáveis externas e wrapper; comprovar que verify cria o ambiente de teste após configuração.\n\n## Entrega e evidência\nsrc/test/resources, fixtures, perfil de teste e guia; dois runs identificados.\n\n## Critérios de conclusão\n- [ ] Base descartável.\n- [ ] Sem estado residual entre testes.\n- [ ] Nenhum dado/segredo real.\n\n## Dependências\nSetup, stack e BD-02; não substitui testes QA-02.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/YBJ5YBeV/30-matheus-ambiente-reprodut%C3%ADvel-seed-de-dados",
+      "shortUrl": "https://trello.com/c/YBJ5YBeV",
+      "closed": false,
+      "complete": false,
+      "position": 49169,
+      "lastActivityAt": "2026-09-27T11:52:35.389Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-18T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e420449a7ea369c0da32",
+      "name": "[Gabriel] README + execução em um comando",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan testa instruções; Francisco revisa clareza\n**Revisor:** Matheus\n**Planejamento:** 2026-11-24\n\n## Objetivo\nDocumentar o caminho validado para subir a API e executar a suíte.\n\n## Como executar\n1. Publicar versão inicial na S1 e atualizar com a implementação; revisão final em 24/11.\n2. Listar JDK/Docker/Git, versões, configuração segura e acesso ao Swagger e /v3/api-docs.\n3. Separar subir aplicação de rodar testes; Windows .\\mvnw.cmd verify e Linux ./mvnw verify, após configurar plugins.\n4. Documentar seleção de *Test/*IT, localização dos relatórios, reset da massa e falhas comuns.\n5. Solicitar a outro integrante executar a partir de checkout limpo e corrigir lacunas.\n6. Linkar docs/, reports/, Trello e repositório oficial; preservar atribuição à origem.\n\n## Entrega e evidência\nREADME.md + evidência da execução por outro integrante.\n\n## Critérios de conclusão\n- [ ] Comandos copiados funcionam no ambiente registrado.\n- [ ] Sem passos implícitos.\n- [ ] Relatórios localizáveis.\n\n## Dependências\nCI e fixtures; atualização contínua.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/TKUhRGgt/31-gabriel-readme-execu%C3%A7%C3%A3o-em-um-comando",
+      "shortUrl": "https://trello.com/c/TKUhRGgt",
+      "closed": false,
+      "complete": false,
+      "position": 65553,
+      "lastActivityAt": "2026-09-27T11:52:36.437Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-24T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e4218b3d1385884551e9",
+      "name": "[Francisco] Slides da apresentação",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Todos fornecem conteúdo e evidências\n**Revisor:** Matheus\n**Planejamento:** 2026-11-26\n\n## Objetivo\nCriar apresentação visual baseada nos resultados reais.\n\n## Como executar\n1. Organizar narrativa: problema, SUT, contrato, estratégia/risco, exemplo de defeito, BD, antes/depois, limites e conclusão.\n2. Selecionar evidências legíveis com commit/run; não exigir um slide por critério se prejudicar a narrativa.\n3. Relacionar slides à matriz de rubrica para garantir cobertura sem excesso.\n4. Conferir números com Matheus e trechos técnicos com Gabriel/Allan.\n5. Incluir divisão de fala e pontos de entrada da demonstração; ensaiar com tempo.\n\n## Entrega e evidência\nArquivo editável dos slides + PDF e roteiro de fala.\n\n## Critérios de conclusão\n- [ ] Sem números sem fonte.\n- [ ] Slides legíveis.\n- [ ] Todos revisaram e duração ensaiada.\n\n## Dependências\nRelatório/métricas e roteiro de demonstração.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/qQvIlw5q/32-francisco-slides-da-apresenta%C3%A7%C3%A3o",
+      "shortUrl": "https://trello.com/c/qQvIlw5q",
+      "closed": false,
+      "complete": false,
+      "position": 81937,
+      "lastActivityAt": "2026-09-27T11:52:37.504Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-26T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e423eb428e829f96a3d8",
+      "name": "[Francisco] Plano B da demo (gravação de contingência)",
+      "description": "**Responsável principal:** Francisco\n**Apoio:** Gabriel grava execução; Matheus verifica pacote\n**Revisor:** Allan\n**Planejamento:** 2026-11-26\n\n## Objetivo\nPreparar contingência sem substituir a demonstração reproduzível.\n\n## Como executar\n1. Gravar execução real com commit, ambiente, suíte, cobertura e um caso rastreável.\n2. Guardar vídeo e relatórios em local acessível, com cópia local para ausência de internet.\n3. Preparar segunda máquina/ambiente conhecido e dados necessários para repetir testes.\n4. Conferir vídeo sem credenciais/dados reais e sem edição que altere resultados.\n5. Documentar quando usar o plano B; gravação complementa evidência, mas não dispensa regra 25.\n\n## Entrega e evidência\nVídeo, pacote local e docs/plano-contingencia.md.\n\n## Critérios de conclusão\n- [ ] Backup abre sem internet.\n- [ ] Execução reproduzível em alternativa.\n- [ ] Limites explícitos.\n\n## Dependências\nSuíte consolidada, README e primeiro ensaio.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/JTx8I4eB/33-francisco-plano-b-da-demo-grava%C3%A7%C3%A3o-de-conting%C3%AAncia",
+      "shortUrl": "https://trello.com/c/JTx8I4eB",
+      "closed": false,
+      "complete": false,
+      "position": 98321,
+      "lastActivityAt": "2026-09-27T11:52:38.421Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-26T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+          "fullName": "FR4NCISCO OFC",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e42423818e62b587b3bf",
+      "name": "[Matheus] Checklist de entrega final (conferência dos 14 critérios)",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Todos\n**Revisor:** Francisco\n**Planejamento:** 2026-11-29\n\n## Objetivo\nConferir 14 critérios, dez entregáveis e submissão até 30/11.\n\n## Como executar\n1. Usar a checklist existente da rubrica e vincular uma evidência a cada critério.\n2. Conferir dez entregáveis do enunciado e trilha BD confirmada; checar arquivos, links e acesso dos docentes.\n3. Identificar versão final, commits/tags, contratos, dados e ferramentas; exportar artefatos antes de expirar no CI.\n4. Executar conferência preliminar em 25/11 e final após relatórios e ensaios, até 29/11.\n5. Confirmar canal/horário de entrega; registrar comprovante de submissão em 30/11.\n6. Manter pendências justificadas visíveis; nenhum card concluído somente porque tem descrição.\n\n## Entrega e evidência\ndocs/checklist-entrega.md + pacote final e comprovante após envio.\n\n## Critérios de conclusão\n- [ ] 14 critérios evidenciados.\n- [ ] Dez entregáveis acessíveis.\n- [ ] Entrega registrada no prazo confirmado.\n\n## Dependências\nRelatórios, slides, ensaios; não antecipar conclusão.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/1mNWyLTq/34-matheus-checklist-de-entrega-final-confer%C3%AAncia-dos-14-crit%C3%A9rios",
+      "shortUrl": "https://trello.com/c/1mNWyLTq",
+      "closed": false,
+      "complete": false,
+      "position": 114705,
+      "lastActivityAt": "2026-09-27T11:52:39.535Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-29T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903142e77adabbb3e059e",
+      "name": "[Matheus] BD-01 · DER, dicionário e análise de normalização",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel explica entidades; Allan confere modelo\n**Revisor:** Allan\n**Planejamento:** 2026-10-11\n\n## Objetivo\nDestrinchar a modelagem da trilha BD; escopo final depende da rubrica docente.\n\n## Como executar\n1. Ler entidades e gerar esquema em banco descartável; confrontar com o modelo JPA.\n2. Desenhar modelo conceitual e lógico de client, product, payment, orders, order_item e address; conferir nomes físicos antes de consolidar.\n3. Documentar PK/FK, cardinalidades, obrigatoriedade, tipos, tamanhos, unicidade e significado de price.\n4. Registrar herança SINGLE_TABLE e discriminadores client_type/product_type/payment_type; justificar nulos por subtipo.\n5. Analisar 1FN-3FN por dependências; explicar preço histórico sem concluir normalização apenas pelo número de tabelas.\n6. Revisar relação pedido-pagamento e efeitos de cascade/orphanRemoval.\n\n## Entrega e evidência\ndocs/bd/modelo-conceitual, modelo-logico, dicionario-dados.md e analise-modelo.md com commit.\n\n## Critérios de conclusão\n- [ ] DER e dicionário coerentes com esquema inspecionado.\n- [ ] Decisões de normalização e herança justificadas.\n- [ ] Revisão por outro integrante.\n\n## Dependências e relação com outros cards\nSubentrega do card 14. Depende do inventário/ambiente; alimenta BD-02 e QA-02.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o",
+      "shortUrl": "https://trello.com/c/YPqTTPbz",
+      "closed": false,
+      "complete": false,
+      "position": 131089,
+      "lastActivityAt": "2026-09-27T11:52:56.947Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90316f9a958c62c4904d9",
+      "name": "[Matheus] BD-02 · Migrações Flyway e integridade no PostgreSQL",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Planejamento:** 2026-10-18\n\n## Objetivo\nTornar esquema reproduzível e versionado, sem depender de ddl-auto=update.\n\n## Como executar\n1. Partir do modelo revisado e preservar banco/commit inicial em ambiente isolado.\n2. Adicionar Flyway e criar V1__schema.sql com PK, FK, NOT NULL, UNIQUE e CHECK exigidos pelas regras aprovadas.\n3. Usar os discriminadores reais; constraints condicionais devem permitir campos de outro subtipo quando adequado.\n4. Definir precisão/escala monetária e arredondamento antes de mudar Double para BigDecimal/NUMERIC.\n5. Separar seeds sintéticos de teste das migrações permanentes; usar ddl-auto=validate após criar esquema por migração.\n6. Executar em base vazia e validar. Mudança em migração já aplicada vira nova versão; não reescrever histórico para esconder incompatibilidade.\n7. Entregar casos SQL inválidos a QA-02; violação nova em dados antigos pede triagem, não prova automática de defeito do modelo.\n\n## Entrega e evidência\nsrc/main/resources/db/migration/ e documentação de reprodução, logs da migração e validação.\n\n## Critérios de conclusão\n- [ ] Esquema recriado do zero.\n- [ ] Histórico Flyway coerente.\n- [ ] Massa de teste separada.\n- [ ] Constraints alinhadas aos requisitos.\n\n## Dependências e relação com outros cards\nSubentrega do card 14; depende de BD-01/requisitos. QA-02 verifica comportamento; não duplicar a suíte aqui.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/FwvkkAdG/36-matheus-bd-02-migra%C3%A7%C3%B5es-flyway-e-integridade-no-postgresql",
+      "shortUrl": "https://trello.com/c/FwvkkAdG",
+      "closed": false,
+      "complete": false,
+      "position": 147473,
+      "lastActivityAt": "2026-09-27T11:53:01.746Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-18T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903176a58a684cf707cc4",
+      "name": "[Allan] BD-03 · Consultas SQL, views e análise de índices",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Matheus\n**Revisor:** Matheus\n**Planejamento:** 2026-11-01\n\n## Objetivo\nProduzir consultas de negócio verificáveis e avaliar plano de execução.\n\n## Como executar\n1. Construir massa sintética conhecida e definir esperado por consulta.\n2. Implementar 6-8 consultas propostas: faturamento aprovado por período, mais vendidos, pedidos por status, clientes sem pedidos, pagamentos pendentes e ticket médio.\n3. Definir período, status e unidade monetária; evitar dobrar totais em joins com itens.\n4. Propor duas views úteis e documentar finalidade.\n5. Rodar EXPLAIN ANALYZE em base de teste com massa adequada, antes/depois de um índice escolhido; registrar volume e ambiente.\n6. Não prometer ganho de desempenho com 50 linhas; interpretar custo/plano e justificar quando índice não ajuda.\n\n## Entrega e evidência\ndocs/bd/consultas.sql, views.sql, massa/esperados e analise-indices.md com planos.\n\n## Critérios de conclusão\n- [ ] Resultados conferidos com massa conhecida.\n- [ ] Views justificadas.\n- [ ] Comparação de plano interpretada.\n- [ ] Revisão de Matheus.\n\n## Dependências e relação com outros cards\nSubentrega do card 14; depende de BD-01/02 e seed. Quantidades propostas, ajustar à rubrica BD.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/9luJhlJy/37-allan-bd-03-consultas-sql-views-e-an%C3%A1lise-de-%C3%ADndices",
+      "shortUrl": "https://trello.com/c/9luJhlJy",
+      "closed": false,
+      "complete": false,
+      "position": 163857,
+      "lastActivityAt": "2026-09-27T11:53:07.307Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-01T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031983ee5fe30448de53",
+      "name": "[Gabriel] QA-01 · Testes unitários das regras de negócio",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus; Allan implementa casos em dupla\n**Revisor:** Allan\n**Planejamento:** 2026-10-25\n\n## Objetivo\nImplementar a frente unitária do card 13, sem Spring ou banco.\n\n## Como executar\n1. Criar classes *Test com JUnit Jupiter/Mockito e dependências isoladas.\n2. Priorizar regras de pedido/pagamento: cliente resolvido, produto ausente, type, pagamento pendente e alteração de endereço.\n3. Testar positivos, negativos e limites com asserções de estado/retorno e efeitos relevantes, evitando apenas verificar que método foi chamado.\n4. Controlar tempo/aleatoriedade quando afetam resultados; fixtures pequenas e legíveis.\n5. Identificar CT/RF/CA nos testes e executar via wrapper; preservar XML e cobertura inicial.\n6. Separar comprovação de transação/constraint real para QA-02.\n\n## Entrega e evidência\nsrc/test/java/.../unit, relatórios Surefire e links CT→teste.\n\n## Critérios de conclusão\n- [ ] Regras críticas têm cenários positivos/negativos.\n- [ ] Execução isolada sem banco.\n- [ ] Asserções verificam negócio.\n- [ ] Revisão cruzada.\n\n## Dependências e relação com outros cards\nCard 13 coordena. Depende de requisitos e setup; caso específico do total fica em QA-04.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/eQ7WLyPR/38-gabriel-qa-01-testes-unit%C3%A1rios-das-regras-de-neg%C3%B3cio",
+      "shortUrl": "https://trello.com/c/eQ7WLyPR",
+      "closed": false,
+      "complete": false,
+      "position": 180241,
+      "lastActivityAt": "2026-09-27T11:53:13.431Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-25T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031a850d8be9beed42ea",
+      "name": "[Matheus] QA-02 · Integração, constraints e rollback real",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Gabriel\n**Planejamento:** 2026-11-01\n\n## Objetivo\nComprovar integridade e persistência usando PostgreSQL real.\n\n## Como executar\n1. Criar *IT com Testcontainers e migrações, ligadas ao Failsafe.\n2. Testar insert/consulta, mapeamento de subtipos, PK/FK, unicidade e checks aprovados.\n3. Inserir dado inválido via JDBC para demonstrar proteção do banco mesmo sem a API.\n4. Provocar falha intermediária no pedido e conferir ausência de cliente/pedido/itens/pagamento parciais conforme a transação.\n5. Testar troca de tipo de pagamento, vínculo com pedido e ausência de órfãos; conferir cascade/orphanRemoval.\n6. Usar flush quando necessário para materializar violação; executar em base vazia e repetir para verificar isolamento.\n7. Registrar erros de configuração separadamente de defeitos do produto.\n\n## Entrega e evidência\nsrc/test/java/.../integration + relatórios Failsafe, consultas de verificação e evidências sanitizadas.\n\n## Critérios de conclusão\n- [ ] Constraints exercitadas diretamente.\n- [ ] Rollback real demonstrado.\n- [ ] Migração em base vazia testada.\n- [ ] Sem resíduos entre casos.\n\n## Dependências e relação com outros cards\nExecuta parte dos cards 13 e 14; depende de BD-02 e ambiente/seed.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/lUE8z32P/39-matheus-qa-02-integra%C3%A7%C3%A3o-constraints-e-rollback-real",
+      "shortUrl": "https://trello.com/c/lUE8z32P",
+      "closed": false,
+      "complete": false,
+      "position": 196625,
+      "lastActivityAt": "2026-09-28T01:19:15.879Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-01T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031c5ccf21c69c20f395",
+      "name": "[Allan] QA-03 · Testes de sistema HTTP e aceitação",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel; Francisco participa do roteiro em dupla\n**Revisor:** Matheus\n**Planejamento:** 2026-11-01\n\n## Objetivo\nDemonstrar o fluxo completo por HTTP e os critérios de negócio.\n\n## Como executar\n1. Usar Spring Boot em porta aleatória + PostgreSQL real + REST Assured.\n2. Criar cliente/produto, pedido com itens/endereço/pagamento, processar o pagamento já criado e consultar o estado.\n3. Organizar Dado/Quando/Então por RF/CA; não criar pagamento duplicado acidentalmente na fixture.\n4. Capturar IDs retornados e conferir persistência; não depender de IDs fixos ou ordem entre testes.\n5. Executar sucesso, referência inexistente, campos inválidos, type e bloqueio de endereço após envio.\n6. Reutilizar validações do card 11; não contar o mesmo caso duas vezes por ser também aceitação.\n7. Anexar requests/responses sanitizados e ligar execução, caso e defeito.\n\n## Entrega e evidência\nTestes HTTP/aceitação e matriz CA→CT→run com resultados.\n\n## Critérios de conclusão\n- [ ] Fluxo de negócio completo exercitado.\n- [ ] CAs prioritários vinculados.\n- [ ] Banco isolado e dados sintéticos.\n- [ ] Francisco consegue explicar um cenário em dupla.\n\n## Dependências e relação com outros cards\nCard 13 coordena; depende de contrato, fixtures, CI e card 11.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/pY0i7PQQ/40-allan-qa-03-testes-de-sistema-http-e-aceita%C3%A7%C3%A3o",
+      "shortUrl": "https://trello.com/c/pY0i7PQQ",
+      "closed": false,
+      "complete": false,
+      "position": 213009,
+      "lastActivityAt": "2026-09-28T01:19:21.992Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-01T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031e24ad3578843213f5",
+      "name": "[Allan] QA-04 · Reproduzir e tratar cálculo de total do pedido",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel corrige se confirmado; Matheus valida regra monetária\n**Revisor:** Matheus\n**Planejamento:** 2026-10-25\n\n## Objetivo\nInvestigar o achado de inspeção: quantidade possivelmente multiplicada duas vezes. Ainda é hipótese de execução.\n\n## Como executar\n1. Revisar OrderService.buildItems, OrderItem.subTotal e total do pedido no commit atual.\n2. Aprovar semântica: price do item é preço unitário histórico; total é soma de preço unitário × quantidade.\n3. Preparar produto de 50,00 e pedido com 2 unidades; esperado proposto 100,00, nunca inferir esperado do código.\n4. Executar unitário e cenário HTTP, guardar obtido/commit/log. Repetir com quantidade 1 e com alteração posterior do preço do catálogo.\n5. Se confirmado, registrar Issue com CT/CA, severidade e causa; corrigir preservando contrato/dados ou documentar evolução.\n6. Retestar o caso original e regressão; avaliar separadamente valor do pagamento e precisão decimal.\n\n## Entrega e evidência\nTeste CT021 (ou ID acordado), registro do achado/Issue, PR se necessário e evidências antes/depois.\n\n## Critérios de conclusão\n- [ ] Resultado real registrado.\n- [ ] Semântica monetária revisada.\n- [ ] Defeito confirmado corrigido ou risco justificado.\n- [ ] Reteste e regressão se houver correção.\n\n## Dependências e relação com outros cards\nDerivado do manual p.8; vincular aos cards 16/17 e RF-07. Não é defeito confirmado apenas pela criação do card.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/UCbFIFXr/41-allan-qa-04-reproduzir-e-tratar-c%C3%A1lculo-de-total-do-pedido",
+      "shortUrl": "https://trello.com/c/UCbFIFXr",
+      "closed": false,
+      "complete": false,
+      "position": 229393,
+      "lastActivityAt": "2026-09-28T01:19:28.969Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-25T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031f09d683c86c1a22bc",
+      "name": "[Allan] QA-05 · Medição de desempenho RNF-03",
+      "description": "**Responsável principal:** Allan\n**Apoio:** Matheus consolida métricas; Gabriel apoia execução\n**Revisor:** Matheus\n**Planejamento:** 2026-11-08\n\n## Objetivo\nMedir p95 sob protocolo explícito, sem alegar capacidade de produção.\n\n## Como executar\n1. Aprovar rotas GET, dataset de 50 pedidos com relações e limite proposto p95 ≤500 ms.\n2. Registrar CPU/memória, SO, JDK, PostgreSQL, commit e condição de rede; ambiente de teste exclusivo.\n3. Para cada rota, 20 requisições de aquecimento e 200 medições sequenciais; registrar também erros.\n4. Guardar tempos brutos e cálculo do percentil; excluir aquecimento conforme protocolo, sem retirar amostras lentas arbitrariamente.\n5. Repetir sob mesmas condições ao comparar versões e explicar variação/limites.\n6. Se falhar, triar consulta/índice/código ou ambiente com evidência; não mudar meta retroativamente para passar.\n\n## Entrega e evidência\nreports/desempenho/ com CSV/JSON, protocolo e interpretação.\n\n## Critérios de conclusão\n- [ ] Protocolo aprovado antes da medição.\n- [ ] Tempos brutos e taxa de erros preservados.\n- [ ] p95 reproduzível por rota.\n- [ ] Limitações documentadas.\n\n## Dependências e relação com outros cards\nRNF-03 e card 18; depende de ambiente estável, seed e endpoints.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/Ob9F07Rn/42-allan-qa-05-medi%C3%A7%C3%A3o-de-desempenho-rnf-03",
+      "shortUrl": "https://trello.com/c/Ob9F07Rn",
+      "closed": false,
+      "complete": false,
+      "position": 245777,
+      "lastActivityAt": "2026-09-28T01:19:34.922Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-08T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+          "fullName": "Allan Gabriel Almeida Barros",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90320e08c1127dff1a095",
+      "name": "[Gabriel] QA-06 · Geração de testes de contrato com Schemathesis",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan reproduz achados; Francisco organiza evidências\n**Revisor:** Matheus\n**Planejamento:** 2026-11-08\n\n## Objetivo\nComplementar casos determinísticos com geração controlada baseada no OpenAPI.\n\n## Como executar\n1. Executar após o núcleo de testes e contrato revisado estarem estáveis; fixar versão/configuração compatíveis.\n2. Usar ambiente descartável e preparar referências/dados para exercitar operações com estado.\n3. Definir orçamento de geração/tempo e seed quando suportado; guardar contrato e comando efetivo da versão escolhida.\n4. Verificar respostas inesperadas e violações de schema/status, distinguindo limitações do gerador.\n5. Reduzir cada achado ao request mínimo reproduzível e convertê-lo em caso determinístico antes de corrigir.\n6. Evitar concluir cobertura ampla se a execução só gerou 404; relatar operações e variantes realmente exercitadas.\n\n## Entrega e evidência\nreports/schemathesis/ e casos mínimos/Issues vinculados.\n\n## Critérios de conclusão\n- [ ] Configuração e versão registradas.\n- [ ] Execução reproduzível em teste.\n- [ ] Achados triados.\n- [ ] Limites de cobertura explicados.\n\n## Dependências e relação com outros cards\nComplemento do card 11, dependente do spike. Não bloquear entregáveis obrigatórios por recurso opcional.\n\n_Revisão de 27/09/2026, alinhada ao Manual A3 v1.0. Nenhum cenário deste card foi executado por esta revisão. Registrar resultados somente após execução real._",
+      "url": "https://trello.com/c/71ixgS6n/43-gabriel-qa-06-gera%C3%A7%C3%A3o-de-testes-de-contrato-com-schemathesis",
+      "shortUrl": "https://trello.com/c/71ixgS6n",
+      "closed": false,
+      "complete": false,
+      "position": 262161,
+      "lastActivityAt": "2026-09-28T01:19:41.870Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-11-08T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Backlog",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c3a3760eb1cc355a29",
+      "name": "[Gabriel] 01 · Setup do repositório e ambiente",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** 2026-10-04\n\n## Objetivo\nPreparar base técnica preservando o estado original (seções 20/24.1).\n\n## Como executar\n1. Usar o repositório oficial já existente; não criar fork duplicado. Conferir acesso e remotos.\n2. Antes de editar: registrar commit original B0 e diagnóstico; tag v0-original apenas após verificar que não existe.\n3. Conferir Java/Maven/Boot/springdoc; registrar versões e falhas. Se precisar ajuste mínimo para subir, criar B1 separado e explicar diferenças.\n4. Configurar banco exclusivo e credenciais via ambiente; não publicar segredo em README/log.\n5. Usar src/main, src/test, docs, reports, config e README; não duplicar testes em /tests sem necessidade Maven.\n6. Subir API e verificar Swagger e /v3/api-docs; vincular exportação ao card específico e iniciar CI mínimo.\n\n## Entrega e evidência\nAPI executável ou bloqueio reproduzível; B0/B1 identificados; README inicial e logs sanitizados.\n\n## Critérios de conclusão\n- [ ] Estado original preservado.\n- [ ] Ambiente e compatibilidade registrados.\n- [ ] Swagger verificado e CI mínimo encaminhado.\n\n## Dependências\nStack e repositório; exportação detalhada no card OpenAPI.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/MT77ib4r/4-gabriel-01-setup-do-reposit%C3%B3rio-e-ambiente",
+      "shortUrl": "https://trello.com/c/MT77ib4r",
+      "closed": false,
+      "complete": false,
+      "position": 1,
+      "lastActivityAt": "2026-09-28T01:20:02.726Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-04T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "A fazer",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c827f25bf6b621c7e0",
+      "name": "[Matheus] 02 · Definição do sistema e requisitos (≥10 RF, ≥5 RNF)",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan redige cenários; Gabriel explica domínio\n**Revisor:** Allan\n**Planejamento:** 2026-10-07\n\n## Objetivo\nDefinir requisitos com origem explícita, mínimo 10 RF e 5 RNF (8 pontos com CA).\n\n## Como executar\n1. Descrever problema, público, SUT, funcionalidades, limites e riscos; pagamentos simulados.\n2. Usar 12 RF do manual: clientes, produtos, endereços, pedido, total, status, endereço de entrega, pagamento, edição e processamento.\n3. Usar 6 RNF: erros, conformidade, eficiência, proteção, manutenção e reprodução; converter metas em medidas.\n4. Confrontar enunciado, comportamento e proposta; não derivar esperado apenas do código.\n5. Inventariar as 28 operações e DTO/type; registrar semântica de price, valor pago, transições, exclusão, clientId+client e repetição como decisões a resolver.\n6. Não impor RFC ou schema diferente sem decisão; partir de timestamp/status/error/message/details observado.\n\n## Entrega e evidência\ndocs/requisitos.md com IDs, origem, prioridade e decisões pendentes.\n\n## Critérios de conclusão\n- [ ] Mínimos atendidos e requisitos verificáveis.\n- [ ] Propostas separadas de observado.\n- [ ] Revisão de Allan.\n\n## Dependências\nEscopo, inventário e card de alinhamento.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/FlbPAXNE/5-matheus-02-defini%C3%A7%C3%A3o-do-sistema-e-requisitos-%E2%89%A510-rf-%E2%89%A55-rnf",
+      "shortUrl": "https://trello.com/c/FlbPAXNE",
+      "closed": false,
+      "complete": false,
+      "position": 2,
+      "lastActivityAt": "2026-09-27T11:53:09.810Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-07T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "A fazer",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cb7e012403f08d5b70",
+      "name": "[Matheus] 03 · Validação dos requisitos",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Francisco revisa texto\n**Revisor:** Allan\n**Planejamento:** 2026-10-09\n\n## Objetivo\nEliminar ambiguidades dos requisitos antes da avaliação formal.\n\n## Como executar\n1. Revisar cada RF/RNF: ambiguidade, completude, contradição, verificabilidade e critérios.\n2. Trocar 'rápido' por protocolo definido: rotas, dataset, máquina, aquecimento, amostra, concorrência e p95.\n3. Precisar política de POST 200/201 e DELETE inexistente, nulidade/campos de erro, type e transições.\n4. Registrar problema, texto antes/depois, decisão, autor e revisor.\n5. Achados documentais têm evidência de inspeção; não exigir teste HTTP para provar requisito ambíguo.\n\n## Entrega e evidência\ndocs/validacao-requisitos.md com tabela de revisão.\n\n## Critérios de conclusão\n- [ ] Todos os requisitos revisados.\n- [ ] Decisões e pendências rastreáveis.\n- [ ] Sem metas impossíveis de verificar.\n\n## Dependências\nCard 02; retorno alimenta CA e contrato.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/rfWqWzVR/6-matheus-03-valida%C3%A7%C3%A3o-dos-requisitos",
+      "shortUrl": "https://trello.com/c/rfWqWzVR",
+      "closed": false,
+      "complete": false,
+      "position": 3,
+      "lastActivityAt": "2026-09-27T11:53:10.920Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-09T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "A fazer",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cf3e5d0ca5ff96642e",
+      "name": "[Matheus] 04 · Critérios de aceitação por requisito",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Gabriel\n**Planejamento:** 2026-10-11\n\n## Objetivo\nDefinir critérios de aceitação e matriz RF→CA→CT→execução→defeito.\n\n## Como executar\n1. Criar CAs objetivos por RF e RNF, cobrindo válido, inválido, persistência e erro quando aplicável.\n2. Usar os nomes reais timestamp, status, error, message, details; path só se aprovado como evolução.\n3. Não declarar todo POST 200 como defeito. Definir contrato-alvo e registrar eventual mudança para 201/Location.\n4. Definir regras de preço unitário×quantidade, estado do pedido, valor pago, type e dados condicionais.\n5. Usar Dado/Quando/Então e relacionar cada CA a casos do catálogo.\n6. Deixar resultado como não executado até gerar evidência.\n\n## Entrega e evidência\ndocs/criterios-aceitacao.md e matriz de rastreabilidade.\n\n## Critérios de conclusão\n- [ ] Cada requisito importante tem CA.\n- [ ] Esperado inequívoco e revisado.\n- [ ] Vínculos atualizáveis por execução.\n\n## Dependências\nRequisitos validados e revisão do contrato.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/NsbhF1uK/7-matheus-04-crit%C3%A9rios-de-aceita%C3%A7%C3%A3o-por-requisito",
+      "shortUrl": "https://trello.com/c/NsbhF1uK",
+      "closed": false,
+      "complete": false,
+      "position": 4,
+      "lastActivityAt": "2026-09-27T11:53:12.009Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "A fazer",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41a28c5cf67a38e2f04",
+      "name": "[Gabriel] Extrair e versionar o contrato OpenAPI (baseline)",
+      "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Planejamento:** 2026-10-11\n\n## Objetivo\nEstabelecer contrato revisado independente da implementação avaliada.\n\n## Como executar\n1. Até 05/10 exportar /v3/api-docs da versão executável e guardar commit, gerador e hash como config/openapi-exportado-v0.json.\n2. Revisar com RF/CA: rotas, respostas, required, formatos, enum, nulidade, type e campos por subtipo.\n3. Conferir respostas inferidas do handler; ausência de @apiresponse não prova ausência no JSON.\n4. Até 11/10 aprovar config/openapi-contrato-v1.json e documentar lacunas/mudanças em relação ao exportado.\n5. Usar arquivo revisado fixo nos testes; não sobrescrever automaticamente para aceitar comportamento incorreto.\n6. Definir mudanças via PR, revisão e justificativa de compatibilidade. Validar suporte do validador ao dialeto.\n\n## Entrega e evidência\nDois contratos identificados + docs/decisoes/contrato.md.\n\n## Critérios de conclusão\n- [ ] Exportação original preservada.\n- [ ] Revisão por requisito concluída.\n- [ ] Contrato-alvo versionado e usado pelo spike.\n\n## Dependências\nB0/B1, requisitos/CA e spike.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/haebO3FA/27-gabriel-extrair-e-versionar-o-contrato-openapi-baseline",
+      "shortUrl": "https://trello.com/c/haebO3FA",
+      "closed": false,
+      "complete": false,
+      "position": 16388,
+      "lastActivityAt": "2026-09-27T11:53:13.199Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-11T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+          "fullName": "Gabriel Sousa",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "A fazer",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e419d69b83862a2ca84c",
+      "name": "[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Todos\n**Revisor:** Gabriel\n**Planejamento:** 2026-10-03\n\n## Objetivo\nEstabelecer responsabilidade visível e trabalho em equipe, considerando condições de equipamento.\n\n## Como executar\n1. Usar um responsável principal por card; apoio e revisor aparecem na descrição. O prefixo [Nome] permite identificar no quadro mesmo sem avatar.\n2. Manter Gabriel em ambiente/CI/arquitetura e caixa-branca; Matheus em coordenação, requisitos/plano de testes, BD e métricas; Allan em risco, inspeção, estática, catálogo, testes e defeitos; Francisco em qualidade, organização, ética, relatórios e apresentação.\n3. Respeitar a limitação de equipamento registrada para Francisco: tarefas práticas em dupla/ambiente compartilhado; todos precisam compreender a suíte, sem exigir build local individual.\n4. Combinar reunião semanal de 30 minutos, canal e disponibilidade. Referência: 226 h de trabalho + 34 h de reserva = 260 h; validar capacidade real.\n5. Limitar uma tarefa principal em andamento por pessoa; revisão por outra pessoa, sem Gabriel ser aprovador único.\n6. Fluxo: Backlog→A fazer→Em andamento→Em revisão→Concluído. Atualizar bloqueios e dependências; concluir só com evidência/revisão.\n\n## Entrega e evidência\nAcordo em docs/acordo-equipe.md e quadro com responsáveis sinalizados.\n\n## Critérios de conclusão\n- [ ] Papéis e capacidade combinados.\n- [ ] Todos têm apoio/revisor.\n- [ ] Participação prática acessível.\n\n## Dependências\nKickoff; divisão operacional adapta o manual às condições registradas no quadro.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho",
+      "shortUrl": "https://trello.com/c/KKPfn6ES",
+      "closed": false,
+      "complete": false,
+      "position": 140737488355328,
+      "lastActivityAt": "2026-09-27T12:01:20.691Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-03T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Em andamento",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a3e5500a42c656ca53"
+    },
+    {
+      "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e418f58fd703419a3487",
+      "name": "[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)",
+      "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel; Francisco organiza retorno\n**Revisor:** Allan\n**Planejamento:** 2026-10-03\n\n## Objetivo\nResolver pendências acadêmicas específicas, sem paralisar trabalho independente.\n\n## Como executar\n1. Confirmar autorização do grupo com quatro integrantes, pois o enunciado limita três.\n2. Solicitar rubrica/entregáveis de Banco de Dados e registrar o escopo aprovado.\n3. Confirmar prazo e horário: enunciado até 30/11; solicitação informa janela 30/11-05/12/2026. Planejar 30/11 enquanto não houver mudança formal.\n4. Informar stack Java por coerência com o SUT; o enunciado recomenda Python, mas admite outra stack.\n5. Registrar data, interlocutor, decisão e cards afetados; não presumir aprovação.\n6. Continuar inventário, leitura, preservação B0 e protótipos independentes; bloquear só o trabalho que depende de resposta.\n\n## Entrega e evidência\ndocs/decisoes/alinhamento-docente.md com registro das respostas recebidas.\n\n## Critérios de conclusão\n- [ ] Grupo, prazo e BD definidos ou pendência explícita.\n- [ ] Impactos refletidos no plano.\n\n## Dependências\nS1; o executor deve realizar o contato, não há envio automático nesta revisão.\n\n_Revisado em 27/09/2026 conforme o Manual do Projeto A3 v1.0. Metas são propostas; resultados só após execução. Trello organiza tarefas; GitHub mantém código, PRs, defeitos e evidências vinculadas._",
+      "url": "https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador",
+      "shortUrl": "https://trello.com/c/3lLw8iW9",
+      "closed": false,
+      "complete": false,
+      "position": 140737488371712,
+      "lastActivityAt": "2026-09-27T12:02:08.378Z",
+      "startedAt": null,
+      "due": {
+        "date": "2026-10-03T21:00:00.000Z",
+        "complete": false
+      },
+      "listId": null,
+      "boardId": null,
+      "labels": [],
+      "labelsHasMore": false,
+      "checklists": [],
+      "checklistsHasMore": false,
+      "members": [
+        {
+          "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+          "fullName": "Matheus Siqueira",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/d91db0444bfec80aae7a1698279c382f"
+        }
+      ],
+      "comments": [],
+      "commentsHasMore": false,
+      "list": null,
+      "board": null,
+      "listName": "Em andamento",
+      "listARI": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a3e5500a42c656ca53"
+    }
+  ],
+  "checklists": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7e4dbcb7309290edf1f33\",\n      \"name\": \"Passos (caixa-preta)\",\n      \"position\": 140737488338944,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e504f6510448e937fa8f\",\n          \"name\": \"Aplicar partições válidas/inválidas aos DTOs, incluindo type ausente, desconhecido e incompatível.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e506028a1440f3711cfa\",\n          \"name\": \"Aplicar valores-limite aos requisitos aprovados; por exemplo, CEP com 7, 8 e 9 dígitos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e507850d8be9be676767\",\n          \"name\": \"Enviar requests inválidos até a API, sem bloqueio pelo validador de request; validar resposta 400.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50803a1c4812968ab1c\",\n          \"name\": \"Verificar recurso inexistente e resposta 404 conforme contrato aprovado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50a0e84de9de337c06c\",\n          \"name\": \"Provocar 500 de forma controlada em teste; conferir schema e ausência de stack trace na resposta.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488420864\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50b3adedc182cb388bc\",\n          \"name\": \"Validar respostas de sucesso e erro contra contrato revisado, congelado e identificado por versão.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488437248\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50ec6fdc3cc848d1e4e\",\n          \"name\": \"Registrar CT, RF/CA, commit, request, resposta e resultado real por execução.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488453632\n        }\n      ]\n    },\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c430345df9c0c4d00e6c\",\n      \"name\": \"Contrato HTTP e consistência de dados\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c46c00780bcbfaeff451\",\n          \"name\": \"Aplicar tabela de decisão como terceira técnica e ligar combinações de condições aos CTs.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c46f0520add4665dad06\",\n          \"name\": \"Testar JSON malformado, tipo incorreto, método/mídia e conflito; justificar status 400/405/415/409 pelo contrato.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c471a0f22722bfe19515\",\n          \"name\": \"Conferir coerência entre status HTTP e campo status do corpo, além de timestamp/error/message/details.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c475d0d513df8d569e7b\",\n          \"name\": \"Conferir variantes de DTO e type em entrada e saída, com campos obrigatórios de cada subtipo.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 4\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c478c40000f19bd6b123\",\n          \"name\": \"Verificar que requisições rejeitadas não persistem dados parciais indevidos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 5\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c47a33604108fe0bdc23\",\n          \"name\": \"Revisar o OpenAPI com requisitos antes de usá-lo como oráculo; gerar do código não prova correção.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 6\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDMwMzQ1ZGY5YzBjNGQwMGU2YyJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7e4dc24f784ce2a5a5d17\",\n      \"name\": \"Passos (caixa-branca)\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50f2fd0aaea78f461f2\",\n          \"name\": \"Medir baseline real de instruções e branches com JaCoCo; registrar commit, escopo e exclusões.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e510669a1a7de1674a6e\",\n          \"name\": \"Mapear branches nos services e no handler de exceções\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5116984dd72f1825f5d\",\n          \"name\": \"Criar testes para os branches faltantes\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e513c649984b8e270aec\",\n          \"name\": \"Medir cobertura de novo e comparar (antes × depois)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5142317638177a01015\",\n          \"name\": \"Salvar os 2 relatórios HTML em reports/cobertura/\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488420864\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdlNGRjMjRmNzg0Y2UyYTVhNWQxNyJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7e4ddbc57b552de9b4fd6\",\n      \"name\": \"Pipeline CI (etapas)\",\n      \"position\": 140737488338944,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e53fb25f1a48bb40b408\",\n          \"name\": \"Criar workflow no push e pull request; mínimo funcional desde S1.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e540e54f10ad402582a8\",\n          \"name\": \"Configurar JDK compatível e Maven Wrapper; registrar versões do build.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e541f4d8e00ae636debc\",\n          \"name\": \"Executar ao menos uma ferramenta estática e preservar relatório.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e543bf88f83b5d44b65c\",\n          \"name\": \"Executar verify pelo Wrapper com Surefire e Failsafe configurados; confirmar testes descobertos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54486760b498514cbc1\",\n          \"name\": \"Publicar cobertura JaCoCo vinculada ao commit e ao escopo medido.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488420864\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e545124c8a3cb46438c0\",\n          \"name\": \"Publicar relatórios Surefire/Failsafe e evidências também quando houver falhas.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488437248\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5460520add466932679\",\n          \"name\": \"Reproduzir o comando do README em ambiente limpo e conferir resultado da CI.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488453632\n        }\n      ]\n    },\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c4327c46905bfdb3d3cb\",\n      \"name\": \"Configuração e descoberta da suíte\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c47d1e8d05a70d2a6240\",\n          \"name\": \"Resolver JUnit Jupiter pelo Boot e validar compatibilidade de REST Assured e JaCoCo.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c481e2d270b528fd28d7\",\n          \"name\": \"Configurar *Test/Surefire e *IT/Failsafe (integration-test e verify); tags não substituem descoberta.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c48486e734c3fbfe44c0\",\n          \"name\": \"Verificar que falha de teste reprova a execução e que suíte vazia não produz falso sucesso.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4869941fc21d65e262d\",\n          \"name\": \"Isolar PostgreSQL, fixtures e portas entre casos; registrar política de limpeza.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 4\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4892e77adabbb8bb720\",\n          \"name\": \"Documentar comandos, pré-requisitos e localização dos relatórios no README.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 5\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDMyN2M0NjkwNWJmZGIzZDNjYiJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7e4def04431814ba427b8\",\n      \"name\": \"14 critérios da rubrica\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e548087b18d10e3e2c59\",\n          \"name\": \"Requisitos e critérios de aceitação (8)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5493ea4c90fda478726\",\n          \"name\": \"Plano de qualidade (8)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54ac6fdc3cc848d6660\",\n          \"name\": \"Planejamento e estratégia de testes (8)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54bdab8b6fa058813fd\",\n          \"name\": \"Testes caixa-preta (10)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54d6b5fae5059ea30fe\",\n          \"name\": \"Testes caixa-branca (10)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488420864\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54e089b48c577cb753a\",\n          \"name\": \"Testes baseados em risco (7)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488437248\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e54ff83408c2ac2dd0b8\",\n          \"name\": \"Unitário, integração, sistema e aceitação (10)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488453632\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e550ebb1f256ad3f94e2\",\n          \"name\": \"Testes automatizados (12)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488470016\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e552e6f060ac441b5268\",\n          \"name\": \"Análise estática e revisão técnica (7)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488486400\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e55326642c99c326d23a\",\n          \"name\": \"Gestão de defeitos (5)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488502784\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5540257ff3e30124fee\",\n          \"name\": \"Métricas e indicadores (7)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488519168\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e55554238a2828ca90af\",\n          \"name\": \"Melhoria contínua — antes/depois (4)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488535552\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e556477b33376c764dbc\",\n          \"name\": \"Ética, segurança e responsabilidade (2)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488551936\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e55870686730d6d258bf\",\n          \"name\": \"Documentação e apresentação (2)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488568320\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdlNGRlZjA0NDMxODE0YmE0MjdiOCJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9039228974edebb53c64b\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903947cc907e46ac06509\",\n          \"name\": \"DER e dicionário coerentes com esquema inspecionado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903956c79b88d6fde10f9\",\n          \"name\": \"Decisões de normalização e herança justificadas.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab90396a1e7668400600c3a\",\n          \"name\": \"Revisão por outro integrante.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjkwMzkyMjg5NzRlZGViYjUzYzY0YiJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab903974e9c8ea273c3175f\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903990e526e52c59d7598\",\n          \"name\": \"Esquema recriado do zero.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9039af3a003001ac97b98\",\n          \"name\": \"Histórico Flyway coerente.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9039cd345cf1a4b2885bd\",\n          \"name\": \"Massa de teste separada.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9039db6ba20a57fad14c1\",\n          \"name\": \"Constraints alinhadas aos requisitos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjkwMzk3NGU5YzhlYTI3M2MzMTc1ZiJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9039e331bd2cec8f54271\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a0c4f9427730eedf75\",\n          \"name\": \"Resultados conferidos com massa conhecida.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a1809cfef0a081ce14\",\n          \"name\": \"Views justificadas.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a2a1e766840060181d\",\n          \"name\": \"Comparação de plano interpretada.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a33865c9646821d29c\",\n          \"name\": \"Revisão de Matheus.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjkwMzllMzMxYmQyY2VjOGY1NDI3MSJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab903a4999ce5e4f80eb689\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a51ac6c2d3f2a70f10\",\n          \"name\": \"Regras críticas têm cenários positivos/negativos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a758e42565c744f634\",\n          \"name\": \"Execução isolada sem banco.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a8f3350e2c8e353d7a\",\n          \"name\": \"Asserções verificam negócio.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab903a983ee5fe304499fcc\",\n          \"name\": \"Revisão cruzada.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjkwM2E0OTk5Y2U1ZTRmODBlYjY4OSJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab904332d8d966bebeaaedf\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c08f483b032b1060222c\",\n          \"name\": \"Constraints exercitadas diretamente.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0905ccc786c91f0adc3\",\n          \"name\": \"Rollback real demonstrado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c092e1385bcfeeb17a30\",\n          \"name\": \"Migração em base vazia testada.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09317edac701c0e09b7\",\n          \"name\": \"Sem resíduos entre casos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjkwNDMzMmQ4ZDk2NmJlYmVhYWVkZiJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9c094671c24a0d24c341c\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0960cca2348f5464501\",\n          \"name\": \"Fluxo de negócio completo exercitado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09730e05179bea0f45f\",\n          \"name\": \"CAs prioritários vinculados.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09898994462dc9162a2\",\n          \"name\": \"Banco isolado e dados sintéticos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09970686730d66ff267\",\n          \"name\": \"Francisco consegue explicar um cenário em dupla.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjljMDk0NjcxYzI0YTBkMjRjMzQxYyJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9c09bad57352fe92e010a\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09c8b3056503558fef4\",\n          \"name\": \"Resultado real registrado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09e8d96e0d959216c32\",\n          \"name\": \"Semântica monetária revisada.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09f5e6c0fc42beacf6c\",\n          \"name\": \"Defeito confirmado corrigido ou risco justificado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a0d41f3dc597b4e0de\",\n          \"name\": \"Reteste e regressão se houver correção.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjljMDliYWQ1NzM1MmZlOTJlMDEwYSJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9c0a2b2d6b6d24d417e2b\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a3fd0be5f89035dce8\",\n          \"name\": \"Protocolo aprovado antes da medição.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a4697e58312fcfa88f\",\n          \"name\": \"Tempos brutos e taxa de erros preservados.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a540ff14f38bad1e27\",\n          \"name\": \"p95 reproduzível por rota.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a6d26d9b282df06d0d\",\n          \"name\": \"Limitações documentadas.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjljMGEyYjJkNmI2ZDI0ZDQxN2UyYiJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab9c0a82fc603dbf5a29ae4\",\n      \"name\": \"Critérios de conclusão\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a99c4166a2fd4c0d6c\",\n          \"name\": \"Configuração e versão registradas.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488355328\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0abb24868020ad4b3ed\",\n          \"name\": \"Execução reproduzível em teste.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488371712\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0ac67e31fde45ae6748\",\n          \"name\": \"Achados triados.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488388096\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0ade48428e095266834\",\n          \"name\": \"Limites de cobertura explicados.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 140737488404480\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjljMGE4MmZjNjAzZGJmNWEyOWFlNCJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c424333c9e83529d2038\",\n      \"name\": \"Tarefas\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c439a427342de6995df1\",\n          \"name\": \"Conferir repositório oficial, remotos e acesso dos integrantes; evitar fork duplicado.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c43ca408870c36d6cb6f\",\n          \"name\": \"Organizar src/main, src/test, docs, reports e config conforme Maven e documentar no README.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c43fb548bb63989f6c2d\",\n          \"name\": \"Executar a API e verificar Swagger UI e /v3/api-docs; registrar versões e falhas reais.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c441818525dfa9a1f0e6\",\n          \"name\": \"Exportar OpenAPI em config/ com commit, gerador e hash; vincular ao card de baseline.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 4\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c44472d7c011a5e87d0b\",\n          \"name\": \"Preservar B0 antes de alterações; separar B1 executável e documentar ajustes mínimos.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 5\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c447afa25910da58733b\",\n          \"name\": \"Registrar alinhamento da stack no card 00; prosseguir com tarefas independentes da resposta docente.\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 6\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDI0MzMzYzllODM1MjlkMjAzOCJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c4277ca193ade97c7909\",\n      \"name\": \"Tarefas\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c44ab6886da40f39e454\",\n          \"name\": \"Descrição do sistema, problema resolvido e público-alvo\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c44d059b33df4743ab11\",\n          \"name\": \"Mapear endpoints, DTOs e entidades\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c450292a5ec27324d7bd\",\n          \"name\": \"Escrever ≥10 requisitos funcionais (RF-01..RF-10)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c45381d255e0abb28fbb\",\n          \"name\": \"Escrever ≥5 requisitos não funcionais (RNF-01..RNF-05)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 4\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c456d9ab2698c85b7223\",\n          \"name\": \"Listar restrições e riscos do sistema\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 5\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDI3N2NhMTkzYWRlOTdjNzkwOSJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c42aad7efed2e1f446f8\",\n      \"name\": \"Tarefas\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c459618e34adf5d5407e\",\n          \"name\": \"Revisar cada requisito: ambiguidade, incompletude, contradição, verificabilidade e termos subjetivos\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c45b8b305650356a8bab\",\n          \"name\": \"Reescrever os requisitos problemáticos em forma mensurável\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c45e6cd70d35eba0541c\",\n          \"name\": \"Registrar os achados como defeitos de requisito (D0xx)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDJhYWQ3ZWZlZDJlMWY0NDZmOCJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [\n    {\n      \"id\": \"ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ab7c42dd4e0b4ee5d7688cd\",\n      \"name\": \"Tarefas\",\n      \"position\": 140737488355328,\n      \"checkItems\": [\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c461d965346b5d79a273\",\n          \"name\": \"Definir de 3 a 5 CAs objetivos para cada RF\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 1\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4635bbc4f47aed7be3f\",\n          \"name\": \"Definir o schema-alvo do corpo de erro (campos obrigatórios)\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 2\n        },\n        {\n          \"id\": \"ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4662b5a3d77df01a581\",\n          \"name\": \"Montar a matriz de rastreabilidade RF → CA → CT\",\n          \"state\": \"INCOMPLETE\",\n          \"position\": 3\n        }\n      ]\n    }\n  ],\n  \"nextCursor\": \"eyJvYmplY3RJZCI6IjZhYjdjNDJkZDRlMGI0ZWU1ZDc2ODhjZCJ9\",\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"checklists\": [],\n  \"nextCursor\": null,\n  \"hasMore\": false\n}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}
