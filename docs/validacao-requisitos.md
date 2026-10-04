@@ -1,6 +1,8 @@
 # Validacao dos requisitos
 
-Data: 03/10/2026.
+Data: 04/10/2026. Atualização: Matheus Siqueira.
+
+Rodada atual: sessão e acesso executados em Java/HTTP/Chromium no CI 37177644692, com 52 verificações aprovadas e build Next. Detalhes em `docs/execucao-sessao.md` e `reports/execucoes/run-2026-10-04-sessao-nextjs.md`. Referências a leitura sem execução abaixo descrevem a etapa documental inicial, não o estado técnico atual. Revisão humana do conjunto permanece pendente; autoria/metas/estoque e quatro telas não foram implementados.
 
 Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, testes e implementacao. Esta validacao foi feita por leitura do backend local, README, direcao criativa, guia visual e revisao do Trello. Nao houve execucao HTTP ou validacao de banco em runtime nesta etapa.
 
@@ -37,14 +39,14 @@ Objetivo: eliminar ambiguidades antes de transformar requisitos em contrato, tes
 | PEN-03 | Custo medio ponderado confirmado em 04/10. | Matheus + Gabriel | Implementar RF-14, BD, relatorio financeiro. |
 | PEN-04 | Conferencia fisica obrigatoria antes de repor estoque, confirmada em 04/10. | Matheus + Allan | Implementar RF-08, RF-10, RF-13, RF-14. |
 | PEN-05 | Dinheiro com 2 casas e HALF_UP confirmado em 04/10. | Matheus + Gabriel | Migracao monetaria de RF-07, RNF-03. |
-| PEN-06 | Next.js + sessao HttpOnly: codigo de acesso, testes e runner E2E adicionados. Aceite depende de execucao Java/HTTP/browser. | Gabriel + Matheus | Ver `docs/execucao-sessao.md`; integrar UI-02 a UI-05 depois do dominio. |
+| PEN-06 | Next.js + sessão HttpOnly implementados por Matheus, executados com sucesso em Java/HTTP/browser. Falta revisão nominal da equipe e preview Windows. | Gabriel + Matheus | QA-08; integrar UI-02 a UI-05 depois do domínio. |
 | PEN-07 | Professores aceitam grupo de quatro, escopo ampliado e prazo interno? | Matheus | Planejamento e entrega final. |
 
 ## Validacao por requisito
 
 | Requisito | Verificacao feita | Situacao |
 | --- | --- | --- |
-| RF-01 Autenticacao | Spring Security, usuarios persistidos, sessao e CSRF adicionados. | Codigo escrito; validar Java/HTTP/E2E da rodada. |
+| RF-01 Autenticacao | Spring Security, usuários persistidos, sessão e CSRF implementados e testados por Matheus. | Java/HTTP/E2E aprovados no CI; revisão humana em QA-08. |
 | RF-02 Autorizacao | Rotas legadas exigem gerente; usuario atual aceita ambos os perfis. | Parcial; projecoes dedicadas de vendedor pendentes. |
 | RF-03 Clientes | CRUD e subtipos existem. | Requisito observado; precisa testes e contrato. |
 | RF-04 Produtos | CRUD e subtipos existem. | Requisito observado; estoque/custo sao extensoes. |

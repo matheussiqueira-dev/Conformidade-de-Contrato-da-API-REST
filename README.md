@@ -1,5 +1,7 @@
 # Order Management Spring
 
+Documentação e responsabilidades atualizadas por **Matheus Siqueira** em 04/10/2026: [índice dos 64 cards e briefings](docs/gestao/README.md), [PDFs e fontes de referência](docs/referencias/README.md). Código e evidências estão na branch `a3-contract-validation`, aguardando revisão da equipe.
+
 API REST para gestão de pedidos, desenvolvida como projeto de portfólio para praticar arquitetura backend com Spring Boot, JPA/Hibernate e PostgreSQL.
 
 Continuação de 04/10: contrato planejado v3 com sessão/CSRF, autenticação Spring e frontend Next.js de acesso. Veja [execução e limites desta rodada](docs/execucao-sessao.md). As rotas legadas exigem gerente; as contas sintéticas existem somente no runner de banco descartável. As áreas de vendas, metas e estoque seguem pendentes.

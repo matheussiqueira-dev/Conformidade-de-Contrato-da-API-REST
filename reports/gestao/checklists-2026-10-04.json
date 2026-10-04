@@ -1,0 +1,393 @@
+{
+  "completed": [
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e53fb25f1a48bb40b408",
+      "text": "Criar workflow no push e pull request; mínimo funcional desde S1."
+    },
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e540e54f10ad402582a8",
+      "text": "Configurar JDK compatível e Maven Wrapper; registrar versões do build."
+    },
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e545124c8a3cb46438c0",
+      "text": "Publicar relatórios Surefire/Failsafe e evidências também quando houver falhas."
+    },
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e5460520add466932679",
+      "text": "Reproduzir comandos de API/BD/frontend e suíte/E2E em ambiente limpo; conferir CI."
+    },
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4869941fc21d65e262d",
+      "text": "Isolar PostgreSQL, fixtures e portas entre casos; registrar política de limpeza."
+    },
+    {
+      "card": "aGnCboeK",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c4892e77adabbb8bb720",
+      "text": "Documentar comandos, pré-requisitos e localização dos relatórios no README."
+    },
+    {
+      "card": "ige94AvZ",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed158ab16a18c74dbf69e",
+      "text": "Não autenticado rejeitado"
+    },
+    {
+      "card": "ige94AvZ",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed15bafba67279b39e0a2",
+      "text": "vendedor não acessa colega/custos"
+    },
+    {
+      "card": "ige94AvZ",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed15de7761645ca6723db",
+      "text": "gerente autorizado"
+    },
+    {
+      "card": "ige94AvZ",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed16270db97271a08f883",
+      "text": "testes HTTP positivos/negativos."
+    },
+    {
+      "card": "vhUnNujA",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed149728b5654f9cfe0ac",
+      "text": "ADR com versões e justificativa"
+    },
+    {
+      "card": "vhUnNujA",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed14b3ebf53078b0fd9b5",
+      "text": "integração mínima real"
+    },
+    {
+      "card": "vhUnNujA",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed14e489e468b757decc3",
+      "text": "execução de API/BD/UI documentada."
+    },
+    {
+      "card": "MT77ib4r",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c43ca408870c36d6cb6f",
+      "text": "Organizar src/main, src/test, docs, reports e config conforme Maven e documentar no README."
+    },
+    {
+      "card": "MT77ib4r",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c43fb548bb63989f6c2d",
+      "text": "Executar a API e verificar Swagger UI e /v3/api-docs; registrar versões e falhas reais."
+    },
+    {
+      "card": "MT77ib4r",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c441818525dfa9a1f0e6",
+      "text": "Exportar OpenAPI em config/ com commit, gerador e hash; vincular ao card de baseline."
+    },
+    {
+      "card": "MT77ib4r",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c44472d7c011a5e87d0b",
+      "text": "Preservar B0 antes de alterações; separar B1 executável e documentar ajustes mínimos."
+    },
+    {
+      "card": "UCbFIFXr",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09c8b3056503558fef4",
+      "text": "Resultado real registrado."
+    },
+    {
+      "card": "UCbFIFXr",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09f5e6c0fc42beacf6c",
+      "text": "Defeito confirmado corrigido ou risco justificado."
+    },
+    {
+      "card": "UCbFIFXr",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c0a0d41f3dc597b4e0de",
+      "text": "Reteste e regressão se houver correção."
+    },
+    {
+      "card": "a9wQuRO0",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e507850d8be9be676767",
+      "text": "Enviar requests inválidos até a API, sem bloqueio pelo validador de request; validar resposta 400."
+    },
+    {
+      "card": "a9wQuRO0",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50803a1c4812968ab1c",
+      "text": "Verificar recurso inexistente e resposta 404 conforme contrato aprovado."
+    },
+    {
+      "card": "a9wQuRO0",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50a0e84de9de337c06c",
+      "text": "Provocar 500 de forma controlada em teste; conferir schema e ausência de stack trace na resposta."
+    },
+    {
+      "card": "a9wQuRO0",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7e50b3adedc182cb388bc",
+      "text": "Validar respostas de sucesso e erro contra contrato revisado, congelado e identificado por versão."
+    },
+    {
+      "card": "a9wQuRO0",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab7c471a0f22722bfe19515",
+      "text": "Conferir coerência entre status HTTP e campo status do corpo, além de timestamp/error/message/details."
+    },
+    {
+      "card": "lUE8z32P",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ab9c09317edac701c0e09b7",
+      "text": "Sem resíduos entre casos."
+    },
+    {
+      "card": "jf7xU6cz",
+      "item": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6abed15642cf49b771f923c6",
+      "text": "pendências bloqueiam apenas a implementação dependente."
+    }
+  ],
+  "newChecklists": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "code": "DOM-02",
+        "checklists": [
+          {
+            "id": "ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ac1e0ac2edcf5759c9a638c",
+            "name": "Execução e aceite — briefing detalhado",
+            "position": 140737488355328,
+            "checkItems": [
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0ad0cd94c75eb76458e",
+                "name": "T1 (até 2h): inventariar todos os campos Double monetários com rg; registrar tipo/API/coluna e estratégia de conversão em docs/decisoes/dinheiro.md. Não converter quantidade ou percentual como dinheiro.",
+                "state": "INCOMPLETE",
+                "position": 140737488355328
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0aedd7dcdc6a98c15ba",
+                "name": "T2 (até 4h): trocar entidade/DTO/serviço por BigDecimal, construir de texto e aplicar scale2/HALF_UP no limite definido. Preservar preço histórico e subtotal multiplicado uma vez; atualizar todos os consumidores.",
+                "state": "INCOMPLETE",
+                "position": 140737488371712
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b0f8a8c2e8d457e680",
+                "name": "T3 (até 4h): criar migração NUMERIC com precisão escolhida por intervalo validado; testar instalação limpa e atualização de massa sintética. Comparar valores antes/depois; documentar backup/rollback.",
+                "state": "INCOMPLETE",
+                "position": 140737488388096
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b174db85986250719d",
+                "name": "T4 (até 3h): validar casos abaixo e contrato/JSON numérico; anexar run e diff. Não alterar arbitrariamente preço antigo por nova entrada.",
+                "state": "INCOMPLETE",
+                "position": 140737488404480
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b2a5fd48f2bb32cda4",
+                "name": "Dado preço 100.00 e quantidade 2, quando criar pedido, então subtotal 200.00 e preço histórico 100.00.",
+                "state": "INCOMPLETE",
+                "position": 140737488420864
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b38544000ec7703aff",
+                "name": "Dado valor inválido/não numérico ou negativo, quando enviar, então resposta4xx documentada e nenhuma persistência parcial.",
+                "state": "INCOMPLETE",
+                "position": 140737488437248
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b501d26783e280e8bd",
+                "name": "Dado valor1.005 no ponto de arredondamento definido, quando normalizar, então 1.01 com HALF_UP; testar0.10 + 0.20 = 0.30 e limite de coluna sem overflow silencioso.",
+                "state": "INCOMPLETE",
+                "position": 140737488453632
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b6f868434b08115d1b",
+                "name": "Publicar evidências sanitizadas e documentação; obter aceite nominal de Allan antes de Concluído.",
+                "state": "INCOMPLETE",
+                "position": 140737488470016
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "code": "SEC-01",
+        "checklists": [
+          {
+            "id": "ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ac1e0b896820714d9773605",
+            "name": "Execução e aceite — briefing detalhado",
+            "position": 140737488355328,
+            "checkItems": [
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0b958d6b533e77cd8c9",
+                "name": "T1 (até 2h): desenhar FK/vendedor histórico e política para pedidos anteriores; não inventar vendedor para registros antigos. Documentar rota de vendedor e DTO restrito no alvoOpenAPI.",
+                "state": "INCOMPLETE",
+                "position": 140737488355328
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0bb045b0af99fd692ed",
+                "name": "T2 (até 4h): derivar AppPrincipal no servidor, resolver usuário e persistir autoria. Remover ou rejeitar sellerId controlado pelo cliente; impedir atribuição manual a outro usuário.",
+                "state": "INCOMPLETE",
+                "position": 140737488371712
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0bcee5afb041d1b74fc",
+                "name": "T3 (até 4h): aplicar consulta/projeção por proprietário. Gerente cancela pedido alheio conforme regra aprovada; vendedor não altera pedido alheio. Edição alheia continua pendência de domínio.",
+                "state": "INCOMPLETE",
+                "position": 140737488388096
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0bdbf41163c7c9710e7",
+                "name": "T4 (até 3h): testes com dois vendedores e gerente, tentativa de IDOR e rollback; confirmar ausência de custo/margem/colegas em JSON e regressão de acesso legado.",
+                "state": "INCOMPLETE",
+                "position": 140737488404480
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0beebe69c5fc4b33516",
+                "name": "Dado vendedor A autenticado, quando criar pedido válido, então autor persistido é A e reload mantém vínculo.",
+                "state": "INCOMPLETE",
+                "position": 140737488420864
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0bff477f3a3cb02db8d",
+                "name": "Dado vendedor A envia sellerId de B ou tenta alterar pedido de B, quando executar, então não obtém autoria de B nem alteração não autorizada; contrato define4xx.",
+                "state": "INCOMPLETE",
+                "position": 140737488437248
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c0875d3c8a80d60dfd",
+                "name": "Dado sessão expirada ou pedido antigo sem autor, quando acessar, então 401 ou tratamento legado explícito, sem autor inventado ou dados de terceiro.",
+                "state": "INCOMPLETE",
+                "position": 140737488453632
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c1603f57fac622dfbd",
+                "name": "Publicar evidências sanitizadas e documentação; obter aceite nominal de Gabriel antes de Concluído.",
+                "state": "INCOMPLETE",
+                "position": 140737488470016
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "code": "QA-08",
+        "checklists": [
+          {
+            "id": "ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ac1e0c384588fbe0aab4911",
+            "name": "Execução e aceite — briefing detalhado",
+            "position": 140737488355328,
+            "checkItems": [
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c3b2c28bac8c28e3fa",
+                "name": "T1 (até 2h): checkout branch de revisão, confirmar commit e portas 15432/18080/3000 livres. Executar runner -Preview no banco descartável; nunca usar datasource normal.",
+                "state": "INCOMPLETE",
+                "position": 140737488355328
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c56cf2e579061d3ee6",
+                "name": "T2 (até 2h): login gerente/vendedor, reload, logout e senha incorreta; verificar401/403, CSRF ausente, renovação de ID e cookie anterior inválido. Registrar esperado/obtido sem senha/token/cookie.",
+                "state": "INCOMPLETE",
+                "position": 140737488371712
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c6b09ad94c860445a3",
+                "name": "T3 (até 2h): teclado, foco, mensagem de erro e zoom 200%,390 px e desktop. Capturar somente dados sintéticos; abrir achados reproduzíveis e vincular card original.",
+                "state": "INCOMPLETE",
+                "position": 140737488388096
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c8f9ca38b969ebc5cb",
+                "name": "T4 (até 1h): Enter encerra recursos próprios; simular falha inicial/porta ocupada e conferir cleanup. Publicar relatório, aprovação/rejeição nominal e pedir revisão de Matheus.",
+                "state": "INCOMPLETE",
+                "position": 140737488404480
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0c95d8d2587673846d2",
+                "name": "Dado ambiente isolado válido, quando rodar Preview e autenticar, então sessão persiste após reload e logout invalida acesso.",
+                "state": "INCOMPLETE",
+                "position": 140737488420864
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0cbb09ad94c86044937",
+                "name": "Dado senha errada/CSRF ausente, quando enviar, então 401/403 documentados, alerta legível e nenhuma credencial aparece no relatório.",
+                "state": "INCOMPLETE",
+                "position": 140737488437248
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0ccb1be51d211c5760e",
+                "name": "Dado porta ocupada ou saída por Enter, quando runner falhar/encerrar, então processos anteriores do usuário permanecem e recursos próprios são limpos; zoom 200% sem controles inacessíveis.",
+                "state": "INCOMPLETE",
+                "position": 140737488453632
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0cd4df7c5af09c25555",
+                "name": "Publicar evidências sanitizadas e documentação; obter aceite nominal de Matheus antes de Concluído.",
+                "state": "INCOMPLETE",
+                "position": 140737488470016
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "code": "DOC-01",
+        "checklists": [
+          {
+            "id": "ari:cloud:trello::checklist/workspace/670309078c0b18383642b7da/6ac1e0ceb326aeccb222febb",
+            "name": "Execução e aceite — briefing detalhado",
+            "position": 140737488355328,
+            "checkItems": [
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d0100c6f2fe594a14c",
+                "name": "T1 (até 2h): mapear 14 critérios do enunciado a card/arquivo/evidência/estado; marcar ausente e não substituir prova por descrição.",
+                "state": "INCOMPLETE",
+                "position": 140737488355328
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d1f1e16b2a6180927b",
+                "name": "T2 (até 3h): integrar catálogo e testes com ID estável RF→CA→CT→run→defeito. Explicar 52 testes versus pelo menos 30 casos acadêmicos e separar baseline/evolução.",
+                "state": "INCOMPLETE",
+                "position": 140737488371712
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d300cc178c09bf3257",
+                "name": "T3 (até 2h): conferir crédito Matheus Siqueira nas implementações desta rodada, mantendo autoria anterior e revisores. Anexar confirmação docente apenas se recebida, sem dados privados.",
+                "state": "INCOMPLETE",
+                "position": 140737488388096
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d4f8a8c2e8d458059c",
+                "name": "T4 (até 2h): testar links GitHub/Trello, abrir PDFs, conferir os dez entregáveis e registrar revisão nominal. Atualizar cards existentes com evidência, sem fechar tudo por este índice.",
+                "state": "INCOMPLETE",
+                "position": 140737488404480
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d687648455b88298a8",
+                "name": "Dado critério com artefato/run, quando clicar a referência, então arquivo certo abre e identifica versão/autor/resultado.",
+                "state": "INCOMPLETE",
+                "position": 140737488420864
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d72872a358334cbfa5",
+                "name": "Dado critério sem prova ou rota apenas planejada, quando consolidar, então aparece pendente e não concluído.",
+                "state": "INCOMPLETE",
+                "position": 140737488437248
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0d9830d0d516c2b563a",
+                "name": "Dado card originalmente Gabriel/Allan com código de Matheus, quando revisar créditos, então implementador Matheus e responsável/revisor original aparecem distintos; duplicação de CT não infla contagem.",
+                "state": "INCOMPLETE",
+                "position": 140737488453632
+              },
+              {
+                "id": "ari:cloud:trello::check-item/workspace/670309078c0b18383642b7da/6ac1e0da731dfe913dee85c1",
+                "name": "Publicar evidências sanitizadas e documentação; obter aceite nominal de Allan antes de Concluído.",
+                "state": "INCOMPLETE",
+                "position": 140737488470016
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
