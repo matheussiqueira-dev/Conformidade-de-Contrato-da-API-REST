@@ -90,7 +90,7 @@ Sequência: QA-08 e DOC-01 podem avançar com os artefatos atuais. DOM-02 depend
 | [[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho](https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho) | Matheus | Concluído | [Briefing](cards/KKPfn6ES.md) |
 | [[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)](https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador) | Matheus | Concluído | [Briefing](cards/3lLw8iW9.md) |
 | [[Gabriel] DOM-02 · Migrar dinheiro para BigDecimal e NUMERIC](https://trello.com/c/HxWdN6Fv/61-gabriel-dom-02-migrar-dinheiro-para-bigdecimal-e-numeric) | Gabriel | A fazer | [Briefing](cards/DOM-02.md) |
-| [[Matheus] SEC-01 · Vincular autoria do pedido à sessão](https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o) | Matheus | A fazer | [Briefing](cards/SEC-01.md) |
+| [[Matheus] SEC-01 · Vincular autoria do pedido à sessão](https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o) | Matheus | Em andamento | [Briefing](cards/SEC-01.md) |
 | [[Allan] QA-08 · Revisar sessão e reproduzir preview no Windows](https://trello.com/c/PQ5Aikvp/63-allan-qa-08-revisar-sess%C3%A3o-e-reproduzir-preview-no-windows) | Allan | A fazer | [Briefing](cards/QA-08.md) |
 | [[Francisco] DOC-01 · Consolidar rubrica, rastreabilidade e autoria](https://trello.com/c/qT7awxOR/64-francisco-doc-01-consolidar-rubrica-rastreabilidade-e-autoria) | Francisco | A fazer | [Briefing](cards/DOC-01.md) |
 

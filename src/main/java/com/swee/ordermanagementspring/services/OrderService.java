@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.entities.OrderItem;
 import com.swee.ordermanagementspring.entities.client.Client;
 import com.swee.ordermanagementspring.entities.client.CorporateClient;
 import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
 import com.swee.ordermanagementspring.entities.payment.CardPayment;
@@ -18,10 +19,13 @@ import com.swee.ordermanagementspring.exceptions.PaymentException;
 import com.swee.ordermanagementspring.exceptions.ProductException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
 import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.transaction.annotation.Transactional;
+import com.swee.ordermanagementspring.security.AppPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +35,14 @@ public class OrderService {
     private final OrderRepository repository;
     private final ProductRepository productRepository;
     private final ClientRepository clientRepository;
+    private final AppUserRepository appUserRepository;
 
-    public OrderService(OrderRepository repository, ProductRepository productRepository, ClientRepository clientRepository) {
+    public OrderService(OrderRepository repository, ProductRepository productRepository, ClientRepository clientRepository,
+                        AppUserRepository appUserRepository) {
         this.repository = repository;
         this.productRepository = productRepository;
         this.clientRepository = clientRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     public List<Order> findAll() {
@@ -47,10 +54,15 @@ public class OrderService {
     }
 
     @Transactional
-    public Order insert(OrderRequestDTO dto) {
+    public Order insert(OrderRequestDTO dto, AppPrincipal principal) {
+        if (principal == null || principal.id() == null) {
+            throw new AccessDeniedException("Authenticated user is required to create an order");
+        }
+        AppUser seller = appUserRepository.findById(principal.id())
+                .orElseThrow(() -> new AccessDeniedException("Authenticated user no longer exists"));
         Client client = resolveClient(dto);
 
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, client);
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, client, seller);
         order.setShippingAddress(buildAddress(dto.getShippingAddress()));
 
         List<OrderItem> items = buildItems(order, dto.getItems());
