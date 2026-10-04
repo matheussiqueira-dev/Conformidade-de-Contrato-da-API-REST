@@ -1,0 +1,38 @@
+{
+  "scope": "baseline-http-isolated-database",
+  "timestamp": "2026-10-04T04:33:28.926Z",
+  "results": [
+    {
+      "name": "Live OpenAPI is 3.1 and includes baseline routes",
+      "passed": true
+    },
+    {
+      "name": "Live OpenAPI documents 400/404 error schemas and validates with official document schema",
+      "passed": true
+    },
+    {
+      "name": "GET products matches baseline response schema",
+      "passed": true
+    },
+    {
+      "name": "Synthetic product creation and retrieval match baseline",
+      "passed": true
+    },
+    {
+      "name": "Invalid product returns 400 validation error",
+      "passed": true
+    },
+    {
+      "name": "Missing product returns 404",
+      "passed": true
+    }
+  ],
+  "contract": "baseline-errors-openapi-2026-10-04.json",
+  "contractGaps": [
+    "Error documentation scope: POST /products 400 and GET /products/{id} 404 only."
+  ],
+  "excluded": [
+    "Seller projections, sales, inventory and goals require the dedicated domain endpoints."
+  ],
+  "authentication": "Manager session; CSRF token on mutations."
+}

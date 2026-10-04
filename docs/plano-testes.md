@@ -21,7 +21,7 @@ Este plano define como testar a Order Management API e a evolucao Loja Gestao de
 | Autenticacao/autorizacao | Gerente, vendedor, 401/403 e dados por perfil. | Alvo, nao implementado. |
 | Metas e realizado | Meta da loja, distribuicao, realizado pago menos estornos e meta zero. | Alvo, nao implementado. |
 | Estoque e custo | Reserva, saida, cancelamento, entrada por lote e custo historico. | Alvo, nao implementado. |
-| Frontend | Gestao, Meu desempenho, Vender e Estoque administrativo. | Alvo, stack pendente. |
+| Frontend | Login, sessao e logout em Next.js; Gestao, Meu desempenho, Vender e Estoque administrativo na evolucao. | Acesso com testes E2E; areas de dominio pendentes. |
 
 Fora do escopo planejado: gateway real de pagamento, dados reais, hospedagem publica obrigatoria e certificacao de producao.
 
