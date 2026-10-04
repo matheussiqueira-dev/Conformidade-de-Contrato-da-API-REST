@@ -14,7 +14,7 @@ O perfil `migration` ativa Flyway e coloca Hibernate em `validate`. O perfil nor
 2. Executar `./mvnw -Pintegration verify` (ou `mvnw.cmd -Pintegration verify` no Windows). `FlywayMigrationTest` cria dois esquemas isolados: um vazio e outro que simula um banco sem histórico Flyway com pedido legado `id=42`. A limpeza de cada esquema ocorre em `finally`.
 3. No CI, a aplicação sobe com perfil `migration` em `ci_flyway` e Hibernate valida o esquema V1+V2. O log fica no artefato `target/flyway-ci.log`.
 
-Esses testes verificam migração limpa, baseline explícito, preservação do pedido antigo e rejeição de `seller_id` inexistente. Eles não equivalem a aprovar a migração de um banco real cujo esquema ainda não foi comparado.
+Esses testes verificam migração limpa, baseline explícito, preservação do pedido antigo e rejeição de `seller_id` inexistente. O [CI #22 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37200555926) executou 17 testes Java (incluindo os dois novos), validou V1/V2 no PostgreSQL 18 e subiu a aplicação com Hibernate `validate` no esquema `ci_flyway`. Eles não equivalem a aprovar a migração de um banco real cujo esquema ainda não foi comparado.
 
 ## Adoção em banco existente
 
