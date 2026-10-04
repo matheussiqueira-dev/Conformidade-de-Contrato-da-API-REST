@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test';
+if (process.env.A3_CONTRACT_ISOLATED !== '1' || !process.env.A3_TEST_PASSWORD) throw new Error('E2E requires the disposable database runner.');
+test('real login, HttpOnly cookie, page reload and logout through Next proxy', async ({ page, context }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name:'Entre para continuar.' })).toBeVisible();
+  await page.getByLabel('E-mail', { exact:true }).fill('seller@example.test');
+  await page.getByLabel('Senha', { exact:true }).fill(process.env.A3_TEST_PASSWORD);
+  await page.getByRole('button', { name:'Entrar na minha conta' }).click();
+  await expect(page.getByRole('heading', { name:'Olá, Vendedor sintetico.' })).toBeVisible();
+  const cookie = (await context.cookies()).find(cookie => cookie.name === 'JSESSIONID');
+  expect(cookie.httpOnly).toBe(true); expect(cookie.sameSite).toBe('Lax');
+  expect(await page.evaluate(() => document.cookie.includes('JSESSIONID'))).toBe(false);
+  await page.reload();
+  await expect(page.getByRole('heading', { name:'Olá, Vendedor sintetico.' })).toBeVisible();
+  await page.screenshot({ path:'test-results/session-desktop.png', fullPage:true });
+  await page.getByRole('button', { name:'Sair da conta' }).click();
+  await expect(page.getByRole('heading', { name:'Entre para continuar.' })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { name:'Entre para continuar.' })).toBeVisible();
+});
+test('wrong password shows accessible error; mobile form fits viewport', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/');
+  await page.getByLabel('E-mail', { exact:true }).fill('manager@example.test');
+  await page.getByLabel('Senha', { exact:true }).fill('intentionally-wrong-password');
+  await page.getByRole('button', { name:'Entrar na minha conta' }).click();
+  await expect(page.getByRole('region', { name:'Acesso ao sistema' }).getByRole('alert')).toContainText('E-mail ou senha inválidos');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path:'test-results/login-mobile.png', fullPage:true });
+});
