@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 
-export const targetPath = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-03-v2.json', import.meta.url);
+export const targetPath = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-04-v3.json', import.meta.url);
 export function auditContract(document) {
   const errors = [];
   const operations = [];
@@ -18,6 +18,15 @@ export function auditContract(document) {
     for (const [key, child] of Object.entries(value)) walk(child, `${location}/${key}`);
   }
   walk(document);
+  const session = Boolean(document.components?.securitySchemes?.sessionAuth);
+  const securityName = session ? 'sessionAuth' : 'bearerAuth';
+  if (session) {
+    const scheme = document.components.securitySchemes.sessionAuth;
+    if (scheme.type !== 'apiKey' || scheme.in !== 'cookie' || scheme.name !== 'JSESSIONID') errors.push('Invalid session cookie security scheme');
+    if (!document.paths?.['/auth/csrf']?.get || !document.paths?.['/auth/logout']?.post) errors.push('Missing CSRF or logout operation');
+    const response = document.components.schemas?.AuthResponse;
+    if (response?.additionalProperties !== false || response?.properties?.accessToken || response?.properties?.tokenType) errors.push('Session login must not expose bearer tokens');
+  }
   if (document.openapi !== '3.1.0') errors.push('Expected OpenAPI 3.1.0');
   if (document['x-contract-status'] !== 'target-planned-not-implemented') errors.push('Missing planned contract marker');
   for (const [path, item] of Object.entries(document.paths ?? {})) {
@@ -29,11 +38,16 @@ export function auditContract(document) {
       if (operation['x-status'] !== 'planned') errors.push(`Missing planned operation marker: ${name}`);
       if (!operation['x-rf']?.length) errors.push(`Missing RF traceability: ${name}`);
       const security = operation.security ?? item.security ?? document.security;
-      if (path !== '/auth/login' && !security?.some(s => Object.hasOwn(s, 'bearerAuth'))) errors.push(`Missing bearer security: ${name}`);
-      if (path === '/auth/login' && security?.length !== 0) errors.push('Login must be public');
+      const isPublic = path === '/auth/login' || (session && ['/auth/csrf', '/auth/logout'].includes(path));
+      if (!isPublic && (!security?.length || security.some(s => !Object.hasOwn(s, securityName)))) errors.push(`Missing ${session ? 'session' : 'bearer'} security: ${name}`);
+      if (isPublic && security?.length !== 0) errors.push(`Auth bootstrap/logout must be public: ${name}`);
       if ((path.startsWith('/stock/') || path === '/management/summary' || path === '/goals/monthly') &&
           JSON.stringify(operation['x-roles']) !== JSON.stringify(['GERENTE'])) errors.push(`Missing manager policy: ${name}`);
       const parameters = [...(item.parameters ?? []), ...(operation.parameters ?? [])].map(p => p.$ref ? resolveRef(p.$ref) : p);
+      if (session && ['post', 'put', 'patch', 'delete'].includes(method)) {
+        if (!parameters.some(p => p?.in === 'header' && p.name === 'X-CSRF-TOKEN' && p.required === true)) errors.push(`Missing required CSRF header: ${name}`);
+        if (!operation.responses?.['403']) errors.push(`Missing CSRF rejection response: ${name}`);
+      }
       for (const match of path.matchAll(/\{([^}]+)\}/g)) {
         if (!parameters.some(p => p?.in === 'path' && p.name === match[1] && p.required === true)) errors.push(`Missing required path parameter: ${name} / ${match[1]}`);
       }
