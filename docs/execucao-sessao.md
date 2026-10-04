@@ -27,6 +27,8 @@ O segundo runner cria senha aleatoria somente em memoria, banco descartavel e AP
 
 Para rodar apenas testes Node sem dependencias do frontend: `node --test frontend/tests/*.test.mjs`. A primeira instalacao do frontend gera package-lock; preservar o lock antes de um release. O CI gera e arquiva esse arquivo junto aos resultados E2E.
 
+Para visualizar depois dos testes: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-contract.ps1 -Preview`. O runner informa a URL e senha temporaria das contas sinteticas; mantem API/Next/banco ativos ate pressionar Enter, quando encerra os recursos. Nao usa o banco normal da loja.
+
 ## Aceite e limites
 
 Aceite: sessao real persiste; ID muda no login; login invalido=401; escrita sem CSRF=403; vendedor nas rotas antigas=403; logout torna cookie anterior inutil; cookie transita pelo proxy do Next. Os testes atuais nao comprovam autoria de pedidos por sessao ou ausencia de margem em projecoes futuras: essas rotas ainda nao existem.
