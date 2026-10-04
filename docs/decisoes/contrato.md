@@ -70,7 +70,17 @@ Rotas planejadas:
 
 O contrato alvo ainda precisa de revisao da equipe antes de virar compromisso de implementacao.
 
+## Revisão do spike
+
+A rodada seguinte criou `config/openapi/target-loja-gestao-openapi-2026-10-03-v2.json`, sem sobrescrever os contratos acima. SHA-256: `16A77FD221546B1A77A5D703E81AD3AAC863F41D25D61390FBC5FB130D4D33C7`. São 10 paths e 11 operações.
+
+A v2 fecha campos extras nas projeções de vendedor e declara papéis propostos via `x-roles`. Sete testes da auditoria estrutural passaram; o diagnóstico legado rejeitou custo/equipe e margem aninhada. A biblioteca disponível não suporta 2020-12, e não houve teste HTTP. Consulte `docs/decisoes/contract-testing.md` para decisão, limitações e pendências antes de adotar o contrato.
+
 ## Regras de mudanca
+
+### Revisão documentada de erros — 04/10/2026
+
+`config/openapi/baseline-errors-openapi-2026-10-04.json` deriva do baseline original sem sobrescrevê-lo. SHA-256: `6FDB2A09F3378F1C5E38BD79511FE39770D703ECFF27A367461C07F56229EAB9`. Documenta apenas os casos HTTP já comprovados: POST `/products` 400 e GET `/products/{id}` 404, com `ApiErrorResponse` e timestamp local sem offset. A exportação Springdoc do backend permanece inalterada. Validação executada: 18 testes Node e 71 pontos de schema da revisão sem achados; a reexecução HTTP com validação ampliada dos corpos ainda está pendente. Ver `reports/execucoes/run-2026-10-04-erros-contrato.md`.
 
 - Nao sobrescrever o baseline sem registrar novo arquivo e hash.
 - Cada rota nova deve apontar para RF, CA e CT correspondentes.
