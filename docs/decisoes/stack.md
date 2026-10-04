@@ -36,11 +36,11 @@ Executar API:
 
 ## CI minimo
 
-Foi criado `.github/workflows/ci.yml` com JDK 25, cache Maven, PostgreSQL 18 como service e comando `./mvnw test`. A execucao remota depende de o workflow ser publicado no GitHub.
+O workflow `.github/workflows/ci.yml` usa JDK 25, PostgreSQL 18 descartável na porta 15432 e `./mvnw -Pintegration verify`. Também executa os 18 testes Node, validação do contrato e seis casos HTTP com API isolada. Relatórios e log da API são preservados como artefatos. O CI remoto do commit antigo `ca79f02` foi confirmado verde; a execução deste workflow ampliado depende da publicação da rodada atual.
 
 ## Decisoes pendentes
 
 - Stack do frontend.
 - Estrategia de autenticacao/sessao.
-- Separacao futura entre testes unitarios rapidos e testes que exigem PostgreSQL.
-- Testcontainers ou perfil de teste isolado para reduzir dependencia de porta local 5432.
+- Unitários padrão e integração com perfil/banco isolados foram executados: seis testes Java aprovados em duas rodadas. Seis casos HTTP da documentação/erros também passaram após a correção de details null.
+- Perfil de teste isolado foi adotado; Testcontainers não é necessário para a rodada atual.

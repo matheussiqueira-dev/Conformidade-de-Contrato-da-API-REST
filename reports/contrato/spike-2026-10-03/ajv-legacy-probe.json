@@ -1,0 +1,41 @@
+{
+  "tool": "Ajv 6.15.0",
+  "scope": "draft-07-compatible-subset-diagnostic-no-http",
+  "dialect202012": false,
+  "contracts": [
+    {
+      "file": "target-loja-gestao-openapi-2026-10-03.json",
+      "validFixture": true,
+      "leakAccepted": true,
+      "nestedLeakAccepted": true,
+      "negativeErrors": null
+    },
+    {
+      "file": "target-loja-gestao-openapi-2026-10-03-v2.json",
+      "validFixture": true,
+      "leakAccepted": false,
+      "nestedLeakAccepted": false,
+      "negativeErrors": [
+        {
+          "keyword": "additionalProperties",
+          "dataPath": "",
+          "schemaPath": "#/additionalProperties",
+          "params": {
+            "additionalProperty": "cost"
+          },
+          "message": "should NOT have additional properties"
+        },
+        {
+          "keyword": "additionalProperties",
+          "dataPath": "",
+          "schemaPath": "#/additionalProperties",
+          "params": {
+            "additionalProperty": "team"
+          },
+          "message": "should NOT have additional properties"
+        }
+      ]
+    }
+  ],
+  "dialectError": "no schema with key or ref \"https://json-schema.org/draft/2020-12/schema\""
+}

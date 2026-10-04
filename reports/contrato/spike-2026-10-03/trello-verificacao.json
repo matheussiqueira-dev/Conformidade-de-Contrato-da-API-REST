@@ -1,0 +1,86 @@
+﻿[
+  {
+    "name": "[Gabriel] Spike: escolher ferramenta de contract testing",
+    "url": "https://trello.com/c/7WLb5mTB/28-gabriel-spike-escolher-ferramenta-de-contract-testing",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Gabriel] Extrair e versionar o contrato OpenAPI (baseline)",
+    "url": "https://trello.com/c/haebO3FA/27-gabriel-extrair-e-versionar-o-contrato-openapi-baseline",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Matheus] Ambiente reprodutível + seed de dados",
+    "url": "https://trello.com/c/YBJ5YBeV/30-matheus-ambiente-reprodut%C3%ADvel-seed-de-dados",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Gabriel] README + execução em um comando",
+    "url": "https://trello.com/c/TKUhRGgt/31-gabriel-readme-execu%C3%A7%C3%A3o-em-um-comando",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Allan] QA-04 · Reproduzir e tratar cálculo de total do pedido",
+    "url": "https://trello.com/c/UCbFIFXr/41-allan-qa-04-reproduzir-e-tratar-c%C3%A1lculo-de-total-do-pedido",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Gabriel] 01 · Setup do repositório e ambiente",
+    "url": "https://trello.com/c/MT77ib4r/4-gabriel-01-setup-do-reposit%C3%B3rio-e-ambiente",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Gabriel] 15 · Automação da suíte e pipeline de CI",
+    "url": "https://trello.com/c/aGnCboeK/18-gabriel-15-automa%C3%A7%C3%A3o-da-su%C3%ADte-e-pipeline-de-ci",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Matheus] QA-02 · Integração, constraints e rollback real",
+    "url": "https://trello.com/c/lUE8z32P/39-matheus-qa-02-integra%C3%A7%C3%A3o-constraints-e-rollback-real",
+    "verified": true,
+    "list": "Em andamento"
+  },
+  {
+    "name": "[Matheus] 02 · Definição do sistema e requisitos (≥10 RF, ≥5 RNF)",
+    "url": "https://trello.com/c/FlbPAXNE/5-matheus-02-defini%C3%A7%C3%A3o-do-sistema-e-requisitos-%E2%89%A510-rf-%E2%89%A55-rnf",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Matheus] 03 · Validação dos requisitos",
+    "url": "https://trello.com/c/rfWqWzVR/6-matheus-03-valida%C3%A7%C3%A3o-dos-requisitos",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Matheus] 04 · Critérios de aceitação por requisito",
+    "url": "https://trello.com/c/NsbhF1uK/7-matheus-04-crit%C3%A9rios-de-aceita%C3%A7%C3%A3o-por-requisito",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Matheus] PL-01 · Reestimar escopo, marcos e capacidade",
+    "url": "https://trello.com/c/T3zkhwHk/45-matheus-pl-01-reestimar-escopo-marcos-e-capacidade",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Matheus] DOM-01 · Decidir descontos, pedidos de terceiros e custos",
+    "url": "https://trello.com/c/jf7xU6cz/48-matheus-dom-01-decidir-descontos-pedidos-de-terceiros-e-custos",
+    "verified": true,
+    "list": "Em revisão"
+  },
+  {
+    "name": "[Matheus] 07 · Plano de testes",
+    "url": "https://trello.com/c/1ZC4pKWK/10-matheus-07-plano-de-testes",
+    "verified": true,
+    "list": "Em revisão"
+  }
+]
