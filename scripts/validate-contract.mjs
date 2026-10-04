@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 
 export const schemaUrl = 'https://spec.openapis.org/oas/3.1/schema/2025-09-15';
 export const officialSchemaPath = new URL('../config/openapi/validation/openapi-3.1-schema.json', import.meta.url);
-export const targetPath = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-03-v2.json', import.meta.url);
+export const targetPath = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-04-v3.json', import.meta.url);
 export function createAjv() {
   // OpenAPI annotations/extensions are not JSON Schema validation keywords.
   const ajv = new Ajv2020({ strict: false, allErrors: true, validateFormats: true });
