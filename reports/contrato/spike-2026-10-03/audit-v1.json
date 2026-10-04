@@ -1,0 +1,86 @@
+{
+  "scope": "structural-policy-audit-only",
+  "paths": 10,
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "operationId": "login",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "operationId": "getCurrentUser",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/management/summary",
+      "operationId": "getManagementSummary",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/performance/me",
+      "operationId": "getMyPerformance",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/goals/monthly",
+      "operationId": "getMonthlyGoals",
+      "roles": []
+    },
+    {
+      "method": "PUT",
+      "path": "/goals/monthly",
+      "operationId": "saveMonthlyGoals",
+      "roles": []
+    },
+    {
+      "method": "POST",
+      "path": "/sales/orders",
+      "operationId": "createSaleOrder",
+      "roles": []
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{id}/cancel",
+      "operationId": "cancelOrder",
+      "roles": []
+    },
+    {
+      "method": "POST",
+      "path": "/payment/{id}/refund",
+      "operationId": "refundPayment",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/stock/products",
+      "operationId": "listStockProducts",
+      "roles": []
+    },
+    {
+      "method": "POST",
+      "path": "/stock/products/{id}/entries",
+      "operationId": "createStockEntry",
+      "roles": []
+    }
+  ],
+  "errors": [
+    "Missing manager policy: GET /management/summary",
+    "Missing manager policy: GET /goals/monthly",
+    "Missing manager policy: PUT /goals/monthly",
+    "Missing manager policy: GET /stock/products",
+    "Missing manager policy: POST /stock/products/{id}/entries",
+    "Open seller projection: #/components/schemas/SellerPerformance",
+    "Open seller projection: #/components/schemas/UserSession",
+    "Open seller projection: #/components/schemas/Money",
+    "Open seller projection: #/components/schemas/SalesOrderResponse",
+    "Open seller projection: #/components/schemas/UserSession",
+    "Open seller projection: #/components/schemas/SalesOrderResponse/items/items",
+    "Open seller projection: #/components/schemas/Money"
+  ]
+}

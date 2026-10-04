@@ -1,0 +1,32 @@
+{
+  "scope": "baseline-http-isolated-database",
+  "timestamp": "2026-10-04T03:19:48.963Z",
+  "results": [
+    {
+      "name": "Live OpenAPI is 3.1 and includes baseline routes",
+      "passed": true
+    },
+    {
+      "name": "GET products matches baseline response schema",
+      "passed": true
+    },
+    {
+      "name": "Synthetic product creation and retrieval match baseline",
+      "passed": true
+    },
+    {
+      "name": "Invalid product returns 400 validation error",
+      "passed": true
+    },
+    {
+      "name": "Missing product returns 404",
+      "passed": true
+    }
+  ],
+  "contractGaps": [
+    "Baseline does not declare the observed 400 and 404 response schemas."
+  ],
+  "excluded": [
+    "Planned login, 401/403 and role-specific projections require API-01 implementation."
+  ]
+}
