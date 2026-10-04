@@ -36,10 +36,10 @@ Executar API:
 
 ## CI minimo
 
-O workflow `.github/workflows/ci.yml` usa JDK 25, PostgreSQL 18 descartável na porta 15432 e `./mvnw -Pintegration verify`. Também executa os 18 testes Node, validação do contrato e seis casos HTTP com API isolada. Relatórios e log da API são preservados como artefatos. O CI remoto do commit antigo `ca79f02` foi confirmado verde; a execução deste workflow ampliado depende da publicação da rodada atual.
+O workflow `.github/workflows/ci.yml` usa JDK 25, PostgreSQL 18 descartável na porta 15432 e `./mvnw -Pintegration verify`. Executa 23 testes de contrato, tres testes do cliente web, seis casos HTTP legados autenticados, seis casos HTTP de sessao, build Next e dois E2E Chromium. Relatorios, log e screenshots ficam como artefatos. A evidencia da rodada atual e registrada em `docs/execucao-sessao.md`.
 
 ## Decisoes pendentes
 
-- Frontend Next.js e sessão no Spring com cookie HttpOnly foram confirmados por Matheus em 04/10/2026. Implementação e detalhes operacionais seguem pendentes; ver `arquitetura-frontend-sessao.md`.
+- Frontend Next.js e sessao HttpOnly confirmados por Matheus em 04/10/2026. Codigo de acesso adicionado; as quatro areas de dominio e detalhes de hospedagem seguem pendentes. Ver `execucao-sessao.md`.
 - Unitários padrão e integração com perfil/banco isolados foram executados: seis testes Java aprovados em duas rodadas. Seis casos HTTP da documentação/erros também passaram após a correção de details null.
 - Perfil de teste isolado foi adotado; Testcontainers não é necessário para a rodada atual.

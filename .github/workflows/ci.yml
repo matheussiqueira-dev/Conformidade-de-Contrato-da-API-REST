@@ -81,7 +81,7 @@ jobs:
           node scripts/http-contract.mjs
           node scripts/http-session.mjs
           cd frontend
-          npm install --no-audit --no-fund
+          npm ci --no-audit --no-fund
           npm test
           BACKEND_ORIGIN=http://127.0.0.1:18080 npm run build
           npx playwright install --with-deps chromium

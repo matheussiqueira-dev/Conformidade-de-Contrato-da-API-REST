@@ -1,0 +1,30 @@
+{
+  "scope": "real-session-http-disposable-database",
+  "timestamp": "2026-10-04T04:33:29.714Z",
+  "results": [
+    {
+      "name": "Anonymous me returns 401; login without CSRF returns 403",
+      "passed": true
+    },
+    {
+      "name": "Wrong credentials return generic 401",
+      "passed": true
+    },
+    {
+      "name": "Login rotates session cookie and exposes only user projection",
+      "passed": true
+    },
+    {
+      "name": "Seller cannot read legacy customer, payment, product or order data",
+      "passed": true
+    },
+    {
+      "name": "Mutations without CSRF fail even with manager session",
+      "passed": true
+    },
+    {
+      "name": "Logout requires CSRF and invalidates the previous cookie",
+      "passed": true
+    }
+  ]
+}

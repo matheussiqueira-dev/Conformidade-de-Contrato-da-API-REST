@@ -1,6 +1,6 @@
 # API-01 e UI-01: acesso com sessao
 
-Data: 04/10/2026. Codigo escrito; o aceite Java, HTTP e browser depende de execucao dos testes abaixo. O contrato v3 continua marcando as rotas de dominio como planejadas.
+Data: 04/10/2026. Acesso validado no [CI 37177302914](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177302914): 12 testes Java, 23 de contrato, tres do cliente web, 12 HTTP e dois E2E passaram; build Next aprovado. Capturas desktop/mobile inspecionadas. Evidencia em `reports/execucoes/run-2026-10-04-sessao-nextjs.md`. O contrato v3 continua marcando as rotas de dominio como planejadas.
 
 ## Implementacao desta rodada
 
@@ -25,7 +25,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-contract.ps1 
 
 O segundo runner cria senha aleatoria somente em memoria, banco descartavel e API em 18080. Verifica seis casos legados autenticados, seis casos de sessao e dois E2E Chromium via Next na porta 3000; encerra os processos que iniciou. O E2E prova Set-Cookie/Cookie, HttpOnly, recarregamento, logout, erro de senha e largura mobile. Screenshots locais ficam em `frontend/test-results`; nao habilitar traces que possam capturar credenciais.
 
-Para rodar apenas testes Node sem dependencias do frontend: `node --test frontend/tests/*.test.mjs`. A primeira instalacao do frontend gera package-lock; preservar o lock antes de um release. O CI gera e arquiva esse arquivo junto aos resultados E2E.
+Para rodar apenas testes Node sem dependencias do frontend: `node --test frontend/tests/*.test.mjs`. O package-lock gerado pelo build aprovado foi incorporado ao frontend; instalacoes usam `npm ci`. O CI arquiva esse arquivo junto aos resultados E2E.
 
 Para visualizar depois dos testes: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-contract.ps1 -Preview`. O runner informa a URL e senha temporaria das contas sinteticas; mantem API/Next/banco ativos ate pressionar Enter, quando encerra os recursos. Nao usa o banco normal da loja.
 
