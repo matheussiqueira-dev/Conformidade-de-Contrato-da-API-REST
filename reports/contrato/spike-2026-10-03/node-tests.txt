@@ -1,0 +1,15 @@
+✔ planned target has references and profile policies (2.1252ms)
+✔ broken reference is detected (1.3809ms)
+✔ protected endpoint cannot declare public security (0.708ms)
+✔ manager policy cannot admit a seller (0.5715ms)
+✔ seller projection cannot allow unknown root or nested fields (1.4474ms)
+✔ explicit sensitive field in seller projection is detected (0.4865ms)
+✔ required path parameters cannot disappear (0.6934ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 78.5875
