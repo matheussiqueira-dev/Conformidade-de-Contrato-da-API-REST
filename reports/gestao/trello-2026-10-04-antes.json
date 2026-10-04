@@ -1,0 +1,2041 @@
+{
+  "lists": [
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39bfc70a1385d0567e7",
+      "name": "Referências",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab905f6ee18a401db90a4c0",
+          "name": "LINKS IMPORTANTES",
+          "description": "## Referências do projeto\n- Google Drive da equipe: https://drive.google.com/drive/folders/13MA9KBPV3kl6OfPjHm4Dvj73PagR3Dj-?usp=sharing\n- Repositório informado pela equipe: https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST\n- API de origem: https://github.com/JkbSousa/order-management-api\n\n## Fontes locais conferidas em 01/10/2026\n- Projeto- A3.pdf: enunciado de Qualidade, 14 critérios/100 pontos e entrega até 30/11.\n- Manual-Projeto-A3.pdf: plano v1.0 da API; exclusões antigas de frontend/auth foram superadas nesta revisão do quadro.\n- direcao-criativa.md e Guia-Visual-Sistema-da-Loja.pdf: quatro áreas, perfis e regras propostas.\n- order-management-api: backend original; novas funções ainda não implementadas.\n\nArquivos locais precisam ser publicados pela equipe no repositório/Drive para acesso compartilhado; não há link público confirmado para o novo guia. Os links acima foram preservados como referências informadas; acesso/commit remoto não foi auditado.\n\n## Recursos opcionais para estudantes\nConsultar elegibilidade e termos nas páginas oficiais: GitHub Education (https://github.com/education/students), JetBrains (https://www.jetbrains.com/academy/student-pack/), Azure (https://azure.microsoft.com/pt-br/free/students), Gemini (https://gemini.google/students/), AWS Educate (https://aws.amazon.com/pt/education/awseducate/), Oracle Academy (https://academy.oracle.com/pt-br/solutions-cloud-program.html) e Google Cloud Education (https://cloud.google.com/edu/students?hl=pt-BR).\nBenefícios, valores, armazenamento e duração não foram confirmados; não tratá-los como garantidos nem como dependências do projeto.",
+          "url": "https://trello.com/c/3MmXle4G/44-links-importantes",
+          "shortUrl": "https://trello.com/c/3MmXle4G",
+          "closed": false,
+          "complete": false,
+          "position": 0.5,
+          "lastActivityAt": "2026-10-01T21:27:14.349Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            },
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            },
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            },
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b299d15a201136e4ad",
+          "name": "[Matheus] Escopo do projeto e SUT",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Francisco\n**Referência anterior (provisória):** Referência contínua\n\n## Objetivo\nManter uma referência única do escopo do A3 na UNIFG: avaliar a conformidade de contrato da Order Management API nas disciplinas de Garantia da Qualidade de Software e Banco de Dados.\n\n## Execução — direção de 01/10/2026\nFrontend e autenticação por perfil passam a integrar o produto Loja • Gestão. Manter a conformidade da API e as evidências de qualidade como eixo acadêmico. O núcleo funcional inclui Gestão, Meu desempenho, Vender e Estoque; gateway real e hospedagem pública continuam fora da entrega planejada. Preservar a API original como B0 e versionar a evolução; os mockups são referências, não sistema executável.\n\n## Entrega\ndocs/escopo.md e índice das fontes: Projeto- A3.pdf, plano recebido, manual v1.0 e versão do código.\n\n## Aceite\n- [ ] Escopo e limites revisados.\n- [ ] Pendências acadêmicas vinculadas ao card de alinhamento.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nCard 00 de alinhamento.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/XBAVHAk6/1-matheus-escopo-do-projeto-e-sut",
+          "shortUrl": "https://trello.com/c/XBAVHAk6",
+          "closed": false,
+          "complete": false,
+          "position": 1,
+          "lastActivityAt": "2026-10-01T21:27:28.637Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3b7e96916900fd84740",
+          "name": "[Francisco] Critérios de avaliação (100 pts)",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus\n**Revisor:** Allan\n**Referência anterior (provisória):** Referência contínua\n\n## Objetivo\nUsar os 14 critérios da rubrica como mapa de evidências, sem perder de vista risco e dependências.\n\n## Execução — direção de 01/10/2026\nReconfirmado no Projeto- A3.pdf: 14 critérios/100 pontos; mínimo 10 RF, 5 RNF, 30 casos e três técnicas caixa-preta. Acrescentar evidências de autorização, reserva concorrente, metas e fluxo de interface aos critérios existentes. Desenvolver telas não substitui testes, análise estática e ciclo de melhoria.\n\n## Entrega\ndocs/matriz-rubrica.md; conferência final no card Checklist de entrega.\n\n## Aceite\n- [ ] 14 critérios mapeados sem lacunas.\n- [ ] Exigências e metas internas diferenciadas.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nEnunciado, seções 4-25.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/JRbuRtZg/2-francisco-crit%C3%A9rios-de-avalia%C3%A7%C3%A3o-100-pts",
+          "shortUrl": "https://trello.com/c/JRbuRtZg",
+          "closed": false,
+          "complete": false,
+          "position": 2,
+          "lastActivityAt": "2026-10-01T21:27:29.767Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3bb0ef983702ef19a08",
+          "name": "[Gabriel] Stack técnica proposta",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Referência anterior (provisória):** Referência contínua\n\n## Objetivo\nFixar uma stack coerente e comprovada por build e teste mínimo.\n\n## Execução — direção de 01/10/2026\nObservado no pom.xml local: Java 25, Boot 4.1.0, springdoc 2.8.5; compatibilidade ainda precisa ser executada. Definir stack do frontend, autenticação/sessão, integração HTTP e ferramenta E2E em decisão técnica, sem apresentar tecnologias propostas como instaladas. Separar cobertura JVM da cobertura de interface.\n\n## Entrega\ndocs/decisoes/stack.md + árvore de dependências + log do build.\n\n## Aceite\n- [ ] Build e teste mínimo executados.\n- [ ] Versões e limitações documentadas.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSetup e spike de contrato.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/X9UQOOgN/3-gabriel-stack-t%C3%A9cnica-proposta",
+          "shortUrl": "https://trello.com/c/X9UQOOgN",
+          "closed": false,
+          "complete": false,
+          "position": 3,
+          "lastActivityAt": "2026-10-01T21:27:30.910Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c39eae14f808d118d45d",
+      "name": "Backlog",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3d73465a9aee6abf828",
+          "name": "[Francisco] 05 · Plano de Qualidade de Software",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-10-11\n\n## Objetivo\nProduzir o Plano de Qualidade com os 11 itens da seção 4.2 (8 pontos).\n\n## Execução — direção de 01/10/2026\nIncluir segurança por perfil, integridade do estoque, precisão monetária e usabilidade das quatro áreas. Acrescentar critérios de saída para impedir exposição de custos/dados de colegas, venda sem disponibilidade e duplicação de pagamento. As metas de 95%/85%/80% permanecem propostas internas.\n\n## Entrega\ndocs/plano-qualidade.md com revisão/commit e links para evidências planejadas.\n\n## Aceite\n- [ ] 11 itens presentes.\n- [ ] Metas mensuráveis e riscos residuais explícitos.\n- [ ] Revisão cruzada concluída.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRequisitos, critérios e risco; marco M1.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/LSD2pMwn/8-francisco-05-plano-de-qualidade-de-software",
+          "shortUrl": "https://trello.com/c/LSD2pMwn",
+          "closed": false,
+          "complete": false,
+          "position": 1,
+          "lastActivityAt": "2026-10-01T21:27:32.104Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dbc727bf260d5c23a3",
+          "name": "[Allan] 06 · Análise de risco das funcionalidades",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Matheus\n**Revisor:** Francisco\n**Referência anterior (provisória):** 2026-10-11\n\n## Objetivo\nDirecionar testes conforme probabilidade × impacto (seção 10, 7 pontos).\n\n## Execução — direção de 01/10/2026\nReclassificar riscos: acesso a dados de colegas/custos, falsificação de vendedor, dupla reserva da última unidade, pagamento repetido, estorno/devolução, metas e joins que duplicam realizado. Avaliar probabilidade/impacto com justificativas; pontuações iniciais não são resultados medidos.\n\n## Entrega\ndocs/matriz-risco.md com RF, CT, responsável, mitigação e revisão.\n\n## Aceite\n- [ ] Todas as áreas avaliadas.\n- [ ] Riscos altos cobertos por casos e responsáveis.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRequisitos e inventário de operações.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/a5gxnQvi/9-allan-06-an%C3%A1lise-de-risco-das-funcionalidades",
+          "shortUrl": "https://trello.com/c/a5gxnQvi",
+          "closed": false,
+          "complete": false,
+          "position": 2,
+          "lastActivityAt": "2026-10-01T21:27:33.887Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e131cc8e1cda39e54f",
+          "name": "[Allan] 08 · Revisão técnica formal (inspeção)",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel como autor técnico; Matheus revisor; Francisco como escriba\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-10-18\n\n## Objetivo\nRealizar inspeção formal de requisitos, arquitetura, código, casos e documentação.\n\n## Execução — direção de 01/10/2026\nInspecionar matriz de permissões, DTOs por perfil, vendedor derivado da sessão, transações de estoque, cálculos de metas e quatro telas. Conferir carregamento/erro/vazio, teclado e mensagens. O código local ainda não contém essas funcionalidades; registrar ausências como trabalho planejado, sem inventar bugs executados.\n\n## Entrega\ndocs/atas/inspecao.md, checklist preenchido e links para achados.\n\n## Aceite\n- [ ] Cinco tipos de artefato revisados.\n- [ ] Ata e achados verificáveis.\n- [ ] Sem registrar hipótese como bug reproduzido.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRascunhos de requisitos, contrato e catálogo.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/MI9ATjxD/11-allan-08-revis%C3%A3o-t%C3%A9cnica-formal-inspe%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/MI9ATjxD",
+          "closed": false,
+          "complete": false,
+          "position": 4,
+          "lastActivityAt": "2026-10-01T21:27:36.558Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e52da2e90775b05e66",
+          "name": "[Allan] 09 · Análise estática (antes × depois)",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel na configuração; Francisco no relatório\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-20\n\n## Objetivo\nComparar análise estática inicial e final com configuração equivalente (seção 7).\n\n## Execução — direção de 01/10/2026\nAcrescentar frontend ao escopo de análise estática quando existir, com ferramenta/versão/ruleset próprios. Manter comparações Java com escopo equivalente; não misturar novo volume de código com melhoria do baseline.\n\n## Entrega\nreports/analise-estatica/antes e depois + docs/analise-estatica.md; logs, commits e configuração.\n\n## Aceite\n- [ ] Baseline até S3 preservada.\n- [ ] Comparação final reproduzível.\n- [ ] Achados graves triados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nB0/B1, setup; final depende das correções.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/VXXKixWS/12-allan-09-an%C3%A1lise-est%C3%A1tica-antes-%C3%97-depois",
+          "shortUrl": "https://trello.com/c/VXXKixWS",
+          "closed": false,
+          "complete": false,
+          "position": 5,
+          "lastActivityAt": "2026-10-01T21:27:37.727Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-20T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3e8207a721dd82efed3",
+          "name": "[Allan] 10 · Catálogo de casos de teste (≥30)",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Matheus; demais integrantes propõem casos\n**Revisor:** Gabriel\n**Referência anterior (provisória):** 2026-10-18\n\n## Objetivo\nDetalhar catálogo mínimo de 30 casos, usando os 36 cenários do manual como ponto de partida.\n\n## Execução — direção de 01/10/2026\nRevisar os 36 cenários antigos em vez de copiá-los como catálogo final. Distribuir ≥30 casos também entre login/perfis, dados de colegas, metas zero, pagamento confirmado/estorno, última unidade concorrente, cancelamento e E2E. Manter IDs e rastreabilidade sem renumerar casos já usados.\n\n## Entrega\ndocs/catalogo-casos.md ou planilha versionada; matriz RF→CA→CT→execução→defeito.\n\n## Aceite\n- [ ] Pelo menos 30 casos completos.\n- [ ] Dados e esperado específicos.\n- [ ] Casos críticos revisados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRequisitos/CA, matriz de risco, contrato e templates.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/Z8XcjCam/13-allan-10-cat%C3%A1logo-de-casos-de-teste-%E2%89%A530",
+          "shortUrl": "https://trello.com/c/Z8XcjCam",
+          "closed": false,
+          "complete": false,
+          "position": 6,
+          "lastActivityAt": "2026-10-01T21:27:39.235Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f114d9d5311e2693c2",
+          "name": "[Gabriel] 11 · Testes caixa-preta de conformidade de contrato",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan implementa cenários; Francisco revisa evidências\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-01\n\n## Objetivo\nValidar contrato via HTTP e demonstrar técnicas caixa-preta (seção 8, 10 pontos).\n\n## Execução — direção de 01/10/2026\nIncluir contrato de autenticação e autorização (401/403 conforme decisão), projeções sem custo para vendedor, vendedor atribuído pelo servidor e conflitos de reserva/pagamento. Nenhuma rota nova está implementada no checkout; documentar contrato-alvo antes da suíte.\n\n## Entrega\nsrc/test/java/.../api + relatórios e requests/responses sanitizados, ligados aos CTs.\n\n## Aceite\n- [ ] 3 técnicas demonstráveis.\n- [ ] Validador não impede negativos.\n- [ ] Resultados rastreados e divergências triadas.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSpike, contrato, fixtures e catálogo; testes HTTP/aceitação complementam esta frente.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/a9wQuRO0/14-gabriel-11-testes-caixa-preta-de-conformidade-de-contrato",
+          "shortUrl": "https://trello.com/c/a9wQuRO0",
+          "closed": false,
+          "complete": false,
+          "position": 7,
+          "lastActivityAt": "2026-10-01T21:27:40.990Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f4b3e9bb679475adfb",
+          "name": "[Gabriel] 12 · Testes caixa-branca e cobertura (JaCoCo)",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus; Allan revisa cenários\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-15\n\n## Objetivo\nMedir cobertura real e analisar caminhos (seção 9, 10 pontos).\n\n## Execução — direção de 01/10/2026\nAdicionar análise de decisões de autorização, reserva, confirmação, estorno e cálculo de meta quando implementadas. Medir JVM e frontend separadamente; os três métodos e metas de cobertura são escolhas internas, não cotas do enunciado.\n\n## Entrega\nreports/cobertura/ com HTML/XML, grafos e interpretação em docs/caixa-branca.md.\n\n## Aceite\n- [ ] Medições identificadas por versão.\n- [ ] 3 métodos analisados.\n- [ ] Lacunas e denominadores explicados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nCI/instrumentação e suíte; diagnóstico inicial até 08/11.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/9EKvdzHs/15-gabriel-12-testes-caixa-branca-e-cobertura-jacoco",
+          "shortUrl": "https://trello.com/c/9EKvdzHs",
+          "closed": false,
+          "complete": false,
+          "position": 8,
+          "lastActivityAt": "2026-10-01T21:30:41.462Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3f85eb27a791f6921e6",
+          "name": "[Gabriel] 13 · Níveis de teste: unitário, integração, sistema, aceitação",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan e Matheus executam frentes; Francisco acompanha evidências\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-11-08\n\n## Objetivo\nCoordenar cobertura dos níveis de teste sem concentrar toda implementação em um membro (seção 12, 10 pontos).\n\n## Execução — direção de 01/10/2026\nConsolidar unitários de cálculo/regra, integração transacional de estoque, sistema HTTP por perfil e aceitação E2E das quatro telas. Reusar CTs quando representam o mesmo requisito; distinguir nível e execução sem inflar a contagem.\n\n## Entrega\ndocs/matriz-niveis.md + link da execução consolidada.\n\n## Aceite\n- [ ] Todos os níveis com evidência.\n- [ ] Cards executores revisados.\n- [ ] Cada integrante explica ao menos um cenário.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nQA-01/02/03, contrato, fixtures, CI e card 17.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/CmRstOih/16-gabriel-13-n%C3%ADveis-de-teste-unit%C3%A1rio-integra%C3%A7%C3%A3o-sistema-aceita%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/CmRstOih",
+          "closed": false,
+          "complete": false,
+          "position": 9,
+          "lastActivityAt": "2026-10-01T21:27:45.564Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3fd8f2fe5df0aef0f17",
+          "name": "[Matheus] 14 · Banco de Dados: modelo, integridade e persistência",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan nos testes/consultas; Gabriel em JPA\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-11-01\n\n## Objetivo\nCoordenar a trilha de Banco de Dados, condicionada à rubrica docente.\n\n## Execução — direção de 01/10/2026\nAmpliar DER/dicionário/migrações para usuário/perfil, vínculo vendedor-pedido, meta mensal e distribuição, movimentos/reservas de estoque e custos históricos. Nomes e cardinalidades são propostas até modelagem; preservar os subtipos atuais salvo decisão justificada.\n\n## Entrega\ndocs/bd/ com índice, DER, dicionário, decisões, SQL, migrações e testes vinculados.\n\n## Aceite\n- [ ] Escopo docente registrado.\n- [ ] Subentregas revisadas.\n- [ ] Modelo, código e testes consistentes.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nAlinhamento BD; BD-01/02/03 e QA-02.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/I4BYlFWv/17-matheus-14-banco-de-dados-modelo-integridade-e-persist%C3%AAncia",
+          "shortUrl": "https://trello.com/c/I4BYlFWv",
+          "closed": false,
+          "complete": false,
+          "position": 10,
+          "lastActivityAt": "2026-10-01T21:27:47.686Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4039aab8c2608f5ba49",
+          "name": "[Allan] 16 · Gestão de defeitos",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Francisco organiza registros; responsáveis corrigem\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-15\n\n## Objetivo\nManter gestão contínua de defeitos desde a primeira inspeção (seção 15, 5 pontos).\n\n## Execução — direção de 01/10/2026\nRegistrar também defeitos de autorização, integridade de estoque, dinheiro, metas e interface. Diferenciar requisito ainda não implementado de falha em requisito prometido. O enunciado exige encontrar/registrar defeitos e demonstrar o ciclo, mas não fixa quantidade.\n\n## Entrega\nIssues e docs/relatorio-defeitos.md exportável; vínculos CT/run/PR.\n\n## Aceite\n- [ ] Registros completos e sem duplicatas.\n- [ ] Severidade distinta de prioridade.\n- [ ] Reteste e regressão comprovados para encerrados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nTemplates; atividade contínua desde S2.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/rXZu5aql/19-allan-16-gest%C3%A3o-de-defeitos",
+          "shortUrl": "https://trello.com/c/rXZu5aql",
+          "closed": false,
+          "complete": false,
+          "position": 12,
+          "lastActivityAt": "2026-10-01T21:27:50.583Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c40c172e090a3732437e",
+          "name": "[Matheus] 17 · Regressão e ciclo de melhoria contínua",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel e Allan corrigem; Francisco consolida comparação\n**Revisor:** Gabriel\n**Referência anterior (provisória):** 2026-11-15\n\n## Objetivo\nDemonstrar um ciclo completo de melhoria com comparação válida (seção 19, 4 pontos).\n\n## Execução — direção de 01/10/2026\nSeparar B0/B1 original/executável da evolução Loja • Gestão. Comparar mesma suíte em versões compatíveis; novos endpoints e UI exigem indicadores próprios. Retestar permissões, concorrência e cálculo junto ao caso corrigido.\n\n## Entrega\ndocs/melhoria-continua.md + commits/tags, matriz antes/depois e runs.\n\n## Aceite\n- [ ] Um ciclo completo rastreável.\n- [ ] Mesma suíte/escopo ou diferenças justificadas.\n- [ ] Nenhum resultado inventado.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nGestão de defeitos, testes, cobertura e análise estática.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/cYHvKIHo/20-matheus-17-regress%C3%A3o-e-ciclo-de-melhoria-cont%C3%ADnua",
+          "shortUrl": "https://trello.com/c/cYHvKIHo",
+          "closed": false,
+          "complete": false,
+          "position": 13,
+          "lastActivityAt": "2026-10-01T21:27:51.754Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-15T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c4108e5d4fb76b719235",
+          "name": "[Matheus] 18 · Métricas e avaliação dos atributos de qualidade",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Francisco na interpretação; Allan confere catálogo\n**Revisor:** Gabriel\n**Referência anterior (provisória):** 2026-11-22\n\n## Objetivo\nColetar e interpretar indicadores (seções 16/17, 7 pontos).\n\n## Execução — direção de 01/10/2026\nSubstituir denominador fixo 28 pelo inventário da versão executada; 28 é baseline observado nos controllers originais. Separar cobertura API, JVM e UI. Medir usabilidade por conclusão de tarefas com protocolo; metas/vendas demonstrativas não são métricas de qualidade obtidas.\n\n## Entrega\ndocs/metricas.md, dados CSV/JSON ou planilha, gráficos e manifesto de execuções.\n\n## Aceite\n- [ ] Fórmulas/escopo explícitos.\n- [ ] Números recuperáveis da evidência.\n- [ ] Comparação validada.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRuns, defeitos, análise estática e QA-05.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/zIsf4wjO/21-matheus-18-m%C3%A9tricas-e-avalia%C3%A7%C3%A3o-dos-atributos-de-qualidade",
+          "shortUrl": "https://trello.com/c/zIsf4wjO",
+          "closed": false,
+          "complete": false,
+          "position": 14,
+          "lastActivityAt": "2026-10-01T21:27:53.182Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-22T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41414062b22e8936053",
+          "name": "[Francisco] 19 · Segurança, privacidade e ética",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Matheus e Gabriel fornecem inspeções técnicas\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-11-20\n\n## Objetivo\nAnalisar segurança, privacidade, ética e impacto de falhas (seção 18, 2 pontos).\n\n## Execução — direção de 01/10/2026\nAcrescentar acesso mínimo por perfil, histórico compartilhado limitado, custo/margem/resultados de colegas protegidos e auditoria de alterações críticas. Examinar impacto de metas/rankings sem exposição indevida. Pagamentos e dados são sintéticos; autenticação agora é requisito funcional.\n\n## Entrega\ndocs/etica-seguranca.md + referências para achados/evidências sanitizadas.\n\n## Aceite\n- [ ] Pergunta sobre falha grave respondida.\n- [ ] Riscos ligados ao sistema.\n- [ ] Texto revisado tecnicamente.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nInventário do sistema, defeitos e evidências; execução local pode ocorrer em dupla.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/VQvMapdo/22-francisco-19-seguran%C3%A7a-privacidade-e-%C3%A9tica",
+          "shortUrl": "https://trello.com/c/VQvMapdo",
+          "closed": false,
+          "complete": false,
+          "position": 15,
+          "lastActivityAt": "2026-10-01T21:27:54.330Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-20T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c417b39a171271f1f26c",
+          "name": "[Francisco] 20 · Relatórios e relatório técnico final",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Todos entregam suas frentes\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-26\n\n## Objetivo\nConsolidar os relatórios sem substituir execução por narrativa.\n\n## Execução — direção de 01/10/2026\nRevisar manual v1.0, que excluía interface, à luz do Guia Visual e direcao-criativa.md de 01/10. Explicar estado inicial, evolução, decisões, testes e riscos. Imagens de mockup só ilustram proposta; não usar como evidência de execução.\n\n## Entrega\ndocs/relatorio-final.md/PDF e índice dos dez entregáveis.\n\n## Aceite\n- [ ] Fontes/evidências rastreáveis.\n- [ ] Todos revisaram sua frente.\n- [ ] Rascunho M3 e final identificados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nCards técnicos e métricas; não marcar concluído sem evidência recebida.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/tWeVAYyZ/23-francisco-20-relat%C3%B3rios-e-relat%C3%B3rio-t%C3%A9cnico-final",
+          "shortUrl": "https://trello.com/c/tWeVAYyZ",
+          "closed": false,
+          "complete": false,
+          "position": 16,
+          "lastActivityAt": "2026-10-01T21:27:55.433Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c41b41ddbcbd88dc88c3",
+          "name": "[Gabriel] 21 · Apresentação e demonstração ao vivo",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Todos; Francisco coordena roteiro\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-28\n\n## Objetivo\nEnsaiar a demonstração ao vivo, com participação de todos (regra 25).\n\n## Execução — direção de 01/10/2026\nDemonstração planejada: gerente consulta equipe/meta/estoque; vendedor vê só seus dados; atendimento cria pedido/reserva; pagamento confirmado altera realizado e saída; cancelamento libera reserva. Mostrar também negativas HTTP e suíte/BD/cobertura. Só demonstrar como pronta a parte executável e testada.\n\n## Entrega\ndocs/roteiro-demo.md, registro dos dois ensaios e checklist individual.\n\n## Aceite\n- [ ] Todos conseguem explicar e demonstrar.\n- [ ] Execução reproduzível.\n- [ ] Contingência testada sem substituir regra 25.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSlides, README, pacote final e plano B.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/PJe5BNT8/24-gabriel-21-apresenta%C3%A7%C3%A3o-e-demonstra%C3%A7%C3%A3o-ao-vivo",
+          "shortUrl": "https://trello.com/c/PJe5BNT8",
+          "closed": false,
+          "complete": false,
+          "position": 17,
+          "lastActivityAt": "2026-10-01T21:27:56.681Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-28T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41deba6166940e0fc57",
+          "name": "[Matheus] Templates padronizados (caso de teste, defeito, relatório)",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Francisco\n**Referência anterior (provisória):** 2026-10-11\n\n## Objetivo\nPadronizar casos, defeitos, execuções e relatórios.\n\n## Execução — direção de 01/10/2026\nAcrescentar perfil autenticado, período/fuso, estado inicial de estoque, eventos de pagamento, identidade da sessão e versão frontend ao manifesto quando aplicáveis. Exemplos continuam NÃO EXECUTADOS.\n\n## Entrega\ndocs/templates/ + template de Issue no repositório.\n\n## Aceite\n- [ ] Modelos completos.\n- [ ] Exemplo sem resultado fictício.\n- [ ] Equipe consegue reutilizar.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRequisitos e convenção de IDs.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/9DYSzP9j/29-matheus-templates-padronizados-caso-de-teste-defeito-relat%C3%B3rio",
+          "shortUrl": "https://trello.com/c/9DYSzP9j",
+          "closed": false,
+          "complete": false,
+          "position": 32785,
+          "lastActivityAt": "2026-10-01T21:28:03.023Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e4218b3d1385884551e9",
+          "name": "[Francisco] Slides da apresentação",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Todos fornecem conteúdo e evidências\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-26\n\n## Objetivo\nCriar apresentação visual baseada nos resultados reais.\n\n## Execução — direção de 01/10/2026\nApresentar Loja • Gestão como evolução do SUT; mostrar as quatro áreas, permissões e transações com evidências reais. Identificar mockup como proposta e setembro/2026 como massa sintética. Manter narrativa de qualidade e rubrica.\n\n## Entrega\nArquivo editável dos slides + PDF e roteiro de fala.\n\n## Aceite\n- [ ] Sem números sem fonte.\n- [ ] Slides legíveis.\n- [ ] Todos revisaram e duração ensaiada.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRelatório/métricas e roteiro de demonstração.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/qQvIlw5q/32-francisco-slides-da-apresenta%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/qQvIlw5q",
+          "closed": false,
+          "complete": false,
+          "position": 81937,
+          "lastActivityAt": "2026-10-01T21:28:07.764Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e423eb428e829f96a3d8",
+          "name": "[Francisco] Plano B da demo (gravação de contingência)",
+          "description": "**Responsável principal:** Francisco\n**Apoio:** Gabriel grava execução; Matheus verifica pacote\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-11-26\n\n## Objetivo\nPreparar contingência sem substituir a demonstração reproduzível.\n\n## Execução — direção de 01/10/2026\nIncluir interface e contas sintéticas no pacote de contingência, além de API/BD/suíte. Gravação deve mostrar versão realmente executada e fluxo por perfil; mockups não substituem demonstração.\n\n## Entrega\nVídeo, pacote local e docs/plano-contingencia.md.\n\n## Aceite\n- [ ] Backup abre sem internet.\n- [ ] Execução reproduzível em alternativa.\n- [ ] Limites explícitos.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSuíte consolidada, README e primeiro ensaio.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/JTx8I4eB/33-francisco-plano-b-da-demo-grava%C3%A7%C3%A3o-de-conting%C3%AAncia",
+          "shortUrl": "https://trello.com/c/JTx8I4eB",
+          "closed": false,
+          "complete": false,
+          "position": 98321,
+          "lastActivityAt": "2026-10-01T21:28:09.619Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-26T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e42423818e62b587b3bf",
+          "name": "[Matheus] Checklist de entrega final (conferência dos 14 critérios)",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Todos\n**Revisor:** Francisco\n**Referência anterior (provisória):** 2026-11-29\n\n## Objetivo\nConferir 14 critérios, dez entregáveis e submissão até 30/11.\n\n## Execução — direção de 01/10/2026\nConferir frontend executável, quatro áreas, autorização por HTTP, reserva concorrente, precisão monetária, metas e estornos com evidência, além dos 14 critérios e dez entregáveis. Rubrica BD e aprovação da equipe/prazo continuam dependentes de retorno documentado.\n\n## Entrega\ndocs/checklist-entrega.md + pacote final e comprovante após envio.\n\n## Aceite\n- [ ] 14 critérios evidenciados.\n- [ ] Dez entregáveis acessíveis.\n- [ ] Entrega registrada no prazo confirmado.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRelatórios, slides, ensaios; não antecipar conclusão.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/1mNWyLTq/34-matheus-checklist-de-entrega-final-confer%C3%AAncia-dos-14-crit%C3%A9rios",
+          "shortUrl": "https://trello.com/c/1mNWyLTq",
+          "closed": false,
+          "complete": false,
+          "position": 114705,
+          "lastActivityAt": "2026-10-01T21:28:11.436Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-29T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903142e77adabbb3e059e",
+          "name": "[Matheus] BD-01 · DER, dicionário e análise de normalização",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel explica entidades; Allan confere modelo\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-10-11\n\n## Objetivo\nDestrinchar a modelagem da trilha BD; escopo final depende da rubrica docente.\n\n## Execução — direção de 01/10/2026\nModelar usuário/perfil e vendedor do pedido, meta loja/distribuições, produto físico/estoque, movimento/reserva, entrada/lote e custo histórico. Evitar tabela de vendas duplicada: histórico deriva de pedidos. Decidir método de custo e devolução antes de fechar schema.\n\n## Entrega\ndocs/bd/modelo-conceitual, modelo-logico, dicionario-dados.md e analise-modelo.md com commit.\n\n## Aceite\n- [ ] DER e dicionário coerentes com esquema inspecionado.\n- [ ] Decisões de normalização e herança justificadas.\n- [ ] Revisão por outro integrante.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSubentrega do card 14. Depende do inventário/ambiente; alimenta BD-02 e QA-02.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/YPqTTPbz",
+          "closed": false,
+          "complete": false,
+          "position": 131089,
+          "lastActivityAt": "2026-10-01T21:30:44.272Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90316f9a958c62c4904d9",
+          "name": "[Matheus] BD-02 · Migrações Flyway e integridade no PostgreSQL",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-10-18\n\n## Objetivo\nTornar esquema reproduzível e versionado, sem depender de ddl-auto=update.\n\n## Execução — direção de 01/10/2026\nAdicionar migrações evolutivas para novas relações, dinheiro NUMERIC, quantidades válidas e unicidades aprovadas. Garantir implantação sobre baseline preservado e base vazia. Somar constraints a controle transacional de concorrência; CHECK isolado não impede duas reservas simultâneas.\n\n## Entrega\nsrc/main/resources/db/migration/ e documentação de reprodução, logs da migração e validação.\n\n## Aceite\n- [ ] Esquema recriado do zero.\n- [ ] Histórico Flyway coerente.\n- [ ] Massa de teste separada.\n- [ ] Constraints alinhadas aos requisitos.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSubentrega do card 14; depende de BD-01/requisitos. QA-02 verifica comportamento; não duplicar a suíte aqui.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/FwvkkAdG/36-matheus-bd-02-migra%C3%A7%C3%B5es-flyway-e-integridade-no-postgresql",
+          "shortUrl": "https://trello.com/c/FwvkkAdG",
+          "closed": false,
+          "complete": false,
+          "position": 147473,
+          "lastActivityAt": "2026-10-01T21:30:45.348Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab903176a58a684cf707cc4",
+          "name": "[Allan] BD-03 · Consultas SQL, views e análise de índices",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Matheus\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-01\n\n## Objetivo\nProduzir consultas de negócio verificáveis e avaliar plano de execução.\n\n## Execução — direção de 01/10/2026\nAdaptar consultas para realizado por pagamento confirmado menos estornos, distribuição/atingimento mensal e disponível = saldo físico − reservado. Filtrar vendedor autenticado no uso da API; evitar duplicar totais em joins. Registrar fuso America/Fortaleza, período e massa conhecida.\n\n## Entrega\ndocs/bd/consultas.sql, views.sql, massa/esperados e analise-indices.md com planos.\n\n## Aceite\n- [ ] Resultados conferidos com massa conhecida.\n- [ ] Views justificadas.\n- [ ] Comparação de plano interpretada.\n- [ ] Revisão de Matheus.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nSubentrega do card 14; depende de BD-01/02 e seed. Quantidades propostas, ajustar à rubrica BD.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/9luJhlJy/37-allan-bd-03-consultas-sql-views-e-an%C3%A1lise-de-%C3%ADndices",
+          "shortUrl": "https://trello.com/c/9luJhlJy",
+          "closed": false,
+          "complete": false,
+          "position": 163857,
+          "lastActivityAt": "2026-10-01T21:28:15.583Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031983ee5fe30448de53",
+          "name": "[Gabriel] QA-01 · Testes unitários das regras de negócio",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus; Allan implementa casos em dupla\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-10-25\n\n## Objetivo\nImplementar a frente unitária do card 13, sem Spring ou banco.\n\n## Execução — direção de 01/10/2026\nAcrescentar unitários para meta zero, soma de distribuição, confirmação/estorno sem duplicação, preço histórico e transições de reserva. Autorização/concorrência e persistência reais ficam nas integrações, não só mocks.\n\n## Entrega\nsrc/test/java/.../unit, relatórios Surefire e links CT→teste.\n\n## Aceite\n- [ ] Regras críticas têm cenários positivos/negativos.\n- [ ] Execução isolada sem banco.\n- [ ] Asserções verificam negócio.\n- [ ] Revisão cruzada.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nCard 13 coordena. Depende de requisitos e setup; caso específico do total fica em QA-04.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/eQ7WLyPR/38-gabriel-qa-01-testes-unit%C3%A1rios-das-regras-de-neg%C3%B3cio",
+          "shortUrl": "https://trello.com/c/eQ7WLyPR",
+          "closed": false,
+          "complete": false,
+          "position": 180241,
+          "lastActivityAt": "2026-10-01T21:30:46.794Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-25T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031c5ccf21c69c20f395",
+          "name": "[Allan] QA-03 · Testes de sistema HTTP e aceitação",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel; Francisco participa do roteiro em dupla\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-01\n\n## Objetivo\nDemonstrar o fluxo completo por HTTP e os critérios de negócio.\n\n## Execução — direção de 01/10/2026\nAcrescentar HTTP e E2E por gerente/vendedor, alteração de ID para buscar colega, custo ausente e vendedor forjado ignorado/rejeitado conforme contrato. Exercitar cliente novo/existente, pedido/reserva, pagamento e meta; E2E não substitui negativas na API.\n\n## Entrega\nTestes HTTP/aceitação e matriz CA→CT→run com resultados.\n\n## Aceite\n- [ ] Fluxo de negócio completo exercitado.\n- [ ] CAs prioritários vinculados.\n- [ ] Banco isolado e dados sintéticos.\n- [ ] Francisco consegue explicar um cenário em dupla.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nCard 13 coordena; depende de contrato, fixtures, CI e card 11.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/pY0i7PQQ/40-allan-qa-03-testes-de-sistema-http-e-aceita%C3%A7%C3%A3o",
+          "shortUrl": "https://trello.com/c/pY0i7PQQ",
+          "closed": false,
+          "complete": false,
+          "position": 213009,
+          "lastActivityAt": "2026-10-01T21:30:49.213Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031f09d683c86c1a22bc",
+          "name": "[Allan] QA-05 · Medição de desempenho RNF-03",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Matheus consolida métricas; Gabriel apoia execução\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-08\n\n## Objetivo\nMedir p95 sob protocolo explícito, sem alegar capacidade de produção.\n\n## Execução — direção de 01/10/2026\nEstender protocolo a Gestão, Meu desempenho, histórico e estoque depois de inventariar rotas. Separar latência HTTP de tempo de tarefa da interface e corrida de estoque; p95≤500 ms/50 pedidos é proposta anterior, sujeita à revisão prévia de carga/escopo.\n\n## Entrega\nreports/desempenho/ com CSV/JSON, protocolo e interpretação.\n\n## Aceite\n- [ ] Protocolo aprovado antes da medição.\n- [ ] Tempos brutos e taxa de erros preservados.\n- [ ] p95 reproduzível por rota.\n- [ ] Limitações documentadas.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nRNF-03 e card 18; depende de ambiente estável, seed e endpoints.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/Ob9F07Rn/42-allan-qa-05-medi%C3%A7%C3%A3o-de-desempenho-rnf-03",
+          "shortUrl": "https://trello.com/c/Ob9F07Rn",
+          "closed": false,
+          "complete": false,
+          "position": 245777,
+          "lastActivityAt": "2026-10-01T21:28:22.285Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab90320e08c1127dff1a095",
+          "name": "[Gabriel] QA-06 · Geração de testes de contrato com Schemathesis",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan reproduz achados; Francisco organiza evidências\n**Revisor:** Matheus\n**Referência anterior (provisória):** 2026-11-08\n\n## Objetivo\nComplementar casos determinísticos com geração controlada baseada no OpenAPI.\n\n## Execução — direção de 01/10/2026\nPreparar autenticação e dados por perfil no ambiente gerativo; impedir operações fora de teste. Relatar operações novas realmente exercitadas e limites em fluxos com estado/concorrência. Manter como complemento opcional.\n\n## Entrega\nreports/schemathesis/ e casos mínimos/Issues vinculados.\n\n## Aceite\n- [ ] Configuração e versão registradas.\n- [ ] Execução reproduzível em teste.\n- [ ] Achados triados.\n- [ ] Limites de cobertura explicados.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nComplemento do card 11, dependente do spike. Não bloquear entregáveis obrigatórios por recurso opcional.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/71ixgS6n/43-gabriel-qa-06-gera%C3%A7%C3%A3o-de-testes-de-contrato-com-schemathesis",
+          "shortUrl": "https://trello.com/c/71ixgS6n",
+          "closed": false,
+          "complete": false,
+          "position": 262161,
+          "lastActivityAt": "2026-10-01T21:28:23.728Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-08T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d38d1a6c8c6ec397df",
+          "name": "[Gabriel] API-01 · Autenticação e autorização por gerente/vendedor",
+          "description": "**Responsável proposto:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nImplementar contas individuais da equipe. Gestão/estoque administrativo: gerente. Meu desempenho: apenas dados próprios. Vender: equipe autenticada. Derivar vendedor da identidade autenticada no servidor; não confiar em sellerId livre. Definir sessão/token/logout/expiração na ADR. Filtrar consultas e DTOs; ocultar menu não é autorização.\n\n## Entrega\nCódigo auth + matriz de permissões + testes\n\n## Critérios de conclusão\n- [ ] Não autenticado rejeitado\n- [ ] vendedor não acessa colega/custos\n- [ ] gerente autorizado\n- [ ] vendedor forjado rejeitado ou ignorado conforme contrato\n- [ ] testes HTTP positivos/negativos.\n\n## Dependências\nARQ-01, requisitos/CA e BD-01/02\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/ige94AvZ/49-gabriel-api-01-autentica%C3%A7%C3%A3o-e-autoriza%C3%A7%C3%A3o-por-gerente-vendedor",
+          "shortUrl": "https://trello.com/c/ige94AvZ",
+          "closed": false,
+          "complete": false,
+          "position": 278545,
+          "lastActivityAt": "2026-10-01T21:37:20.210Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d4899330163a2ebd30",
+          "name": "[Matheus] API-02 · Metas mensais, distribuição e realizado",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nImplementar meta da loja e distribuição por vendedor: soma igual à meta da loja. Realizado = vendas com pagamento confirmado menos estornos; pendente não conta. Confirmação não altera meta. Atingimento=realizado/meta×100 (1 decimal); meta zero=Sem meta. Registrar período/fuso America/Fortaleza e vendedor histórico. Dados individuais restritos à sessão.\n\n## Entrega\nAPI/DTOs/metas + testes\n\n## Critérios de conclusão\n- [ ] Somas e meta zero testadas\n- [ ] pendente excluído\n- [ ] evento repetido não duplica realizado\n- [ ] gerente vê equipe e vendedor só seus valores.\n\n## Dependências\nDOM-01, API-01, pagamento e modelo BD\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/9OrNNT1y/50-matheus-api-02-metas-mensais-distribui%C3%A7%C3%A3o-e-realizado",
+          "shortUrl": "https://trello.com/c/9OrNNT1y",
+          "closed": false,
+          "complete": false,
+          "position": 294929,
+          "lastActivityAt": "2026-10-01T21:37:26.547Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d619562df2731fef69",
+          "name": "[Gabriel] API-03 · Estoque: reserva, saída e cancelamento atômicos",
+          "description": "**Responsável proposto:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nImplementar saldo físico, reservado e disponível=saldo−reservado. Pedido reserva; pagamento confirmado converte reserva em saída; cancelamento libera; devolução física confirmada permite entrada. Proteger última unidade sob concorrência real de transações. Eventos repetidos não duplicam movimento. Reservar e criar pedido na mesma operação atômica.\n\n## Entrega\nServiço/movimentos/reservas + integração PostgreSQL\n\n## Critérios de conclusão\n- [ ] No máximo uma reserva da última unidade\n- [ ] nenhum saldo negativo\n- [ ] rollback sem resíduos\n- [ ] confirmação/cancelamento repetidos consistentes.\n\n## Dependências\nDOM-01, BD-01/02 e API-01\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/nEt4hNMG/51-gabriel-api-03-estoque-reserva-sa%C3%ADda-e-cancelamento-at%C3%B4micos",
+          "shortUrl": "https://trello.com/c/nEt4hNMG",
+          "closed": false,
+          "complete": false,
+          "position": 311313,
+          "lastActivityAt": "2026-10-01T21:37:32.298Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d8484d511c773d9585",
+          "name": "[Matheus] API-04 · Entradas de estoque e custo histórico do gerente",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nRegistrar entradas/lotes com quantidade, custo e preço de venda segundo decisão de custeio. Preservar custo atribuído à venda e preço unitário histórico, mesmo após mudar catálogo. Usar decimal/NUMERIC e auditoria de alteração. Vendedor recebe apenas dados comerciais necessários; custo/margem ausentes de JSON, não só da tela.\n\n## Entrega\nEntrada/lote/custo + migrações + testes\n\n## Critérios de conclusão\n- [ ] Custos históricos preservados\n- [ ] mudança de preço não altera venda passada\n- [ ] acesso restrito inclusive por HTTP\n- [ ] valores de compra não inventados.\n\n## Dependências\nDOM-01, API-03, API-01 e BD-02\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/Bm4Z8HVX/52-matheus-api-04-entradas-de-estoque-e-custo-hist%C3%B3rico-do-gerente",
+          "shortUrl": "https://trello.com/c/Bm4Z8HVX",
+          "closed": false,
+          "complete": false,
+          "position": 327697,
+          "lastActivityAt": "2026-10-01T21:37:41.175Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d9ccaf81310048b739",
+          "name": "[Gabriel] API-05 · Histórico do cliente e atendimento compartilhado",
+          "description": "**Responsável proposto:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nAtender cliente novo ou existente. Histórico deriva de pedidos; não duplicar cadastro de vendas. Compartilhar somente produtos, datas e estado necessários ao atendimento, sem custo, margem ou resultados de colegas. Definir campos pessoais necessários, paginação e alteração de pedidos segundo DOM-01.\n\n## Entrega\nEndpoints/DTOs atendimento + testes\n\n## Critérios de conclusão\n- [ ] Cliente existente reutilizado\n- [ ] histórico coerente com pedidos\n- [ ] projeção limitada por perfil\n- [ ] regra para terceiros respeitada.\n\n## Dependências\nAPI-01, DOM-01, contrato e clientes/pedidos\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/FrFkwHnJ/53-gabriel-api-05-hist%C3%B3rico-do-cliente-e-atendimento-compartilhado",
+          "shortUrl": "https://trello.com/c/FrFkwHnJ",
+          "closed": false,
+          "complete": false,
+          "position": 344081,
+          "lastActivityAt": "2026-10-01T21:37:45.608Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0dafcecab46e0544fd4",
+          "name": "[Gabriel] API-06 · Confirmar pagamento, estorno e efeitos consistentes",
+          "description": "**Responsável proposto:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nManter pagamentos simulados. Integrar confirmação de pagamento já vinculado ao pedido com reserva/saída e realizado; sem criar outro pagamento automaticamente. Estorno reduz realizado; entrada no estoque só após devolução física confirmada conforme decisão. Definir transições e idempotência para impedir duplo efeito.\n\n## Entrega\nServiços pagamento/pedido + integração\n\n## Critérios de conclusão\n- [ ] Confirmação repetida não duplica saída/realizado\n- [ ] pendente não conta\n- [ ] falha tem rollback\n- [ ] estorno não cria retorno físico automático\n- [ ] testes de transição.\n\n## Dependências\nDOM-01, API-02/03, QA-04 e BD-02\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/MUxkT9NS/54-gabriel-api-06-confirmar-pagamento-estorno-e-efeitos-consistentes",
+          "shortUrl": "https://trello.com/c/MUxkT9NS",
+          "closed": false,
+          "complete": false,
+          "position": 360465,
+          "lastActivityAt": "2026-10-01T21:37:51.760Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0dc92e88ee61855cf2f",
+          "name": "[Matheus] UI-01 · Implementar base visual e navegação por perfil",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Francisco\n**Revisor:** Gabriel\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nCriar shell claro com navegação lateral e componentes reutilizáveis seguindo Guia Visual: branco/cinza, destaque #5468E8, degradê discreto, espaço de 8 px e números legíveis. Referência desktop 1440×1024; prever telas menores. Menu por perfil, sessão e estados globais. API deve autorizar independentemente da navegação.\n\n## Entrega\nFrontend/componentes + evidências de revisão\n\n## Critérios de conclusão\n- [ ] Navegação coerente para gerente/vendedor\n- [ ] teclado/foco/contraste e overflow conferidos\n- [ ] carregamento/erro/vazio implementados.\n\n## Dependências\nUX-01, ARQ-01 e API-01\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/JHujvpfp/55-matheus-ui-01-implementar-base-visual-e-navega%C3%A7%C3%A3o-por-perfil",
+          "shortUrl": "https://trello.com/c/JHujvpfp",
+          "closed": false,
+          "complete": false,
+          "position": 376849,
+          "lastActivityAt": "2026-10-01T21:37:56.149Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0ddc525a2de60a496dc",
+          "name": "[Matheus] UI-02 · Gestão: loja, equipe, metas e alerta de estoque",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nImplementar resumo compacto, evolução por período com eixo/legenda/meta, tabela de vendedores e alerta curto de estoque. Tela do gerente. Consultar API autorizada, sem totais fictícios fixos fora do seed; filtros e barras derivam dos dados. Mostrar período e estado sem dados.\n\n## Entrega\nTela Gestão + testes de aceitação\n\n## Critérios de conclusão\n- [ ] Gerente vê conjunto\n- [ ] vendedor bloqueado\n- [ ] meta/realizado e gráfico conferidos com fixture\n- [ ] filtro/estados funcionam.\n\n## Dependências\nUI-01, API-02/03 e BD-03\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/1nef0V1n/56-matheus-ui-02-gest%C3%A3o-loja-equipe-metas-e-alerta-de-estoque",
+          "shortUrl": "https://trello.com/c/1nef0V1n",
+          "closed": false,
+          "complete": false,
+          "position": 393233,
+          "lastActivityAt": "2026-10-01T21:38:00.677Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0de9b507639470ca5dd",
+          "name": "[Matheus] UI-03 · Meu desempenho: meta e vendas do próprio vendedor",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Francisco\n**Revisor:** Gabriel\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nExibir só meta, realizado, atingimento e vendas do usuário autenticado. Nada de resultados de colegas/custos; filtro de identidade imposto no servidor. Mostrar Sem meta quando zero e proporções calculadas, não barras copiadas de imagem. Metas e pagamentos vêm da API.\n\n## Entrega\nTela Meu desempenho + testes\n\n## Critérios de conclusão\n- [ ] Ana: 68.400/80.000=85,5% na fixture\n- [ ] colega inacessível via ID\n- [ ] meta zero sem divisão\n- [ ] estados claros.\n\n## Dependências\nUI-01, API-01/02\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/vSFg74kp/57-matheus-ui-03-meu-desempenho-meta-e-vendas-do-pr%C3%B3prio-vendedor",
+          "shortUrl": "https://trello.com/c/vSFg74kp",
+          "closed": false,
+          "complete": false,
+          "position": 409617,
+          "lastActivityAt": "2026-10-01T21:38:07.567Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e07e2ad8b33d5f30d7",
+          "name": "[Matheus] UI-04 · Vender: Cliente → Produtos → Pagamento",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nCriar fluxo com cliente novo/existente, histórico permitido, busca de produtos disponíveis e resumo sempre visível. Etapas devem refletir preenchimento real. Ação principal Criar pedido; servidor calcula valores e identifica vendedor. Fixture: 4.500+1.200=5.700 sem desconto. Pagamento pendente não atualiza realizado; tratar falta de estoque e clique repetido.\n\n## Entrega\nTela Vender + E2E + integração\n\n## Critérios de conclusão\n- [ ] Fluxo novo/existente funciona\n- [ ] total conferido no servidor\n- [ ] custo ausente\n- [ ] erro preserva formulário\n- [ ] reserva e pagamento não duplicam por repetição.\n\n## Dependências\nUI-01, API-03/05/06 e DOM-01\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/MlqruKBN/58-matheus-ui-04-vender-cliente-%E2%86%92-produtos-%E2%86%92-pagamento",
+          "shortUrl": "https://trello.com/c/MlqruKBN",
+          "closed": false,
+          "complete": false,
+          "position": 426001,
+          "lastActivityAt": "2026-10-01T21:38:13.550Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e190b3cc0f83d2170e",
+          "name": "[Matheus] UI-05 · Estoque administrativo: saldo, reserva, custo e preço",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nImplementar tabela operacional de gerente com saldo físico, reservado, disponível, entradas, custo de compra e preço de venda. Permitir entrada conforme API-04; mostrar custos não informados sem inventar valor. Não renderizar a mesma tela para vendedor com colunas só escondidas: resposta deve ser autorizada.\n\n## Entrega\nTela Estoque + testes\n\n## Critérios de conclusão\n- [ ] Saldo/reservado/disponível distintos\n- [ ] gerente registra entrada\n- [ ] vendedor bloqueado na API\n- [ ] estados e moeda revisados.\n\n## Dependências\nUI-01, API-03/04\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/wfIF8udO/59-matheus-ui-05-estoque-administrativo-saldo-reserva-custo-e-pre%C3%A7o",
+          "shortUrl": "https://trello.com/c/wfIF8udO",
+          "closed": false,
+          "complete": false,
+          "position": 442385,
+          "lastActivityAt": "2026-10-01T21:38:17.765Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0e25e2fa1640d04d53c",
+          "name": "[Allan] QA-07 · Aceitação das quatro telas e regressão por perfil",
+          "description": "**Responsável proposto:** Allan\n**Apoio:** Gabriel e Francisco em dupla\n**Revisor:** Matheus\n**Prioridade/sequência:** Implementar após dependências; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nAutomatizar E2E com contas sintéticas distintas e banco descartável. Cobrir quatro áreas, cliente novo/existente, preço×quantidade, pedido/reserva/pagamento/realizado, cancelamento e meta zero. Verificar teclado, carregamento/erro/vazio e layout em telas menores. Testar acesso direto HTTP a colega/custo, além da interface. Concorrência real fica também em QA-02.\n\n## Entrega\nSuíte E2E + relatórios + checklist UI\n\n## Critérios de conclusão\n- [ ] CT/RF/CA rastreados\n- [ ] E2E repetível\n- [ ] dados isolados\n- [ ] negativas na API\n- [ ] evidências por commit/run sem mockup como execução.\n\n## Dependências\nUI-01..05, API-01..06, catálogo e CI\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/vctQv8R5/60-allan-qa-07-aceita%C3%A7%C3%A3o-das-quatro-telas-e-regress%C3%A3o-por-perfil",
+          "shortUrl": "https://trello.com/c/vctQv8R5",
+          "closed": false,
+          "complete": false,
+          "position": 458769,
+          "lastActivityAt": "2026-10-01T21:38:22.693Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a0e96916900fd823d5",
+      "name": "A fazer",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0bb3438c11cfd4b1713",
+          "name": "[Francisco] UX-01 · Fonte visual, quatro áreas e estados da interface",
+          "description": "**Responsável proposto:** Francisco\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Definir antes da implementação; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nConsolidar direcao-criativa.md e Guia Visual com as quatro telas da mesma proposta. Publicar arquivos no repositório/Drive e inserir links compartilháveis no quadro. Usar Loja • Gestão provisoriamente, sem vínculo com Apple. Mockups são referência. Definir estados carregando/vazio/erro/sucesso, teclado, responsividade e textos determinísticos.\n\n## Entrega\ndocs/ui/guia-visual.md + referências\n\n## Critérios de conclusão\n- [ ] Fontes acessíveis à equipe\n- [ ] fluxo por perfil revisado\n- [ ] checklist de estados e acessibilidade definida.\n\n## Dependências\nGuia Visual local; PL-01\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/5uQbmzmm/46-francisco-ux-01-fonte-visual-quatro-%C3%A1reas-e-estados-da-interface",
+          "shortUrl": "https://trello.com/c/5uQbmzmm",
+          "closed": false,
+          "complete": false,
+          "position": 49156,
+          "lastActivityAt": "2026-10-01T21:38:29.407Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/69c70faf2591e2e2ed69295a",
+              "fullName": "FR4NCISCO OFC",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/69c70faf2591e2e2ed69295a/ac10bf90b29e6ed1974caa16a70cddd0"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d1d19613b15cf9c676",
+          "name": "[Gabriel] ARQ-01 · Decisão de stack e integração frontend/API",
+          "description": "**Responsável proposto:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n**Prioridade/sequência:** Definir antes da implementação; prazo a reestimar em PL-01.\n\n## Objetivo e execução\nPreservar backend Java e escolher stack da interface, biblioteca HTTP, sessão/autenticação e E2E mediante spike curto. Definir URLs/configuração externa, CORS para origem da interface e erro HTTP consistente. Não apresentar biblioteca como instalada antes do commit/build. Preferir componentes determinísticos; gráficos calculados a partir dos dados.\n\n## Entrega\ndocs/decisoes/arquitetura-loja.md + spike\n\n## Critérios de conclusão\n- [ ] ADR com versões e justificativa\n- [ ] integração mínima real\n- [ ] execução de API/BD/UI documentada.\n\n## Dependências\nSetup, stack e UX-01\n\nPlanejado em 01/10/2026 conforme direcao-criativa.md e Guia Visual. Não implementado/certificado por esta revisão. Concluir apenas com execução real e revisão. Responsáveis propostos precisam ser validados no acordo da equipe.",
+          "url": "https://trello.com/c/vhUnNujA/47-gabriel-arq-01-decis%C3%A3o-de-stack-e-integra%C3%A7%C3%A3o-frontend-api",
+          "shortUrl": "https://trello.com/c/vhUnNujA",
+          "closed": false,
+          "complete": false,
+          "position": 65540,
+          "lastActivityAt": "2026-10-01T21:38:35.813Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a3e5500a42c656ca53",
+      "name": "Em andamento",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c400073a4a72a6b41051",
+          "name": "[Gabriel] 15 · Automação da suíte e pipeline de CI",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n\n## Execução — 03/10/2026\nAmpliei .github/workflows/ci.yml para PostgreSQL18 exclusivo de teste: database order_management_test e porta15432. Comando -Pintegration verify inclui unitários, contexto e persistência.\nComo: perfil Maven controla exclusão da tag integration; perfil Spring usa create-drop no banco de teste; actions/upload-artifact preserva target/surefire-reports mesmo com falha; setup-node24 executa testes e auditoria estrutural do contrato.\nUtilizado: GitHub Actions checkout/setup-java/setup-node/upload-artifact, Maven/Surefire, JUnit, PostgreSQL service e Node nativo sem dependências npm.\n\n## Evidências\nCI, POM, src/test/resources/application-integration.properties; scripts/audit-contract*.mjs; reports/execucoes/run-2026-10-03-continuacao.md.\nSete testes Node locais aprovados; XML POM e diff verificados. CI ampliado ainda local, sem run remoto e sem suíte Java ampliada aprovada.\n\n## Pendências\nExecutar/publicar pipeline em ambiente disponível, checar artefatos; ampliar cobertura e E2E conforme implementação. Em andamento.",
+          "url": "https://trello.com/c/aGnCboeK/18-gabriel-15-automa%C3%A7%C3%A3o-da-su%C3%ADte-e-pipeline-de-ci",
+          "shortUrl": "https://trello.com/c/aGnCboeK",
+          "closed": false,
+          "complete": false,
+          "position": 11,
+          "lastActivityAt": "2026-10-04T02:33:21.936Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41cc438b247d3821534",
+          "name": "[Gabriel] Spike: escolher ferramenta de contract testing",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n\n## Execução — continuação de 03/10/2026\nAuditei o alvo (10 paths/11 operações), referências, perfis, segurança declarada, RF e projeções. Identifiquei schemas abertos que aceitavam campos sensíveis extras; criei alvo v2 preservando o baseline e alvo inicial.\nComo: scripts/audit-contract.mjs + sete testes Node; probe-legacy-ajv.cjs compara exemplos sintéticos antes/depois. V2 rejeitou custo/equipe e margem aninhada. Ajv 6.15.0 local falhou ao compilar metaschema 2020-12: não foi adotado.\nUtilizado: Node 24.19.0, node:test, fs/assert e Ajv legado apenas diagnóstico de subconjunto draft-07. Proposta: avaliar Ajv 8/ajv/dist/2020; instalação npm bloqueada por EACCES.\n\n## Entrega e evidência\ndocs/decisoes/contract-testing.md; reports/contrato/spike-2026-10-03/; reports/execucoes/run-2026-10-03-continuacao.md.\n7 testes Node aprovados. Auditoria estrutural não é validação completa OpenAPI nem teste HTTP.\n\n## Pendências\nValidador 2020-12, positivo/negativo HTTP real, sessão e 401/403 após API-01; revisão Allan/Gabriel. Em andamento; sem declarar conformidade ou autenticação implementada.",
+          "url": "https://trello.com/c/7WLb5mTB/28-gabriel-spike-escolher-ferramenta-de-contract-testing",
+          "shortUrl": "https://trello.com/c/7WLb5mTB",
+          "closed": false,
+          "complete": false,
+          "position": 16401,
+          "lastActivityAt": "2026-10-04T02:33:09.908Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-07T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41f771e19f45f855872",
+          "name": "[Matheus] Ambiente reprodutível + seed de dados",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel; Allan valida uso\n**Revisor:** Gabriel\n\n## Execução — 03/10/2026\nImplementei ambiente exclusivo de teste em docker-compose.test.yml: PostgreSQL 18, porta local 15432, database order_management_test, healthcheck e armazenamento descartável tmpfs. Não altera o postgres-order de desenvolvimento.\nComo: perfil Spring integration com create-drop; JUnit anotação JUnit Tag (integration); unitários padrão sem banco e -Pintegration verify para suíte completa. OrderFixtures cria massa sintética por teste; persistência com transação Spring/rollback.\nRunner scripts/test.ps1 localiza JAVA_HOME/JDK portátil, sobe Compose próprio a3-tests, executa suíte e encerra esse ambiente.\nUtilizado: PowerShell, Docker Compose, PostgreSQL, Spring Boot Test, JPA/EntityManager, JUnit e Mockito.\n\n## Evidência\nREADME.md; src/test/resources/application-integration.properties; OrderFixtures.java; OrderPersistenceTest.java; reports/execucoes/run-2026-10-03-continuacao.md.\nPOM e script passaram leitura/parser; execução Java bloqueada por java.security AccessDeniedException e Docker indisponível nesta sessão.\n\n## Pendências\nExecutar duas rodadas e provar ausência de estado residual; revisão Gabriel. Seed de usuários/metas/estoque depende das funções futuras. Em andamento; integração não aprovada ainda.",
+          "url": "https://trello.com/c/YBJ5YBeV/30-matheus-ambiente-reprodut%C3%ADvel-seed-de-dados",
+          "shortUrl": "https://trello.com/c/YBJ5YBeV",
+          "closed": false,
+          "complete": false,
+          "position": 49169,
+          "lastActivityAt": "2026-10-04T02:35:30.518Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-18T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e420449a7ea369c0da32",
+          "name": "[Gabriel] README + execução em um comando",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Allan testa instruções; Francisco revisa clareza\n**Revisor:** Matheus\n\n## Execução — 03/10/2026\nAtualizei README com comandos de unitários, integração e auditoria do contrato, requisitos JDK 25/Docker/Node e localização dos relatórios.\nComo: scripts/test.ps1 oferece modos Unit/Integration; detecta JDK portátil ou exige JAVA_HOME; propaga falhas; integração usa banco descartável separado e encerra Compose a3-tests.\nComandos: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1; adicionar -Mode Integration para PostgreSQL. Auditoria: node --test scripts/audit-contract.test.mjs.\nUtilizado: PowerShell, Maven Wrapper/Surefire, Docker Compose, JUnit tags, Node.js. Documentado que frontend/login continuam planejados e Flyway pendente.\n\n## Evidências\nREADME.md; scripts/test.ps1; docker-compose.test.yml; reports/execucoes/run-2026-10-03-continuacao.md.\nParser PowerShell sem erros e sete testes Node aprovados. Runner Java/integração ainda não validado de ponta a ponta por bloqueio do JDK/Docker.\n\n## Pendências\nExecução por Allan/outro integrante e reteste do runner em ambiente disponível; comandos de frontend após ARQ-01/UI. Em andamento.",
+          "url": "https://trello.com/c/TKUhRGgt/31-gabriel-readme-execu%C3%A7%C3%A3o-em-um-comando",
+          "shortUrl": "https://trello.com/c/TKUhRGgt",
+          "closed": false,
+          "complete": false,
+          "position": 65553,
+          "lastActivityAt": "2026-10-04T02:33:15.745Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-24T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031a850d8be9beed42ea",
+          "name": "[Matheus] QA-02 · Integração, constraints e rollback real",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Gabriel\n\n## Execução — 03/10/2026\nIniciei integração real do baseline com OrderPersistenceTest: cria produtos sintéticos e pedidos pelo OrderService; flush/clear obriga recarga do banco.\nCenários: preço unitário histórico persiste após mudança do catálogo; venda iPhone4500+AirPods1200 mantém total5700, cliente/endereço/pagamento persistidos.\nComo: Spring Boot Test, perfil integration, banco PostgreSQL exclusivo porta15432, transação Spring com rollback e massa OrderFixtures.\nUtilizado: Java25, JUnit, AssertJ, Spring/JPA/EntityManager, Maven tags e Compose descartável.\n\n## Evidência\nOrderPersistenceTest.java; OrderFixtures.java; application-integration.properties; docker-compose.test.yml; reports/execucoes/run-2026-10-03-continuacao.md.\nCódigo implementado, sem execução aprovada: bloqueios JDK/Docker nesta sessão.\n\n## Pendências\nExecutar e confirmar persistência/rollback; ainda faltam cenários de constraints, erro parcial, concorrência e domínio estoque. Não afirmar rollback comprovado antes do run. Em andamento.",
+          "url": "https://trello.com/c/lUE8z32P/39-matheus-qa-02-integra%C3%A7%C3%A3o-constraints-e-rollback-real",
+          "shortUrl": "https://trello.com/c/lUE8z32P",
+          "closed": false,
+          "complete": false,
+          "position": 196625,
+          "lastActivityAt": "2026-10-04T02:35:35.970Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-11-01T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e41a28c5cf67a38e2f04",
+          "name": "[Gabriel] Extrair e versionar o contrato OpenAPI (baseline)",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n\n## Execução — 03/10/2026\nBaseline exportado em config/openapi/baseline-openapi-2026-10-03.json: 14 paths, SHA-256 4CF78EA43C7A24490F5B53F4E4BB11FCBBC4689EFDC1DB57BB9FA5EB9FE8F180.\nAlvo inicial de 10 paths/11 operações foi preservado. Nova revisão: config/openapi/target-loja-gestao-openapi-2026-10-03-v2.json, SHA-256 16A77FD221546B1A77A5D703E81AD3AAC863F41D25D61390FBC5FB130D4D33C7.\nComo: fechamento de campos extras nas projeções do vendedor e objetos aninhados, itens obrigatórios e extensão x-roles por operação. Marcadores planned mantidos; permissões são propostas, sem enforcement no servidor.\nUtilizado: exportação Springdoc anterior; Node.js/fs/crypto para inspeção e hashes; auditoria estrutural e exemplos sintéticos no spike.\n\n## Evidências\ndocs/decisoes/contrato.md e contract-testing.md; reports/contrato/spike-2026-10-03/. Sete testes da auditoria aprovados; v2 rejeita exemplos de custo/equipe e margem extra.\n\n## Pendências\nValidação integral OpenAPI 3.1/2020-12 e execução HTTP/autorização; revisão do alvo. Ajv legado incompatível; novas rotas ainda não implementadas. Mantido Em andamento.",
+          "url": "https://trello.com/c/haebO3FA/27-gabriel-extrair-e-versionar-o-contrato-openapi-baseline",
+          "shortUrl": "https://trello.com/c/haebO3FA",
+          "closed": false,
+          "complete": false,
+          "position": 140737488371712,
+          "lastActivityAt": "2026-10-04T02:33:11.026Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a6f202173608d1720c",
+      "name": "Em revisão",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c3a3760eb1cc355a29",
+          "name": "[Gabriel] 01 · Setup do repositório e ambiente",
+          "description": "**Responsável principal:** Gabriel\n**Apoio:** Matheus\n**Revisor:** Allan\n\n## Execução — 03/10/2026\nRodada anterior restaurou Maven Wrapper3.9.11, JDK25 portátil, PostgreSQL18/Compose, CI mínimo e exportação OpenAPI; commit ca79f02. Dois testes Java aprovados naquele ambiente.\nContinuação: corrigi mvnw.cmd para atributo Target nulo em diretório comum no PowerShell (antes falhava em indexação de matriz nula). Separei unitários sem banco de contexto/persistência anotação JUnit Tag (integration); criei perfil Spring/banco descartável separado e runner PowerShell.\nUtilizado: Java25/Boot4.1, Maven Wrapper/Surefire, PowerShell, Compose/PostgreSQL18, JUnit tags. CI preparado para -Pintegration verify e artefatos Surefire.\n\n## Evidências\nmvnw.cmd; pom.xml; docker-compose.test.yml; scripts/test.ps1; .github/workflows/ci.yml; docs/decisoes/stack.md; reports/execucoes/run-2026-10-03-continuacao.md.\nWrapper passou a iniciar Maven. Nesta sessão, JVM falhou em java.security (AccessDeniedException), Docker sem acesso e npm com EACCES. Não contar como falha do produto nem sucesso dos testes novos.\n\n## Pendências\nReteste Java/runner/CI em ambiente liberado; revisão Gabriel. Mantido Em revisão.",
+          "url": "https://trello.com/c/MT77ib4r/4-gabriel-01-setup-do-reposit%C3%B3rio-e-ambiente",
+          "shortUrl": "https://trello.com/c/MT77ib4r",
+          "closed": false,
+          "complete": false,
+          "position": 140737488322560,
+          "lastActivityAt": "2026-10-04T02:35:33.132Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-04T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7ca40e0387dafef3572c6",
+              "fullName": "Gabriel Sousa",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7ca40e0387dafef3572c6/2043b53a8adb2808afe68a43a72e1d6c"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab9031e24ad3578843213f5",
+          "name": "[Allan] QA-04 · Reproduzir e tratar cálculo de total do pedido",
+          "description": "**Responsável principal:** Allan\n**Apoio:** Gabriel corrige se confirmado; Matheus valida regra monetária\n**Revisor:** Matheus\n\n## Execução — 03/10/2026\nRodada anterior: confirmou multiplicação duplicada (100 × qtd 2 gravado como preço 200), corrigiu OrderService.buildItems para preço unitário e publicou ca79f02. Reteste anterior: 2 testes Java aprovados.\nContinuação: ampliei CT-MONEY-001 (4500+1200=5700); teste de preço histórico em memória; dois testes PostgreSQL cobrem recarga após catálogo mudar 100→150 mantendo item 100/total200 e persistência da venda demonstrativa.\nComo: OrderFixtures compartilhada; JUnit/Mockito para serviço; Spring Boot Test + JPA/EntityManager.flush/clear para recarga real; transação com rollback.\nUtilizado: Java25, JUnit, Mockito, AssertJ, Spring/JPA, PostgreSQL de teste isolado.\n\n## Evidências\nOrderServiceTest.java e OrderPersistenceTest.java; reports/execucoes/run-2026-10-03-ct-money-002.md e run-2026-10-03-continuacao.md.\nNovos testes implementados, ainda sem aprovação: JVM bloqueada em java.security e Docker indisponível. Resultado anterior não representa suíte ampliada.\n\n## Pendências\nExecutar CT-MONEY-001/003 e regressão completa; revisar resultados. Mantido Em revisão; não marcar concluído sem evidências novas.",
+          "url": "https://trello.com/c/UCbFIFXr/41-allan-qa-04-reproduzir-e-tratar-c%C3%A1lculo-de-total-do-pedido",
+          "shortUrl": "https://trello.com/c/UCbFIFXr",
+          "closed": false,
+          "complete": false,
+          "position": 140737488338944,
+          "lastActivityAt": "2026-10-04T02:33:17.153Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-25T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/6ab7e115719b09a1e31f83a3",
+              "fullName": "Allan Gabriel Almeida Barros",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/6ab7e115719b09a1e31f83a3/502bf54bbfa3775853736beac8fbb392"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3c827f25bf6b621c7e0",
+          "name": "[Matheus] 02 · Definição do sistema e requisitos (≥10 RF, ≥5 RNF)",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan redige cenários; Gabriel explica domínio\n**Revisor:** Allan\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/requisitos.md com 16 RF e 7 RNF, IDs, origem, prioridade e estado observado/alvo/pendente. Inclui perfis, autoria pela sessão, metas, histórico, estoque/custo e quatro áreas; distingue API baseline de funções futuras. Utilizado: revisão do código/DTOs, enunciado e guia visual, tabelas Markdown. Requisitos dependentes de regras/perfis permanecem propostas para revisão. Nesta continuação, confrontei o contrato-alvo v2 com rastreabilidade x-rf; novos testes monetários estão implementados, sem execução Java aprovada.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/FlbPAXNE/5-matheus-02-defini%C3%A7%C3%A3o-do-sistema-e-requisitos-%E2%89%A510-rf-%E2%89%A55-rnf",
+          "shortUrl": "https://trello.com/c/FlbPAXNE",
+          "closed": false,
+          "complete": false,
+          "position": 140737488355328,
+          "lastActivityAt": "2026-10-04T02:34:20.168Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-07T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cb7e012403f08d5b70",
+          "name": "[Matheus] 03 · Validação dos requisitos",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Francisco revisa texto\n**Revisor:** Allan\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/validacao-requisitos.md com revisão de ambiguidades, contradições, impacto e decisões pendentes. Como: comparei baseline, direção Loja Gestão e critérios, separando fatos observados de propostas. Utilizado: código Java/DTOs, documentação de origem e tabelas Markdown. Limites de desconto, autoria em pedidos alheios, custo/devolução, sessão e arredondamento ainda exigem decisão/revisão. Na continuação, o spike documenta lacuna de projeções abertas no contrato e propõe v2; não é evidência de vazamento HTTP nem validação humana.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/rfWqWzVR/6-matheus-03-valida%C3%A7%C3%A3o-dos-requisitos",
+          "shortUrl": "https://trello.com/c/rfWqWzVR",
+          "closed": false,
+          "complete": false,
+          "position": 140737488371712,
+          "lastActivityAt": "2026-10-04T02:34:21.513Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-09T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3cf3e5d0ca5ff96642e",
+          "name": "[Matheus] 04 · Critérios de aceitação por requisito",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan\n**Revisor:** Gabriel\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/criterios-aceitacao.md com Dado/Quando/Então e mapa RF→CA→CT. Como: explicitei respostas e efeitos esperados para dados por perfil, autor pela sessão, metas, última unidade, cancelamento e dinheiro. Utilizado: requisitos, regras de domínio e tabelas Markdown. Continuação: implementados CT-MONEY-001 e cobertura complementar CT-MONEY-003 em unitário/persistência; novos testes Java aguardam execução. Sete testes Node aprovam somente a auditoria estrutural do alvo; não aprovam CAs HTTP/auth/estoque.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/NsbhF1uK/7-matheus-04-crit%C3%A9rios-de-aceita%C3%A7%C3%A3o-por-requisito",
+          "shortUrl": "https://trello.com/c/NsbhF1uK",
+          "closed": false,
+          "complete": false,
+          "position": 140737488388096,
+          "lastActivityAt": "2026-10-04T02:34:22.879Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0ba124e86e59499e265",
+          "name": "[Matheus] PL-01 · Reestimar escopo, marcos e capacidade",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Francisco\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/planejamento-loja.md com linhas B0/documentação/API/BD/UI/evidências, marcos M0–M5, dependências e ordem dos cards. Como: priorizei baseline e riscos antes de API/UI e mantive estimativas como propostas; carga inicial Matheus70h não representa compromisso da equipe. Utilizado: enunciado, backlog Trello, guia e tabelas Markdown. Continuação entrega spike parcial, suíte monetária ampliada, ambiente isolado e runner. Bloqueios atuais de execução JDK/Docker/npm registrados. Capacidade/datas ainda exigem revisão; sem alterar prazos como se aprovados.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/T3zkhwHk/45-matheus-pl-01-reestimar-escopo-marcos-e-capacidade",
+          "shortUrl": "https://trello.com/c/T3zkhwHk",
+          "closed": false,
+          "complete": false,
+          "position": 140737488404480,
+          "lastActivityAt": "2026-10-04T02:34:23.981Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6abed0d2f7b6e1b4482b39db",
+          "name": "[Matheus] DOM-01 · Decidir descontos, pedidos de terceiros e custos",
+          "description": "**Responsável proposto:** Matheus\n**Apoio:** Gabriel\n**Revisor:** Allan\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/decisoes/regras-loja.md com decisões DOM, pendências e transições propostas para preço histórico, dinheiro, autoria, metas, reserva, pagamento/estorno/devolução. Como: explicitei o que é proposta, alvo aprovado e decisão pendente, sem presumir implementação. Utilizado: entidades/enums/serviços Java, requisitos/guia e tabelas Markdown. Continuação: alvo v2 fecha projeções e declara x-roles como proposta. Cancelamento exige controle de autoria e estorno requer revisão da política. Dinheiro decimal, custo, idempotência e desconto permanecem pendentes. Correção do preço unitário em ca79f02 é fato do baseline.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/jf7xU6cz/48-matheus-dom-01-decidir-descontos-pedidos-de-terceiros-e-custos",
+          "shortUrl": "https://trello.com/c/jf7xU6cz",
+          "closed": false,
+          "complete": false,
+          "position": 140737488420864,
+          "lastActivityAt": "2026-10-04T02:34:25.357Z",
+          "startedAt": null,
+          "due": {
+            "date": null,
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7c3dddb7dd712fb2420f8",
+          "name": "[Matheus] 07 · Plano de testes",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Allan; Francisco na organização\n**Revisor:** Gabriel\n\n## Descritivo do que foi feito — 03/10/2026\nProduzi docs/plano-testes.md com níveis, quatro técnicas caixa-preta, seleção P0/P1/P2, massa sintética, mapa CT→CA→nível→técnica→risco e registro de execução. Como: separei baseline/evolução/interface e evidência planejada de resultados reais. Utilizado: requisitos, critérios, contrato, JUnit/Mockito/PostgreSQL planejados e Markdown. Continuação atualiza plano para unitários padrão sem banco, perfil integration e fixtures compartilhadas. Novos testes monetários/persistência implementados; execução Java bloqueada. Sete testes Node passaram e diagnóstico Ajv legado não prova OpenAPI3.1. E2E/perfis/estoque continuam futuros.\n\n## Evidência e revisão\nArtefatos versionados na rodada anterior em ca79f02. Continuação: reports/execucoes/run-2026-10-03-continuacao.md e docs/decisoes/contract-testing.md. Mantido Em revisão: falta revisão cruzada do responsável/revisor; nenhuma aprovação humana foi presumida.",
+          "url": "https://trello.com/c/1ZC4pKWK/10-matheus-07-plano-de-testes",
+          "shortUrl": "https://trello.com/c/1ZC4pKWK",
+          "closed": false,
+          "complete": false,
+          "position": 140737488437248,
+          "lastActivityAt": "2026-10-04T02:34:27.032Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-11T21:00:00.000Z",
+            "complete": false
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    },
+    {
+      "id": "ari:cloud:trello::list/workspace/670309078c0b18383642b7da/6ab7c3a939738588bf64dfc4",
+      "name": "Concluído",
+      "cards": [
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e419d69b83862a2ca84c",
+          "name": "[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Todos\n**Revisor:** Gabriel\n**Referência anterior (provisória):** 2026-10-03\n\n## Objetivo\nEstabelecer responsabilidade visível e trabalho em equipe, considerando condições de equipamento.\n\n## Execução — direção de 01/10/2026\nAmpliar divisão proposta: Matheus coordena domínio/BD e interface; Gabriel API/auth/CI; Allan testes/risco/concorrência; Francisco documentação e aceitação em dupla. Reestimar capacidade com frontend incluído; 260 h do manual é referência antiga, não compromisso confirmado.\n\n## Entrega\nAcordo em docs/acordo-equipe.md e quadro com responsáveis sinalizados.\n\n## Aceite\n- [ ] Papéis e capacidade combinados.\n- [ ] Todos têm apoio/revisor.\n- [ ] Participação prática acessível.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nKickoff; divisão operacional adapta o manual às condições registradas no quadro.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho",
+          "shortUrl": "https://trello.com/c/KKPfn6ES",
+          "closed": false,
+          "complete": true,
+          "position": 140737488355328,
+          "lastActivityAt": "2026-10-03T16:30:38.061Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-03T21:00:00.000Z",
+            "complete": true
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        },
+        {
+          "id": "ari:cloud:trello::card/workspace/670309078c0b18383642b7da/6ab7e418f58fd703419a3487",
+          "name": "[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)",
+          "description": "**Responsável principal:** Matheus\n**Apoio:** Gabriel; Francisco organiza retorno\n**Revisor:** Allan\n**Referência anterior (provisória):** 2026-10-03\n\n## Objetivo\nResolver pendências acadêmicas específicas, sem paralisar trabalho independente.\n\n## Execução — direção de 01/10/2026\nAdicionar alinhamento do novo escopo Loja • Gestão e proteção do tempo de qualidade: o enunciado permite desenvolver um SUT, mas desenvolvimento não é foco principal. Confirmar critérios BD, quatro integrantes e prazo. Nenhuma aprovação docente foi encontrada; contato continua tarefa humana.\n\n## Entrega\ndocs/decisoes/alinhamento-docente.md com registro das respostas recebidas.\n\n## Aceite\n- [ ] Grupo, prazo e BD definidos ou pendência explícita.\n- [ ] Impactos refletidos no plano.\n- [ ] Ampliação acima contemplada com evidência e revisão.\n\n## Dependências\nS1; o executor deve realizar o contato, não há envio automático nesta revisão.\n\nFontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.",
+          "url": "https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador",
+          "shortUrl": "https://trello.com/c/3lLw8iW9",
+          "closed": false,
+          "complete": true,
+          "position": 140737488371712,
+          "lastActivityAt": "2026-10-03T16:30:33.395Z",
+          "startedAt": null,
+          "due": {
+            "date": "2026-10-03T21:00:00.000Z",
+            "complete": true
+          },
+          "listId": null,
+          "boardId": null,
+          "labels": [],
+          "labelsHasMore": false,
+          "checklists": [],
+          "checklistsHasMore": false,
+          "members": [
+            {
+              "id": "ari:cloud:trello::user/670308fa03be5d0b43de71ff",
+              "fullName": "Matheus Siqueira",
+              "avatarUrl": "https://trello-members.s3.amazonaws.com/670308fa03be5d0b43de71ff/3bbe16f52d5737723f021e4b2ddc5cca"
+            }
+          ],
+          "comments": [],
+          "commentsHasMore": false,
+          "list": null,
+          "board": null
+        }
+      ]
+    }
+  ],
+  "hasNextPage": false,
+  "nextCursor": null,
+  "board": {
+    "id": "ari:cloud:trello::board/workspace/670309078c0b18383642b7da/6ab7c0402cf9bc767660ee71",
+    "name": "Conformidade de Contrato da API REST"
+  }
+}
