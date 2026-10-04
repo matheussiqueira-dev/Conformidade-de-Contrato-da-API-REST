@@ -40,7 +40,6 @@ O workflow `.github/workflows/ci.yml` usa JDK 25, PostgreSQL 18 descartável na 
 
 ## Decisoes pendentes
 
-- Stack do frontend.
-- Estrategia de autenticacao/sessao.
+- Frontend Next.js e sessão no Spring com cookie HttpOnly foram confirmados por Matheus em 04/10/2026. Implementação e detalhes operacionais seguem pendentes; ver `arquitetura-frontend-sessao.md`.
 - Unitários padrão e integração com perfil/banco isolados foram executados: seis testes Java aprovados em duas rodadas. Seis casos HTTP da documentação/erros também passaram após a correção de details null.
 - Perfil de teste isolado foi adotado; Testcontainers não é necessário para a rodada atual.
