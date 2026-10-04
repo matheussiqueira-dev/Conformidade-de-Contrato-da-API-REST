@@ -2,8 +2,12 @@ package com.swee.ordermanagementspring.controllers;
 
 import com.swee.ordermanagementspring.dto.ProductRequestDTO;
 import com.swee.ordermanagementspring.dto.ProductResponseDTO;
-import com.swee.ordermanagementspring.entities.product.Product;
+import com.swee.ordermanagementspring.exceptions.ErrorResponse;
 import com.swee.ordermanagementspring.services.ProductService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +31,23 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "*/*", schema = @Schema(implementation = ProductResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Produto nao encontrado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    })
     public ProductResponseDTO findById(@PathVariable Long id) {
         return ProductResponseDTO.from(service.findById(id));
     }
 
     @PostMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "*/*", schema = @Schema(implementation = ProductResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Validacao ou regra de produto invalida",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    })
     public ProductResponseDTO insert(@Valid @RequestBody ProductRequestDTO dto) {
         return ProductResponseDTO.from(service.insert(dto));
     }

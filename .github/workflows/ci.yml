@@ -12,13 +12,13 @@ jobs:
       postgres:
         image: postgres:18
         env:
-          POSTGRES_DB: order_management
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: senha123
+          POSTGRES_DB: order_management_test
+          POSTGRES_USER: postgres_test
+          POSTGRES_PASSWORD: local_test_only
         ports:
-          - 5432:5432
+          - 15432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -d order_management"
+          --health-cmd "pg_isready -U postgres_test -d order_management_test"
           --health-interval 5s
           --health-timeout 3s
           --health-retries 10
@@ -37,4 +37,53 @@ jobs:
       - name: Test
         run: |
           chmod +x mvnw
-          ./mvnw test
+          ./mvnw -Pintegration verify
+
+      - name: Set up Node for structural contract audit
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Audit planned contract
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm test
+          node scripts/audit-contract.mjs
+          npm run contract
+
+      - name: Verify live OpenAPI and HTTP error responses
+        shell: bash
+        env:
+          A3_CONTRACT_ISOLATED: "1"
+        run: |
+          java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
+            --server.address=127.0.0.1 --server.port=18080 \
+            --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
+            --spring.datasource.username=postgres_test \
+            --spring.datasource.password=local_test_only \
+            --spring.jpa.hibernate.ddl-auto=create-drop \
+            --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            if ! kill -0 "$api_pid" 2>/dev/null; then
+              cat target/api-ci.log
+              exit 1
+            fi
+            if curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
+          node scripts/http-contract.mjs
+
+      - name: Preserve test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: |
+            target/surefire-reports/
+            target/api-ci.log
+            reports/contrato/spike-2026-10-04/
