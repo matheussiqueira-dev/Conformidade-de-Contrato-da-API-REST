@@ -16,6 +16,10 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,7 +35,12 @@ public class AuthController {
         this.sessions = sessions;
     }
     public record LoginRequest(@NotBlank @Email @Size(max = 254) String email,
-                               @NotBlank @Size(min = 8, max = 72) String password) {}
+                               @NotBlank @Size(min = 8, max = 72) String password) {
+        @AssertTrue(message = "Password must contain at most 72 UTF-8 bytes")
+        public boolean isPasswordWithinBcryptLimit() {
+            return password == null || password.getBytes(StandardCharsets.UTF_8).length <= 72;
+        }
+    }
     public record UserSession(Long id, String name, String email, UserRole role) {
         static UserSession from(AppPrincipal principal) {
             return new UserSession(principal.id(), principal.name(), principal.getUsername(), principal.role());
@@ -41,11 +50,16 @@ public class AuthController {
     public record CsrfResponse(String headerName, String token) {}
 
     @GetMapping("/csrf")
+    @Operation(summary = "Obtem token CSRF; renovar apos login/logout")
     public ResponseEntity<CsrfResponse> csrf(CsrfToken csrf) {
         return ResponseEntity.ok().header("Cache-Control", "no-store")
                 .body(new CsrfResponse(csrf.getHeaderName(), csrf.getToken()));
     }
     @PostMapping("/login")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Sessao estabelecida"),
+            @ApiResponse(responseCode = "400", description = "Credenciais malformadas"),
+            @ApiResponse(responseCode = "401", description = "Credenciais invalidas"),
+            @ApiResponse(responseCode = "403", description = "Token CSRF ausente ou invalido")})
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest dto,
                                               HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
@@ -63,6 +77,8 @@ public class AuthController {
         }
     }
     @GetMapping("/me")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Usuario autenticado"),
+            @ApiResponse(responseCode = "401", description = "Sessao ausente ou expirada")})
     public ResponseEntity<UserSession> me(@AuthenticationPrincipal AppPrincipal principal) {
         return ResponseEntity.ok().header("Cache-Control", "no-store").body(UserSession.from(principal));
     }

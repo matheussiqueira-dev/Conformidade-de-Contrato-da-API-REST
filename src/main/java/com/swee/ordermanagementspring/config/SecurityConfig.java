@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/me").authenticated()
                         // Legacy DTOs contain unrestricted customer/payment data. Sellers only receive
                         // dedicated projections when those endpoints are implemented.
-                        .requestMatchers("/products/**", "/clients/**", "/orders/**", "/payment/**", "/payments/**", "/addresses/**").hasRole("GERENTE")
+                        .requestMatchers("/products/**", "/clients/**", "/orders/**", "/payment/**", "/address/**").hasRole("GERENTE")
                         .anyRequest().denyAll())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, ex) -> SecurityJson.error(response, 401))

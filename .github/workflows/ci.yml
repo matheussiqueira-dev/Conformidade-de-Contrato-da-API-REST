@@ -56,7 +56,9 @@ jobs:
         env:
           A3_CONTRACT_ISOLATED: "1"
         run: |
+          export A3_TEST_PASSWORD="$(openssl rand -hex 16)"
           java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
+            --spring.profiles.active=contract \
             --server.address=127.0.0.1 --server.port=18080 \
             --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
             --spring.datasource.username=postgres_test \
@@ -77,6 +79,7 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
           node scripts/http-contract.mjs
+          node scripts/http-session.mjs
 
       - name: Preserve test reports
         if: always()
@@ -87,3 +90,4 @@ jobs:
             target/surefire-reports/
             target/api-ci.log
             reports/contrato/spike-2026-10-04/
+            reports/contrato/session-2026-10-04/
