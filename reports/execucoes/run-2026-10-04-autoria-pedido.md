@@ -6,7 +6,7 @@ Data: 04/10/2026. Implementação e documentação: **Matheus Siqueira**. Estado
 
 Foram aplicadas as orientações de `domain-modeling` e `migration-strategy` do pacote `cto-toolkit-3.0.0-v2.zip` e de `spring-boot-patterns` e `database-design` do pacote `ultrapowers-dev-1.2.0-v2.zip`. A associação `Order.seller` representa o autor persistido. O controller obtém o principal autenticado; o serviço consulta novamente a conta por ID antes de salvar. O corpo da requisição não escolhe o vendedor.
 
-Arquivos alterados: `Order.java`, `OrderService.java`, `OrderController.java`, `OrderServiceTest.java` e `OrderPersistenceTest.java`. A FK `orders.seller_id` admite nulo para pedidos históricos sem autoria comprovada. Não foi atribuída uma conta fictícia a esses registros. O índice `idx_orders_seller_id` prepara consultas por vendedor.
+Arquivos alterados: `Order.java`, `OrderService.java`, `OrderController.java`, `GlobalExceptionHandler.java`, `OrderServiceTest.java`, `OrderPersistenceTest.java` e `ErrorResponseTest.java`. A FK `orders.seller_id` admite nulo para pedidos históricos sem autoria comprovada. Não foi atribuída uma conta fictícia a esses registros. O índice `idx_orders_seller_id` prepara consultas por vendedor. Sessão de conta removida retorna 403 sem expor detalhes internos, em vez de cair no handler genérico 500.
 
 ## Verificação executada
 
