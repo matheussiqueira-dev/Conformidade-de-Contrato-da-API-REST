@@ -39,6 +39,45 @@ Os DTOs de request/response usam um campo `type` para indicar qual subtipo está
 
 ## Como rodar o projeto
 
+### Execução do A3 no Windows
+
+Com JDK 25 (`JAVA_HOME`) configurado, na pasta `order-management-api`:
+
+```powershell
+# Unitários, sem PostgreSQL
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1
+
+# Unitários + contexto + persistência, com Docker Desktop ativo
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test.ps1 -Mode Integration
+
+# Auditoria estrutural do contrato planejado, com Node.js
+node --test scripts/audit-contract.test.mjs
+node scripts/audit-contract.mjs
+```
+
+O runner pode localizar o JDK portátil já baixado em `../tmp/tools/jdk-25`; em outra máquina, configure `JAVA_HOME`. O modo integração cria e encerra um PostgreSQL exclusivo na porta 15432, database `order_management_test`, com `docker-compose.test.yml`. A massa `OrderFixtures` é sintética e cada teste de persistência usa rollback. Relatórios Java ficam em `target/surefire-reports` e são preservados como artefato no CI. Para testes diretos: `.\mvnw.cmd test` ou `.\mvnw.cmd -Pintegration verify` após iniciar o banco de teste.
+
+Duas rodadas da suíte Java ampliada passaram com seis testes cada; veja [relatório da rodada](reports/execucoes/run-2026-10-03-continuacao.md). A continuação de 04/10 adicionou Ajv 8/2020-12: 16 testes Node aprovados, documento OpenAPI validado com adaptação explícita para a limitação Ajv #1745, 37 pontos de schema do alvo v2 sem achados e cinco casos HTTP aprovados no banco descartável. O baseline ainda não declara as respostas de erro 400/404 observadas. Frontend, login e novas rotas continuam planejados.
+
+Para concluir o spike de contrato e HTTP com banco descartável:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-contract.ps1
+```
+
+O runner instala as dependências Node fixadas, baixa o schema oficial OpenAPI, valida o contrato e inicia uma API de teste na porta 18080 com banco exclusivo na porta 15432. Não execute simultaneamente com `test.ps1 -Mode Integration`. Evidências, política de formatos e alternativa `-HttpOnly` estão no [relatório de contrato](reports/execucoes/run-2026-10-04-contrato.md).
+
+A [revisão dos erros](reports/execucoes/run-2026-10-04-erros-contrato.md) documenta POST `/products` 400 e GET `/products/{id}` 404 em um novo contrato, preservando o baseline original. Passaram 18 testes Node, a validação da revisão e os seis casos HTTP com validação do OpenAPI ao vivo e dos corpos de erro. Evidência conferida em 04/10 às 00:42:24: `http-swagger-errors-v1.json`. A exportação Springdoc documenta os erros e aceita details como array/null. Ver [rodada Swagger](reports/execucoes/run-2026-10-04-swagger-erros.md).
+
+Para subir a API de desenvolvimento com o banco na porta 5432:
+
+```powershell
+docker compose up -d postgres
+.\mvnw.cmd spring-boot:run
+```
+
+O `ddl-auto=update` atual é um baseline de desenvolvimento. As migrações Flyway do produto ainda estão pendentes.
+
 ### 1. Suba o PostgreSQL via Docker
 
 ```bash
