@@ -4,9 +4,9 @@ Atualizado em 04/10/2026 por **Matheus Siqueira**. Quadro: https://trello.com/b/
 
 ## O que já foi entregue
 
-Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI 37177644692 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692). Resultado:12 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E =52 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
+Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. A primeira fatia de autoria do pedido também está em andamento. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI da autoria aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104). Resultado atual: 15 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E = 55 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
 
-Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheirodecimal, autoria, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheiro decimal, migração e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
 
 ## Como usar os registros
 
