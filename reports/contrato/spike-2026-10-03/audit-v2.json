@@ -1,0 +1,97 @@
+{
+  "scope": "structural-policy-audit-only",
+  "paths": 10,
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "operationId": "login",
+      "roles": []
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "operationId": "getCurrentUser",
+      "roles": [
+        "GERENTE",
+        "VENDEDOR"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/management/summary",
+      "operationId": "getManagementSummary",
+      "roles": [
+        "GERENTE"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/performance/me",
+      "operationId": "getMyPerformance",
+      "roles": [
+        "GERENTE",
+        "VENDEDOR"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/goals/monthly",
+      "operationId": "getMonthlyGoals",
+      "roles": [
+        "GERENTE"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/goals/monthly",
+      "operationId": "saveMonthlyGoals",
+      "roles": [
+        "GERENTE"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/sales/orders",
+      "operationId": "createSaleOrder",
+      "roles": [
+        "GERENTE",
+        "VENDEDOR"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{id}/cancel",
+      "operationId": "cancelOrder",
+      "roles": [
+        "GERENTE",
+        "VENDEDOR"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/payment/{id}/refund",
+      "operationId": "refundPayment",
+      "roles": [
+        "GERENTE"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/stock/products",
+      "operationId": "listStockProducts",
+      "roles": [
+        "GERENTE"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/stock/products/{id}/entries",
+      "operationId": "createStockEntry",
+      "roles": [
+        "GERENTE"
+      ]
+    }
+  ],
+  "errors": []
+}

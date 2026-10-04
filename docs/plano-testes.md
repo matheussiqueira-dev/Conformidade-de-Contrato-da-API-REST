@@ -16,7 +16,7 @@ Este plano define como testar a Order Management API e a evolucao Loja Gestao de
 | Area | Inclui | Estado atual |
 | --- | --- | --- |
 | API baseline | Clientes, produtos, enderecos, pedidos e pagamentos simulados. | Codigo local observado. |
-| Contrato REST | Exportacao OpenAPI do baseline e contrato alvo da evolucao. | Baseline exportado em `config/openapi/baseline-openapi-2026-10-03.json`; contrato alvo ainda pendente. |
+| Contrato REST | Exportacao OpenAPI do baseline e contrato alvo da evolucao. | Baseline e dois alvos versionados; auditoria estrutural executada, validador 2020-12 e HTTP pendentes. |
 | Banco de dados | Persistencia PostgreSQL, integridade, transacoes, seed e consultas. | Pendente de modelo evolutivo. |
 | Autenticacao/autorizacao | Gerente, vendedor, 401/403 e dados por perfil. | Alvo, nao implementado. |
 | Metas e realizado | Meta da loja, distribuicao, realizado pago menos estornos e meta zero. | Alvo, nao implementado. |
@@ -92,7 +92,13 @@ Comandos alvo depois de corrigir o ambiente:
 .\mvnw.cmd spring-boot:run
 ```
 
-Enquanto o wrapper estiver incompleto, a execucao fica bloqueada por ambiente e nao deve ser contada como falha do produto.
+O wrapper foi restaurado e recebeu correção para `Target` nulo no PowerShell. Falhas de acesso ao JDK/Docker devem ser registradas como ambiente, sem aprovação nem falha de produto presumida.
+
+### Separação da suíte implementada na continuação
+
+`mvnw.cmd test` seleciona unitários sem banco. `mvnw.cmd -Pintegration verify` também inclui os testes `@Tag("integration")`, com perfil Spring `integration`, PostgreSQL exclusivo na porta 15432 e banco `order_management_test`. O runner `scripts/test.ps1 -Mode Integration` usa Compose descartável. `OrderFixtures` cria a massa sintética e os testes de persistência usam rollback; não há seed automático na base de desenvolvimento.
+
+CT-MONEY-001 e a recarga de preço histórico de CT-MONEY-003 foram implementados e conferidos nas duas rodadas da suíte Java ampliada, com seis testes aprovados por rodada. Os seis casos HTTP da rodada Swagger passaram, incluindo schemas dos corpos 400/404 e documento OpenAPI ao vivo. Evidências: `reports/execucoes/run-2026-10-03-continuacao.md` e `reports/execucoes/run-2026-10-04-swagger-erros.md`. Isso não aprova os demais casos ainda não implementados nem autenticação/perfis.
 
 ## Mapa caso -> nivel -> tecnica -> risco
 
