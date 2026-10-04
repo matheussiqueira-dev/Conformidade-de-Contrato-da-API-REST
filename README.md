@@ -2,6 +2,8 @@
 
 API REST para gestão de pedidos, desenvolvida como projeto de portfólio para praticar arquitetura backend com Spring Boot, JPA/Hibernate e PostgreSQL.
 
+Continuação de 04/10: contrato planejado v3 com sessão/CSRF, autenticação Spring e frontend Next.js de acesso. Veja [execução e limites desta rodada](docs/execucao-sessao.md). As rotas legadas exigem gerente; as contas sintéticas existem somente no runner de banco descartável. As áreas de vendas, metas e estoque seguem pendentes.
+
 O sistema modela um fluxo completo de e-commerce: clientes (pessoa física ou jurídica), produtos (físicos ou digitais), pedidos com múltiplos itens, pagamentos (cartão, PIX ou boleto) e endereços de entrega.
 
 ## Stack

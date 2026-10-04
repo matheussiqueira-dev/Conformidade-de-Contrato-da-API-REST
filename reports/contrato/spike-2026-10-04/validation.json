@@ -2,7 +2,7 @@
   "dialect": "2020-12",
   "officialDocumentSchema": true,
   "officialSchemaCompatibility": "Ajv #1745: four #meta dynamic refs resolved statically; data schemas validated separately",
-  "schemasChecked": 37,
+  "schemasChecked": 41,
   "findings": [],
   "revisedBaseline": {
     "dialect": "2020-12",

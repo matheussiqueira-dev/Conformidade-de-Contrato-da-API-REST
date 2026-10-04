@@ -1,9 +1,11 @@
-param([switch]$HttpOnly)
+param([switch]$HttpOnly, [switch]$Frontend)
 $ErrorActionPreference = 'Stop'
 $projectDirectory = Split-Path $PSScriptRoot -Parent
 $apiProcess = $null
 $composeStarted = $false
 $previousIsolatedFlag = $env:A3_CONTRACT_ISOLATED
+$previousTestPassword = $env:A3_TEST_PASSWORD
+$previousBackendOrigin = $env:BACKEND_ORIGIN
 Push-Location $projectDirectory
 try {
     if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Instale Node.js antes de executar.' }
@@ -35,7 +37,9 @@ try {
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
     # Explicit disposable datasource; application-integration.properties is a test resource,
     # so it is not bundled in the application jar.
-    $arguments = @('-jar', ('"' + $jar + '"'), '--server.address=127.0.0.1', '--server.port=18080',
+    $env:A3_CONTRACT_ISOLATED = '1'
+    $env:A3_TEST_PASSWORD = [guid]::NewGuid().ToString('N')
+    $arguments = @('-jar', ('"' + $jar + '"'), '--spring.profiles.active=contract', '--server.address=127.0.0.1', '--server.port=18080',
         '--spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test',
         '--spring.datasource.username=postgres_test', '--spring.datasource.password=local_test_only',
         '--spring.jpa.hibernate.ddl-auto=create-drop', '--spring.jpa.show-sql=false')
@@ -52,8 +56,28 @@ try {
     $env:A3_CONTRACT_ISOLATED = '1'
     & node scripts/http-contract.mjs
     if ($LASTEXITCODE -ne 0) { throw 'Teste HTTP falhou. Consulte reports/contrato/spike-2026-10-04/http-swagger-errors-v1.json.' }
+    & node scripts/http-session.mjs
+    if ($LASTEXITCODE -ne 0) { throw 'Teste de sessao falhou. Consulte reports/contrato/session-2026-10-04/http-session.json.' }
+    if ($Frontend) {
+        Push-Location frontend
+        try {
+            $env:BACKEND_ORIGIN = 'http://127.0.0.1:18080'
+            if (Test-Path package-lock.json) { & npm.cmd ci --no-audit --no-fund } else { & npm.cmd install --no-audit --no-fund }
+            if ($LASTEXITCODE -ne 0) { throw 'Instalacao do frontend falhou.' }
+            & npm.cmd test
+            if ($LASTEXITCODE -ne 0) { throw 'Teste do cliente de sessao falhou.' }
+            & npm.cmd run build
+            if ($LASTEXITCODE -ne 0) { throw 'Build Next.js falhou.' }
+            & npx.cmd playwright install chromium
+            if ($LASTEXITCODE -ne 0) { throw 'Instalacao do navegador de teste falhou.' }
+            & npm.cmd run test:e2e
+            if ($LASTEXITCODE -ne 0) { throw 'E2E de sessao/proxy falhou.' }
+        } finally { Pop-Location }
+    }
 } finally {
     $env:A3_CONTRACT_ISOLATED = $previousIsolatedFlag
+    $env:A3_TEST_PASSWORD = $previousTestPassword
+    $env:BACKEND_ORIGIN = $previousBackendOrigin
     if ($apiProcess -and -not $apiProcess.HasExited) { Stop-Process -Id $apiProcess.Id -Force }
     if ($composeStarted) {
         & docker compose -f docker-compose.test.yml -p a3-tests down
