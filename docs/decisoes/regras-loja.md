@@ -1,6 +1,6 @@
 # Regras de dominio - Loja Gestao
 
-Data: 03/10/2026.
+Data: 04/10/2026. Registro e implementação técnica desta rodada: Matheus Siqueira.
 
 Este documento inicia o card DOM-01. As decisoes abaixo sao propostas para revisao da equipe. Nenhuma regra deve ser tratada como implementada enquanto nao houver codigo, testes e contrato correspondentes.
 
@@ -66,8 +66,8 @@ O enum atual de pedido nao possui `CANCELED` e o enum atual de pagamento nao pos
 
 ## Perguntas para revisao
 
-- A equipe aceita gerente como unico perfil com permissao de desconto no MVP?
-- A equipe prefere FIFO por lote ou media ponderada para custo?
+- Definir o teto numérico de desconto e o formato da auditoria; gerente como único perfil já foi aprovado por Matheus.
+- Implementar custo médio ponderado aprovado por Matheus; FIFO é referência histórica superada.
 - Sera criado status `CANCELED` para pedido e `REFUNDED` para pagamento?
 - O professor espera modelagem relacional detalhada de estoque/custo para a rubrica de Banco de Dados?
 - As decisoes de dominio serao aplicadas antes ou depois da exportacao do contrato baseline?
