@@ -24,7 +24,7 @@ test('wrong password shows accessible error; mobile form fits viewport', async (
   await page.getByLabel('E-mail', { exact:true }).fill('manager@example.test');
   await page.getByLabel('Senha', { exact:true }).fill('intentionally-wrong-password');
   await page.getByRole('button', { name:'Entrar na minha conta' }).click();
-  await expect(page.getByRole('alert')).toContainText('E-mail ou senha inválidos');
+  await expect(page.getByRole('region', { name:'Acesso ao sistema' }).getByRole('alert')).toContainText('E-mail ou senha inválidos');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path:'test-results/login-mobile.png', fullPage:true });
 });
