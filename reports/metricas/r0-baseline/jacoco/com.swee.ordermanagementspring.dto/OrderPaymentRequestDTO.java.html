@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderPaymentRequestDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">OrderPaymentRequestDTO.java</span></div><h1>OrderPaymentRequestDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+import java.time.LocalDate;
+
+<span class="fc" id="L8">public class OrderPaymentRequestDTO {</span>
+
+    @NotNull(message = &quot;Payment type required.&quot;)
+    private String type;
+
+    @NotNull(message = &quot;Value required.&quot;)
+    @Positive(message = &quot;Value must be positive.&quot;)
+    private Double amount;
+
+    private String cardNumber;
+    private String cardHolder;
+    private Integer installments;
+
+    private String pixKey;
+    private String pixHolderName;
+
+    private String barCode;
+    private LocalDate dueDate;
+
+    public String getType() {
+<span class="fc" id="L28">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="fc" id="L32">        this.type = type;</span>
+<span class="fc" id="L33">    }</span>
+
+    public Double getAmount() {
+<span class="fc" id="L36">        return amount;</span>
+    }
+
+    public void setAmount(Double amount) {
+<span class="fc" id="L40">        this.amount = amount;</span>
+<span class="fc" id="L41">    }</span>
+
+    public String getCardNumber() {
+<span class="nc" id="L44">        return cardNumber;</span>
+    }
+
+    public void setCardNumber(String cardNumber) {
+<span class="nc" id="L48">        this.cardNumber = cardNumber;</span>
+<span class="nc" id="L49">    }</span>
+
+    public String getCardHolder() {
+<span class="nc" id="L52">        return cardHolder;</span>
+    }
+
+    public void setCardHolder(String cardHolder) {
+<span class="nc" id="L56">        this.cardHolder = cardHolder;</span>
+<span class="nc" id="L57">    }</span>
+
+    public Integer getInstallments() {
+<span class="nc" id="L60">        return installments;</span>
+    }
+
+    public void setInstallments(Integer installments) {
+<span class="nc" id="L64">        this.installments = installments;</span>
+<span class="nc" id="L65">    }</span>
+
+    public String getPixKey() {
+<span class="fc" id="L68">        return pixKey;</span>
+    }
+
+    public void setPixKey(String pixKey) {
+<span class="fc" id="L72">        this.pixKey = pixKey;</span>
+<span class="fc" id="L73">    }</span>
+
+    public String getPixHolderName() {
+<span class="fc" id="L76">        return pixHolderName;</span>
+    }
+
+    public void setPixHolderName(String pixHolderName) {
+<span class="fc" id="L80">        this.pixHolderName = pixHolderName;</span>
+<span class="fc" id="L81">    }</span>
+
+    public String getBarCode() {
+<span class="nc" id="L84">        return barCode;</span>
+    }
+
+    public void setBarCode(String barCode) {
+<span class="nc" id="L88">        this.barCode = barCode;</span>
+<span class="nc" id="L89">    }</span>
+
+    public LocalDate getDueDate() {
+<span class="nc" id="L92">        return dueDate;</span>
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+<span class="nc" id="L96">        this.dueDate = dueDate;</span>
+<span class="nc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

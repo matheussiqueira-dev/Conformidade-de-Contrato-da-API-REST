@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">OrderService.java</span></div><h1>OrderService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.*;
+import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.OrderItem;
+import com.swee.ordermanagementspring.entities.client.Client;
+import com.swee.ordermanagementspring.entities.client.CorporateClient;
+import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
+import com.swee.ordermanagementspring.entities.payment.CardPayment;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.entities.payment.PixPayment;
+import com.swee.ordermanagementspring.entities.product.Product;
+import com.swee.ordermanagementspring.exceptions.OrderException;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+import com.swee.ordermanagementspring.exceptions.ProductException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import com.swee.ordermanagementspring.repositories.OrderRepository;
+import com.swee.ordermanagementspring.repositories.ProductRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.transaction.annotation.Transactional;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class OrderService {
+    private final OrderRepository repository;
+    private final ProductRepository productRepository;
+    private final ClientRepository clientRepository;
+    private final AppUserRepository appUserRepository;
+
+    public OrderService(OrderRepository repository, ProductRepository productRepository, ClientRepository clientRepository,
+<span class="fc" id="L41">                        AppUserRepository appUserRepository) {</span>
+<span class="fc" id="L42">        this.repository = repository;</span>
+<span class="fc" id="L43">        this.productRepository = productRepository;</span>
+<span class="fc" id="L44">        this.clientRepository = clientRepository;</span>
+<span class="fc" id="L45">        this.appUserRepository = appUserRepository;</span>
+<span class="fc" id="L46">    }</span>
+
+    public List&lt;Order&gt; findAll() {
+<span class="nc" id="L49">        return repository.findAll();</span>
+    }
+
+    public Order findById(Long id) {
+<span class="nc" id="L53">        return repository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found&quot;));</span>
+    }
+
+    @Transactional
+    public Order insert(OrderRequestDTO dto, AppPrincipal principal) {
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">        if (principal == null || principal.id() == null) {</span>
+<span class="fc" id="L59">            throw new AccessDeniedException(&quot;Authenticated user is required to create an order&quot;);</span>
+        }
+<span class="fc" id="L61">        AppUser seller = appUserRepository.findById(principal.id())</span>
+<span class="fc" id="L62">                .orElseThrow(() -&gt; new AccessDeniedException(&quot;Authenticated user no longer exists&quot;));</span>
+<span class="fc" id="L63">        Client client = resolveClient(dto);</span>
+
+<span class="fc" id="L65">        Order order = new Order(OrderStatus.PENDING_PAYMENT, client, seller);</span>
+<span class="fc" id="L66">        order.setShippingAddress(buildAddress(dto.getShippingAddress()));</span>
+
+<span class="fc" id="L68">        List&lt;OrderItem&gt; items = buildItems(order, dto.getItems());</span>
+<span class="fc" id="L69">        order.setItems(items);</span>
+
+<span class="fc" id="L71">        Payment payment = buildPayment(dto.getPayment(), order);</span>
+<span class="fc" id="L72">        order.setPayment(payment);</span>
+
+<span class="fc" id="L74">        return repository.save(order);</span>
+    }
+
+    private Client resolveClient(OrderRequestDTO dto) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (dto.getClientId() != null) {</span>
+<span class="nc" id="L79">            return clientRepository.findById(dto.getClientId())</span>
+<span class="nc" id="L80">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Client not found, id: &quot; + dto.getClientId()));</span>
+        }
+
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (dto.getClient() != null) {</span>
+<span class="fc" id="L84">            return buildNewClient(dto.getClient());</span>
+        }
+
+<span class="nc" id="L87">        throw new OrderException(&quot;It is necessary to provide either clientId or client data.&quot;);</span>
+    }
+
+    private Client buildNewClient(ClientRequestDTO dto) {
+<span class="pc bpc" id="L91" title="2 of 3 branches missed.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;INDIVIDUAL&quot; -&gt; {
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">                if (dto.getCpf() == null || dto.getCpf().isBlank()) {</span>
+<span class="nc" id="L94">                    throw new OrderException(&quot;CPF is required for INDIVIDUAL clients.&quot;);</span>
+                }
+<span class="fc" id="L96">                yield new IndividualClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());</span>
+            }
+            case &quot;CORPORATE&quot; -&gt; {
+<span class="nc bnc" id="L99" title="All 4 branches missed.">                if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {</span>
+<span class="nc" id="L100">                    throw new OrderException(&quot;CNPJ is required for CORPORATE clients.&quot;);</span>
+                }
+<span class="nc" id="L102">                yield new CorporateClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());</span>
+            }
+<span class="nc" id="L104">            default -&gt; throw new OrderException(&quot;Invalid client type: &quot; + dto.getType());</span>
+        };
+    }
+
+    private Address buildAddress(AddressRequestDTO dto) {
+<span class="fc" id="L109">        return new Address(dto.getZipCode(), dto.getState(), dto.getCity(),</span>
+<span class="fc" id="L110">                dto.getNeighborhood(), dto.getComplement(), dto.getNumber(), dto.getStreet());</span>
+    }
+
+    private List&lt;OrderItem&gt; buildItems(Order order, List&lt;OrderItemRequestDTO&gt; itemsDto) {
+<span class="fc" id="L114">        List&lt;OrderItem&gt; items = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (OrderItemRequestDTO itemDto : itemsDto) {</span>
+<span class="fc" id="L117">            Product product = productRepository.findById(itemDto.getProductId())</span>
+<span class="pc" id="L118">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Product not found, id: &quot; + itemDto.getProductId()));</span>
+
+<span class="fc" id="L120">            OrderItem item = new OrderItem(order, product, itemDto.getQuantity(), product.getPrice());</span>
+<span class="fc" id="L121">            items.add(item);</span>
+<span class="fc" id="L122">        }</span>
+
+<span class="fc" id="L124">        return items;</span>
+    }
+
+    private Payment buildPayment(OrderPaymentRequestDTO dto, Order order) {
+<span class="pc bpc" id="L128" title="3 of 4 branches missed.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;CARD&quot; -&gt; {
+<span class="nc bnc" id="L130" title="All 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="nc" id="L131">                    throw new PaymentException(&quot;cardNumber is required for CARD payments.&quot;);</span>
+                }
+<span class="nc" id="L133">                yield new CardPayment(dto.getAmount(), order, dto.getCardNumber(), dto.getCardHolder(), dto.getInstallments());</span>
+            }
+            case &quot;PIX&quot; -&gt; {
+<span class="pc bpc" id="L136" title="2 of 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="nc" id="L137">                    throw new PaymentException(&quot;pixKey is required for PIX payments.&quot;);</span>
+                }
+<span class="fc" id="L139">                yield new PixPayment(dto.getAmount(), order, dto.getPixKey(), dto.getPixHolderName(), null, null);</span>
+            }
+            case &quot;BOLETO&quot; -&gt; {
+<span class="nc bnc" id="L142" title="All 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="nc" id="L143">                    throw new PaymentException(&quot;barCode is required for BOLETO payments.&quot;);</span>
+                }
+<span class="nc" id="L145">                yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());</span>
+            }
+<span class="nc" id="L147">            default -&gt; throw new PaymentException(&quot;Invalid payment type: &quot; + dto.getType());</span>
+        };
+    }
+
+    public Order updateStatus(Long id, OrderStatusUpdateDTO dto) {
+<span class="nc" id="L152">        Order order = findById(id);</span>
+
+        OrderStatus newStatus;
+        try {
+<span class="nc" id="L156">            newStatus = OrderStatus.valueOf(dto.getStatus().toUpperCase());</span>
+<span class="nc" id="L157">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L158">            throw new OrderException(&quot;Invalid status: &quot; + dto.getStatus());</span>
+<span class="nc" id="L159">        }</span>
+
+<span class="nc" id="L161">        order.setStatus(newStatus);</span>
+<span class="nc" id="L162">        return repository.save(order);</span>
+    }
+
+    public Order updateAddress(Long id, AddressRequestDTO dto) {
+<span class="nc" id="L166">        Order order = findById(id);</span>
+
+<span class="nc bnc" id="L168" title="All 4 branches missed.">        if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED) {</span>
+<span class="nc" id="L169">            throw new OrderException(&quot;The shipping address cannot be changed for an order that has already been shipped or delivered.&quot;);</span>
+        }
+
+<span class="nc" id="L172">        Address address = order.getShippingAddress();</span>
+<span class="nc" id="L173">        address.setStreet(dto.getStreet());</span>
+<span class="nc" id="L174">        address.setNumber(dto.getNumber());</span>
+<span class="nc" id="L175">        address.setComplement(dto.getComplement());</span>
+<span class="nc" id="L176">        address.setNeighborhood(dto.getNeighborhood());</span>
+<span class="nc" id="L177">        address.setCity(dto.getCity());</span>
+<span class="nc" id="L178">        address.setState(dto.getState());</span>
+<span class="nc" id="L179">        address.setZipCode(dto.getZipCode());</span>
+
+<span class="nc" id="L181">        return repository.save(order);</span>
+    }
+
+    public void delete(Long id) {
+<span class="nc" id="L185">        repository.deleteById(id);</span>
+<span class="nc" id="L186">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

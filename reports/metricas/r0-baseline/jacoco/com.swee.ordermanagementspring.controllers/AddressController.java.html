@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddressController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">AddressController.java</span></div><h1>AddressController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.dto.AddressRequestDTO;
+import com.swee.ordermanagementspring.dto.AddressResponseDTO;
+import com.swee.ordermanagementspring.services.AddressService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/address&quot;)
+<span class="fc" id="L15">public class AddressController {</span>
+
+    @Autowired
+    private AddressService addressService;
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;AddressResponseDTO&gt;&gt; findAll() {
+<span class="nc" id="L22">        List&lt;AddressResponseDTO&gt; list = addressService.findAll().stream()</span>
+<span class="nc" id="L23">                .map(AddressResponseDTO::from)</span>
+<span class="nc" id="L24">                .toList();</span>
+<span class="nc" id="L25">        return ResponseEntity.ok(list);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;AddressResponseDTO&gt; findById(@PathVariable Long id) {
+<span class="nc" id="L30">        return ResponseEntity.ok(AddressResponseDTO.from(addressService.findById(id)));</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;AddressResponseDTO&gt; insert(@Valid @RequestBody AddressRequestDTO dto) {
+<span class="nc" id="L35">        return ResponseEntity.ok(AddressResponseDTO.from(addressService.insert(dto)));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;AddressResponseDTO&gt; update(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO dto) {
+<span class="nc" id="L40">        return ResponseEntity.ok(AddressResponseDTO.from(addressService.update(id, dto)));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id){
+<span class="nc" id="L45">        addressService.delete(id);</span>
+<span class="nc" id="L46">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
