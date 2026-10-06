@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenApiConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.config</a> &gt; <span class="el_source">OpenApiConfig.java</span></div><h1>OpenApiConfig.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.config;
+
+import io.swagger.v3.oas.models.media.JsonSchema;
+import io.swagger.v3.oas.models.media.StringSchema;
+import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.parameters.HeaderParameter;
+import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.Components;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+
+@Configuration
+<span class="fc" id="L20">public class OpenApiConfig {</span>
+
+    @Bean
+    public OpenApiCustomizer sessionSecurityDocumentation() {
+<span class="fc" id="L24">        return openApi -&gt; {</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            if (openApi.getComponents() == null) openApi.setComponents(new Components());</span>
+<span class="nc" id="L26">            openApi.getComponents().addSecuritySchemes(&quot;sessionAuth&quot;, new SecurityScheme()</span>
+<span class="nc" id="L27">                    .type(SecurityScheme.Type.APIKEY).in(SecurityScheme.In.COOKIE).name(&quot;JSESSIONID&quot;));</span>
+            // Logout is handled by Spring Security rather than an MVC controller.
+<span class="nc" id="L29">            var logout = new Operation().operationId(&quot;logout&quot;).summary(&quot;Invalida sessao e CSRF&quot;)</span>
+<span class="nc" id="L30">                    .responses(new io.swagger.v3.oas.models.responses.ApiResponses()</span>
+<span class="nc" id="L31">                            .addApiResponse(&quot;204&quot;, new ApiResponse().description(&quot;Sessao encerrada&quot;)));</span>
+<span class="nc" id="L32">            openApi.getPaths().addPathItem(&quot;/auth/logout&quot;, new PathItem().post(logout));</span>
+<span class="nc" id="L33">            openApi.getPaths().forEach((path, item) -&gt; item.readOperationsMap().forEach((method, operation) -&gt; {</span>
+<span class="nc" id="L34">                boolean publicAuth = List.of(&quot;/auth/login&quot;, &quot;/auth/csrf&quot;, &quot;/auth/logout&quot;).contains(path);</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">                operation.setSecurity(publicAuth ? List.of() : List.of(new SecurityRequirement().addList(&quot;sessionAuth&quot;)));</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">                if (List.of(PathItem.HttpMethod.POST, PathItem.HttpMethod.PUT, PathItem.HttpMethod.PATCH, PathItem.HttpMethod.DELETE).contains(method)) {</span>
+<span class="nc" id="L37">                    operation.addParametersItem(new HeaderParameter().name(&quot;X-CSRF-TOKEN&quot;).required(true)</span>
+<span class="nc" id="L38">                            .description(&quot;Token retornado por GET /auth/csrf&quot;)</span>
+<span class="nc" id="L39">                            .schema(new StringSchema()));</span>
+<span class="nc" id="L40">                    operation.getResponses().addApiResponse(&quot;403&quot;, new ApiResponse().description(&quot;Perfil sem permissao ou token CSRF invalido&quot;));</span>
+                }
+<span class="nc bnc" id="L42" title="All 2 branches missed.">                if (!publicAuth) operation.getResponses().addApiResponse(&quot;401&quot;, new ApiResponse().description(&quot;Sessao ausente ou expirada&quot;));</span>
+<span class="nc" id="L43">            }));</span>
+<span class="nc" id="L44">        };</span>
+    }
+
+    @Bean
+    public OpenApiCustomizer errorDetailsSchema() {
+<span class="fc" id="L49">        return openApi -&gt; {</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">            if (openApi.getComponents() == null || openApi.getComponents().getSchemas() == null) {</span>
+<span class="nc" id="L51">                return;</span>
+            }
+<span class="nc" id="L53">            var errorSchema = openApi.getComponents().getSchemas().get(&quot;ApiErrorResponse&quot;);</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">            if (errorSchema != null &amp;&amp; errorSchema.getProperties() != null) {</span>
+                // The array annotation resolver drops the null type in this Springdoc version.
+                // Express the actual nullable response using an OpenAPI 3.1 JSON Schema.
+<span class="nc" id="L57">                var details = new JsonSchema();</span>
+<span class="nc" id="L58">                details.setTypes(new LinkedHashSet&lt;&gt;(List.of(&quot;array&quot;, &quot;null&quot;)));</span>
+<span class="nc" id="L59">                details.setItems(new StringSchema());</span>
+<span class="nc" id="L60">                errorSchema.addProperty(&quot;details&quot;, details);</span>
+            }
+<span class="nc" id="L62">        };</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

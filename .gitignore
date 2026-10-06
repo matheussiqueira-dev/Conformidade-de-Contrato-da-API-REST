@@ -9,3 +9,8 @@ node_modules/
 playwright-report/
 test-results/
 .env.local
+
+# Caches locais de ferramentas
+.cto-toolkit/
+frontend/.npm-cache/
+.npm-cache/

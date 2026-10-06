@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContractUsersConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.config</a> &gt; <span class="el_source">ContractUsersConfig.java</span></div><h1>ContractUsersConfig.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.config;
+
+import com.swee.ordermanagementspring.entities.auth.*;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration @Profile(&quot;contract&quot;)
+<span class="nc" id="L11">public class ContractUsersConfig {</span>
+    @Bean CommandLineRunner contractUsers(AppUserRepository users, PasswordEncoder encoder, Environment env) {
+<span class="nc" id="L13">        return args -&gt; {</span>
+<span class="nc bnc" id="L14" title="All 2 branches missed.">            if (!&quot;1&quot;.equals(env.getProperty(&quot;A3_CONTRACT_ISOLATED&quot;))</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">                    || !&quot;create-drop&quot;.equals(env.getProperty(&quot;spring.jpa.hibernate.ddl-auto&quot;))</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">                    || !env.getRequiredProperty(&quot;spring.datasource.url&quot;).equals(&quot;jdbc:postgresql://localhost:15432/order_management_test&quot;)) {</span>
+<span class="nc" id="L17">                throw new IllegalStateException(&quot;Contract fixtures require the disposable database runner&quot;);</span>
+            }
+<span class="nc" id="L19">            String password = env.getRequiredProperty(&quot;A3_TEST_PASSWORD&quot;);</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">            if (password.length() &lt; 12) throw new IllegalStateException(&quot;Test password too short&quot;);</span>
+<span class="nc" id="L21">            users.save(new AppUser(&quot;Gerente sintetico&quot;, &quot;manager@example.test&quot;, encoder.encode(password), UserRole.GERENTE));</span>
+<span class="nc" id="L22">            users.save(new AppUser(&quot;Vendedor sintetico&quot;, &quot;seller@example.test&quot;, encoder.encode(password), UserRole.VENDEDOR));</span>
+<span class="nc" id="L23">        };</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
