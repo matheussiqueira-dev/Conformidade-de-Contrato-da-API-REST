@@ -1,6 +1,6 @@
 {
   "scope": "baseline-http-isolated-database",
-  "timestamp": "2026-10-04T03:42:24.731Z",
+  "timestamp": "2026-10-05T23:08:38.161Z",
   "results": [
     {
       "name": "Live OpenAPI is 3.1 and includes baseline routes",
@@ -32,6 +32,7 @@
     "Error documentation scope: POST /products 400 and GET /products/{id} 404 only."
   ],
   "excluded": [
-    "Planned login, 401/403 and role-specific projections require API-01 implementation."
-  ]
+    "Seller projections, sales, inventory and goals require the dedicated domain endpoints."
+  ],
+  "authentication": "Manager session; CSRF token on mutations."
 }
