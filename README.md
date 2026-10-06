@@ -80,6 +80,10 @@ docker compose up -d postgres
 .\mvnw.cmd spring-boot:run
 ```
 
+Se `postgres-order` ja existir e tiver sido criado por `docker run`, o Compose pode falhar com conflito de nome. Nesse caso, use `docker start postgres-order` para retomar esse banco, sem apagar o container. Confirme a disponibilidade com `docker exec postgres-order pg_isready -U postgres -d order_management`. Para login por HTTP local, defina `$env:SESSION_COOKIE_SECURE='false'` antes de iniciar a API; o ambiente normal nao cria contas de acesso automaticamente.
+
+Diagnostico de inicializacao de 05/10: [banco parado, conflito de container e downloads npm](reports/execucoes/run-2026-10-05-debug-inicializacao.md). O runner `-Preview` agora instala o frontend antes de iniciar API/banco e limita as tentativas de download, para identificar problemas de rede mais cedo.
+
 O `ddl-auto=update` atual é um baseline de desenvolvimento. As migrações Flyway do produto ainda estão pendentes.
 
 ### 1. Suba o PostgreSQL via Docker
