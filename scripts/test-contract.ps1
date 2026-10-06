@@ -12,7 +12,7 @@ Push-Location $projectDirectory
 try {
     if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Instale Node.js antes de executar.' }
     if (-not (Test-Path 'node_modules/ajv/dist/2020.js')) {
-        & npm.cmd ci --ignore-scripts --no-audit --no-fund
+        & npm.cmd ci --ignore-scripts --no-audit --no-fund --fetch-retries=1 --fetch-timeout=20000 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=2000
         if ($LASTEXITCODE -ne 0) { throw 'Instalacao dos validadores falhou.' }
     }
     & npm.cmd test
@@ -27,6 +27,23 @@ try {
         if (Test-Path (Join-Path $portableJdk 'bin/java.exe')) { $env:JAVA_HOME = $portableJdk }
     }
     if (-not $env:JAVA_HOME) { throw 'Configure JAVA_HOME para JDK 25.' }
+    # Install before starting disposable services: a registry failure must not
+    # look like an API startup failure or leave the user waiting through retries.
+    if ($Frontend) {
+        $webListener = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue
+        if ($webListener) { throw 'Porta 3000 ocupada. Encerre o frontend existente antes do runner isolado.' }
+        Push-Location frontend
+        try {
+            if (Test-Path package-lock.json) {
+                & npm.cmd ci --no-audit --no-fund --fetch-retries=1 --fetch-timeout=20000 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=2000
+            }
+            else {
+                & npm.cmd install --no-audit --no-fund --fetch-retries=1 --fetch-timeout=20000 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=2000
+            }
+            if ($LASTEXITCODE -ne 0) { throw 'Instalacao do frontend falhou antes de iniciar API/banco. Para ECONNRESET ou timeout, verifique acesso HTTPS a registry.npmjs.org e o log npm informado acima.' }
+        }
+        finally { Pop-Location }
+    }
     $listener = Get-NetTCPConnection -LocalPort 18080 -State Listen -ErrorAction SilentlyContinue
     if ($listener) { throw 'Porta 18080 ocupada. Encerre o processo existente antes do teste isolado.' }
     & .\mvnw.cmd -DskipTests package
@@ -52,7 +69,8 @@ try {
         try {
             $response = Invoke-WebRequest -UseBasicParsing 'http://127.0.0.1:18080/v3/api-docs' -TimeoutSec 1
             if ($response.StatusCode -eq 200) { $ready = $true; break }
-        } catch { Start-Sleep -Milliseconds 500 }
+        }
+        catch { Start-Sleep -Milliseconds 500 }
     }
     if (-not $ready) { throw 'Timeout aguardando API isolada.' }
     $env:A3_CONTRACT_ISOLATED = '1'
@@ -64,8 +82,6 @@ try {
         Push-Location frontend
         try {
             $env:BACKEND_ORIGIN = 'http://127.0.0.1:18080'
-            if (Test-Path package-lock.json) { & npm.cmd ci --no-audit --no-fund } else { & npm.cmd install --no-audit --no-fund }
-            if ($LASTEXITCODE -ne 0) { throw 'Instalacao do frontend falhou.' }
             & npm.cmd test
             if ($LASTEXITCODE -ne 0) { throw 'Teste do cliente de sessao falhou.' }
             & npm.cmd run build
@@ -83,13 +99,16 @@ try {
                 Write-Host ('Senha temporaria de ambas as contas: ' + $env:A3_TEST_PASSWORD)
                 Read-Host 'Pressione Enter para encerrar o preview e o banco descartavel' | Out-Null
             }
-        } finally { Pop-Location }
+        }
+        finally { Pop-Location }
     }
-} finally {
+}
+finally {
     $env:A3_CONTRACT_ISOLATED = $previousIsolatedFlag
     $env:A3_TEST_PASSWORD = $previousTestPassword
     $env:BACKEND_ORIGIN = $previousBackendOrigin
     if ($webProcess -and -not $webProcess.HasExited) { Stop-Process -Id $webProcess.Id -Force }
+    
     if ($apiProcess -and -not $apiProcess.HasExited) { Stop-Process -Id $apiProcess.Id -Force }
     if ($composeStarted) {
         & docker compose -f docker-compose.test.yml -p a3-tests down
