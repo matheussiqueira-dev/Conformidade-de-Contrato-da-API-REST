@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Regras PMD do A3 (secao 7 do enunciado): estilo, possiveis bugs, codigo morto,
+  complexidade e manutencao. Duplicacao e medida separadamente pelo CPD.
+  O build nao falha por violacao: o objetivo e medir antes x depois.
+-->
+<ruleset name="A3 Qualidade"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>Regras de bugs, codigo morto, complexidade e estilo para o SUT.</description>
+
+    <rule ref="rulesets/java/quickstart.xml"/>
+
+    <!-- Complexidade: RNF de manutenibilidade usa limite 10 por metodo. -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="methodReportLevel" value="10"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/CognitiveComplexity"/>
+    <rule ref="category/java/design.xml/NPathComplexity"/>
+
+    <!-- Codigo morto e possiveis bugs adicionais. -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+    <rule ref="category/java/bestpractices.xml/UnusedFormalParameter"/>
+    <rule ref="category/java/errorprone.xml/AvoidCatchingThrowable"/>
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+</ruleset>

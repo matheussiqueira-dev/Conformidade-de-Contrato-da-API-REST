@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">OrderController.java</span></div><h1>OrderController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.dto.AddressRequestDTO;
+import com.swee.ordermanagementspring.dto.OrderRequestDTO;
+import com.swee.ordermanagementspring.dto.OrderResponseDTO;
+import com.swee.ordermanagementspring.dto.OrderStatusUpdateDTO;
+import com.swee.ordermanagementspring.services.OrderService;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@RequestMapping(&quot;/orders&quot;)
+public class OrderController {
+
+    private final OrderService service;
+
+<span class="fc" id="L22">    public OrderController(OrderService service) {</span>
+<span class="fc" id="L23">        this.service = service;</span>
+<span class="fc" id="L24">    }</span>
+
+    @GetMapping
+    public List&lt;OrderResponseDTO&gt; findAll() {
+<span class="nc" id="L28">        return service.findAll().stream()</span>
+<span class="nc" id="L29">                .map(OrderResponseDTO::from)</span>
+<span class="nc" id="L30">                .toList();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public OrderResponseDTO findById(@PathVariable Long id) {
+<span class="nc" id="L35">        return OrderResponseDTO.from(service.findById(id));</span>
+    }
+
+    @PostMapping
+    public OrderResponseDTO insert(@Valid @RequestBody OrderRequestDTO dto,
+                                   @AuthenticationPrincipal AppPrincipal principal) {
+<span class="nc" id="L41">        return OrderResponseDTO.from(service.insert(dto, principal));</span>
+    }
+
+    @PutMapping(&quot;/{id}/status&quot;)
+    public OrderResponseDTO updateStatus(@PathVariable Long id, @Valid @RequestBody OrderStatusUpdateDTO dto) {
+<span class="nc" id="L46">        return OrderResponseDTO.from(service.updateStatus(id, dto));</span>
+    }
+
+    @PutMapping(&quot;/{id}/address&quot;)
+    public OrderResponseDTO updateAddress(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO dto) {
+<span class="nc" id="L51">        return OrderResponseDTO.from(service.updateAddress(id, dto));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public void delete(@PathVariable Long id){
+<span class="nc" id="L56">        service.delete(id);</span>
+<span class="nc" id="L57">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

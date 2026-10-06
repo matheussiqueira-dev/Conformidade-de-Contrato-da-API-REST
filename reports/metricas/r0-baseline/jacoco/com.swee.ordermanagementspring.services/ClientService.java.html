@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">ClientService.java</span></div><h1>ClientService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.ClientRequestDTO;
+import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.entities.client.Client;
+import com.swee.ordermanagementspring.entities.client.CorporateClient;
+import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.exceptions.ProductException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.ClientRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ClientService {
+
+    private final ClientRepository repository;
+<span class="fc" id="L19">    public ClientService (ClientRepository repository){</span>
+<span class="fc" id="L20">        this.repository = repository;</span>
+<span class="fc" id="L21">    }</span>
+
+    public List&lt;Client&gt; findAll() {
+<span class="nc" id="L24">        return repository.findAll();</span>
+    }
+
+    public Client findById(Long id) {
+<span class="nc" id="L28">        return repository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Client not found&quot;));</span>
+    }
+
+    public Client updateAddress(Long id, Address address) {
+<span class="nc" id="L32">        Client client = findById(id);</span>
+
+<span class="nc" id="L34">        client.setAddress(address);</span>
+
+<span class="nc" id="L36">        return repository.save(client);</span>
+    }
+
+    public Client update(Long id, ClientRequestDTO dto) {
+<span class="nc" id="L40">        Client existing = findById(id);</span>
+
+<span class="nc" id="L42">        existing.setName(dto.getName());</span>
+<span class="nc" id="L43">        existing.setEmail(dto.getEmail());</span>
+<span class="nc" id="L44">        existing.setBirthDate(dto.getBirthDate());</span>
+
+<span class="nc bnc" id="L46" title="All 4 branches missed.">        if (existing instanceof IndividualClient individual &amp;&amp; dto.getCpf() != null) {</span>
+<span class="nc" id="L47">            individual.setCpf(dto.getCpf());</span>
+        }
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (existing instanceof CorporateClient corporate) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (dto.getCnpj() != null) {</span>
+<span class="nc" id="L52">                corporate.setCnpj(dto.getCnpj());</span>
+            }
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (dto.getCompanyName() != null) {</span>
+<span class="nc" id="L55">                corporate.setCompanyName(dto.getCompanyName());</span>
+            }
+        }
+
+<span class="nc" id="L59">        return repository.save(existing);</span>
+    }
+
+    public Client insert(ClientRequestDTO dto) {
+<span class="nc" id="L63">        Client client = buildClient(dto);</span>
+<span class="nc" id="L64">        return repository.save(client);</span>
+    }
+
+    private Client buildClient(ClientRequestDTO dto) {
+<span class="nc bnc" id="L68" title="All 3 branches missed.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;INDIVIDUAL&quot; -&gt; {
+<span class="nc bnc" id="L70" title="All 4 branches missed.">                if (dto.getCpf() == null || dto.getCpf().isBlank()) {</span>
+<span class="nc" id="L71">                    throw new ProductException(&quot;cpf é obrigatório para cliente INDIVIDUAL&quot;);</span>
+                }
+<span class="nc" id="L73">                yield new IndividualClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());</span>
+            }
+            case &quot;CORPORATE&quot; -&gt; {
+<span class="nc bnc" id="L76" title="All 4 branches missed.">                if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {</span>
+<span class="nc" id="L77">                    throw new ProductException(&quot;cnpj é obrigatório para cliente CORPORATE&quot;);</span>
+                }
+<span class="nc" id="L79">                yield new CorporateClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());</span>
+            }
+<span class="nc" id="L81">            default -&gt; throw new ProductException(&quot;Tipo de cliente inválido: &quot; + dto.getType());</span>
+        };
+    }
+
+    public void delete(Long id) {
+<span class="nc" id="L86">        repository.deleteById(id);</span>
+<span class="nc" id="L87">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
