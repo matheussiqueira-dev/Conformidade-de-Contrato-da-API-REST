@@ -89,7 +89,7 @@ class PaymentProcessingTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D006] boleto sem vencimento gera erro de negocio, nao NullPointerException")
         void missingDueDateIsABusinessError() {
             BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", null);

@@ -46,6 +46,10 @@ public class BoletoPayment extends Payment{
             throw new PaymentException("Invalid barcode");
         }
 
+        if (dueDate == null) {
+            throw new PaymentException("dueDate is required for BOLETO payments");
+        }
+
         if (dueDate.isBefore(LocalDate.now())) {
             this.status = PaymentStatus.EXPIRED;
             return false;
