@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd xmlns="https://pmd-code.org/schema/cpd-report"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         pmdVersion="7.17.0"
+         timestamp="2026-10-06T18:28:44.0600471-03:00"
+         version="1.0.0"
+         xsi:schemaLocation="https://pmd-code.org/schema/cpd-report https://pmd.github.io/schema/cpd-report_1_0_0.xsd">
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\OrderManagementSpringApplication.java"
+         totalNumberOfTokens="29"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\config\ContractUsersConfig.java"
+         totalNumberOfTokens="153"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\config\OpenApiConfig.java"
+         totalNumberOfTokens="457"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\config\SecurityConfig.java"
+         totalNumberOfTokens="340"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\AddressController.java"
+         totalNumberOfTokens="216"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\AuthController.java"
+         totalNumberOfTokens="523"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\ClientController.java"
+         totalNumberOfTokens="211"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\OrderController.java"
+         totalNumberOfTokens="220"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\PaymentController.java"
+         totalNumberOfTokens="277"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\controllers\ProductController.java"
+         totalNumberOfTokens="322"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\AddressRequestDTO.java"
+         totalNumberOfTokens="255"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\AddressResponseDTO.java"
+         totalNumberOfTokens="241"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ClientRequestDTO.java"
+         totalNumberOfTokens="229"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ClientResponseDTO.java"
+         totalNumberOfTokens="292"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderItemRequestDTO.java"
+         totalNumberOfTokens="78"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderItemResponseDTO.java"
+         totalNumberOfTokens="133"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderPaymentRequestDTO.java"
+         totalNumberOfTokens="260"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderRequestDTO.java"
+         totalNumberOfTokens="173"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderResponseDTO.java"
+         totalNumberOfTokens="281"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderStatusUpdateDTO.java"
+         totalNumberOfTokens="38"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\PaymentRequestDTO.java"
+         totalNumberOfTokens="293"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\PaymentResponseDTO.java"
+         totalNumberOfTokens="506"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ProductRequestDTO.java"
+         totalNumberOfTokens="196"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ProductResponseDTO.java"
+         totalNumberOfTokens="261"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\Address.java"
+         totalNumberOfTokens="279"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\Order.java"
+         totalNumberOfTokens="424"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\OrderItem.java"
+         totalNumberOfTokens="201"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\auth\AppUser.java"
+         totalNumberOfTokens="194"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\auth\UserRole.java"
+         totalNumberOfTokens="8"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\client\Client.java"
+         totalNumberOfTokens="262"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\client\CorporateClient.java"
+         totalNumberOfTokens="117"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\client\IndividualClient.java"
+         totalNumberOfTokens="83"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\enums\OrderStatus.java"
+         totalNumberOfTokens="14"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\enums\PaymentStatus.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\enums\PixKeyType.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\payment\BoletoPayment.java"
+         totalNumberOfTokens="177"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\payment\CardPayment.java"
+         totalNumberOfTokens="186"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\payment\Payment.java"
+         totalNumberOfTokens="285"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\payment\PixPayment.java"
+         totalNumberOfTokens="304"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\product\DigitalProduct.java"
+         totalNumberOfTokens="87"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\product\PhysicalProduct.java"
+         totalNumberOfTokens="123"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\product\Product.java"
+         totalNumberOfTokens="226"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\ErrorResponse.java"
+         totalNumberOfTokens="244"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\GlobalExceptionHandler.java"
+         totalNumberOfTokens="480"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\OrderException.java"
+         totalNumberOfTokens="19"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\PaymentException.java"
+         totalNumberOfTokens="19"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\ProductException.java"
+         totalNumberOfTokens="19"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\exceptions\ResourceNotFoundException.java"
+         totalNumberOfTokens="19"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\AddressRepository.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\AppUserRepository.java"
+         totalNumberOfTokens="21"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\ClientRepository.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\OrderRepository.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\PaymentRepository.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\repositories\ProductRepository.java"
+         totalNumberOfTokens="12"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\security\AppPrincipal.java"
+         totalNumberOfTokens="144"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\security\DatabaseUserDetailsService.java"
+         totalNumberOfTokens="81"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\security\SecurityJson.java"
+         totalNumberOfTokens="103"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\AddressService.java"
+         totalNumberOfTokens="233"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\ClientService.java"
+         totalNumberOfTokens="440"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\OrderService.java"
+         totalNumberOfTokens="1088"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\PaymentService.java"
+         totalNumberOfTokens="822"/>
+   <file path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\ProductService.java"
+         totalNumberOfTokens="366"/>
+   <duplication lines="58" tokens="163">
+      <file begintoken="4089"
+            column="5"
+            endcolumn="2"
+            endline="98"
+            endtoken="4251"
+            line="41"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderPaymentRequestDTO.java"/>
+      <file begintoken="4878"
+            column="5"
+            endcolumn="2"
+            endline="113"
+            endtoken="5040"
+            line="56"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\PaymentRequestDTO.java"/>
+      <codefragment><![CDATA[    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getCardHolder() {
+        return cardHolder;
+    }
+
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+
+    public String getPixKey() {
+        return pixKey;
+    }
+
+    public void setPixKey(String pixKey) {
+        this.pixKey = pixKey;
+    }
+
+    public String getPixHolderName() {
+        return pixHolderName;
+    }
+
+    public void setPixHolderName(String pixHolderName) {
+        this.pixHolderName = pixHolderName;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+}]]></codefragment>
+   </duplication>
+   <duplication lines="56" tokens="162">
+      <file begintoken="2851"
+            column="5"
+            endcolumn="2"
+            endline="86"
+            endtoken="3012"
+            line="31"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\AddressRequestDTO.java"/>
+      <file begintoken="6125"
+            column="5"
+            endcolumn="2"
+            endline="92"
+            endtoken="6286"
+            line="36"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\Address.java"/>
+      <codefragment><![CDATA[    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+}]]></codefragment>
+   </duplication>
+   <duplication lines="27" tokens="71">
+      <file begintoken="3345"
+            column="5"
+            endcolumn="11"
+            endline="65"
+            endtoken="3415"
+            line="39"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ClientRequestDTO.java"/>
+      <file begintoken="7278"
+            column="5"
+            endcolumn="11"
+            endline="64"
+            endtoken="7348"
+            line="38"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\client\Client.java"/>
+      <codefragment><![CDATA[    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getCpf() {
+]]></codefragment>
+   </duplication>
+   <duplication lines="27" tokens="71">
+      <file begintoken="5628"
+            column="5"
+            endcolumn="11"
+            endline="61"
+            endtoken="5698"
+            line="35"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\ProductRequestDTO.java"/>
+      <file begintoken="8942"
+            column="5"
+            endcolumn="11"
+            endline="61"
+            endtoken="9012"
+            line="36"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\product\Product.java"/>
+      <codefragment><![CDATA[    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getWeight() {
+]]></codefragment>
+   </duplication>
+   <duplication lines="25" tokens="70">
+      <file begintoken="4089"
+            column="5"
+            endcolumn="6"
+            endline="65"
+            endtoken="4158"
+            line="41"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderPaymentRequestDTO.java"/>
+      <file begintoken="7871"
+            column="5"
+            endcolumn="6"
+            endline="53"
+            endtoken="7940"
+            line="29"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\entities\payment\CardPayment.java"/>
+      <codefragment><![CDATA[    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getCardHolder() {
+        return cardHolder;
+    }
+
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+]]></codefragment>
+   </duplication>
+   <duplication lines="27" tokens="68">
+      <file begintoken="4023"
+            column="5"
+            endcolumn="11"
+            endline="43"
+            endtoken="4090"
+            line="17"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\OrderPaymentRequestDTO.java"/>
+      <file begintoken="4789"
+            column="5"
+            endcolumn="11"
+            endline="50"
+            endtoken="4856"
+            line="22"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\dto\PaymentRequestDTO.java"/>
+      <codefragment><![CDATA[    private String cardNumber;
+    private String cardHolder;
+    private Integer installments;
+
+    private String pixKey;
+    private String pixHolderName;
+
+    private String barCode;
+    private LocalDate dueDate;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getCardNumber() {
+]]></codefragment>
+   </duplication>
+   <duplication lines="7" tokens="62">
+      <file begintoken="11618"
+            column="91"
+            endcolumn="48"
+            endline="137"
+            endtoken="11679"
+            line="131"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\OrderService.java"/>
+      <file begintoken="12647"
+            column="90"
+            endcolumn="48"
+            endline="151"
+            endtoken="12708"
+            line="145"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\PaymentService.java"/>
+      <codefragment><![CDATA[                    throw new PaymentException("cardNumber is required for CARD payments.");
+                }
+                yield new CardPayment(dto.getAmount(), order, dto.getCardNumber(), dto.getCardHolder(), dto.getInstallments());
+            }
+            case "PIX" -> {
+                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {
+                    throw new PaymentException("pixKey is required for PIX payments.");
+]]></codefragment>
+   </duplication>
+   <duplication lines="7" tokens="60">
+      <file begintoken="11681"
+            column="86"
+            endcolumn="48"
+            endline="143"
+            endtoken="11740"
+            line="137"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\OrderService.java"/>
+      <file begintoken="12710"
+            column="85"
+            endcolumn="48"
+            endline="157"
+            endtoken="12769"
+            line="151"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\PaymentService.java"/>
+      <codefragment><![CDATA[                    throw new PaymentException("pixKey is required for PIX payments.");
+                }
+                yield new PixPayment(dto.getAmount(), order, dto.getPixKey(), dto.getPixHolderName(), null, null);
+            }
+            case "BOLETO" -> {
+                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {
+                    throw new PaymentException("barCode is required for BOLETO payments.");
+]]></codefragment>
+   </duplication>
+   <duplication lines="7" tokens="58">
+      <file begintoken="10788"
+            column="91"
+            endcolumn="30"
+            endline="77"
+            endtoken="10845"
+            line="71"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\ClientService.java"/>
+      <file begintoken="11294"
+            column="87"
+            endcolumn="30"
+            endline="100"
+            endtoken="11351"
+            line="94"
+            path="C:\Users\mathe\Documents\Programação\A3\order-management-api\src\main\java\com\swee\ordermanagementspring\services\OrderService.java"/>
+      <codefragment><![CDATA[                    throw new ProductException("cpf é obrigatório para cliente INDIVIDUAL");
+                }
+                yield new IndividualClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
+            }
+            case "CORPORATE" -> {
+                if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {
+                    throw new ProductException("cnpj é obrigatório para cliente CORPORATE");
+]]></codefragment>
+   </duplication>
+</pmd-cpd>

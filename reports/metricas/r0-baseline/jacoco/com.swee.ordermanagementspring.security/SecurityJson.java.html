@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityJson.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.security</a> &gt; <span class="el_source">SecurityJson.java</span></div><h1>SecurityJson.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.security;
+
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDateTime;
+
+public final class SecurityJson {
+    private SecurityJson() {}
+    // Only fixed server messages enter this function; no request text is interpolated.
+    public static void error(HttpServletResponse response, int status) throws IOException {
+<span class="fc" id="L11">        response.setStatus(status);</span>
+<span class="fc" id="L12">        response.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L13">        response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L14">        response.setHeader(&quot;Cache-Control&quot;, &quot;no-store&quot;);</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        String error = status == 401 ? &quot;Unauthorized&quot; : &quot;Forbidden&quot;;</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        String message = status == 401 ? &quot;Autenticacao necessaria ou credenciais invalidas&quot; : &quot;Acesso negado ou token CSRF invalido&quot;;</span>
+<span class="fc" id="L17">        response.getWriter().write(&quot;{\&quot;timestamp\&quot;:\&quot;&quot; + LocalDateTime.now() + &quot;\&quot;,\&quot;status\&quot;:&quot; + status</span>
+                + &quot;,\&quot;error\&quot;:\&quot;&quot; + error + &quot;\&quot;,\&quot;message\&quot;:\&quot;&quot; + message + &quot;\&quot;,\&quot;details\&quot;:null}&quot;);
+<span class="fc" id="L19">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

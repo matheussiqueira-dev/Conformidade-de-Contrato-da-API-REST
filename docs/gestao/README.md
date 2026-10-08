@@ -4,9 +4,11 @@ Atualizado em 04/10/2026 por **Matheus Siqueira**. Quadro: https://trello.com/b/
 
 ## O que já foi entregue
 
-Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI 37177644692 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37177644692). Resultado:12 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E =52 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
+Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. A primeira fatia de autoria do pedido também está em andamento. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI da autoria aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104). Resultado atual: 15 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E = 55 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
 
-Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheirodecimal, autoria, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheiro decimal, migração de banco real e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+
+Fase seguinte iniciada: Matheus implementou V1/V2 Flyway para esquema vazio e vínculo de vendedor, documentou DER/dicionário e guia de adoção controlada. O [CI #22 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37200555926) executou 17 testes Java e inicializou a API com Hibernate `validate` sobre V1/V2 em PostgreSQL 18. Migração de banco real e conversão monetária permanecem pendentes; detalhes em [BD-02](cards/FwvkkAdG.md).
 
 ## Como usar os registros
 
@@ -52,8 +54,8 @@ Sequência: QA-08 e DOC-01 podem avançar com os artefatos atuais. DOM-02 depend
 | [[Francisco] Slides da apresentação](https://trello.com/c/qQvIlw5q/32-francisco-slides-da-apresenta%C3%A7%C3%A3o) | Francisco | Backlog | [Briefing](cards/qQvIlw5q.md) |
 | [[Francisco] Plano B da demo (gravação de contingência)](https://trello.com/c/JTx8I4eB/33-francisco-plano-b-da-demo-grava%C3%A7%C3%A3o-de-conting%C3%AAncia) | Francisco | Backlog | [Briefing](cards/JTx8I4eB.md) |
 | [[Matheus] Checklist de entrega final (conferência dos 14 critérios)](https://trello.com/c/1mNWyLTq/34-matheus-checklist-de-entrega-final-confer%C3%AAncia-dos-14-crit%C3%A9rios) | Matheus | Backlog | [Briefing](cards/1mNWyLTq.md) |
-| [[Matheus] BD-01 · DER, dicionário e análise de normalização](https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o) | Matheus | A fazer | [Briefing](cards/YPqTTPbz.md) |
-| [[Matheus] BD-02 · Migrações Flyway e integridade no PostgreSQL](https://trello.com/c/FwvkkAdG/36-matheus-bd-02-migra%C3%A7%C3%B5es-flyway-e-integridade-no-postgresql) | Matheus | A fazer | [Briefing](cards/FwvkkAdG.md) |
+| [[Matheus] BD-01 · DER, dicionário e análise de normalização](https://trello.com/c/YPqTTPbz/35-matheus-bd-01-der-dicion%C3%A1rio-e-an%C3%A1lise-de-normaliza%C3%A7%C3%A3o) | Matheus | Em andamento | [Briefing](cards/YPqTTPbz.md) |
+| [[Matheus] BD-02 · Migrações Flyway e integridade no PostgreSQL](https://trello.com/c/FwvkkAdG/36-matheus-bd-02-migra%C3%A7%C3%B5es-flyway-e-integridade-no-postgresql) | Matheus | Em andamento | [Briefing](cards/FwvkkAdG.md) |
 | [[Allan] BD-03 · Consultas SQL, views e análise de índices](https://trello.com/c/9luJhlJy/37-allan-bd-03-consultas-sql-views-e-an%C3%A1lise-de-%C3%ADndices) | Allan | Backlog | [Briefing](cards/9luJhlJy.md) |
 | [[Gabriel] QA-01 · Testes unitários das regras de negócio](https://trello.com/c/eQ7WLyPR/38-gabriel-qa-01-testes-unit%C3%A1rios-das-regras-de-neg%C3%B3cio) | Gabriel | Em andamento | [Briefing](cards/eQ7WLyPR.md) |
 | [[Allan] QA-03 · Testes de sistema HTTP e aceitação](https://trello.com/c/pY0i7PQQ/40-allan-qa-03-testes-de-sistema-http-e-aceita%C3%A7%C3%A3o) | Allan | Em andamento | [Briefing](cards/pY0i7PQQ.md) |
@@ -90,7 +92,7 @@ Sequência: QA-08 e DOC-01 podem avançar com os artefatos atuais. DOM-02 depend
 | [[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho](https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho) | Matheus | Concluído | [Briefing](cards/KKPfn6ES.md) |
 | [[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)](https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador) | Matheus | Concluído | [Briefing](cards/3lLw8iW9.md) |
 | [[Gabriel] DOM-02 · Migrar dinheiro para BigDecimal e NUMERIC](https://trello.com/c/HxWdN6Fv/61-gabriel-dom-02-migrar-dinheiro-para-bigdecimal-e-numeric) | Gabriel | A fazer | [Briefing](cards/DOM-02.md) |
-| [[Matheus] SEC-01 · Vincular autoria do pedido à sessão](https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o) | Matheus | A fazer | [Briefing](cards/SEC-01.md) |
+| [[Matheus] SEC-01 · Vincular autoria do pedido à sessão](https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o) | Matheus | Em andamento | [Briefing](cards/SEC-01.md) |
 | [[Allan] QA-08 · Revisar sessão e reproduzir preview no Windows](https://trello.com/c/PQ5Aikvp/63-allan-qa-08-revisar-sess%C3%A3o-e-reproduzir-preview-no-windows) | Allan | A fazer | [Briefing](cards/QA-08.md) |
 | [[Francisco] DOC-01 · Consolidar rubrica, rastreabilidade e autoria](https://trello.com/c/qT7awxOR/64-francisco-doc-01-consolidar-rubrica-rastreabilidade-e-autoria) | Francisco | A fazer | [Briefing](cards/DOC-01.md) |
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AddressService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">AddressService.java</span></div><h1>AddressService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.AddressRequestDTO;
+import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.AddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+<span class="fc" id="L13">public class AddressService {</span>
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    public List&lt;Address&gt; findAll() {
+<span class="nc" id="L19">        return addressRepository.findAll();</span>
+    }
+
+    public Address findById(Long id){
+<span class="nc" id="L23">        return addressRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Address not found, id: &quot; + id));</span>
+    }
+
+    public Address insert(AddressRequestDTO dto) {
+<span class="nc" id="L27">        Address address = new Address(dto.getZipCode(), dto.getState(), dto.getCity(),</span>
+<span class="nc" id="L28">                dto.getNeighborhood(), dto.getComplement(), dto.getNumber(), dto.getStreet());</span>
+<span class="nc" id="L29">        return addressRepository.save(address);</span>
+    }
+
+    public Address update(Long id, AddressRequestDTO dto) {
+<span class="nc" id="L33">        Address existing = findById(id);</span>
+
+<span class="nc" id="L35">        existing.setStreet(dto.getStreet());</span>
+<span class="nc" id="L36">        existing.setNumber(dto.getNumber());</span>
+<span class="nc" id="L37">        existing.setComplement(dto.getComplement());</span>
+<span class="nc" id="L38">        existing.setNeighborhood(dto.getNeighborhood());</span>
+<span class="nc" id="L39">        existing.setCity(dto.getCity());</span>
+<span class="nc" id="L40">        existing.setState(dto.getState());</span>
+<span class="nc" id="L41">        existing.setZipCode(dto.getZipCode());</span>
+
+<span class="nc" id="L43">        return addressRepository.save(existing);</span>
+    }
+
+    public void delete (Long id) {
+<span class="nc" id="L47">        addressRepository.deleteById(id);</span>
+<span class="nc" id="L48">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

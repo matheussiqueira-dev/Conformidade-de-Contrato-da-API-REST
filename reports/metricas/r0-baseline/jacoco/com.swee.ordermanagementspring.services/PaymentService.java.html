@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">PaymentService.java</span></div><h1>PaymentService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.PaymentRequestDTO;
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
+import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
+import com.swee.ordermanagementspring.entities.payment.CardPayment;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.entities.payment.PixPayment;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.OrderRepository;
+import com.swee.ordermanagementspring.repositories.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+<span class="fc" id="L22">public class PaymentService {</span>
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+
+    @Transactional
+    public Payment processAndSave(Payment payment) {
+<span class="nc" id="L33">        payment.processPayment();</span>
+
+<span class="nc" id="L35">        Payment saved = paymentRepository.save(payment);</span>
+
+<span class="nc" id="L37">        Order order = saved.getOrder();</span>
+<span class="nc" id="L38">        order.setStatus(OrderStatus.PAID);</span>
+
+<span class="nc" id="L40">        return saved;</span>
+
+    }
+
+    public List&lt;Payment&gt; findAll() {
+<span class="nc" id="L45">        return paymentRepository.findAll();</span>
+    }
+
+    public Payment findById(Long id) {
+<span class="nc" id="L49">        return paymentRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Payment not found, id: &quot; + id));</span>
+    }
+
+    public Payment insert(PaymentRequestDTO dto) {
+<span class="nc" id="L53">        Order order = orderRepository.findById(dto.getOrderId())</span>
+<span class="nc" id="L54">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found, id: &quot; + dto.getOrderId()));</span>
+
+<span class="nc" id="L56">        Payment payment = buildPayment(dto, order);</span>
+
+<span class="nc" id="L58">        return paymentRepository.save(payment);</span>
+    }
+    @Transactional
+    public Payment update(Long id, PaymentRequestDTO dto) {
+<span class="nc" id="L62">        Payment existing = findById(id);</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (existing.getStatus() != PaymentStatus.PENDING) {</span>
+<span class="nc" id="L65">            throw new PaymentException(&quot;Only payments with PENDING status can be edited&quot;);</span>
+        }
+
+<span class="nc" id="L68">        boolean typeChanged =</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">                (dto.getType().equalsIgnoreCase(&quot;CARD&quot;) &amp;&amp; !(existing instanceof CardPayment))</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">                        || (dto.getType().equalsIgnoreCase(&quot;PIX&quot;) &amp;&amp; !(existing instanceof PixPayment))</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">                        || (dto.getType().equalsIgnoreCase(&quot;BOLETO&quot;) &amp;&amp; !(existing instanceof BoletoPayment));</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (typeChanged) {</span>
+<span class="nc" id="L74">            Order order = existing.getOrder();</span>
+
+            //remove a referencia do payment antigo do banco
+<span class="nc" id="L77">            order.setPayment(null);</span>
+
+            //remove o payment antigo
+<span class="nc" id="L80">            paymentRepository.delete(existing);</span>
+<span class="nc" id="L81">            paymentRepository.flush();</span>
+
+            //cria um novo tipo de payment
+<span class="nc" id="L84">            Payment updated = buildPayment(dto, order);</span>
+
+            //mantem os dois lados do relacionamento sincronizados
+<span class="nc" id="L87">            order.setPayment(updated);</span>
+<span class="nc" id="L88">            updated.setOrder(order);</span>
+
+<span class="nc" id="L90">            return paymentRepository.save(updated);</span>
+        }
+
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        switch (dto.getType().toUpperCase()) {</span>
+
+            case &quot;CARD&quot; -&gt; {
+<span class="nc bnc" id="L96" title="All 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="nc" id="L97">                    throw new PaymentException(&quot;cardNumber is required for CARD payments&quot;);</span>
+                }
+
+<span class="nc" id="L100">                CardPayment payment = (CardPayment) existing;</span>
+
+<span class="nc" id="L102">                payment.setAmount(dto.getAmount());</span>
+<span class="nc" id="L103">                payment.setCardNumber(dto.getCardNumber());</span>
+<span class="nc" id="L104">                payment.setCardHolder(dto.getCardHolder());</span>
+<span class="nc" id="L105">                payment.setInstallments(dto.getInstallments());</span>
+<span class="nc" id="L106">            }</span>
+
+            case &quot;PIX&quot; -&gt; {
+<span class="nc bnc" id="L109" title="All 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="nc" id="L110">                    throw new PaymentException(&quot;pixKey is required for PIX payments&quot;);</span>
+                }
+
+<span class="nc" id="L113">                PixPayment payment = (PixPayment) existing;</span>
+
+<span class="nc" id="L115">                payment.setAmount(dto.getAmount());</span>
+<span class="nc" id="L116">                payment.setPixKey(dto.getPixKey());</span>
+<span class="nc" id="L117">                payment.setPixHolderName(dto.getPixHolderName());</span>
+<span class="nc" id="L118">                payment.setPixKeyType(null);</span>
+<span class="nc" id="L119">            }</span>
+
+            case &quot;BOLETO&quot; -&gt; {
+<span class="nc bnc" id="L122" title="All 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="nc" id="L123">                    throw new PaymentException(&quot;barCode is required for BOLETO payments&quot;);</span>
+                }
+
+<span class="nc" id="L126">                BoletoPayment payment = (BoletoPayment) existing;</span>
+
+<span class="nc" id="L128">                payment.setAmount(dto.getAmount());</span>
+<span class="nc" id="L129">                payment.setBarCode(dto.getBarCode());</span>
+<span class="nc" id="L130">                payment.setDueDate(dto.getDueDate());</span>
+<span class="nc" id="L131">            }</span>
+
+<span class="nc" id="L133">            default -&gt; throw new PaymentException(</span>
+<span class="nc" id="L134">                    &quot;Invalid payment type: &quot; + dto.getType()</span>
+            );
+        }
+
+<span class="nc" id="L138">        return paymentRepository.save(existing);</span>
+    }
+
+    private Payment buildPayment(PaymentRequestDTO dto, Order order) {
+<span class="nc bnc" id="L142" title="All 4 branches missed.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;CARD&quot; -&gt; {
+<span class="nc bnc" id="L144" title="All 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="nc" id="L145">                    throw new PaymentException(&quot;cardNumber is required for CARD payments&quot;);</span>
+                }
+<span class="nc" id="L147">                yield new CardPayment(dto.getAmount(), order, dto.getCardNumber(), dto.getCardHolder(), dto.getInstallments());</span>
+            }
+            case &quot;PIX&quot; -&gt; {
+<span class="nc bnc" id="L150" title="All 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="nc" id="L151">                    throw new PaymentException(&quot;pixKey is required for PIX payments&quot;);</span>
+                }
+<span class="nc" id="L153">                yield new PixPayment(dto.getAmount(), order, dto.getPixKey(), dto.getPixHolderName(), null, null);</span>
+            }
+            case &quot;BOLETO&quot; -&gt; {
+<span class="nc bnc" id="L156" title="All 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="nc" id="L157">                    throw new PaymentException(&quot;barCode is required for BOLETO payments&quot;);</span>
+                }
+<span class="nc" id="L159">                yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());</span>
+            }
+<span class="nc" id="L161">            default -&gt; throw new PaymentException(&quot;Invalid payment type: &quot; + dto.getType());</span>
+        };
+    }
+
+    public void delete(Long id) {
+<span class="nc" id="L166">        paymentRepository.deleteById(id);</span>
+<span class="nc" id="L167">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

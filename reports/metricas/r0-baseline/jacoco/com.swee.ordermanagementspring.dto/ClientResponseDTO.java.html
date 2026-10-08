@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">ClientResponseDTO.java</span></div><h1>ClientResponseDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.swee.ordermanagementspring.entities.client.Client;
+import com.swee.ordermanagementspring.entities.client.CorporateClient;
+import com.swee.ordermanagementspring.entities.client.IndividualClient;
+
+import java.time.LocalDate;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ClientResponseDTO {
+
+    private Long id;
+    private String type;
+    private String name;
+    private String email;
+    private LocalDate birthDate;
+    private String cpf;
+    private String cnpj;
+    private String companyName;
+
+    public ClientResponseDTO(Long id, String type, String name, String email, LocalDate birthDate,
+<span class="nc" id="L23">                             String cpf, String cnpj, String companyName) {</span>
+<span class="nc" id="L24">        this.id = id;</span>
+<span class="nc" id="L25">        this.type = type;</span>
+<span class="nc" id="L26">        this.name = name;</span>
+<span class="nc" id="L27">        this.email = email;</span>
+<span class="nc" id="L28">        this.birthDate = birthDate;</span>
+<span class="nc" id="L29">        this.cpf = cpf;</span>
+<span class="nc" id="L30">        this.cnpj = cnpj;</span>
+<span class="nc" id="L31">        this.companyName = companyName;</span>
+<span class="nc" id="L32">    }</span>
+
+    public static ClientResponseDTO from(Client client) {
+<span class="nc" id="L35">        ClientResponseDTO dto = new ClientResponseDTO(</span>
+<span class="nc" id="L36">                client.getId(),</span>
+<span class="nc bnc" id="L37" title="All 3 branches missed.">                switch (client) {</span>
+<span class="nc" id="L38">                    case IndividualClient i -&gt; &quot;INDIVIDUAL&quot;;</span>
+<span class="nc" id="L39">                    case CorporateClient c -&gt; &quot;CORPORATE&quot;;</span>
+<span class="nc" id="L40">                    default -&gt; &quot;UNKNOWN&quot;;</span>
+<span class="nc" id="L41">                },</span>
+<span class="nc" id="L42">                client.getName(),</span>
+<span class="nc" id="L43">                client.getEmail(),</span>
+<span class="nc" id="L44">                client.getBirthDate(),</span>
+                null,
+                null,
+                null
+        );
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (client instanceof IndividualClient individual) {</span>
+<span class="nc" id="L51">            dto.cpf = individual.getCpf();</span>
+        }
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (client instanceof CorporateClient corporate) {</span>
+<span class="nc" id="L55">            dto.cnpj = corporate.getCnpj();</span>
+<span class="nc" id="L56">            dto.companyName = corporate.getCompanyName();</span>
+        }
+
+<span class="nc" id="L59">        return dto;</span>
+    }
+
+    public Long getId() {
+<span class="nc" id="L63">        return id;</span>
+    }
+
+    public String getType() {
+<span class="nc" id="L67">        return type;</span>
+    }
+
+    public String getName() {
+<span class="nc" id="L71">        return name;</span>
+    }
+
+    public String getEmail() {
+<span class="nc" id="L75">        return email;</span>
+    }
+
+    public LocalDate getBirthDate() {
+<span class="nc" id="L79">        return birthDate;</span>
+    }
+
+    public String getCpf() {
+<span class="nc" id="L83">        return cpf;</span>
+    }
+
+    public String getCnpj() {
+<span class="nc" id="L87">        return cnpj;</span>
+    }
+
+    public String getCompanyName() {
+<span class="nc" id="L91">        return companyName;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
