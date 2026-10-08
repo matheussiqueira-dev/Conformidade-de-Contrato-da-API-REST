@@ -89,6 +89,31 @@ jobs:
           cd ..
           node scripts/ci-evidence.mjs
 
+      - name: Verify Flyway schema with Hibernate validation
+        shell: bash
+        run: |
+          java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
+            --spring.profiles.active=migration \
+            --server.address=127.0.0.1 --server.port=18081 \
+            --spring.datasource.url='jdbc:postgresql://localhost:15432/order_management_test?currentSchema=ci_flyway' \
+            --spring.datasource.username=postgres_test \
+            --spring.datasource.password=local_test_only \
+            --spring.flyway.schemas=ci_flyway \
+            --spring.jpa.show-sql=false > target/flyway-ci.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            if ! kill -0 "$api_pid" 2>/dev/null; then
+              cat target/flyway-ci.log
+              exit 1
+            fi
+            if curl --fail --silent http://127.0.0.1:18081/v3/api-docs > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:18081/v3/api-docs > /dev/null
+
       - name: Preserve test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -97,6 +122,7 @@ jobs:
           path: |
             target/surefire-reports/
             target/api-ci.log
+            target/flyway-ci.log
             reports/contrato/spike-2026-10-04/
             reports/contrato/session-2026-10-04/
             frontend/package-lock.json

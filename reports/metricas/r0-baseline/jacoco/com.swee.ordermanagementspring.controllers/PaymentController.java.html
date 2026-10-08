@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">PaymentController.java</span></div><h1>PaymentController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.dto.PaymentRequestDTO;
+import com.swee.ordermanagementspring.dto.PaymentResponseDTO;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.services.PaymentService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/payment&quot;)
+<span class="fc" id="L16">public class PaymentController {</span>
+
+    @Autowired
+    private PaymentService paymentService;
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;PaymentResponseDTO&gt;&gt; findAll() {
+<span class="nc" id="L23">        List&lt;PaymentResponseDTO&gt; list = paymentService.findAll().stream()</span>
+<span class="nc" id="L24">                .map(PaymentResponseDTO::from)</span>
+<span class="nc" id="L25">                .toList();</span>
+<span class="nc" id="L26">        return ResponseEntity.ok(list);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;PaymentResponseDTO&gt; findById(@PathVariable Long id) {
+<span class="nc" id="L31">        Payment payment = paymentService.findById(id);</span>
+<span class="nc" id="L32">        return ResponseEntity.ok(PaymentResponseDTO.from(payment));</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;PaymentResponseDTO&gt; insert(@Valid @RequestBody PaymentRequestDTO dto){
+<span class="nc" id="L37">        Payment savedPayment = paymentService.insert(dto);</span>
+<span class="nc" id="L38">        return ResponseEntity.ok(PaymentResponseDTO.from(savedPayment));</span>
+    }
+
+    @PostMapping(&quot;/{id}/process&quot;)
+    public ResponseEntity&lt;PaymentResponseDTO&gt; process(@PathVariable Long id) {
+<span class="nc" id="L43">        Payment payment = paymentService.findById(id);</span>
+<span class="nc" id="L44">        Payment processedPayment = paymentService.processAndSave(payment);</span>
+<span class="nc" id="L45">        return ResponseEntity.ok(PaymentResponseDTO.from(processedPayment));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;PaymentResponseDTO&gt; update(@PathVariable Long id, @Valid @RequestBody PaymentRequestDTO dto) {
+<span class="nc" id="L50">        Payment updated = paymentService.update(id, dto);</span>
+<span class="nc" id="L51">        return ResponseEntity.ok(PaymentResponseDTO.from(updated));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
+<span class="nc" id="L56">        paymentService.delete(id);</span>
+<span class="nc" id="L57">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

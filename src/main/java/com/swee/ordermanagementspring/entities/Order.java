@@ -1,6 +1,7 @@
 package com.swee.ordermanagementspring.entities;
 
 import com.swee.ordermanagementspring.entities.client.Client;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.Payment;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", indexes = @Index(name = "idx_orders_seller_id", columnList = "seller_id"))
 public class Order {
 
     @Id
@@ -22,6 +23,10 @@ public class Order {
     private OrderStatus status;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Client client;
+    // Null only for orders created before authenticated authorship was introduced.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private AppUser seller;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true) //implementa orphan removal
     private List<OrderItem> items = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
@@ -34,9 +39,10 @@ public class Order {
 
     }
 
-    public Order(OrderStatus status, Client client) {
+    public Order(OrderStatus status, Client client, AppUser seller) {
         this.client = client;
         this.status = status;
+        this.seller = java.util.Objects.requireNonNull(seller, "seller is required for new orders");
     }
 
     public List<OrderItem> getItems() {
@@ -66,6 +72,10 @@ public class Order {
 
     public Client getClient() {
         return client;
+    }
+
+    public AppUser getSeller() {
+        return seller;
     }
 
     public void setClient(Client client) {

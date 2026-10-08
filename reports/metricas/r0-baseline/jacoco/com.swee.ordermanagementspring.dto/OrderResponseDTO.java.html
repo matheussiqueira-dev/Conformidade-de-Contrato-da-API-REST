@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">OrderResponseDTO.java</span></div><h1>OrderResponseDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class OrderResponseDTO {
+
+    private Long id;
+    private LocalDateTime moment;
+    private OrderStatus status;
+    private ClientResponseDTO client;
+    private List&lt;OrderItemResponseDTO&gt; items;
+    private PaymentResponseDTO payment;
+    private AddressResponseDTO shippingAddress;
+    private Double total;
+
+    public OrderResponseDTO(Long id, LocalDateTime moment, OrderStatus status, ClientResponseDTO client,
+                            List&lt;OrderItemResponseDTO&gt; items, PaymentResponseDTO payment,
+<span class="nc" id="L22">                            AddressResponseDTO shippingAddress, Double total) {</span>
+<span class="nc" id="L23">        this.id = id;</span>
+<span class="nc" id="L24">        this.moment = moment;</span>
+<span class="nc" id="L25">        this.status = status;</span>
+<span class="nc" id="L26">        this.client = client;</span>
+<span class="nc" id="L27">        this.items = items;</span>
+<span class="nc" id="L28">        this.payment = payment;</span>
+<span class="nc" id="L29">        this.shippingAddress = shippingAddress;</span>
+<span class="nc" id="L30">        this.total = total;</span>
+<span class="nc" id="L31">    }</span>
+
+    public static OrderResponseDTO from(Order order) {
+<span class="nc" id="L34">        return new OrderResponseDTO(</span>
+<span class="nc" id="L35">                order.getId(),</span>
+<span class="nc" id="L36">                order.getMoment(),</span>
+<span class="nc" id="L37">                order.getStatus(),</span>
+<span class="nc" id="L38">                ClientResponseDTO.from(order.getClient()),</span>
+<span class="nc" id="L39">                order.getItems().stream().map(OrderItemResponseDTO::from).toList(),</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                order.getPayment() != null ? PaymentResponseDTO.from(order.getPayment()) : null,</span>
+<span class="nc" id="L41">                AddressResponseDTO.from(order.getShippingAddress()),</span>
+<span class="nc" id="L42">                order.total()</span>
+        );
+    }
+
+    public Long getId() {
+<span class="nc" id="L47">        return id;</span>
+    }
+
+    public LocalDateTime getMoment() {
+<span class="nc" id="L51">        return moment;</span>
+    }
+
+    public OrderStatus getStatus() {
+<span class="nc" id="L55">        return status;</span>
+    }
+
+    public ClientResponseDTO getClient() {
+<span class="nc" id="L59">        return client;</span>
+    }
+
+    public List&lt;OrderItemResponseDTO&gt; getItems() {
+<span class="nc" id="L63">        return items;</span>
+    }
+
+    public PaymentResponseDTO getPayment() {
+<span class="nc" id="L67">        return payment;</span>
+    }
+
+    public AddressResponseDTO getShippingAddress() {
+<span class="nc" id="L71">        return shippingAddress;</span>
+    }
+
+    public Double getTotal() {
+<span class="nc" id="L75">        return total;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
