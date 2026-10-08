@@ -1,0 +1,1470 @@
+{
+  "label": "R0 - baseline (suite original, antes dos novos testes e correcoes)",
+  "generatedAt": "2026-10-06T21:35:25.799Z",
+  "tests": {
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "executed": 17,
+    "passed": 17,
+    "passRate": 100,
+    "failRate": 0,
+    "suites": [
+      {
+        "name": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.OrderManagementSpringApplicationTests",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "cases": [
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "emptyDatabaseMigratesThroughV2AndRejectsUnknownSeller",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "explicitlyBaselinedLegacyDatabaseKeepsOrders",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.OrderManagementSpringApplicationTests",
+        "name": "contextLoads",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "name": "staleSessionReturns403WithoutLeakingAccountDetails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "name": "genericErrorBodyMatchesHttpStatusAndDoesNotLeakException",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "loginWithoutCsrfIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "sessionRotatesPersistsAndLogoutInvalidatesIt",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "unauthenticatedReadReturnsJson401",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "bcryptByteLimitIsValidatedBeforeAuthentication",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "wrongPasswordDoesNotEstablishSession",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "name": "historicalUnitPriceSurvivesCatalogChangeAndDatabaseReload",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "name": "demonstrationSalePersistsClientAddressPaymentAndTotal",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "unauthenticatedCallerCannotCreateOrder",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "insertKeepsItemPriceAsUnitPriceAndMultipliesQuantityOnce",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "removedUserCannotCreateOrderFromAnOldSession",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "insertCalculatesDemonstrationSaleTotal",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "catalogPriceChangeDoesNotChangeExistingItemPriceInMemory",
+        "status": "PASS"
+      }
+    ]
+  },
+  "coverage": {
+    "total": {
+      "instructions": {
+        "missed": 2775,
+        "covered": 1385,
+        "total": 4160,
+        "percent": 33.3
+      },
+      "branches": {
+        "missed": 199,
+        "covered": 22,
+        "total": 221,
+        "percent": 10
+      },
+      "lines": {
+        "missed": 721,
+        "covered": 349,
+        "total": 1070,
+        "percent": 32.6
+      },
+      "methods": {
+        "missed": 285,
+        "covered": 164,
+        "total": 449,
+        "percent": 36.5
+      }
+    },
+    "complexity": {
+      "total": 566,
+      "methods": 449,
+      "average": 1.26,
+      "max": 18,
+      "above10": 1,
+      "top": [
+        {
+          "class": "PaymentService",
+          "method": "update",
+          "line": 62,
+          "complexity": 18,
+          "branchCoverage": 0
+        },
+        {
+          "class": "OrderService",
+          "method": "buildPayment",
+          "line": 128,
+          "complexity": 10,
+          "branchCoverage": 18.8
+        },
+        {
+          "class": "PaymentService",
+          "method": "buildPayment",
+          "line": 142,
+          "complexity": 10,
+          "branchCoverage": 0
+        },
+        {
+          "class": "PaymentResponseDTO",
+          "method": "from",
+          "line": 45,
+          "complexity": 9,
+          "branchCoverage": 0
+        },
+        {
+          "class": "OrderService",
+          "method": "buildNewClient",
+          "line": 91,
+          "complexity": 7,
+          "branchCoverage": 27.3
+        },
+        {
+          "class": "ClientService",
+          "method": "buildClient",
+          "line": 68,
+          "complexity": 7,
+          "branchCoverage": 0
+        },
+        {
+          "class": "PixPayment",
+          "method": "processPayment",
+          "line": 71,
+          "complexity": 7,
+          "branchCoverage": 0
+        },
+        {
+          "class": "ProductService",
+          "method": "buildProduct",
+          "line": 54,
+          "complexity": 6,
+          "branchCoverage": 0
+        },
+        {
+          "class": "ClientService",
+          "method": "update",
+          "line": 40,
+          "complexity": 6,
+          "branchCoverage": 0
+        },
+        {
+          "class": "ContractUsersConfig",
+          "method": "lambda$contractUsers$0",
+          "line": 14,
+          "complexity": 5,
+          "branchCoverage": 0
+        }
+      ]
+    },
+    "packages": [
+      {
+        "name": "com.swee.ordermanagementspring.config",
+        "instructions": {
+          "missed": 241,
+          "covered": 200,
+          "total": 441,
+          "percent": 45.4
+        },
+        "branches": {
+          "missed": 24,
+          "covered": 0,
+          "total": 24,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 38,
+          "covered": 26,
+          "total": 64,
+          "percent": 40.6
+        },
+        "methods": {
+          "missed": 7,
+          "covered": 19,
+          "total": 26,
+          "percent": 73.1
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.enums",
+        "instructions": {
+          "missed": 0,
+          "covered": 87,
+          "total": 87,
+          "percent": 100
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 16,
+          "total": 16,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 3,
+          "total": 3,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.auth",
+        "instructions": {
+          "missed": 0,
+          "covered": 51,
+          "total": 51,
+          "percent": 100
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 13,
+          "total": 13,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 8,
+          "total": 8,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.repositories",
+        "instructions": null,
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": null,
+        "methods": null
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services",
+        "instructions": {
+          "missed": 973,
+          "covered": 229,
+          "total": 1202,
+          "percent": 19.1
+        },
+        "branches": {
+          "missed": 114,
+          "covered": 13,
+          "total": 127,
+          "percent": 10.2
+        },
+        "lines": {
+          "missed": 174,
+          "covered": 45,
+          "total": 219,
+          "percent": 20.5
+        },
+        "methods": {
+          "missed": 38,
+          "covered": 12,
+          "total": 50,
+          "percent": 24
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.payment",
+        "instructions": {
+          "missed": 226,
+          "covered": 41,
+          "total": 267,
+          "percent": 15.4
+        },
+        "branches": {
+          "missed": 22,
+          "covered": 0,
+          "total": 22,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 77,
+          "covered": 17,
+          "total": 94,
+          "percent": 18.1
+        },
+        "methods": {
+          "missed": 31,
+          "covered": 6,
+          "total": 37,
+          "percent": 16.2
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.exceptions",
+        "instructions": {
+          "missed": 85,
+          "covered": 92,
+          "total": 177,
+          "percent": 52
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 23,
+          "covered": 23,
+          "total": 46,
+          "percent": 50
+        },
+        "methods": {
+          "missed": 9,
+          "covered": 11,
+          "total": 20,
+          "percent": 55
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities",
+        "instructions": {
+          "missed": 97,
+          "covered": 159,
+          "total": 256,
+          "percent": 62.1
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 2,
+          "total": 2,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 41,
+          "covered": 51,
+          "total": 92,
+          "percent": 55.4
+        },
+        "methods": {
+          "missed": 26,
+          "covered": 21,
+          "total": 47,
+          "percent": 44.7
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.dto",
+        "instructions": {
+          "missed": 790,
+          "covered": 168,
+          "total": 958,
+          "percent": 17.5
+        },
+        "branches": {
+          "missed": 34,
+          "covered": 0,
+          "total": 34,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 265,
+          "covered": 70,
+          "total": 335,
+          "percent": 20.9
+        },
+        "methods": {
+          "missed": 116,
+          "covered": 49,
+          "total": 165,
+          "percent": 29.7
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security",
+        "instructions": {
+          "missed": 5,
+          "covered": 101,
+          "total": 106,
+          "percent": 95.3
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 4,
+          "total": 4,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 22,
+          "total": 22,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 1,
+          "covered": 7,
+          "total": 8,
+          "percent": 87.5
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.product",
+        "instructions": {
+          "missed": 78,
+          "covered": 37,
+          "total": 115,
+          "percent": 32.2
+        },
+        "branches": {
+          "missed": 4,
+          "covered": 0,
+          "total": 4,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 24,
+          "covered": 16,
+          "total": 40,
+          "percent": 40
+        },
+        "methods": {
+          "missed": 12,
+          "covered": 7,
+          "total": 19,
+          "percent": 36.8
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.controllers",
+        "instructions": {
+          "missed": 211,
+          "covered": 187,
+          "total": 398,
+          "percent": 47
+        },
+        "branches": {
+          "missed": 1,
+          "covered": 3,
+          "total": 4,
+          "percent": 75
+        },
+        "lines": {
+          "missed": 50,
+          "covered": 36,
+          "total": 86,
+          "percent": 41.9
+        },
+        "methods": {
+          "missed": 28,
+          "covered": 15,
+          "total": 43,
+          "percent": 34.9
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring",
+        "instructions": {
+          "missed": 5,
+          "covered": 3,
+          "total": 8,
+          "percent": 37.5
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 2,
+          "covered": 1,
+          "total": 3,
+          "percent": 33.3
+        },
+        "methods": {
+          "missed": 1,
+          "covered": 1,
+          "total": 2,
+          "percent": 50
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.client",
+        "instructions": {
+          "missed": 64,
+          "covered": 30,
+          "total": 94,
+          "percent": 31.9
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 27,
+          "covered": 13,
+          "total": 40,
+          "percent": 32.5
+        },
+        "methods": {
+          "missed": 16,
+          "covered": 5,
+          "total": 21,
+          "percent": 23.8
+        }
+      }
+    ]
+  },
+  "pmd": {
+    "total": 44,
+    "byRule": {
+      "UseUtilityClass": 1,
+      "LiteralsFirstInComparisons": 4,
+      "ControlStatementBraces": 3,
+      "UnnecessaryImport": 7,
+      "UncommentedEmptyConstructor": 13,
+      "AssignmentInOperand": 1,
+      "UnnecessaryFullyQualifiedName": 1,
+      "CyclomaticComplexity": 5,
+      "UseLocaleWithCaseConversions": 7,
+      "PreserveStackTrace": 1,
+      "CognitiveComplexity": 1
+    },
+    "byRuleset": {
+      "Design": 7,
+      "Best Practices": 5,
+      "Code Style": 11,
+      "Documentation": 13,
+      "Error Prone": 8
+    },
+    "byPriority": {
+      "3": 36,
+      "4": 8
+    },
+    "violations": [
+      {
+        "file": "com/swee/ordermanagementspring/OrderManagementSpringApplication.java",
+        "line": 7,
+        "rule": "UseUtilityClass",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "All methods are static. Consider adding a private no-args constructor to prevent instantiation."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/ContractUsersConfig.java",
+        "line": 16,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/ContractUsersConfig.java",
+        "line": 20,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/OpenApiConfig.java",
+        "line": 25,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/OpenApiConfig.java",
+        "line": 42,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/controllers/ClientController.java",
+        "line": 6,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.client.Client'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java",
+        "line": 3,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'jakarta.validation.constraints.NotBlank'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Address.java",
+        "line": 18,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Order.java",
+        "line": 8,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'org.hibernate.engine.internal.Cascade'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Order.java",
+        "line": 38,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/OrderItem.java",
+        "line": 21,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/auth/AppUser.java",
+        "line": 20,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/client/Client.java",
+        "line": 30,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/client/CorporateClient.java",
+        "line": 17,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/client/IndividualClient.java",
+        "line": 16,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/BoletoPayment.java",
+        "line": 4,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/CardPayment.java",
+        "line": 4,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/CardPayment.java",
+        "line": 20,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/Payment.java",
+        "line": 35,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/PixPayment.java",
+        "line": 4,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/PixPayment.java",
+        "line": 25,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/DigitalProduct.java",
+        "line": 11,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/PhysicalProduct.java",
+        "line": 12,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/PhysicalProduct.java",
+        "line": 35,
+        "rule": "AssignmentInOperand",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "Avoid assignment to shippingValue in operand"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/Product.java",
+        "line": 24,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/security/AppPrincipal.java",
+        "line": 15,
+        "rule": "UnnecessaryFullyQualifiedName",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unnecessary qualifier 'User': 'withUsername' is already in scope"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/ClientService.java",
+        "line": 67,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildClient(ClientRequestDTO)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/ClientService.java",
+        "line": 68,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 19,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.exceptions.ProductException'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 90,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildNewClient(ClientRequestDTO)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 91,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 127,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildPayment(OrderPaymentRequestDTO, Order)' has a cyclomatic complexity of 14."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 128,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 156,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 158,
+        "rule": "PreserveStackTrace",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Thrown exception does not preserve the stack trace of exception 'e' on all code paths"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 61,
+        "rule": "CognitiveComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'update(Long, PaymentRequestDTO)' has a cognitive complexity of 16, current threshold is 15"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 61,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'update(Long, PaymentRequestDTO)' has a cyclomatic complexity of 17."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 69,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 70,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 71,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 93,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 141,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildPayment(PaymentRequestDTO, Order)' has a cyclomatic complexity of 14."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 142,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/ProductService.java",
+        "line": 54,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      }
+    ]
+  },
+  "cpd": {
+    "total": 9,
+    "duplicatedLines": 241,
+    "duplications": [
+      {
+        "lines": 58,
+        "tokens": 163,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:41",
+          "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java:56"
+        ]
+      },
+      {
+        "lines": 56,
+        "tokens": 162,
+        "files": [
+          "com/swee/ordermanagementspring/dto/AddressRequestDTO.java:31",
+          "com/swee/ordermanagementspring/entities/Address.java:36"
+        ]
+      },
+      {
+        "lines": 27,
+        "tokens": 71,
+        "files": [
+          "com/swee/ordermanagementspring/dto/ClientRequestDTO.java:39",
+          "com/swee/ordermanagementspring/entities/client/Client.java:38"
+        ]
+      },
+      {
+        "lines": 27,
+        "tokens": 71,
+        "files": [
+          "com/swee/ordermanagementspring/dto/ProductRequestDTO.java:35",
+          "com/swee/ordermanagementspring/entities/product/Product.java:36"
+        ]
+      },
+      {
+        "lines": 25,
+        "tokens": 70,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:41",
+          "com/swee/ordermanagementspring/entities/payment/CardPayment.java:29"
+        ]
+      },
+      {
+        "lines": 27,
+        "tokens": 68,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:17",
+          "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java:22"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 62,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:131",
+          "com/swee/ordermanagementspring/services/PaymentService.java:145"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 60,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:137",
+          "com/swee/ordermanagementspring/services/PaymentService.java:151"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 58,
+        "files": [
+          "com/swee/ordermanagementspring/services/ClientService.java:71",
+          "com/swee/ordermanagementspring/services/OrderService.java:94"
+        ]
+      }
+    ]
+  },
+  "spotbugs": {
+    "total": 46,
+    "byCategory": {
+      "BAD_PRACTICE": 2,
+      "STYLE": 3,
+      "MALICIOUS_CODE": 34,
+      "I18N": 7
+    },
+    "byPriority": {
+      "2": 38,
+      "3": 8
+    },
+    "byType": {
+      "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION": 1,
+      "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE": 1,
+      "EI_EXPOSE_REP2": 20,
+      "EI_EXPOSE_REP": 14,
+      "CT_CONSTRUCTOR_THROW": 1,
+      "DLS_DEAD_LOCAL_STORE": 1,
+      "EQ_DOESNT_OVERRIDE_EQUALS": 1,
+      "DM_CONVERT_CASE": 7
+    },
+    "ncss": 1833,
+    "bugs": [
+      {
+        "type": "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION",
+        "category": "BAD_PRACTICE",
+        "priority": 3,
+        "rank": 19,
+        "class": "SecurityConfig",
+        "line": 22
+      },
+      {
+        "type": "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 13,
+        "class": "AuthController",
+        "line": 32
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ClientController",
+        "line": 18
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderController",
+        "line": 22
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ProductController",
+        "line": 22
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderResponseDTO",
+        "line": 22
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderResponseDTO",
+        "line": 22
+      },
+      {
+        "type": "CT_CONSTRUCTOR_THROW",
+        "category": "BAD_PRACTICE",
+        "priority": 2,
+        "rank": 16,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 21
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Client",
+        "line": 30
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Client",
+        "line": 30
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 35
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 35
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 35
+      },
+      {
+        "type": "DLS_DEAD_LOCAL_STORE",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 17,
+        "class": "PhysicalProduct",
+        "line": 12
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ErrorResponse",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ErrorResponse",
+        "line": 23
+      },
+      {
+        "type": "EQ_DOESNT_OVERRIDE_EQUALS",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 17,
+        "class": "AppPrincipal",
+        "line": 14
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "ClientService",
+        "line": 19
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "OrderService",
+        "line": 41
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "OrderService",
+        "line": 41
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "OrderService",
+        "line": 41
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "PaymentService",
+        "line": 22
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "PaymentService",
+        "line": 22
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "ProductService",
+        "line": 18
+      }
+    ]
+  }
+}

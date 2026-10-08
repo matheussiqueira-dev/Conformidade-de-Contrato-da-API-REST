@@ -3,6 +3,10 @@ package com.swee.ordermanagementspring.services;
 import com.swee.ordermanagementspring.dto.OrderRequestDTO;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.entities.auth.UserRole;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import com.swee.ordermanagementspring.security.AppPrincipal;
 import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import jakarta.persistence.EntityManager;
@@ -27,11 +31,19 @@ class OrderPersistenceTest {
     @Autowired ProductRepository products;
     @Autowired OrderRepository orders;
     @Autowired EntityManager entityManager;
+    @Autowired AppUserRepository users;
+
+    private AppPrincipal actor() {
+        AppUser user = users.save(new AppUser("Vendedor de teste", "seller-" + java.util.UUID.randomUUID() + "@example.test",
+                "synthetic-hash", UserRole.VENDEDOR));
+        return new AppPrincipal(user);
+    }
 
     @Test
     void historicalUnitPriceSurvivesCatalogChangeAndDatabaseReload() {
         PhysicalProduct product = products.save(new PhysicalProduct(100.0, "Mouse", "Fixture sintetica", 0.2));
-        Order saved = orderService.insert(orderRequest(product.getId(), 2));
+        AppPrincipal seller = actor();
+        Order saved = orderService.insert(orderRequest(product.getId(), 2), seller);
         entityManager.flush();
         Long orderId = saved.getId();
         product.setPrice(150.0);
@@ -44,6 +56,7 @@ class OrderPersistenceTest {
         assertThat(reloaded.getItems().getFirst().getPrice()).isEqualTo(100.0);
         assertThat(reloaded.getItems().getFirst().getQuantity()).isEqualTo(2);
         assertThat(reloaded.total()).isEqualTo(200.0);
+        assertThat(reloaded.getSeller().getId()).isEqualTo(seller.id());
     }
 
     @Test
@@ -53,7 +66,8 @@ class OrderPersistenceTest {
         OrderRequestDTO request = orderRequest(phone.getId(), 1);
         request.setItems(List.of(item(phone.getId(), 1), item(earbuds.getId(), 1)));
         request.getPayment().setAmount(5700.0);
-        Long orderId = orderService.insert(request).getId();
+        AppPrincipal seller = actor();
+        Long orderId = orderService.insert(request, seller).getId();
         entityManager.flush();
         entityManager.clear();
 
@@ -64,5 +78,6 @@ class OrderPersistenceTest {
         assertThat(reloaded.getShippingAddress().getId()).isNotNull();
         assertThat(reloaded.getPayment().getId()).isNotNull();
         assertThat(reloaded.getPayment().getAmount()).isEqualTo(5700.0);
+        assertThat(reloaded.getSeller().getId()).isEqualTo(seller.id());
     }
 }

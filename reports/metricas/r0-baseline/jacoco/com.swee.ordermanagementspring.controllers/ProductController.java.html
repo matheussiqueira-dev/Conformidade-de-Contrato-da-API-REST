@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">ProductController.java</span></div><h1>ProductController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.dto.ProductRequestDTO;
+import com.swee.ordermanagementspring.dto.ProductResponseDTO;
+import com.swee.ordermanagementspring.exceptions.ErrorResponse;
+import com.swee.ordermanagementspring.services.ProductService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/products&quot;)
+public class ProductController {
+
+    private final ProductService service;
+
+<span class="fc" id="L22">    public ProductController (ProductService service) {</span>
+<span class="fc" id="L23">        this.service = service;</span>
+<span class="fc" id="L24">    }</span>
+
+    @GetMapping
+    public List&lt;ProductResponseDTO&gt; findAll() {
+<span class="nc" id="L28">        return service.findAll().stream()</span>
+<span class="nc" id="L29">                .map(ProductResponseDTO::from)</span>
+<span class="nc" id="L30">                .toList();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    @ApiResponses({
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;OK&quot;,
+                    content = @Content(mediaType = &quot;*/*&quot;, schema = @Schema(implementation = ProductResponseDTO.class))),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Produto nao encontrado&quot;,
+                    content = @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ProductResponseDTO findById(@PathVariable Long id) {
+<span class="nc" id="L41">        return ProductResponseDTO.from(service.findById(id));</span>
+    }
+
+    @PostMapping
+    @ApiResponses({
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;OK&quot;,
+                    content = @Content(mediaType = &quot;*/*&quot;, schema = @Schema(implementation = ProductResponseDTO.class))),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Validacao ou regra de produto invalida&quot;,
+                    content = @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ProductResponseDTO insert(@Valid @RequestBody ProductRequestDTO dto) {
+<span class="nc" id="L52">        return ProductResponseDTO.from(service.insert(dto));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ProductResponseDTO update(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO dto) {
+<span class="nc" id="L57">        return ProductResponseDTO.from(service.update(id, dto));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public void delete(@PathVariable Long id){
+<span class="nc" id="L62">        service.delete(id);</span>
+<span class="nc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

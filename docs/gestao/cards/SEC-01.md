@@ -2,13 +2,24 @@
 
 Card: https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o. Membro nativo atribuído: Matheus.
 
-Criado/planejado por **Matheus Siqueira** em 04/10/2026. Execução futura: **Matheus**; revisor: **Gabriel**. Não atribuir a Matheus implementação ainda pendente. Estado inicial: A fazer. Complexidade estimada 5 pontos, sujeita à capacidade da equipe; cada tarefa tem janela de até 4 h.
+Criado/planejado por **Matheus Siqueira** em 04/10/2026. Implementação da primeira fatia: **Matheus Siqueira**; revisor: **Gabriel**. Estado atual: Em andamento. Complexidade estimada 5 pontos, sujeita à capacidade da equipe; cada tarefa tem janela de até 4 h.
+
+## Progresso técnico em 04/10/2026
+
+- `OrderController.insert` obtém `AppPrincipal` da sessão; o request não possui campo de autor.
+- `OrderService.insert` rejeita ausência de principal e sessão de usuário removido, consulta `AppUserRepository` pelo ID autenticado e associa esse usuário ao pedido antes de salvar.
+- `Order` possui associação `seller_id` e índice para consultas futuras. A coluna é anulável exclusivamente para conservar pedidos anteriores sem atribuir autoria fictícia.
+- Testes unitários cobrem autoria derivada, principal ausente e conta removida; testes de persistência verificam o vínculo após recarga do banco.
+- `GlobalExceptionHandler` responde 403 para conta removida, sem vazar o motivo interno; `ErrorResponseTest` verifica status e corpo.
+- Os 23 testes Node de contrato passaram localmente. O [CI #20](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104) aprovou 15 testes Java, 23 de contrato, 3 de cliente, 12 HTTP, 2 E2E e build. Maven/JVM local foi bloqueado por `AccessDeniedException` ao abrir dependências JAR; veja [relatório desta fatia](../../../reports/execucoes/run-2026-10-04-autoria-pedido.md).
+
+Ainda faltam a migração versionada de `seller_id`, consultas/projeções exclusivas do vendedor, testes HTTP com dois vendedores e revisão de Gabriel. Esta fatia não conclui SEC-01.
 
 ## História e por que criar este card
 
 Como vendedor, quero pedidos atribuídos à minha conta autenticada para impedir falsificação de autoria e acesso a vendas de colegas.
 
-Sessão e perfis foram implementados por Matheus Siqueira. Order ainda não vincula o usuário autenticado; endpoints de vendedor são planejados, e rotas legadas permanecem só para gerente.
+Sessão e perfis foram implementados por Matheus Siqueira. Novos pedidos agora recebem o usuário da sessão; endpoints de vendedor são planejados, e rotas legadas permanecem só para gerente.
 
 Este card decompõe uma lacuna da implementação atual; complementa cards existentes sem substituir seus critérios nem duplicar resultados. Os demais domínios já têm API-02 a06, BD e UI próprios; não foram criados novos cards genéricos para os mesmos escopos.
 
