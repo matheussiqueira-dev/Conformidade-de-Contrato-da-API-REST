@@ -2,14 +2,16 @@ package com.swee.ordermanagementspring.dto;
 
 import com.swee.ordermanagementspring.entities.OrderItem;
 
+import java.math.BigDecimal;
+
 public class OrderItemResponseDTO {
 
     private Long id;
     private ProductResponseDTO product;
     private Integer quantity;
-    private Double price;
+    private BigDecimal price;
 
-    public OrderItemResponseDTO(Long id, ProductResponseDTO product, Integer quantity, Double price) {
+    public OrderItemResponseDTO(Long id, ProductResponseDTO product, Integer quantity, BigDecimal price) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
@@ -37,7 +39,7 @@ public class OrderItemResponseDTO {
         return quantity;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 }

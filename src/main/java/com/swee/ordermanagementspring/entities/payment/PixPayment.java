@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,7 +27,7 @@ public class PixPayment extends Payment{
 
     }
 
-    public PixPayment(Double amount, Order order, String pixKey, String pixHolderName, String transactionId, PixKeyType pixKeyType) {
+    public PixPayment(BigDecimal amount, Order order, String pixKey, String pixHolderName, String transactionId, PixKeyType pixKeyType) {
         super(amount, order);
         this.pixKey = pixKey;
         this.pixHolderName = pixHolderName;

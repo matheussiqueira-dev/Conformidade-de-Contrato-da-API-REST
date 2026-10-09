@@ -1,9 +1,13 @@
 package com.swee.ordermanagementspring.dto;
 
+import com.swee.ordermanagementspring.entities.Money;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+
+import java.math.BigDecimal;
 
 public class ProductRequestDTO {
 
@@ -15,7 +19,8 @@ public class ProductRequestDTO {
 
     @NotNull(message = "Price required.")
     @Positive(message = "Price must be positive.")
-    private Double price;
+    @DecimalMax(value = Money.MAX, message = "Value exceeds the maximum of " + Money.MAX + ".")
+    private BigDecimal price;
 
     private String description;
 
@@ -42,11 +47,11 @@ public class ProductRequestDTO {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

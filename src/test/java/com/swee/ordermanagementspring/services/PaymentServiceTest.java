@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Optional;
@@ -61,7 +62,7 @@ class PaymentServiceTest {
     void approvedPaymentMarksOrderPaid() {
         saveReturnsArgument();
         Order order = pendingOrder();
-        PixPayment payment = new PixPayment(100.0, order, "marina@example.test", "Marina", null, null);
+        PixPayment payment = new PixPayment(new BigDecimal("100.0"), order, "marina@example.test", "Marina", null, null);
 
         Payment processed = service.processAndSave(payment);
 
@@ -75,7 +76,7 @@ class PaymentServiceTest {
     void expiredBoletoDoesNotMarkOrderPaid() {
         saveReturnsArgument();
         Order order = pendingOrder();
-        BoletoPayment payment = new BoletoPayment(100.0, order, "34191790010104351004791020150008291070026000",
+        BoletoPayment payment = new BoletoPayment(new BigDecimal("100.0"), order, "34191790010104351004791020150008291070026000",
                 LocalDate.now().minusDays(1));
 
         service.processAndSave(payment);
@@ -89,7 +90,7 @@ class PaymentServiceTest {
     @Tag("regression")
     void onlyPendingPaymentsCanBeProcessed(PaymentStatus status) {
         Order order = pendingOrder();
-        CardPayment payment = new CardPayment(100.0, order, "4111111111111111", "MARINA", 1);
+        CardPayment payment = new CardPayment(new BigDecimal("100.0"), order, "4111111111111111", "MARINA", 1);
         payment.setStatus(status);
 
         assertThatThrownBy(() -> service.processAndSave(payment)).isInstanceOf(PaymentException.class);
@@ -165,20 +166,34 @@ class PaymentServiceTest {
         verify(paymentRepository, never()).save(any());
     }
 
-    @ParameterizedTest(name = "[D012] valor nao finito {0} gera erro de negocio, nao NumberFormatException")
-    @ValueSource(doubles = {Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NaN})
+    @ParameterizedTest(name = "[D012/DOM-02] {0} arredonda HALF_UP antes de comparar com 100,00")
+    @ValueSource(strings = {"100.004", "100.00", "99.995"})
     @Tag("regression")
-    void nonFiniteAmountIsABusinessError(double amount) {
+    void amountIsComparedAfterHalfUpRounding(String amount) {
+        saveReturnsArgument();
         when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
-        assertThatThrownBy(() -> service.insert(TestData.payment("PIX", amount, 1L)))
-                .isInstanceOf(PaymentException.class);
+        PaymentRequestDTO dto = TestData.payment("PIX", 100.0, 1L);
+        dto.setAmount(new BigDecimal(amount));
+
+        assertThat(service.insert(dto).getAmount()).isEqualTo(new BigDecimal("100.00"));
+    }
+
+    @Test
+    @Tag("regression")
+    @DisplayName("[D012/DOM-02] 100.005 arredonda para 100.01 e e rejeitado")
+    void halfCentAboveTotalIsRejected() {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
+        PaymentRequestDTO dto = TestData.payment("PIX", 100.0, 1L);
+        dto.setAmount(new BigDecimal("100.005"));
+
+        assertThatThrownBy(() -> service.insert(dto)).isInstanceOf(PaymentException.class);
         verify(paymentRepository, never()).save(any());
     }
 
     @Test
     @DisplayName("[CT-PAY-007] somente pagamento PENDING pode ser editado")
     void onlyPendingPaymentCanBeEdited() {
-        CardPayment approved = new CardPayment(100.0, pendingOrder(), "4111111111111111", "MARINA", 1);
+        CardPayment approved = new CardPayment(new BigDecimal("100.0"), pendingOrder(), "4111111111111111", "MARINA", 1);
         approved.setStatus(PaymentStatus.APPROVED);
         when(paymentRepository.findById(5L)).thenReturn(Optional.of(approved));
 
@@ -190,7 +205,7 @@ class PaymentServiceTest {
     @DisplayName("[CT-PAY-008] edicao do mesmo tipo atualiza os campos")
     void sameTypeUpdateChangesFields() {
         saveReturnsArgument();
-        CardPayment existing = new CardPayment(100.0, pendingOrder(), "4000000000000002", "OUTRO", 1);
+        CardPayment existing = new CardPayment(new BigDecimal("100.0"), pendingOrder(), "4000000000000002", "OUTRO", 1);
         when(paymentRepository.findById(5L)).thenReturn(Optional.of(existing));
         PaymentRequestDTO dto = TestData.payment("CARD", 100.0, 1L);
         dto.setInstallments(3);
@@ -206,7 +221,7 @@ class PaymentServiceTest {
     void typeChangeReplacesPayment() {
         saveReturnsArgument();
         Order order = pendingOrder();
-        PixPayment existing = new PixPayment(100.0, order, "marina@example.test", "Marina", null, null);
+        PixPayment existing = new PixPayment(new BigDecimal("100.0"), order, "marina@example.test", "Marina", null, null);
         order.setPayment(existing);
         when(paymentRepository.findById(5L)).thenReturn(Optional.of(existing));
 
@@ -221,7 +236,7 @@ class PaymentServiceTest {
     @Test
     @DisplayName("[CT-PAY-010] edicao de cartao sem numero e rejeitada")
     void cardUpdateRequiresNumber() {
-        CardPayment existing = new CardPayment(100.0, pendingOrder(), "4111111111111111", "MARINA", 1);
+        CardPayment existing = new CardPayment(new BigDecimal("100.0"), pendingOrder(), "4111111111111111", "MARINA", 1);
         when(paymentRepository.findById(5L)).thenReturn(Optional.of(existing));
         PaymentRequestDTO dto = TestData.payment("CARD", 100.0, 1L);
         dto.setCardNumber(" ");

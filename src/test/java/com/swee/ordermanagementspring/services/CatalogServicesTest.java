@@ -29,6 +29,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -82,13 +83,13 @@ class CatalogServicesTest {
         @Test
         @DisplayName("[CT-PROD-UPD] atualizacao mantem peso quando nao informado")
         void updateKeepsWeightWhenAbsent() {
-            PhysicalProduct existing = new PhysicalProduct(10.0, "Antigo", "Fixture", 3.0);
+            PhysicalProduct existing = new PhysicalProduct(new BigDecimal("10.0"), "Antigo", "Fixture", 3.0);
             when(repository.findById(1L)).thenReturn(Optional.of(existing));
 
             service.update(1L, TestData.physicalProduct(12.5, null));
 
             assertThat(existing.getName()).isEqualTo("Mouse");
-            assertThat(existing.getPrice()).isEqualTo(12.5);
+            assertThat(existing.getPrice()).isEqualByComparingTo("12.5");
             assertThat(existing.getWeight()).isEqualTo(3.0);
         }
 

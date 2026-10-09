@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.swee.ordermanagementspring.services.OrderFixtures.*;
@@ -41,31 +42,31 @@ class OrderPersistenceTest {
 
     @Test
     void historicalUnitPriceSurvivesCatalogChangeAndDatabaseReload() {
-        PhysicalProduct product = products.save(new PhysicalProduct(100.0, "Mouse", "Fixture sintetica", 0.2));
+        PhysicalProduct product = products.save(new PhysicalProduct(new BigDecimal("100.0"), "Mouse", "Fixture sintetica", 0.2));
         AppPrincipal seller = actor();
         Order saved = orderService.insert(orderRequest(product.getId(), 2), seller);
         entityManager.flush();
         Long orderId = saved.getId();
-        product.setPrice(150.0);
+        product.setPrice(new BigDecimal("150.0"));
         entityManager.flush();
         entityManager.clear();
 
         Order reloaded = orders.findById(orderId).orElseThrow();
 
-        assertThat(reloaded.getItems().getFirst().getProduct().getPrice()).isEqualTo(150.0);
-        assertThat(reloaded.getItems().getFirst().getPrice()).isEqualTo(100.0);
+        assertThat(reloaded.getItems().getFirst().getProduct().getPrice()).isEqualByComparingTo("150.0");
+        assertThat(reloaded.getItems().getFirst().getPrice()).isEqualByComparingTo("100.0");
         assertThat(reloaded.getItems().getFirst().getQuantity()).isEqualTo(2);
-        assertThat(reloaded.total()).isEqualTo(200.0);
+        assertThat(reloaded.total()).isEqualByComparingTo("200.0");
         assertThat(reloaded.getSeller().getId()).isEqualTo(seller.id());
     }
 
     @Test
     void demonstrationSalePersistsClientAddressPaymentAndTotal() {
-        PhysicalProduct phone = products.save(new PhysicalProduct(4500.0, "iPhone", "Fixture sintetica", 0.2));
-        PhysicalProduct earbuds = products.save(new PhysicalProduct(1200.0, "AirPods", "Fixture sintetica", 0.1));
+        PhysicalProduct phone = products.save(new PhysicalProduct(new BigDecimal("4500.0"), "iPhone", "Fixture sintetica", 0.2));
+        PhysicalProduct earbuds = products.save(new PhysicalProduct(new BigDecimal("1200.0"), "AirPods", "Fixture sintetica", 0.1));
         OrderRequestDTO request = orderRequest(phone.getId(), 1);
         request.setItems(List.of(item(phone.getId(), 1), item(earbuds.getId(), 1)));
-        request.getPayment().setAmount(5700.0);
+        request.getPayment().setAmount(new BigDecimal("5700.0"));
         AppPrincipal seller = actor();
         Long orderId = orderService.insert(request, seller).getId();
         entityManager.flush();
@@ -73,11 +74,11 @@ class OrderPersistenceTest {
 
         Order reloaded = orders.findById(orderId).orElseThrow();
 
-        assertThat(reloaded.total()).isEqualTo(5700.0);
+        assertThat(reloaded.total()).isEqualByComparingTo("5700.0");
         assertThat(reloaded.getClient().getId()).isNotNull();
         assertThat(reloaded.getShippingAddress().getId()).isNotNull();
         assertThat(reloaded.getPayment().getId()).isNotNull();
-        assertThat(reloaded.getPayment().getAmount()).isEqualTo(5700.0);
+        assertThat(reloaded.getPayment().getAmount()).isEqualByComparingTo("5700.0");
         assertThat(reloaded.getSeller().getId()).isEqualTo(seller.id());
     }
 }

@@ -13,6 +13,7 @@ import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public final class TestData {
     /** Pedido em memoria com um item de 100,00 x quantidade. */
     public static Order order(OrderStatus status, int quantity) {
         Order order = new Order(status, client(), seller(7L));
-        PhysicalProduct product = new PhysicalProduct(100.0, "Mouse", "Fixture sintetica", 0.2);
+        PhysicalProduct product = new PhysicalProduct(new BigDecimal("100.0"), "Mouse", "Fixture sintetica", 0.2);
         order.setItems(List.of(new OrderItem(order, product, quantity, product.getPrice())));
         return order;
     }
@@ -73,7 +74,7 @@ public final class TestData {
         product.setType("PHYSICAL");
         product.setName("Mouse");
         product.setDescription("Fixture sintetica");
-        product.setPrice(price);
+        product.setPrice(price == null ? null : BigDecimal.valueOf(price));
         product.setWeight(weight);
         return product;
     }
@@ -82,7 +83,7 @@ public final class TestData {
         ProductRequestDTO product = new ProductRequestDTO();
         product.setType("DIGITAL");
         product.setName("E-book");
-        product.setPrice(30.0);
+        product.setPrice(new BigDecimal("30.0"));
         product.setDownloadLink(downloadLink);
         return product;
     }
@@ -90,7 +91,7 @@ public final class TestData {
     public static PaymentRequestDTO payment(String type, double amount, Long orderId) {
         PaymentRequestDTO payment = new PaymentRequestDTO();
         payment.setType(type);
-        payment.setAmount(amount);
+        payment.setAmount(BigDecimal.valueOf(amount));
         payment.setOrderId(orderId);
         payment.setCardNumber("4111111111111111");
         payment.setCardHolder("MARINA COSTA");
