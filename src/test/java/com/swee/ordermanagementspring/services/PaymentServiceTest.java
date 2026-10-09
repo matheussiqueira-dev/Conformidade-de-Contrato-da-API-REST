@@ -98,6 +98,19 @@ class PaymentServiceTest {
         assertThat(order.getStatus()).isEqualTo(OrderStatus.PENDING_PAYMENT);
     }
 
+    @ParameterizedTest(name = "[D018] pagamento aprovado depois de {0} nao volta o pedido para PAID")
+    @ValueSource(strings = {"SHIPPED", "DELIVERED"})
+    @Tag("regression")
+    void latePaymentDoesNotMoveOrderBackToPaid(OrderStatus advanced) {
+        Order order = TestData.order(advanced, 1);
+        PixPayment payment = new PixPayment(new BigDecimal("100.00"), order, "marina@example.test", "Marina", null, null);
+
+        assertThatThrownBy(() -> service.processAndSave(payment)).isInstanceOf(PaymentException.class);
+        assertThat(order.getStatus()).isEqualTo(advanced);
+        assertThat(payment.getStatus()).isEqualTo(PaymentStatus.PENDING);
+        verify(paymentRepository, never()).save(any());
+    }
+
     @Test
     @DisplayName("[CT-PAY-004] criar pagamento para pedido inexistente retorna nao encontrado")
     void insertForMissingOrderFails() {

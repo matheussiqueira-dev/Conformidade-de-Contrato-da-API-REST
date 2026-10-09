@@ -6,6 +6,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -36,6 +37,24 @@ class MoneyValidationTest {
         ProductRequestDTO dto = TestData.physicalProduct(1.0, 1.0);
         dto.setPrice(new BigDecimal(price));
         assertThat(validator.validate(dto).isEmpty()).isEqualTo(valid);
+    }
+
+    /** [D017] Valor-limite: o menor valor aceito e o que vale ao menos R$ 0,01 depois do HALF_UP. */
+    @ParameterizedTest(name = "[D017] {0} -> valido = {1}")
+    @CsvSource({"0.00, false", "0.004, false", "0.0049, false", "0.005, true", "0.01, true"})
+    @Tag("regression")
+    void subCentValuesThatRoundToZeroAreRejected(String value, boolean valid) {
+        ProductRequestDTO product = TestData.physicalProduct(1.0, 1.0);
+        product.setPrice(new BigDecimal(value));
+        PaymentRequestDTO payment = TestData.payment("PIX", 1.0, 1L);
+        payment.setAmount(new BigDecimal(value));
+        OrderPaymentRequestDTO orderPayment = new OrderPaymentRequestDTO();
+        orderPayment.setType("PIX");
+        orderPayment.setAmount(new BigDecimal(value));
+
+        assertThat(validator.validate(product).isEmpty()).as("preco do produto").isEqualTo(valid);
+        assertThat(validator.validate(payment).isEmpty()).as("valor do pagamento").isEqualTo(valid);
+        assertThat(validator.validate(orderPayment).isEmpty()).as("valor do pagamento no pedido").isEqualTo(valid);
     }
 
     @ParameterizedTest(name = "[DOM-02] pagamento {0} valido = {1}")

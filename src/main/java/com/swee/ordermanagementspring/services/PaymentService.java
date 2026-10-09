@@ -29,6 +29,11 @@ public class PaymentService {
 
 
     @Transactional
+    public Payment process(Long id) {
+        return processAndSave(findById(id));
+    }
+
+    @Transactional
     public Payment processAndSave(Payment payment) {
         // D004: pagamento ja aprovado, recusado ou expirado nao e processado de novo
         if (payment.getStatus() != PaymentStatus.PENDING) {

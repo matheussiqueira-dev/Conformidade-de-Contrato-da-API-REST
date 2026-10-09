@@ -123,6 +123,26 @@ class FlywayMigrationTest {
         }
     }
 
+    /** [D020] 9999999999.994 arredondaria para 9999999999.99 e passaria; a V3 confere o limite antes de arredondar. */
+    @Test
+    @Tag("regression")
+    void v3RejectsLegacyValueJustAboveLimitBeforeRounding() throws Exception {
+        String schema = schema();
+        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = admin.createStatement()) {
+            statement.execute("CREATE SCHEMA " + schema);
+            try {
+                flyway(schema, "2").migrate();
+                try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                    sql.executeUpdate("INSERT INTO product (product_type, name, price) VALUES ('DIGITAL', 'Quase no limite', 9999999999.994)");
+                }
+                assertThatThrownBy(() -> flyway(schema, null).migrate()).hasStackTraceContaining("acima de 9999999999.99");
+            } finally {
+                statement.execute("DROP SCHEMA " + schema + " CASCADE");
+            }
+        }
+    }
+
     @Test
     void v3FailsInsteadOfTruncatingValuesAboveColumnLimit() throws Exception {
         String schema = schema();
