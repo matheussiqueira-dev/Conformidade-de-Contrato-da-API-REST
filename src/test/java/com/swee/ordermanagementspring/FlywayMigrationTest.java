@@ -18,18 +18,26 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FlywayMigrationTest {
     private static final String URL = "jdbc:postgresql://localhost:15432/order_management_test";
     private static final String USER = "postgres_test";
-    private static final String PASSWORD = "local_test_only";
+    private static final String PASSWORD_VARIABLE = "TEST_DB_PASSWORD";
+
+    private static String password() {
+        String value = System.getenv(PASSWORD_VARIABLE);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Defina " + PASSWORD_VARIABLE + " com a senha do PostgreSQL de teste.");
+        }
+        return value;
+    }
 
     private String schema() {
         return "flyway_test_" + UUID.randomUUID().toString().replace("-", "");
     }
 
     private Connection connect(String schema) throws Exception {
-        return DriverManager.getConnection(URL + "?currentSchema=" + schema, USER, PASSWORD);
+        return DriverManager.getConnection(URL + "?currentSchema=" + schema, USER, password());
     }
 
     private Flyway flyway(String schema, String target) {
-        var config = Flyway.configure().dataSource(URL + "?currentSchema=" + schema, USER, PASSWORD)
+        var config = Flyway.configure().dataSource(URL + "?currentSchema=" + schema, USER, password())
                 .schemas(schema).baselineOnMigrate(false);
         if (target != null) config.target(MigrationVersion.fromVersion(target));
         return config.load();
@@ -38,7 +46,7 @@ class FlywayMigrationTest {
     @Test
     void emptyDatabaseMigratesThroughV2AndRejectsUnknownSeller() throws Exception {
         String schema = schema();
-        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
@@ -64,7 +72,7 @@ class FlywayMigrationTest {
     @Test
     void explicitlyBaselinedLegacyDatabaseKeepsOrders() throws Exception {
         String schema = schema();
-        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {

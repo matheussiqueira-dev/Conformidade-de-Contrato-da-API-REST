@@ -99,3 +99,8 @@ docs/etica-seguranca.md + referências para achados/evidências sanitizadas.
 Inventário do sistema, defeitos e evidências; execução local pode ocorrer em dupla.
 
 Fontes: enunciado A3 + direcao-criativa.md/Guia Visual (01/10). Novas funções são planejadas. Datas anteriores: reestimar em PL-01. Baseline e detalhes anteriores preservados no registro local desta revisão.
+
+## Atualização 08/10/2026 — credenciais
+- Senhas removidas do código: o banco de teste usa `TEST_DB_PASSWORD` (gerada por execução nos runners e no CI; secret opcional no GitHub) e o banco de desenvolvimento usa `SPRING_DATASOURCE_PASSWORD` (`application.properties`, `docker-compose.yml`, README).
+- Decisão: as senhas antigas permanecem no histórico do Git. Elas valem apenas para bancos locais ou descartáveis, e reescrever o histórico obrigaria a equipe a clonar de novo e quebraria links de commits nos relatórios. Mitigação: cada integrante troca a senha do próprio banco local.
+- Usar este registro como evidência no `docs/etica-seguranca.md`.

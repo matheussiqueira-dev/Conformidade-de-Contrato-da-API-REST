@@ -59,7 +59,7 @@ node --test scripts/audit-contract.test.mjs
 node scripts/audit-contract.mjs
 ```
 
-O runner pode localizar o JDK portátil já baixado em `../tmp/tools/jdk-25`; em outra máquina, configure `JAVA_HOME`. O modo integração cria e encerra um PostgreSQL exclusivo na porta 15432, database `order_management_test`, com `docker-compose.test.yml`. A massa `OrderFixtures` é sintética e cada teste de persistência usa rollback. Relatórios Java ficam em `target/surefire-reports` e são preservados como artefato no CI. Para testes diretos: `.\mvnw.cmd test` ou `.\mvnw.cmd -Pintegration verify` após iniciar o banco de teste.
+O runner pode localizar o JDK portátil já baixado em `../tmp/tools/jdk-25`; em outra máquina, configure `JAVA_HOME`. O modo integração cria e encerra um PostgreSQL exclusivo na porta 15432, database `order_management_test`, com `docker-compose.test.yml`. A massa `OrderFixtures` é sintética e cada teste de persistência usa rollback. Relatórios Java ficam em `target/surefire-reports` e são preservados como artefato no CI. Para testes diretos: `.\mvnw.cmd test` ou `.\mvnw.cmd -Pintegration verify` após iniciar o banco de teste. A senha do banco de teste vem da variável `TEST_DB_PASSWORD`: os runners geram uma por execução; para comandos diretos, defina-a antes (`$env:TEST_DB_PASSWORD = [guid]::NewGuid().ToString('N')`) e use o mesmo terminal para o Compose e o Maven. No CI, o secret opcional `TEST_DB_PASSWORD` substitui a senha gerada por execução.
 
 Duas rodadas anteriores da suíte Java passaram com seis testes cada; veja [relatório histórico](reports/execucoes/run-2026-10-03-continuacao.md). A auditoria atual usa Ajv 8/2020-12, preserva a v2 e valida a v3 de sessão/CSRF. A revisão do baseline documenta 400/404. Autenticação e frontend de acesso foram adicionados; vendas, metas e estoque seguem pendentes. Veja [estado da implementação e verificações](docs/execucao-sessao.md).
 
@@ -76,11 +76,12 @@ A [revisão dos erros](reports/execucoes/run-2026-10-04-erros-contrato.md) docum
 Para subir a API de desenvolvimento com o banco na porta 5432:
 
 ```powershell
+$env:SPRING_DATASOURCE_PASSWORD = '<senha do seu banco local>'
 docker compose up -d postgres
 .\mvnw.cmd spring-boot:run
 ```
 
-Se `postgres-order` ja existir e tiver sido criado por `docker run`, o Compose pode falhar com conflito de nome. Nesse caso, use `docker start postgres-order` para retomar esse banco, sem apagar o container. Confirme a disponibilidade com `docker exec postgres-order pg_isready -U postgres -d order_management`. Para login por HTTP local, defina `$env:SESSION_COOKIE_SECURE='false'` antes de iniciar a API; o ambiente normal nao cria contas de acesso automaticamente.
+Se `postgres-order` ja existir e tiver sido criado por `docker run`, o Compose pode falhar com conflito de nome. Nesse caso, use `docker start postgres-order` para retomar esse banco, sem apagar o container. Confirme a disponibilidade com `docker exec postgres-order pg_isready -U postgres -d order_management`. Para login por HTTP local, defina `$env:SESSION_COOKIE_SECURE='false'` antes de iniciar a API; o ambiente normal nao cria contas de acesso automaticamente. A senha do banco de desenvolvimento vem da variavel `SPRING_DATASOURCE_PASSWORD`, usada tanto pelo Compose quanto pela API; se `postgres-order` ja existir, use como valor a senha definida na criacao do container.
 
 Diagnostico de inicializacao de 05/10: [banco parado, conflito de container e downloads npm](reports/execucoes/run-2026-10-05-debug-inicializacao.md). O runner `-Preview` agora instala o frontend antes de iniciar API/banco e limita as tentativas de download, para identificar problemas de rede mais cedo.
 
@@ -90,7 +91,7 @@ O `ddl-auto=update` atual é um baseline de desenvolvimento. As migrações Flyw
 
 ```bash
 docker run --name postgres-order \
-  -e POSTGRES_PASSWORD=senha123 \
+  -e POSTGRES_PASSWORD="$SPRING_DATASOURCE_PASSWORD" \
   -e POSTGRES_DB=order_management \
   -p 5432:5432 \
   -d postgres
@@ -101,7 +102,7 @@ docker run --name postgres-order \
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/order_management
 spring.datasource.username=postgres
-spring.datasource.password=senha123
+# senha: variavel de ambiente SPRING_DATASOURCE_PASSWORD
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.hibernate.ddl-auto=update

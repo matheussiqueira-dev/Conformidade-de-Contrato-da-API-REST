@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: order_management_test
       POSTGRES_USER: postgres_test
-      POSTGRES_PASSWORD: local_test_only
+      POSTGRES_PASSWORD: ${TEST_DB_PASSWORD:?Defina TEST_DB_PASSWORD; scripts/test.ps1 e scripts/test-contract.ps1 geram uma senha automaticamente}
     ports:
       - "127.0.0.1:15432:5432"
     healthcheck:

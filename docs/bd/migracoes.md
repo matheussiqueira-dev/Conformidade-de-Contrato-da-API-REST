@@ -10,7 +10,7 @@ O perfil `migration` ativa Flyway e coloca Hibernate em `validate`. O perfil nor
 
 ## Reproduzir em banco descartável
 
-1. Iniciar somente o serviço `a3-tests` de `docker-compose.test.yml`.
+1. Definir `TEST_DB_PASSWORD` no terminal e iniciar somente o serviço `a3-tests` de `docker-compose.test.yml`.
 2. Executar `./mvnw -Pintegration verify` (ou `mvnw.cmd -Pintegration verify` no Windows). `FlywayMigrationTest` cria dois esquemas isolados: um vazio e outro que simula um banco sem histórico Flyway com pedido legado `id=42`. A limpeza de cada esquema ocorre em `finally`.
 3. No CI, a aplicação sobe com perfil `migration` em `ci_flyway` e Hibernate valida o esquema V1+V2. O log fica no artefato `target/flyway-ci.log`.
 

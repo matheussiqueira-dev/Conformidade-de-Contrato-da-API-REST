@@ -7,6 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Secret opcional; sem ele, cada execucao usa uma senha propria do run.
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
 
     services:
       postgres:
@@ -14,7 +17,7 @@ jobs:
         env:
           POSTGRES_DB: order_management_test
           POSTGRES_USER: postgres_test
-          POSTGRES_PASSWORD: local_test_only
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
         ports:
           - 15432:5432
         options: >-
@@ -62,7 +65,7 @@ jobs:
             --server.address=127.0.0.1 --server.port=18080 \
             --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
             --spring.datasource.username=postgres_test \
-            --spring.datasource.password=local_test_only \
+            --spring.datasource.password="$TEST_DB_PASSWORD" \
             --spring.jpa.hibernate.ddl-auto=create-drop \
             --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
           api_pid=$!
@@ -97,7 +100,7 @@ jobs:
             --server.address=127.0.0.1 --server.port=18081 \
             --spring.datasource.url='jdbc:postgresql://localhost:15432/order_management_test?currentSchema=ci_flyway' \
             --spring.datasource.username=postgres_test \
-            --spring.datasource.password=local_test_only \
+            --spring.datasource.password="$TEST_DB_PASSWORD" \
             --spring.flyway.schemas=ci_flyway \
             --spring.jpa.show-sql=false > target/flyway-ci.log 2>&1 &
           api_pid=$!
