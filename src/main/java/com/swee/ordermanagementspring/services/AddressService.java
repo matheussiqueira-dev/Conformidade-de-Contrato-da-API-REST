@@ -44,6 +44,10 @@ public class AddressService {
     }
 
     public void delete (Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!addressRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Address not found, id: " + id);
+        }
         addressRepository.deleteById(id);
     }
 }

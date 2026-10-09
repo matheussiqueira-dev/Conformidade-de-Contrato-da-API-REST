@@ -8,6 +8,7 @@ import com.swee.ordermanagementspring.entities.client.IndividualClient;
 import com.swee.ordermanagementspring.entities.product.DigitalProduct;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import com.swee.ordermanagementspring.entities.product.Product;
+import com.swee.ordermanagementspring.exceptions.ClientException;
 import com.swee.ordermanagementspring.exceptions.ProductException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.AddressRepository;
@@ -99,7 +100,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir produto inexistente retorna nao encontrado")
         void deletingMissingProductFails() {
             when(repository.existsById(9L)).thenReturn(false);
@@ -136,13 +137,12 @@ class CatalogServicesTest {
 
         @ParameterizedTest(name = "[CA-03-01/02] documento obrigatorio ausente para {0} -> erro de cliente")
         @ValueSource(strings = {"INDIVIDUAL", "CORPORATE"})
-        @Tag("known-defect")
+        @Tag("regression")
         void missingDocumentIsAClientError(String type) {
             ClientRequestDTO dto = "INDIVIDUAL".equals(type) ? TestData.individual(" ") : TestData.corporate(null);
             // [D008] erro de cliente nao pode ser classificado como erro de produto.
             assertThatThrownBy(() -> service.insert(dto))
-                    .isInstanceOf(RuntimeException.class)
-                    .isNotInstanceOf(ProductException.class)
+                    .isInstanceOf(ClientException.class)
                     .hasMessageContaining("INDIVIDUAL".equals(type) ? "cpf" : "cnpj");
         }
 
@@ -180,7 +180,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir cliente inexistente retorna nao encontrado")
         void deletingMissingClientFails() {
             when(repository.existsById(9L)).thenReturn(false);
@@ -206,7 +206,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir endereco inexistente retorna nao encontrado")
         void deletingMissingAddressFails() {
             when(repository.existsById(8L)).thenReturn(false);

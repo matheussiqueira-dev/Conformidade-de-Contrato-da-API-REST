@@ -163,6 +163,10 @@ public class PaymentService {
     }
 
     public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!paymentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Payment not found, id: " + id);
+        }
         paymentRepository.deleteById(id);
     }
 }

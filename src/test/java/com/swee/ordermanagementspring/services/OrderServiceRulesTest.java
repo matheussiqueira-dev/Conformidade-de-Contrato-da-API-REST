@@ -105,7 +105,7 @@ class OrderServiceRulesTest {
             "SHIPPED, PAID",
             "PAID, PENDING_PAYMENT"
     })
-    @Tag("known-defect")
+    @Tag("regression")
     void statusRegressionIsRejected(OrderStatus current, String requested) {
         Order order = TestData.order(current, 1);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
@@ -224,10 +224,20 @@ class OrderServiceRulesTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D011] excluir pedido inexistente retorna nao encontrado")
     void deletingMissingOrderFails() {
         lenient().when(orderRepository.existsById(9L)).thenReturn(false);
         assertThatThrownBy(() -> service.delete(9L)).isInstanceOf(ResourceNotFoundException.class);
+        verify(orderRepository, never()).deleteById(any());
+    }
+
+    @Test
+    @Tag("regression")
+    @DisplayName("[D011] excluir pedido existente continua funcionando")
+    void deletingExistingOrderRemovesIt() {
+        when(orderRepository.existsById(7L)).thenReturn(true);
+        service.delete(7L);
+        verify(orderRepository).deleteById(7L);
     }
 }

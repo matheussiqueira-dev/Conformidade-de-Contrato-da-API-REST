@@ -158,6 +158,11 @@ public class OrderService {
             throw new OrderException("Invalid status: " + dto.getStatus());
         }
 
+        // D010: o status so avanca no fluxo; repetir o status atual e permitido
+        if (!order.getStatus().canMoveTo(newStatus)) {
+            throw new OrderException("Order status cannot go back from " + order.getStatus() + " to " + newStatus);
+        }
+
         order.setStatus(newStatus);
         return repository.save(order);
     }
@@ -182,6 +187,10 @@ public class OrderService {
     }
 
     public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Order not found, id: " + id);
+        }
         repository.deleteById(id);
     }
 }

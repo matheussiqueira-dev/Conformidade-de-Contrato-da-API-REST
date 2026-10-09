@@ -219,7 +219,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D011] excluir pagamento inexistente retorna nao encontrado")
     void deletingMissingPaymentFails() {
         lenient().when(paymentRepository.existsById(99L)).thenReturn(false);
