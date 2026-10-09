@@ -2,7 +2,10 @@ package com.swee.ordermanagementspring.entities.product;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.swee.ordermanagementspring.entities.Money;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -18,15 +21,16 @@ public abstract class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Double price;
+    @Column(precision = Money.PRECISION, scale = Money.SCALE)
+    private BigDecimal price;
     protected String description;
 
     public Product () {
 
     }
 
-    public Product(Double price, String name, String description) {
-        this.price = price;
+    public Product(BigDecimal price, String name, String description) {
+        this.price = Money.of(price);
         this.name = name;
         this.description = description;
     }
@@ -42,12 +46,12 @@ public abstract class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPrice(BigDecimal price) {
+        this.price = Money.of(price);
     }
 
     public String getDescription() {
@@ -58,5 +62,5 @@ public abstract class Product {
         this.description = description;
     }
 
-    public abstract Double calculateShippingValue();
+    public abstract BigDecimal calculateShippingValue();
 }

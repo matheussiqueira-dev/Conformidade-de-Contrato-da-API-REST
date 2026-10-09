@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.entities.payment.CardPayment;
 import com.swee.ordermanagementspring.entities.payment.Payment;
 import com.swee.ordermanagementspring.entities.payment.PixPayment;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ public class PaymentResponseDTO {
 
     private Long id;
     private String type;
-    private Double amount;
+    private BigDecimal amount;
     private PaymentStatus status;
     private LocalDateTime paymentDate;
     private Long orderId;
@@ -31,7 +32,7 @@ public class PaymentResponseDTO {
     private String barCode;
     private LocalDate dueDate;
 
-    public PaymentResponseDTO(Long id, String type, Double amount, PaymentStatus status,
+    public PaymentResponseDTO(Long id, String type, BigDecimal amount, PaymentStatus status,
                               LocalDateTime paymentDate, Long orderId) {
         this.id = id;
         this.type = type;
@@ -93,7 +94,7 @@ public class PaymentResponseDTO {
         return type;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 

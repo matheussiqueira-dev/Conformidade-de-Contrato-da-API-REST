@@ -8,6 +8,7 @@ import com.swee.ordermanagementspring.entities.client.IndividualClient;
 import com.swee.ordermanagementspring.entities.product.DigitalProduct;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import com.swee.ordermanagementspring.entities.product.Product;
+import com.swee.ordermanagementspring.exceptions.ClientException;
 import com.swee.ordermanagementspring.exceptions.ProductException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.AddressRepository;
@@ -28,6 +29,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -81,13 +83,13 @@ class CatalogServicesTest {
         @Test
         @DisplayName("[CT-PROD-UPD] atualizacao mantem peso quando nao informado")
         void updateKeepsWeightWhenAbsent() {
-            PhysicalProduct existing = new PhysicalProduct(10.0, "Antigo", "Fixture", 3.0);
+            PhysicalProduct existing = new PhysicalProduct(new BigDecimal("10.0"), "Antigo", "Fixture", 3.0);
             when(repository.findById(1L)).thenReturn(Optional.of(existing));
 
             service.update(1L, TestData.physicalProduct(12.5, null));
 
             assertThat(existing.getName()).isEqualTo("Mouse");
-            assertThat(existing.getPrice()).isEqualTo(12.5);
+            assertThat(existing.getPrice()).isEqualByComparingTo("12.5");
             assertThat(existing.getWeight()).isEqualTo(3.0);
         }
 
@@ -99,7 +101,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir produto inexistente retorna nao encontrado")
         void deletingMissingProductFails() {
             when(repository.existsById(9L)).thenReturn(false);
@@ -136,13 +138,12 @@ class CatalogServicesTest {
 
         @ParameterizedTest(name = "[CA-03-01/02] documento obrigatorio ausente para {0} -> erro de cliente")
         @ValueSource(strings = {"INDIVIDUAL", "CORPORATE"})
-        @Tag("known-defect")
+        @Tag("regression")
         void missingDocumentIsAClientError(String type) {
             ClientRequestDTO dto = "INDIVIDUAL".equals(type) ? TestData.individual(" ") : TestData.corporate(null);
             // [D008] erro de cliente nao pode ser classificado como erro de produto.
             assertThatThrownBy(() -> service.insert(dto))
-                    .isInstanceOf(RuntimeException.class)
-                    .isNotInstanceOf(ProductException.class)
+                    .isInstanceOf(ClientException.class)
                     .hasMessageContaining("INDIVIDUAL".equals(type) ? "cpf" : "cnpj");
         }
 
@@ -180,7 +181,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir cliente inexistente retorna nao encontrado")
         void deletingMissingClientFails() {
             when(repository.existsById(9L)).thenReturn(false);
@@ -206,7 +207,7 @@ class CatalogServicesTest {
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D011] excluir endereco inexistente retorna nao encontrado")
         void deletingMissingAddressFails() {
             when(repository.existsById(8L)).thenReturn(false);

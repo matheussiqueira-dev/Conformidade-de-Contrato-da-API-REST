@@ -3,6 +3,8 @@ package com.swee.ordermanagementspring.entities.product;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.math.BigDecimal;
+
 @Entity
 @DiscriminatorValue("DIGITAL")
 public class DigitalProduct extends Product{
@@ -12,7 +14,7 @@ public class DigitalProduct extends Product{
 
     }
 
-    public DigitalProduct(Double price, String name, String description, String downloadLink) {
+    public DigitalProduct(BigDecimal price, String name, String description, String downloadLink) {
         super(price, name, description);
         this.downloadLink = downloadLink;
     }
@@ -26,7 +28,7 @@ public class DigitalProduct extends Product{
     }
 
     @Override
-    public Double calculateShippingValue() {
-        return 0.0;
+    public BigDecimal calculateShippingValue() {
+        return new BigDecimal("0.00");
     }
 }

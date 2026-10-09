@@ -28,6 +28,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ class OrderServiceRulesTest {
 
     private void catalogWithMouse() {
         lenient().when(productRepository.findById(1L))
-                .thenReturn(Optional.of(new PhysicalProduct(100.0, "Mouse", "Fixture", 0.2)));
+                .thenReturn(Optional.of(new PhysicalProduct(new BigDecimal("100.0"), "Mouse", "Fixture", 0.2)));
         lenient().when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
     }
 
@@ -105,7 +106,7 @@ class OrderServiceRulesTest {
             "SHIPPED, PAID",
             "PAID, PENDING_PAYMENT"
     })
-    @Tag("known-defect")
+    @Tag("regression")
     void statusRegressionIsRejected(OrderStatus current, String requested) {
         Order order = TestData.order(current, 1);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
@@ -142,7 +143,7 @@ class OrderServiceRulesTest {
         OrderRequestDTO dto = orderRequest(1L, 1);
         dto.setClient(null);
         dto.setClientId(5L);
-        dto.getPayment().setAmount(100.0);
+        dto.getPayment().setAmount(new BigDecimal("100.0"));
 
         assertThat(service.insert(dto, actor()).getClient()).isSameAs(existing);
     }
@@ -188,14 +189,14 @@ class OrderServiceRulesTest {
         catalogWithMouse();
         OrderRequestDTO card = orderRequest(1L, 1);
         card.getPayment().setType("CARD");
-        card.getPayment().setAmount(100.0);
+        card.getPayment().setAmount(new BigDecimal("100.0"));
         card.getPayment().setCardNumber("4111111111111111");
         card.getPayment().setInstallments(2);
         assertThat(service.insert(card, actor()).getPayment()).isInstanceOf(CardPayment.class);
 
         OrderRequestDTO boleto = orderRequest(1L, 1);
         boleto.getPayment().setType("BOLETO");
-        boleto.getPayment().setAmount(100.0);
+        boleto.getPayment().setAmount(new BigDecimal("100.0"));
         boleto.getPayment().setBarCode("34191790010104351004791020150008291070026000");
         boleto.getPayment().setDueDate(LocalDate.now().plusDays(2));
         assertThat(service.insert(boleto, actor()).getPayment()).isInstanceOf(BoletoPayment.class);
@@ -207,15 +208,15 @@ class OrderServiceRulesTest {
         catalogWithMouse();
         OrderRequestDTO dto = orderRequest(1L, 1);
         dto.getPayment().setType(type);
-        dto.getPayment().setAmount(100.0);
+        dto.getPayment().setAmount(new BigDecimal("100.0"));
         dto.getPayment().setPixKey(null);
         assertThatThrownBy(() -> service.insert(dto, actor())).isInstanceOf(PaymentException.class);
     }
 
     @ParameterizedTest(name = "[D012] pagamento de {0} para pedido de 100,00 e rejeitado")
     @CsvSource({"99.99", "100.01", "0.01"})
-    @Tag("known-defect")
-    void paymentAmountMustEqualOrderTotal(double amount) {
+    @Tag("regression")
+    void paymentAmountMustEqualOrderTotal(BigDecimal amount) {
         catalogWithMouse();
         OrderRequestDTO dto = orderRequest(1L, 1);
         dto.getPayment().setAmount(amount);
@@ -224,10 +225,20 @@ class OrderServiceRulesTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D011] excluir pedido inexistente retorna nao encontrado")
     void deletingMissingOrderFails() {
         lenient().when(orderRepository.existsById(9L)).thenReturn(false);
         assertThatThrownBy(() -> service.delete(9L)).isInstanceOf(ResourceNotFoundException.class);
+        verify(orderRepository, never()).deleteById(any());
+    }
+
+    @Test
+    @Tag("regression")
+    @DisplayName("[D011] excluir pedido existente continua funcionando")
+    void deletingExistingOrderRemovesIt() {
+        when(orderRepository.existsById(7L)).thenReturn(true);
+        service.delete(7L);
+        verify(orderRepository).deleteById(7L);
     }
 }

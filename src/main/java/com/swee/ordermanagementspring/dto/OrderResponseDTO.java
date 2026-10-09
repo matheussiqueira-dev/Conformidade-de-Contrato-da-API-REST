@@ -3,6 +3,7 @@ package com.swee.ordermanagementspring.dto;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,11 +16,11 @@ public class OrderResponseDTO {
     private List<OrderItemResponseDTO> items;
     private PaymentResponseDTO payment;
     private AddressResponseDTO shippingAddress;
-    private Double total;
+    private BigDecimal total;
 
     public OrderResponseDTO(Long id, LocalDateTime moment, OrderStatus status, ClientResponseDTO client,
                             List<OrderItemResponseDTO> items, PaymentResponseDTO payment,
-                            AddressResponseDTO shippingAddress, Double total) {
+                            AddressResponseDTO shippingAddress, BigDecimal total) {
         this.id = id;
         this.moment = moment;
         this.status = status;
@@ -71,7 +72,7 @@ public class OrderResponseDTO {
         return shippingAddress;
     }
 
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 }

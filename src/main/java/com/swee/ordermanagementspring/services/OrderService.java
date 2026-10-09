@@ -68,6 +68,7 @@ public class OrderService {
         List<OrderItem> items = buildItems(order, dto.getItems());
         order.setItems(items);
 
+        PaymentRules.requireAmountMatchesTotal(dto.getPayment().getAmount(), order);
         Payment payment = buildPayment(dto.getPayment(), order);
         order.setPayment(payment);
 
@@ -125,7 +126,7 @@ public class OrderService {
     }
 
     private Payment buildPayment(OrderPaymentRequestDTO dto, Order order) {
-        return switch (dto.getType().toUpperCase()) {
+        return switch (PaymentRules.normalizeType(dto.getType())) {
             case "CARD" -> {
                 if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {
                     throw new PaymentException("cardNumber is required for CARD payments.");
@@ -142,6 +143,7 @@ public class OrderService {
                 if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {
                     throw new PaymentException("barCode is required for BOLETO payments.");
                 }
+                PaymentRules.requireDueDate(dto.getDueDate());
                 yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());
             }
             default -> throw new PaymentException("Invalid payment type: " + dto.getType());
@@ -156,6 +158,11 @@ public class OrderService {
             newStatus = OrderStatus.valueOf(dto.getStatus().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new OrderException("Invalid status: " + dto.getStatus());
+        }
+
+        // D010: o status so avanca no fluxo; repetir o status atual e permitido
+        if (!order.getStatus().canMoveTo(newStatus)) {
+            throw new OrderException("Order status cannot go back from " + order.getStatus() + " to " + newStatus);
         }
 
         order.setStatus(newStatus);
@@ -182,6 +189,10 @@ public class OrderService {
     }
 
     public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Order not found, id: " + id);
+        }
         repository.deleteById(id);
     }
 }

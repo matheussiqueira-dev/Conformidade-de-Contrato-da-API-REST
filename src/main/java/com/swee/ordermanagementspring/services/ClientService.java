@@ -5,7 +5,7 @@ import com.swee.ordermanagementspring.entities.Address;
 import com.swee.ordermanagementspring.entities.client.Client;
 import com.swee.ordermanagementspring.entities.client.CorporateClient;
 import com.swee.ordermanagementspring.entities.client.IndividualClient;
-import com.swee.ordermanagementspring.exceptions.ProductException;
+import com.swee.ordermanagementspring.exceptions.ClientException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
@@ -68,21 +68,25 @@ public class ClientService {
         return switch (dto.getType().toUpperCase()) {
             case "INDIVIDUAL" -> {
                 if (dto.getCpf() == null || dto.getCpf().isBlank()) {
-                    throw new ProductException("cpf é obrigatório para cliente INDIVIDUAL");
+                    throw new ClientException("cpf é obrigatório para cliente INDIVIDUAL");
                 }
                 yield new IndividualClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
             }
             case "CORPORATE" -> {
                 if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {
-                    throw new ProductException("cnpj é obrigatório para cliente CORPORATE");
+                    throw new ClientException("cnpj é obrigatório para cliente CORPORATE");
                 }
                 yield new CorporateClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());
             }
-            default -> throw new ProductException("Tipo de cliente inválido: " + dto.getType());
+            default -> throw new ClientException("Tipo de cliente inválido: " + dto.getType());
         };
     }
 
     public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Client not found, id: " + id);
+        }
         repository.deleteById(id);
     }
 }
