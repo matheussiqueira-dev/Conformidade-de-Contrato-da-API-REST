@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: order_management
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: senha123
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:?Defina SPRING_DATASOURCE_PASSWORD com a senha do banco de desenvolvimento}
     ports:
       - "5432:5432"
     healthcheck:

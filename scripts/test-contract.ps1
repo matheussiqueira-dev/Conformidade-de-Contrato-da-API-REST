@@ -8,6 +8,7 @@ $composeStarted = $false
 $previousIsolatedFlag = $env:A3_CONTRACT_ISOLATED
 $previousTestPassword = $env:A3_TEST_PASSWORD
 $previousBackendOrigin = $env:BACKEND_ORIGIN
+$previousDbPassword = $env:TEST_DB_PASSWORD
 Push-Location $projectDirectory
 try {
     if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Instale Node.js antes de executar.' }
@@ -48,6 +49,8 @@ try {
     if ($listener) { throw 'Porta 18080 ocupada. Encerre o processo existente antes do teste isolado.' }
     & .\mvnw.cmd -DskipTests package
     if ($LASTEXITCODE -ne 0) { throw 'Build Java falhou.' }
+    # Banco descartavel em tmpfs: uma senha nova por execucao basta.
+    if (-not $env:TEST_DB_PASSWORD) { $env:TEST_DB_PASSWORD = [guid]::NewGuid().ToString('N') }
     $composeStarted = $true
     & docker compose -f docker-compose.test.yml -p a3-tests up -d --wait
     if ($LASTEXITCODE -ne 0) { throw 'Banco descartavel nao iniciou.' }
@@ -60,7 +63,7 @@ try {
     $env:A3_TEST_PASSWORD = [guid]::NewGuid().ToString('N')
     $arguments = @('-jar', ('"' + $jar + '"'), '--spring.profiles.active=contract', '--server.address=127.0.0.1', '--server.port=18080',
         '--spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test',
-        '--spring.datasource.username=postgres_test', '--spring.datasource.password=local_test_only',
+        '--spring.datasource.username=postgres_test', ('--spring.datasource.password=' + $env:TEST_DB_PASSWORD),
         '--spring.jpa.hibernate.ddl-auto=create-drop', '--spring.jpa.show-sql=false')
     $apiProcess = Start-Process -FilePath (Join-Path $env:JAVA_HOME 'bin/java.exe') -ArgumentList $arguments -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $outputDirectory 'api-stdout.log') -RedirectStandardError (Join-Path $outputDirectory 'api-stderr.log')
     $ready = $false
@@ -114,5 +117,7 @@ finally {
         & docker compose -f docker-compose.test.yml -p a3-tests down
         if ($LASTEXITCODE -ne 0) { Write-Warning 'Nao foi possivel encerrar o banco descartavel.' }
     }
+    # Restaurar so depois do down: o Compose precisa da variavel para interpolar o arquivo.
+    $env:TEST_DB_PASSWORD = $previousDbPassword
     Pop-Location
 }

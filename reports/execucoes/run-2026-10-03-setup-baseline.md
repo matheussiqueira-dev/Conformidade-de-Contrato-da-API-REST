@@ -22,7 +22,7 @@ Desbloquear a execucao local do projeto, rodar a suite minima e exportar o contr
 - Criado `.mvn/wrapper/maven-wrapper.properties` apontando para Maven 3.9.11.
 - Baixado JDK 25 portatil para o workspace, sem instalacao global no sistema.
 - Iniciado Docker Desktop instalado no perfil do usuario.
-- Criado container PostgreSQL `postgres-order` com `POSTGRES_DB=order_management` e senha `senha123`, conforme README.
+- Criado container PostgreSQL `postgres-order` com `POSTGRES_DB=order_management` e a senha local de desenvolvimento (omitida nesta evidencia), conforme README.
 - Criado `docker-compose.yml` para versionar o PostgreSQL local com healthcheck.
 - Criado `.github/workflows/ci.yml` com JDK 25, PostgreSQL 18 e `./mvnw test`.
 - Registradas as decisoes `docs/decisoes/stack.md` e `docs/decisoes/contrato.md`.
