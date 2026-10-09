@@ -8,7 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      # Secret opcional; sem ele, cada execucao usa uma senha propria do run.
+      # Secret opcional; sem ele, cada execucao usa um valor deterministico do run (banco descartavel).
+      # A mesma expressao se repete em services.postgres.env: o contexto env nao existe em services.
       TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
 
     services:

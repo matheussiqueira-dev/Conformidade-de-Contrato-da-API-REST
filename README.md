@@ -90,6 +90,7 @@ O `ddl-auto=update` atual é um baseline de desenvolvimento. As migrações Flyw
 ### 1. Suba o PostgreSQL via Docker
 
 ```bash
+export SPRING_DATASOURCE_PASSWORD='<senha do seu banco local>'
 docker run --name postgres-order \
   -e POSTGRES_PASSWORD="$SPRING_DATASOURCE_PASSWORD" \
   -e POSTGRES_DB=order_management \
