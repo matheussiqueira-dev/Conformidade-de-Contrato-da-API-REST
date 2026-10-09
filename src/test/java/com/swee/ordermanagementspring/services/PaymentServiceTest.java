@@ -165,6 +165,16 @@ class PaymentServiceTest {
         verify(paymentRepository, never()).save(any());
     }
 
+    @ParameterizedTest(name = "[D012] valor nao finito {0} gera erro de negocio, nao NumberFormatException")
+    @ValueSource(doubles = {Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NaN})
+    @Tag("regression")
+    void nonFiniteAmountIsABusinessError(double amount) {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
+        assertThatThrownBy(() -> service.insert(TestData.payment("PIX", amount, 1L)))
+                .isInstanceOf(PaymentException.class);
+        verify(paymentRepository, never()).save(any());
+    }
+
     @Test
     @DisplayName("[CT-PAY-007] somente pagamento PENDING pode ser editado")
     void onlyPendingPaymentCanBeEdited() {

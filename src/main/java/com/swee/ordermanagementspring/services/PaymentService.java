@@ -55,6 +55,7 @@ public class PaymentService {
         return paymentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Payment not found, id: " + id));
     }
 
+    @Transactional
     public Payment insert(PaymentRequestDTO dto) {
         Order order = orderRepository.findById(dto.getOrderId())
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found, id: " + dto.getOrderId()));

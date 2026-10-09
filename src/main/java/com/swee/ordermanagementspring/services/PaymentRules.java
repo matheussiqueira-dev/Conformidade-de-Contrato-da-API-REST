@@ -42,6 +42,10 @@ final class PaymentRules {
     }
 
     private static BigDecimal cents(Double value) {
+        // JSON com numero gigante vira Infinity; BigDecimal.valueOf lancaria NumberFormatException (500)
+        if (value.isNaN() || value.isInfinite()) {
+            throw new PaymentException("Payment amount must be a finite number");
+        }
         return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP);
     }
 }
