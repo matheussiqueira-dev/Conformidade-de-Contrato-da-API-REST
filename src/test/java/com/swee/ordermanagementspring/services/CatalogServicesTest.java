@@ -106,6 +106,16 @@ class CatalogServicesTest {
         void deletingMissingProductFails() {
             when(repository.existsById(9L)).thenReturn(false);
             assertThatThrownBy(() -> service.delete(9L)).isInstanceOf(ResourceNotFoundException.class);
+            verify(repository, never()).deleteById(any());
+        }
+
+        @Test
+        @Tag("regression")
+        @DisplayName("[D011] excluir produto existente continua funcionando")
+        void deletingExistingProductDeletes() {
+            when(repository.existsById(7L)).thenReturn(true);
+            service.delete(7L);
+            verify(repository).deleteById(7L);
         }
     }
 
@@ -186,6 +196,16 @@ class CatalogServicesTest {
         void deletingMissingClientFails() {
             when(repository.existsById(9L)).thenReturn(false);
             assertThatThrownBy(() -> service.delete(9L)).isInstanceOf(ResourceNotFoundException.class);
+            verify(repository, never()).deleteById(any());
+        }
+
+        @Test
+        @Tag("regression")
+        @DisplayName("[D011] excluir cliente existente continua funcionando")
+        void deletingExistingClientDeletes() {
+            when(repository.existsById(7L)).thenReturn(true);
+            service.delete(7L);
+            verify(repository).deleteById(7L);
         }
     }
 
@@ -212,6 +232,16 @@ class CatalogServicesTest {
         void deletingMissingAddressFails() {
             when(repository.existsById(8L)).thenReturn(false);
             assertThatThrownBy(() -> service.delete(8L)).isInstanceOf(ResourceNotFoundException.class);
+            verify(repository, never()).deleteById(any());
+        }
+
+        @Test
+        @Tag("regression")
+        @DisplayName("[D011] excluir endereco existente continua funcionando")
+        void deletingExistingAddressDeletes() {
+            when(repository.existsById(7L)).thenReturn(true);
+            service.delete(7L);
+            verify(repository).deleteById(7L);
         }
     }
 }

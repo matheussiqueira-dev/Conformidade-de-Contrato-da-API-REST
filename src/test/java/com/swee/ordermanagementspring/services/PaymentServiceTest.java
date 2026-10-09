@@ -249,5 +249,15 @@ class PaymentServiceTest {
     void deletingMissingPaymentFails() {
         lenient().when(paymentRepository.existsById(99L)).thenReturn(false);
         assertThatThrownBy(() -> service.delete(99L)).isInstanceOf(ResourceNotFoundException.class);
+        verify(paymentRepository, never()).deleteById(any());
+    }
+
+    @Test
+    @Tag("regression")
+    @DisplayName("[D011] excluir pagamento existente continua funcionando")
+    void deletingExistingPaymentDeletes() {
+        when(paymentRepository.existsById(7L)).thenReturn(true);
+        service.delete(7L);
+        verify(paymentRepository).deleteById(7L);
     }
 }
