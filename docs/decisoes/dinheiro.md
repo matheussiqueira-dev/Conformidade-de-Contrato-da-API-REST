@@ -50,7 +50,8 @@ Mantidos como `Double`: `ProductRequestDTO.weight`, `ProductResponseDTO.weight` 
 
 ## Entrada e validação
 
-- Os campos de entrada mantêm `@NotNull` e `@Positive` e ganharam `@DecimalMax(Money.MAX)`. Valor acima de `9999999999.99` retorna 400 antes de chegar ao banco.
+- Os campos de entrada mantêm `@NotNull` e têm `@DecimalMin(Money.MIN)` e `@DecimalMax(Money.MAX)`. Valor acima de `9999999999.99` retorna 400 antes de chegar ao banco.
+- **Mínimo aceito = 0,005 (D017, FIX-03).** Antes, `@Positive` aceitava `0.001`–`0.004`, que o HALF_UP grava como `0.00` (produto de preço zero, pedido de valor zero). O mínimo foi escolhido para ser coerente com a normalização: `0.005` arredonda para `0.01` e é aceito; `0.0049` arredondaria para `0.00` e é rejeitado. Fronteiras testadas: `0.00`, `0.004`, `0.0049`, `0.005`, `0.01` (`MoneyValidationTest.subCentValuesThatRoundToZeroAreRejected`).
 - Valor não numérico (ex.: `"price": "abc"`) ou JSON malformado agora retorna 400 `Validation Error` pelo `GlobalExceptionHandler` (`HttpMessageNotReadableException`); antes resultava em 500.
 - **Mais de 2 casas é aceito e normalizado, não rejeitado:** `10.005` vira `10.01` na entidade. Para pagamento, a comparação com o total também é feita em 2 casas, então `100.004` é aceito para um pedido de `100.00`. Se a equipe preferir rejeitar, a mudança é acrescentar `@Digits(integer = 10, fraction = 2)` aos DTOs de entrada; essa decisão não foi tomada.
 
@@ -70,7 +71,7 @@ ALTER TABLE payment    ALTER COLUMN amount TYPE numeric(12,2) USING round(amount
 
 - `round(numeric, 2)` do PostgreSQL arredonda metade para longe do zero, o que equivale a HALF_UP para os valores positivos validados pela API.
 - Por que 12,2: cobre até 9.999.999.999,99, muito acima de qualquer preço ou pedido da loja, e mantém o limite igual em coluna e DTO.
-- Valor legado acima do limite faz a migração **falhar** (`numeric field overflow`); a V3 não trunca nada em silêncio. O PostgreSQL executa a V3 em uma transação, então uma falha não deixa colunas meio convertidas.
+- Valor legado acima do limite faz a migração **falhar**: a V3 confere `abs(valor) > 9999999999.99` **antes** de arredondar e aborta com mensagem própria (D020, FIX-03). Sem essa checagem, `9999999999.994` arredondaria para `9999999999.99` e passaria; só valores a partir de `9999999999.995` estouravam a coluna. O PostgreSQL executa a V3 em uma transação, então uma falha não deixa colunas meio convertidas.
 - Os pedidos existentes mantêm o preço histórico do item: a V3 só arredonda `order_item.price` e não lê `product.price`.
 
 ### Antes de migrar um banco real
@@ -109,6 +110,8 @@ A aplicação depois da V3 espera `numeric` (Hibernate `validate`). Voltar só a
 | Valor não numérico (`"abc"`) → 400 | sem teste automatizado; coberto só pelo handler `HttpMessageNotReadableException` | não verificado por teste |
 | Migração de massa sintética double → numeric (1.005 → 1.01; 0.1 + 0.2 → 0.30; 1.004 → 1.00) | `FlywayMigrationTest.v3ConvertsLegacyDoubleMoneyToNumericHalfUp` | passou |
 | Limite da coluna sem overflow silencioso | `FlywayMigrationTest.v3FailsInsteadOfTruncatingValuesAboveColumnLimit` | passou |
+| D017: valor abaixo de meio centavo rejeitado nos três DTOs | `MoneyValidationTest.subCentValuesThatRoundToZeroAreRejected` | falhou antes do FIX-03 (`fc58a4b`), passou depois |
+| D020: `9999999999.994` legado rejeitado antes do arredondamento | `FlywayMigrationTest.v3RejectsLegacyValueJustAboveLimitBeforeRounding` | falhou antes do FIX-03 (`fc58a4b`), passou depois |
 | Instalação limpa V1 → V3 | `FlywayMigrationTest.emptyDatabaseMigratesThroughV3AndRejectsUnknownSeller` | passou |
 
 Execução local em 09/10/2026 (Windows, JDK 25 portátil, PostgreSQL 18 via `docker-compose.test.yml`): `scripts/test.ps1 -Mode Unit` com 130 testes e 0 falhas; `scripts/test.ps1 -Mode Integration` com 137 testes e 0 falhas.
