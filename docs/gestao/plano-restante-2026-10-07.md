@@ -1,6 +1,6 @@
 # Plano do que falta — Projeto A3 (Loja Gestão / Order Management API)
 
-Atualizado em 09/10/2026 por **Matheus Siqueira** (situação do GitHub conferida em 09/10). Quadro: https://trello.com/b/ombHh0vo
+Atualizado em 09/10/2026 por **Matheus Siqueira** (situação do GitHub conferida em 09/10; revisado à tarde com a avaliação da rubrica, ver [seção 9](#9-ajustes-da-avaliação-de-0910)). Quadro: https://trello.com/b/ombHh0vo
 
 Este documento lista tudo o que ainda precisa ser feito até a entrega, **como** fazer, **com o que** fazer, **quem** faz e **quem revisa**. Ele complementa o [índice dos cards](README.md) e não substitui os briefings detalhados de cada card.
 
@@ -16,7 +16,11 @@ Este documento lista tudo o que ainda precisa ser feito até a entrega, **como**
 | `matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST` (`origin`, **repositório oficial do projeto desde 08/10**) | Último push em 08/10 às 16:39 (horário de Brasília); **nenhum commit, PR, issue ou revisão nova desde então**. Na noite de 08/10 o histórico de `main` e `conformidade-main` foi reescrito (mensagens e autoria dos commits; o conteúdo dos arquivos não mudou). Hashes atuais: `main` = `3f10c37` (merge do PR #2), `conformidade-main` = `d8ccb66`, suíte nova = `7a4270c`. A CI passou em `main` e em `conformidade-main` depois da reescrita. PR #3 fechado. Branch `a3-contract-validation` (PR #1 e #4, já mesclados) ainda existe no remoto. | Todo o trabalho passa a ser concentrado neste repositório. Equipe avisada no card GIT-01 em 08/10 (clonar e seguir branch por card → PR → revisão). **Quem clonou antes da noite de 08/10 precisa clonar de novo** (ou `git fetch` + `git reset` para `origin/main`). |
 | PR #5 — FIX-01 (`fix/FIX-01-pagamentos` → `main`) | Aberto em 08/10. Em 09/10 o GitHub o marcava como **em conflito**: a branch tinha sido criada sobre o histórico antigo (`1a46cbc`) e o PR mostrava 16 commits e 223 arquivos. **09/10: rebase sobre `3f10c37`** (`ded3e4d`) e commit `6a8c8e5` com os 3 apontamentos do cubic que eram do FIX-01. Agora o PR tem **2 commits, 7 arquivos, sem conflito**; `scripts/test.ps1`: 104 testes, 0 falhas. Versão anterior guardada na branch local `backup/FIX-01-pre-rebase-2026-10-09`. | Aguarda CI e **revisão de Allan**; depois merge e reteste no card 16. |
 | PR #6 — card 19 (`chore/19-credenciais-env` → `main`) | Aberto em 09/10: senhas de banco saem do código (`TEST_DB_PASSWORD` no banco de teste/CI, gerada por execução; `SPRING_DATASOURCE_PASSWORD` no banco de desenvolvimento). `scripts/test.ps1`: 90 testes, 0 falhas. Modo Integration e contrato não rodaram localmente (Docker desligado). | Aguarda CI e revisão de Allan. **Depois do merge, cada integrante define `SPRING_DATASOURCE_PASSWORD` antes de subir o banco local.** |
-| Cópia local | Alterações de senha publicadas no PR #6. Versão anterior à reescrita preservada na branch local `backup/pre-rewrite-2026-10-08`. | Versionar este plano (`docs/plano-restante`). |
+| PR #7 — este plano (`docs/plano-restante` → `main`) | Aberto em 09/10; CI verde. Arquivo versionado: `docs/gestao/plano-restante-2026-10-07.md`. | Aguarda revisão de Francisco. |
+| PR #8 — FIX-02 (`fix/FIX-02-status-exclusao` → `main`) | Aberto em 09/10; CI verde. Contém os commits do PR #5. 09/10 (tarde): transições de status explícitas, tabela 5 × 5 testada e teste de exclusão de registro existente nos serviços (apontamentos do revisor). | Aguarda revisão de Allan. Mesclar **depois** do #5. |
+| PR #9 — DOM-02 (`feat/DOM-02-bigdecimal` → `main`) | Aberto em 09/10; CI verde. Contém os commits de #5 e #8. Os apontamentos do revisor revelaram D017–D020 (seção 3.2). | Aguarda revisão de Gabriel. Mesclar **depois** do #8; rebase de quem entrar depois entre #6 e #9 (`FlywayMigrationTest`). |
+| Branch `fix/FIX-03-pagamento-dinheiro` (local, sobre o #9) | 09/10: testes de regressão de D017–D020 escritos antes da correção (7 falhas em 176), depois a correção (176 testes, 0 falhas, unitário + integração) e contrato HTTP aprovado. | Abrir PR depois do merge do #9. |
+| Cópia local | Alterações de senha publicadas no PR #6. Versão anterior à reescrita preservada na branch local `backup/pre-rewrite-2026-10-08`. A `main` local ainda rastreia `upstream/main` (repositório antigo, 32 commits atrás). | Plano versionado no PR #7. Corrigir a `main` local: `git branch -f main origin/main` e `git branch -u origin/main main`. |
 
 ### 1.2 Código e testes
 
@@ -94,11 +98,18 @@ Defeitos revelados pela execução de 07/10 (registrados no card 16 em 08/10). *
 | D012 | Pagamento com valor diferente do total do pedido é aceito (POST /orders e POST /payment). | Crítica | `OrderService`, `PaymentService` | FIX-01 |
 | D003 | Boleto vencido marca o pedido como PAID. | Alta | `BoletoPayment.processPayment`, `PaymentService` | FIX-01 |
 | D006 | Boleto sem vencimento é aceito; processamento lança NullPointerException. | Alta | `PaymentService.buildPayment`, `BoletoPayment` | FIX-01 |
-| — | Pagamento não PENDING pode ser reprocessado (NPE em `processAndSave`). | Alta | `PaymentService.processAndSave` | FIX-01 |
+| D004 | Pagamento não PENDING pode ser reprocessado (NPE em `processAndSave`). | Alta | `PaymentService.processAndSave` | FIX-01 |
 | D016 | Tipo de pagamento depende do locale (`toUpperCase()` sem `Locale`). | Média | `PaymentService`, `OrderService` (usar `Locale.ROOT`) | FIX-01 |
 | D010 | Status do pedido regride (DELIVERED→PENDING_PAYMENT, SHIPPED→PAID, PAID→PENDING_PAYMENT). | Alta | `OrderService.updateStatus` (tabela de transições) | FIX-02 |
 | D011 | DELETE de produto/cliente/endereço/pedido/pagamento inexistente não retorna 404. | Média | 5 serviços: `existsById` antes de `deleteById` | FIX-02 |
-| — | Cliente sem CPF/CNPJ lança `ProductException` (tipo de exceção errado). | Baixa | `ClientService.buildClient` | FIX-02 |
+| D008 | Cliente sem CPF/CNPJ lança `ProductException` (tipo de exceção errado). | Baixa | `ClientService.buildClient` | FIX-02 |
+| D017 | Valores abaixo de meio centavo (0,001–0,004) passam por `@Positive` e são gravados como 0,00. | Alta | DTOs de dinheiro: mínimo `Money.MIN` = 0,005 | FIX-03 |
+| D018 | Pagamento processado depois do envio volta o pedido para PAID (reabre D010). | Alta | `PaymentService.processAndSave` (`canMoveTo(PAID)`) | FIX-03 |
+| D019 | Dois `/payment/{id}/process` ou duas trocas de status simultâneas passam pela validação. | Média | `SELECT ... FOR UPDATE` em pedido e pagamento | FIX-03 |
+| D020 | Migração V3 arredonda antes de conferir o limite de `NUMERIC(12,2)`. | Baixa | `V3__money_numeric.sql` | FIX-03 |
+| D021 | Sem a variável de senha, a API falha com erro de autenticação confuso; senha com espaço quebra `test-contract.ps1`. | Baixa | `DatasourcePasswordGuard`; senha pelo ambiente do processo | PR #6 (card 19) |
+
+**09/10 (tarde)**: FIX-02 publicado no PR #8. D017–D021 vieram dos apontamentos do revisor automático nos PRs #6 e #9 e foram reproduzidos por testes antes da correção (ver seção 9).
 
 **Como**: corrigir sempre na camada de serviço, antes de salvar; manter o teste que expôs o defeito como regressão (`@Tag("regression")`), remover `known-defect`, executar `scripts/test.ps1` e `scripts/test-contract.ps1`; se o status HTTP mudar, atualizar o contrato de erros. **Allan** registra em `docs/defeitos.md` (ou GitHub Issues): ID, RF/CA, severidade, passos, esperado × obtido, commit, correção, reteste.
 
@@ -106,12 +117,12 @@ Defeitos revelados pela execução de 07/10 (registrados no card 16 em 08/10). *
 
 ### 3.3 Frente C — Domínio da loja: API e banco (P1, 12/10 a 08/11)
 
-Ordem recomendada (caminho crítico): **DOM-02 → BD-02/SEC-01 → API-03 → API-06 → API-02 → API-04 → API-05 → ENV-01**.
+Ordem recomendada (caminho crítico): **DOM-02 → BD-02/SEC-01 → ENV-01a → API-03 → API-06 → API-02 → ENV-01b → API-04 → API-05**. ENV-01 foi dividido porque o seed de metas depende das tabelas criadas em API-02; a infraestrutura da demo (ENV-01a) não precisa esperar.
 
 | Card | O que fazer | Como fazer | Ferramentas | Resp. / Rev. |
 | --- | --- | --- | --- | --- |
-| **DOM-02** BigDecimal/NUMERIC | Trocar `Double` por `BigDecimal` em entidades e DTOs de dinheiro (Order, OrderItem, Product, Payment e subclasses). | Migração Flyway `V3__money_numeric.sql` com `ALTER COLUMN ... TYPE NUMERIC(12,2)`; escala 2 e `RoundingMode.HALF_UP` (decisão DOM-01); comparar com `compareTo`, nunca `equals`; serializar como número no JSON; atualizar contrato. Rodar QA-04/CT-MONEY-002 como regressão. | JPA `@Column(precision=12, scale=2)`, Flyway, Jackson, JUnit | Gabriel / Allan |
-| **BD-02** Flyway e integridade | Adotar Flyway também no perfil normal; política para bancos antigos; FKs, CHECKs (quantidade > 0, valores ≥ 0), índices. | V3+ incrementais; `baseline-on-migrate` só com cópia de segurança; testar upgrade e rollback em cópia sintética; `FlywayMigrationTest` com Hibernate `validate`. | Flyway, PostgreSQL 18, Docker Compose, Testcontainers/compose de teste | Matheus / Gabriel |
+| **DOM-02** BigDecimal/NUMERIC (**PR #9 aberto em 09/10**) | Trocar `Double` por `BigDecimal` em entidades e DTOs de dinheiro (Order, OrderItem, Product, Payment e subclasses). | Migração Flyway `V3__money_numeric.sql` com `ALTER COLUMN ... TYPE NUMERIC(12,2)`; escala 2 e `RoundingMode.HALF_UP` (decisão DOM-01); comparar com `compareTo`, nunca `equals`; serializar como número no JSON; atualizar contrato. Rodar QA-04/CT-MONEY-002 como regressão. | JPA `@Column(precision=12, scale=2)`, Flyway, Jackson, JUnit | Gabriel / Allan |
+| **BD-02** Flyway e integridade | Adotar Flyway também no perfil normal; política para bancos antigos; FKs, CHECKs (quantidade > 0, valores ≥ 0), índices. | V3+ incrementais; nunca `baseline-on-migrate` (marcaria um esquema incompatível como V1 sem validar a estrutura): seguir `docs/bd/migracoes.md`, com backup, comparação do esquema e `baseline` explícito; testar upgrade e rollback em cópia sintética; `FlywayMigrationTest` com Hibernate `validate`. | Flyway, PostgreSQL 18, Docker Compose, Testcontainers/compose de teste | Matheus / Gabriel |
 | **BD-01** DER e dicionário | Completar DER e dicionário com tabelas novas (metas, estoque, lotes, movimentos) e análise de normalização (1FN–3FN). | Atualizar `docs/bd/dicionario-dados.md` e `docs/bd/migracoes.md`; gerar DER a partir do esquema real. | dbdiagram/DBeaver/Mermaid ER | Matheus / Allan |
 | **SEC-01** Autoria do pedido | Terminar: consulta "minhas vendas" por vendedor; teste HTTP com dois vendedores e gerente; contrato atualizado. | `OrderRepository.findBySellerId`; filtro por `AppPrincipal` no serviço; 403 para ID de colega. | Spring Security, JPA, Node HTTP tests | Matheus / Gabriel |
 | **API-03** Estoque atômico | Reserva ao criar pedido, saída no pagamento confirmado, liberação no cancelamento. Disponível = físico − reservado. | Tabelas `stock_balance` e `stock_movement`; `@Transactional` + bloqueio pessimista (`SELECT ... FOR UPDATE`) ou `@Version`; testes de concorrência com dois pedidos para a última unidade. | Spring `@Transactional`, JPA `@Lock`, PostgreSQL, JUnit + `ExecutorService` | Gabriel / Allan |
@@ -120,7 +131,7 @@ Ordem recomendada (caminho crítico): **DOM-02 → BD-02/SEC-01 → API-03 → A
 | **API-04** Entradas e custo | Gerente registra entradas/lotes com quantidade, custo e preço; custo histórico preservado na venda (custo médio, decisão DOM-01). | Tabela `stock_entry`; custo médio ponderado recalculado na entrada; custo copiado para o item do pedido; DTO de vendedor **sem** custo/margem. | Spring, JPA, BigDecimal | Matheus / Gabriel |
 | **API-05** Histórico do cliente (P2) | Histórico de compras e atendimento compartilhado entre vendedores. | Consulta por cliente com paginação; respeitar perfil. | Spring Data `Pageable` | Gabriel / Allan |
 | **BD-03** SQL, views e índices | Consultas de relatório (vendas por vendedor/mês, estoque abaixo do mínimo), views e análise `EXPLAIN ANALYZE`. | Views em migração Flyway; comparar plano antes/depois do índice. | PostgreSQL, `EXPLAIN (ANALYZE, BUFFERS)` | Allan / Matheus |
-| **ENV-01** Ambiente de demo | Perfil `demo` com Flyway + validate, contas e massa sintética, `scripts/demo.ps1`. | Seed por perfil (gerente, Ana/Bruno/Carla, catálogo, metas de setembro); senhas via variável de ambiente. | Spring profiles, Flyway, Docker Compose, PowerShell | Matheus / Gabriel |
+| **ENV-01** Ambiente de demo (a: infraestrutura; b: seed de metas) | ENV-01a: perfil `demo` com Flyway + validate, contas e massa sintética, `scripts/demo.ps1`. ENV-01b (depois de API-02): metas de setembro no seed. | Seed por perfil (gerente, Ana/Bruno/Carla, catálogo, metas de setembro); senhas via variável de ambiente. | Spring profiles, Flyway, Docker Compose, PowerShell | Matheus / Gabriel |
 
 **Corte de escopo se faltar tempo** (decisão a registrar em PL-01): manter API-03, API-06 e API-02 (sustentam Vender, Meu desempenho e Gestão); reduzir API-04 a entrada simples sem lote; adiar API-05.
 
@@ -186,8 +197,8 @@ Ordem recomendada (caminho crítico): **DOM-02 → BD-02/SEC-01 → API-03 → A
 | 07/10–11/10 | QA-09, GIT-01, Templates, 05, 06, início REV-01 | Código publicado, CI verde, revisões iniciadas, plano de qualidade e riscos. |
 | 12/10–18/10 | FIX-01, FIX-02, DOM-02, 08 inspeção, 10 catálogo, REV-01 | Defeitos críticos corrigidos e retestados; dinheiro em BigDecimal; catálogo ≥30. **R1 de métricas.** |
 | 19/10–25/10 | **Semana de A1 — capacidade reduzida.** BD-02/SEC-01, DOC-01, UX-01 | Flyway no perfil normal; autoria completa; matriz da rubrica. |
-| 26/10–01/11 | API-03, API-06, QA-02, ENV-01, BD-01 | Estoque e pagamento consistentes com testes de transação; ambiente de demo. |
-| 02/11–08/11 | API-02, API-04, CT-02, QA-03, UI-04 | Metas e entradas; contrato das rotas novas; tela Vender. |
+| 26/10–01/11 | API-03, API-06, QA-02, ENV-01a, BD-01 | Estoque e pagamento consistentes com testes de transação; ENV-01a: perfil `demo` com Flyway + `validate`, contas sintéticas, catálogo e `scripts/demo.ps1` (sem metas). |
+| 02/11–08/11 | API-02, ENV-01b, API-04, CT-02, QA-03, UI-04 | Metas e entradas; ENV-01b: seed de metas de setembro, que depende das tabelas de API-02; contrato das rotas novas; tela Vender. |
 | 09/11–15/11 | **A1 2ª oportunidade.** UI-03, UI-02, 16, 17, 12 | Telas Meu desempenho e Gestão; defeitos e regressão consolidados. |
 | 16/11–22/11 | QA-07, UI-05 (se houver tempo), 09, 18, 19, QA-05 | Aceitação por perfil; **R2 de métricas**; segurança; desempenho. |
 | 23/11–29/11 | 20, README, slides, plano B, 21, checklist final | Pacote completo, ensaio, gravação, tag de entrega. |
@@ -247,3 +258,34 @@ node scripts/quality-metrics.mjs
 3. Evidência sanitizada (sem senhas, tokens ou dados pessoais).
 4. Revisor nominal aprovou no card (comentário com data).
 5. Briefing do card e este plano atualizados quando o escopo mudar.
+
+## 9. Ajustes da avaliação de 09/10
+
+A avaliação da rubrica de 09/10 concluiu que o risco da nota está nos **artefatos de avaliação**, não no código. Os critérios críticos (plano de qualidade, risco, caixa-branca, estática/inspeção) somam 32 pontos e dependem quase só de documentar e medir o que já existe. O enunciado diz que o objetivo "não é o desenvolvimento da aplicação". Decisões:
+
+1. **Prioridade**: os artefatos da rubrica (05, 06, Templates, 10, 16, 08, R1) vêm antes da expansão do domínio (metas, estoque, quatro telas).
+2. **Ordem de merge obrigatória**: **#5 → #8 → #9**, depois #6 e #7. #9 já contém #5 e #8. #6 e #9 colidem em `FlywayMigrationTest`: quem entrar depois faz rebase. O FIX-03 vira PR depois do #9.
+3. **Revisão humana**: nenhum dos PRs tem aprovação. Pela Definição de Pronto, nenhum card fecha sem revisão de quem não é autor. Cada integrante revisa e sabe explicar os testes do próprio card, porque será questionado na apresentação.
+4. **Corte de escopo** (registrar em PL-01): manter API-03 e API-06 só se ENV-01a estiver pronto até 01/11. Adiar ou cortar API-04, API-05, UI-02, UI-03, UI-05, QA-05 e QA-06. Uma tela (UI-04 Vender) cobre a demonstração E2E.
+5. **Medição R1** logo depois dos merges (QA-10), antes de novas funcionalidades, para a comparação antes × depois ser só das correções.
+
+### Cards novos propostos
+
+| Código | Título | Responsável / revisor | Prazo | Critério de aceite |
+| --- | --- | --- | --- | --- |
+| GIT-02 | Higiene do repositório e proteção da `main` | Matheus / Gabriel | 11/10 | `main` protegida (PR, CI e 1 aprovação obrigatórios); branches obsoletas `a3-contract-validation` e `conformidade-main` removidas; `main` local rastreando `origin`; índice de gestão atualizado |
+| REV-02 | Revisão humana e merge ordenado dos PRs #5–#9 | Allan, Gabriel, Francisco / Matheus | 12/10 | 5 PRs aprovados por quem não é autor; 0 threads abertas |
+| FIX-03 | Corrigir D017–D020 | Gabriel / Allan | 18/10 | Teste falha antes e passa depois; tag `regression` (branch local pronta em 09/10) |
+| QA-10 | Medição R1 pós-correções | Matheus / Gabriel | 15/10 | `reports/metricas/r1/` com comando, commit e data; tabela R0 × R1 |
+| QA-11 | Valor-limite monetário | Allan / Gabriel | 25/10 | Fronteiras 0,00; 0,004; 0,005; 0,01; máximo; máximo + 0,01 testadas e ligadas ao catálogo |
+| QA-12 | ESLint no frontend e na CI | Francisco / Matheus | 25/10 | Job de CI com resultado antes × depois |
+| DOC-02 | Relatórios de execução publicados pela CI | Gabriel / Allan | 25/10 | Surefire + JaCoCo como artefatos baixáveis |
+| SEC-02 | Rotação de credenciais expostas no histórico | Francisco / Matheus | 18/10 | Senhas locais trocadas por todos; risco residual documentado |
+| DEMO-01 | Roteiro dos 13 desafios ao vivo da seção 25 | Gabriel / todos | 22/11 | Cada integrante executa e explica ao menos 2 desafios |
+
+### Riscos que dependem de decisão da equipe
+
+- **Concentração de autoria**: os commits dos 5 PRs abertos são de Matheus, inclusive de cards de outros integrantes. Quem não implementou precisa revisar e saber explicar.
+- **Tamanho do grupo**: o enunciado limita a 3 alunos e a equipe tem 4. Guardar a autorização docente por escrito no DOC-01.
+- **Professor de Banco de Dados** ainda "A preencher" no documento de apresentação v1.0.
+- **Fora do Git**: a chave privada de assinatura está em `A3/.chaves-git/`, dentro da pasta do projeto. Mover para fora da pasta e configurar a assinatura verificável dos commits.
