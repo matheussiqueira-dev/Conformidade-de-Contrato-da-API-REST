@@ -214,7 +214,7 @@ class OrderServiceRulesTest {
 
     @ParameterizedTest(name = "[D012] pagamento de {0} para pedido de 100,00 e rejeitado")
     @CsvSource({"99.99", "100.01", "0.01"})
-    @Tag("known-defect")
+    @Tag("regression")
     void paymentAmountMustEqualOrderTotal(double amount) {
         catalogWithMouse();
         OrderRequestDTO dto = orderRequest(1L, 1);

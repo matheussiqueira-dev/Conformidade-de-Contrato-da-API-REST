@@ -42,11 +42,20 @@ public class BoletoPayment extends Payment{
 
     @Override
     public boolean processPayment() {
+        return processPayment(LocalDate.now());
+    }
+
+    /** Data de referencia explicita: o teste de vencimento nao depende da virada do dia. */
+    boolean processPayment(LocalDate today) {
         if (barCode == null || barCode.isEmpty()) {
             throw new PaymentException("Invalid barcode");
         }
 
-        if (dueDate.isBefore(LocalDate.now())) {
+        if (dueDate == null) {
+            throw new PaymentException("dueDate is required for BOLETO payments");
+        }
+
+        if (dueDate.isBefore(today)) {
             this.status = PaymentStatus.EXPIRED;
             return false;
         }

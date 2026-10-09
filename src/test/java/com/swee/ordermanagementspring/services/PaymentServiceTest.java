@@ -70,7 +70,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D003] boleto vencido fica EXPIRED e o pedido continua aguardando pagamento")
     void expiredBoletoDoesNotMarkOrderPaid() {
         saveReturnsArgument();
@@ -86,7 +86,7 @@ class PaymentServiceTest {
 
     @ParameterizedTest(name = "[D004] pagamento {0} nao pode ser processado novamente")
     @ValueSource(strings = {"APPROVED", "DECLINED", "EXPIRED"})
-    @Tag("known-defect")
+    @Tag("regression")
     void onlyPendingPaymentsCanBeProcessed(PaymentStatus status) {
         Order order = pendingOrder();
         CardPayment payment = new CardPayment(100.0, order, "4111111111111111", "MARINA", 1);
@@ -123,7 +123,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D016] tipo em minusculas funciona tambem com locale padrao turco")
     void typeParsingIsLocaleIndependent() {
         saveReturnsArgument();
@@ -146,7 +146,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D006] boleto sem vencimento e rejeitado na criacao")
     void boletoRequiresDueDate() {
         when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
@@ -156,11 +156,21 @@ class PaymentServiceTest {
     }
 
     @Test
-    @Tag("known-defect")
+    @Tag("regression")
     @DisplayName("[D012] valor do pagamento diferente do total do pedido e rejeitado")
     void amountMustMatchOrderTotal() {
         when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
         assertThatThrownBy(() -> service.insert(TestData.payment("PIX", 0.01, 1L)))
+                .isInstanceOf(PaymentException.class);
+        verify(paymentRepository, never()).save(any());
+    }
+
+    @ParameterizedTest(name = "[D012] valor nao finito {0} gera erro de negocio, nao NumberFormatException")
+    @ValueSource(doubles = {Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NaN})
+    @Tag("regression")
+    void nonFiniteAmountIsABusinessError(double amount) {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(pendingOrder()));
+        assertThatThrownBy(() -> service.insert(TestData.payment("PIX", amount, 1L)))
                 .isInstanceOf(PaymentException.class);
         verify(paymentRepository, never()).save(any());
     }
