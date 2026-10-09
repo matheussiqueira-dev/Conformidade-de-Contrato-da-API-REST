@@ -69,6 +69,10 @@ public class ProductService {
     }
 
     public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Product not found, id: " + id);
+        }
         repository.deleteById(id);
     }
 }
