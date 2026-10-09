@@ -154,7 +154,7 @@ class FlywayMigrationTest {
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO product (product_type, name, price) VALUES ('DIGITAL', 'Caro', 10000000000.00)");
                 }
-                assertThatThrownBy(() -> flyway(schema, null).migrate()).hasStackTraceContaining("numeric field overflow");
+                assertThatThrownBy(() -> flyway(schema, null).migrate()).hasStackTraceContaining("acima de 9999999999.99");
             } finally {
                 statement.execute("DROP SCHEMA " + schema + " CASCADE");
             }

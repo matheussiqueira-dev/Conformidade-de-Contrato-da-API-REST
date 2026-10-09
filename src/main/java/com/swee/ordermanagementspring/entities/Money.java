@@ -13,6 +13,12 @@ public final class Money {
     public static final int SCALE = 2;
     /** Maior valor que cabe em NUMERIC(12,2); usado tambem na validacao dos DTOs. */
     public static final String MAX = "9999999999.99";
+    /**
+     * D017: menor valor aceito na entrada. 0,005 arredonda (HALF_UP) para 0,01; abaixo disso o valor viraria 0,00.
+     * A precisao de NUMERIC(12,2) so e garantida na fronteira dos DTOs (MIN/MAX); codigo que cria entidades
+     * sem passar por eles deve respeitar os mesmos limites.
+     */
+    public static final String MIN = "0.005";
 
     private Money() {
     }

@@ -87,7 +87,7 @@ class OrderServiceRulesTest {
     @Tag("regression")
     void statusTransitionTable(OrderStatus current, String requested, String expected) {
         Order order = TestData.order(current, 1);
-        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.findWithLockById(1L)).thenReturn(Optional.of(order));
         lenient().when(orderRepository.save(order)).thenReturn(order);
 
         if ("OK".equals(expected)) {
@@ -109,7 +109,7 @@ class OrderServiceRulesTest {
     @Tag("regression")
     void statusRegressionIsRejected(OrderStatus current, String requested) {
         Order order = TestData.order(current, 1);
-        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.findWithLockById(1L)).thenReturn(Optional.of(order));
         lenient().when(orderRepository.save(order)).thenReturn(order);
 
         assertThatThrownBy(() -> service.updateStatus(1L, status(requested))).isInstanceOf(OrderException.class);

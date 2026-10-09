@@ -150,8 +150,10 @@ public class OrderService {
         };
     }
 
+    /** D019: a linha do pedido fica bloqueada da leitura ate o commit, entao duas trocas simultaneas sao serializadas. */
+    @Transactional
     public Order updateStatus(Long id, OrderStatusUpdateDTO dto) {
-        Order order = findById(id);
+        Order order = repository.findWithLockById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
 
         OrderStatus newStatus;
         try {
