@@ -1,4 +1,4 @@
-package com.swee.ordermanagementspring.entities.client;
+package com.swee.ordermanagementspring.entities.customer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 @Entity
 @DiscriminatorValue("INDIVIDUAL")
-public class IndividualClient extends Client{
+public class IndividualCustomer extends Customer{
 
     @Column(unique = true)
     private String cpf;
 
-    public IndividualClient() {
+    public IndividualCustomer() {
 
     }
 
@@ -25,7 +25,7 @@ public class IndividualClient extends Client{
         this.cpf = cpf;
     }
 
-    public IndividualClient(String name, String email, LocalDate birthDate, String cpf) {
+    public IndividualCustomer(String name, String email, LocalDate birthDate, String cpf) {
         super(name, email, birthDate);
         this.cpf = cpf;
 

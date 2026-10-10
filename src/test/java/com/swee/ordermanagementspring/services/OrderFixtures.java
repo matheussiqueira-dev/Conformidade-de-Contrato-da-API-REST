@@ -7,21 +7,21 @@ import java.util.List;
 final class OrderFixtures {
     static OrderRequestDTO orderRequest(Long productId, Integer quantity) {
         OrderRequestDTO request = new OrderRequestDTO();
-        request.setClient(individualClient());
+        request.setCustomer(individualCustomer());
         request.setItems(List.of(item(productId, quantity)));
         request.setPayment(pixPayment());
         request.setShippingAddress(address());
         return request;
     }
 
-    private static ClientRequestDTO individualClient() {
-        ClientRequestDTO client = new ClientRequestDTO();
-        client.setType("INDIVIDUAL");
-        client.setName("Marina Costa");
-        client.setEmail("marina@example.com");
-        client.setBirthDate(LocalDate.of(1995, 4, 12));
-        client.setCpf("12345678901");
-        return client;
+    private static CustomerRequestDTO individualCustomer() {
+        CustomerRequestDTO customer = new CustomerRequestDTO();
+        customer.setType("INDIVIDUAL");
+        customer.setName("Marina Costa");
+        customer.setEmail("marina@example.com");
+        customer.setBirthDate(LocalDate.of(1995, 4, 12));
+        customer.setCpf("12345678901");
+        return customer;
     }
 
     static OrderItemRequestDTO item(Long productId, Integer quantity) {

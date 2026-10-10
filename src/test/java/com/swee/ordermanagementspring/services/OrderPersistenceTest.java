@@ -60,7 +60,7 @@ class OrderPersistenceTest {
     }
 
     @Test
-    void demonstrationSalePersistsClientAddressPaymentAndTotal() {
+    void demonstrationSalePersistsCustomerAddressPaymentAndTotal() {
         PhysicalProduct phone = products.save(new PhysicalProduct(4500.0, "iPhone", "Fixture sintetica", 0.2));
         PhysicalProduct earbuds = products.save(new PhysicalProduct(1200.0, "AirPods", "Fixture sintetica", 0.1));
         OrderRequestDTO request = orderRequest(phone.getId(), 1);
@@ -74,7 +74,7 @@ class OrderPersistenceTest {
         Order reloaded = orders.findById(orderId).orElseThrow();
 
         assertThat(reloaded.total()).isEqualTo(5700.0);
-        assertThat(reloaded.getClient().getId()).isNotNull();
+        assertThat(reloaded.getCustomer().getId()).isNotNull();
         assertThat(reloaded.getShippingAddress().getId()).isNotNull();
         assertThat(reloaded.getPayment().getId()).isNotNull();
         assertThat(reloaded.getPayment().getAmount()).isEqualTo(5700.0);

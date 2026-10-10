@@ -1,6 +1,6 @@
 package com.swee.ordermanagementspring.entities;
 
-import com.swee.ordermanagementspring.entities.client.Client;
+import com.swee.ordermanagementspring.entities.customer.Customer;
 import com.swee.ordermanagementspring.entities.auth.AppUser;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.Payment;
@@ -22,7 +22,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Client client;
+    private Customer customer;
     // Null only for orders created before authenticated authorship was introduced.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
@@ -39,8 +39,8 @@ public class Order {
 
     }
 
-    public Order(OrderStatus status, Client client, AppUser seller) {
-        this.client = client;
+    public Order(OrderStatus status, Customer customer, AppUser seller) {
+        this.customer = customer;
         this.status = status;
         this.seller = java.util.Objects.requireNonNull(seller, "seller is required for new orders");
     }
@@ -70,16 +70,16 @@ public class Order {
         this.status = status;
     }
 
-    public Client getClient() {
-        return client;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public AppUser getSeller() {
         return seller;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
     //nao vou precisar usar alguns desses metodos
     public void addItem(OrderItem item) {

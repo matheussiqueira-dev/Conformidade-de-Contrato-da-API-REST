@@ -1,17 +1,17 @@
 package com.swee.ordermanagementspring.services;
 
-import com.swee.ordermanagementspring.dto.ClientRequestDTO;
+import com.swee.ordermanagementspring.dto.CustomerRequestDTO;
 import com.swee.ordermanagementspring.dto.ProductRequestDTO;
-import com.swee.ordermanagementspring.entities.client.Client;
-import com.swee.ordermanagementspring.entities.client.CorporateClient;
-import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.entities.customer.Customer;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
+import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
 import com.swee.ordermanagementspring.entities.product.DigitalProduct;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import com.swee.ordermanagementspring.entities.product.Product;
 import com.swee.ordermanagementspring.exceptions.ProductException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.AddressRepository;
-import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import com.swee.ordermanagementspring.support.TestData;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,29 +108,29 @@ class CatalogServicesTest {
     }
 
     @Nested
-    @DisplayName("ClientService")
-    class Clients {
-        private ClientRepository repository;
-        private ClientService service;
+    @DisplayName("CustomerService")
+    class Customers {
+        private CustomerRepository repository;
+        private CustomerService service;
 
         @BeforeEach
         void setUp() {
-            repository = mock(ClientRepository.class);
-            when(repository.save(any(Client.class))).thenAnswer(invocation -> invocation.getArgument(0));
-            service = new ClientService(repository);
+            repository = mock(CustomerRepository.class);
+            when(repository.save(any(Customer.class))).thenAnswer(invocation -> invocation.getArgument(0));
+            service = new CustomerService(repository);
         }
 
         @Test
         @DisplayName("[CA-03-03] pessoa fisica com CPF e criada")
         void individualWithCpf() {
-            assertThat(service.insert(TestData.individual("12345678901"))).isInstanceOf(IndividualClient.class);
+            assertThat(service.insert(TestData.individual("12345678901"))).isInstanceOf(IndividualCustomer.class);
         }
 
         @Test
         @DisplayName("[CA-03-04] pessoa juridica com CNPJ e criada com razao social")
         void corporateWithCnpj() {
-            Client saved = service.insert(TestData.corporate("12345678000199"));
-            assertThat(saved).isInstanceOfSatisfying(CorporateClient.class,
+            Customer saved = service.insert(TestData.corporate("12345678000199"));
+            assertThat(saved).isInstanceOfSatisfying(CorporateCustomer.class,
                     c -> assertThat(c.getCompanyName()).isEqualTo("Loja Sintetica LTDA"));
         }
 
@@ -138,7 +138,7 @@ class CatalogServicesTest {
         @ValueSource(strings = {"INDIVIDUAL", "CORPORATE"})
         @Tag("known-defect")
         void missingDocumentIsAClientError(String type) {
-            ClientRequestDTO dto = "INDIVIDUAL".equals(type) ? TestData.individual(" ") : TestData.corporate(null);
+            CustomerRequestDTO dto = "INDIVIDUAL".equals(type) ? TestData.individual(" ") : TestData.corporate(null);
             // [D008] erro de cliente nao pode ser classificado como erro de produto.
             assertThatThrownBy(() -> service.insert(dto))
                     .isInstanceOf(RuntimeException.class)
@@ -149,7 +149,7 @@ class CatalogServicesTest {
         @Test
         @DisplayName("[CT-CLI-005] tipo de cliente invalido e rejeitado")
         void invalidType() {
-            ClientRequestDTO dto = TestData.individual("12345678901");
+            CustomerRequestDTO dto = TestData.individual("12345678901");
             dto.setType("GOVERNO");
             assertThatThrownBy(() -> service.insert(dto)).hasMessageContaining("GOVERNO");
         }
@@ -157,7 +157,7 @@ class CatalogServicesTest {
         @Test
         @DisplayName("[CT-CLI-006] atualizacao de pessoa juridica troca CNPJ e razao social")
         void corporateUpdate() {
-            CorporateClient existing = new CorporateClient("Antigo", "old@example.test", LocalDate.of(1990, 1, 1), "1", "Old");
+            CorporateCustomer existing = new CorporateCustomer("Antigo", "old@example.test", LocalDate.of(1990, 1, 1), "1", "Old");
             when(repository.findById(3L)).thenReturn(Optional.of(existing));
 
             service.update(3L, TestData.corporate("12345678000199"));
@@ -170,7 +170,7 @@ class CatalogServicesTest {
         @Test
         @DisplayName("[CT-CLI-007] atualizacao de pessoa fisica sem CPF preserva o CPF")
         void individualUpdateKeepsCpf() {
-            IndividualClient existing = TestData.client();
+            IndividualCustomer existing = TestData.customer();
             ReflectionTestUtils.setField(existing, "id", 4L);
             when(repository.findById(4L)).thenReturn(Optional.of(existing));
 
@@ -182,7 +182,7 @@ class CatalogServicesTest {
         @Test
         @Tag("known-defect")
         @DisplayName("[D011] excluir cliente inexistente retorna nao encontrado")
-        void deletingMissingClientFails() {
+        void deletingMissingCustomerFails() {
             when(repository.existsById(9L)).thenReturn(false);
             assertThatThrownBy(() -> service.delete(9L)).isInstanceOf(ResourceNotFoundException.class);
         }

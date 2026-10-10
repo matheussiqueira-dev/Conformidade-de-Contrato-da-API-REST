@@ -4,7 +4,7 @@ import com.swee.ordermanagementspring.dto.OrderRequestDTO;
 import com.swee.ordermanagementspring.dto.OrderStatusUpdateDTO;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.auth.AppUser;
-import com.swee.ordermanagementspring.entities.client.CorporateClient;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
 import com.swee.ordermanagementspring.entities.payment.CardPayment;
@@ -13,7 +13,7 @@ import com.swee.ordermanagementspring.exceptions.OrderException;
 import com.swee.ordermanagementspring.exceptions.PaymentException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
 import com.swee.ordermanagementspring.repositories.AppUserRepository;
-import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
 import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import com.swee.ordermanagementspring.security.AppPrincipal;
@@ -49,7 +49,7 @@ class OrderServiceRulesTest {
     @Mock
     private ProductRepository productRepository;
     @Mock
-    private ClientRepository clientRepository;
+    private CustomerRepository customerRepository;
     @Mock
     private AppUserRepository appUserRepository;
     @InjectMocks
@@ -134,44 +134,44 @@ class OrderServiceRulesTest {
     }
 
     @Test
-    @DisplayName("[CA-05-04] pedido com clientId existente reutiliza o cliente")
-    void existingClientIsReused() {
+    @DisplayName("[CA-05-04] pedido com customerId existente reutiliza o cliente")
+    void existingCustomerIsReused() {
         catalogWithMouse();
-        CorporateClient existing = new CorporateClient("Loja", "loja@example.test", LocalDate.of(2000, 1, 1), "1", "Loja");
-        when(clientRepository.findById(5L)).thenReturn(Optional.of(existing));
+        CorporateCustomer existing = new CorporateCustomer("Loja", "loja@example.test", LocalDate.of(2000, 1, 1), "1", "Loja");
+        when(customerRepository.findById(5L)).thenReturn(Optional.of(existing));
         OrderRequestDTO dto = orderRequest(1L, 1);
-        dto.setClient(null);
-        dto.setClientId(5L);
+        dto.setCustomer(null);
+        dto.setCustomerId(5L);
         dto.getPayment().setAmount(100.0);
 
-        assertThat(service.insert(dto, actor()).getClient()).isSameAs(existing);
+        assertThat(service.insert(dto, actor()).getCustomer()).isSameAs(existing);
     }
 
     @Test
-    @DisplayName("[CT-ORDER-005] clientId inexistente retorna nao encontrado")
-    void missingClientId() {
+    @DisplayName("[CT-ORDER-005] customerId inexistente retorna nao encontrado")
+    void missingCustomerId() {
         OrderRequestDTO dto = orderRequest(1L, 1);
-        dto.setClient(null);
-        dto.setClientId(404L);
-        when(clientRepository.findById(404L)).thenReturn(Optional.empty());
+        dto.setCustomer(null);
+        dto.setCustomerId(404L);
+        when(customerRepository.findById(404L)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> service.insert(dto, actor())).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
-    @DisplayName("[CA-05-03] pedido sem clientId e sem cliente novo e rejeitado")
-    void clientIsRequired() {
+    @DisplayName("[CA-05-03] pedido sem customerId e sem cliente novo e rejeitado")
+    void customerIsRequired() {
         OrderRequestDTO dto = orderRequest(1L, 1);
-        dto.setClient(null);
+        dto.setCustomer(null);
         assertThatThrownBy(() -> service.insert(dto, actor())).isInstanceOf(OrderException.class);
         verify(orderRepository, never()).save(any());
     }
 
     @ParameterizedTest(name = "[CT-ORDER-006] cliente novo {0} sem documento e rejeitado")
     @CsvSource({"INDIVIDUAL", "CORPORATE", "GOVERNO"})
-    void newClientRules(String type) {
+    void newCustomerRules(String type) {
         OrderRequestDTO dto = orderRequest(1L, 1);
-        dto.setClient("CORPORATE".equals(type) ? TestData.corporate(" ") : TestData.individual(""));
-        dto.getClient().setType(type);
+        dto.setCustomer("CORPORATE".equals(type) ? TestData.corporate(" ") : TestData.individual(""));
+        dto.getCustomer().setType(type);
         assertThatThrownBy(() -> service.insert(dto, actor())).isInstanceOf(OrderException.class);
     }
 

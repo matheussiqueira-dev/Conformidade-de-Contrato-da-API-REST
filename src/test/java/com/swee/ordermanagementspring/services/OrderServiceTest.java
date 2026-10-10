@@ -6,7 +6,7 @@ import com.swee.ordermanagementspring.entities.auth.AppUser;
 import com.swee.ordermanagementspring.entities.auth.UserRole;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import com.swee.ordermanagementspring.repositories.AppUserRepository;
-import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
 import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class OrderServiceTest {
     private ProductRepository productRepository;
 
     @Mock
-    private ClientRepository clientRepository;
+    private CustomerRepository customerRepository;
 
     @Mock
     private AppUserRepository appUserRepository;
@@ -101,7 +101,7 @@ class OrderServiceTest {
     void unauthenticatedCallerCannotCreateOrder() {
         assertThatThrownBy(() -> orderService.insert(orderRequest(1L, 1), null))
                 .isInstanceOf(AccessDeniedException.class);
-        verifyNoInteractions(orderRepository, productRepository, clientRepository, appUserRepository);
+        verifyNoInteractions(orderRepository, productRepository, customerRepository, appUserRepository);
     }
 
     @Test
@@ -112,7 +112,7 @@ class OrderServiceTest {
 
         assertThatThrownBy(() -> orderService.insert(orderRequest(1L, 1), new AppPrincipal(removed)))
                 .isInstanceOf(AccessDeniedException.class);
-        verifyNoInteractions(orderRepository, productRepository, clientRepository);
+        verifyNoInteractions(orderRepository, productRepository, customerRepository);
     }
 
 }

@@ -863,11 +863,11 @@
           "shippingAddress"
         ],
         "properties": {
-          "clientId": {
+          "customerId": {
             "type": "integer",
             "format": "int64"
           },
-          "client": {
+          "customer": {
             "type": "object",
             "additionalProperties": true
           },

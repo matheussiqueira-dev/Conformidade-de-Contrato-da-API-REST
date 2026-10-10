@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 
-public class ClientRequestDTO {
+public class CustomerRequestDTO {
 
-    @NotNull(message = "Client type is required.")
+    @NotNull(message = "Customer type is required.")
     private String type; //INDIVIDUAL ou CORPORATE
 
     @NotBlank(message = "Name is required.")
@@ -23,10 +23,10 @@ public class ClientRequestDTO {
     @Past(message = "Birth date must be in the past.")
     private LocalDate birthDate;
 
-    //campo do IndividualClient
+    //campo do IndividualCustomer
     private String cpf;
 
-    //campos do CorporateClient
+    //campos do CorporateCustomer
     private String cnpj;
     private String companyName;
 

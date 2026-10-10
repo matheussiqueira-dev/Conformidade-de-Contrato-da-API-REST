@@ -100,7 +100,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   let officialSchema, blocked;
   try { officialSchema = await loadOfficialSchema(); }
   catch (error) { blocked = `Official OpenAPI document validation blocked: ${error.message}`; }
-  const revisedBaseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-04.json', import.meta.url), 'utf8'));
+  const revisedBaseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-06.json', import.meta.url), 'utf8'));
   const result = { ...validateDocument(document, officialSchema),
     revisedBaseline: validateDocument(revisedBaseline, officialSchema), ...(blocked ? { blocked } : {}) };
   const reportDirectory = new URL('../reports/contrato/spike-2026-10-04/', import.meta.url);

@@ -4,9 +4,9 @@ import com.swee.ordermanagementspring.dto.*;
 import com.swee.ordermanagementspring.entities.Address;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.OrderItem;
-import com.swee.ordermanagementspring.entities.client.Client;
-import com.swee.ordermanagementspring.entities.client.CorporateClient;
-import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.entities.customer.Customer;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
+import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
 import com.swee.ordermanagementspring.entities.auth.AppUser;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
@@ -18,7 +18,7 @@ import com.swee.ordermanagementspring.exceptions.OrderException;
 import com.swee.ordermanagementspring.exceptions.PaymentException;
 import com.swee.ordermanagementspring.exceptions.ProductException;
 import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
-import com.swee.ordermanagementspring.repositories.ClientRepository;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
 import com.swee.ordermanagementspring.repositories.AppUserRepository;
 import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
@@ -34,14 +34,14 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository repository;
     private final ProductRepository productRepository;
-    private final ClientRepository clientRepository;
+    private final CustomerRepository customerRepository;
     private final AppUserRepository appUserRepository;
 
-    public OrderService(OrderRepository repository, ProductRepository productRepository, ClientRepository clientRepository,
+    public OrderService(OrderRepository repository, ProductRepository productRepository, CustomerRepository customerRepository,
                         AppUserRepository appUserRepository) {
         this.repository = repository;
         this.productRepository = productRepository;
-        this.clientRepository = clientRepository;
+        this.customerRepository = customerRepository;
         this.appUserRepository = appUserRepository;
     }
 
@@ -60,9 +60,9 @@ public class OrderService {
         }
         AppUser seller = appUserRepository.findById(principal.id())
                 .orElseThrow(() -> new AccessDeniedException("Authenticated user no longer exists"));
-        Client client = resolveClient(dto);
+        Customer customer = resolveCustomer(dto);
 
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, client, seller);
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, customer, seller);
         order.setShippingAddress(buildAddress(dto.getShippingAddress()));
 
         List<OrderItem> items = buildItems(order, dto.getItems());
@@ -74,34 +74,34 @@ public class OrderService {
         return repository.save(order);
     }
 
-    private Client resolveClient(OrderRequestDTO dto) {
-        if (dto.getClientId() != null) {
-            return clientRepository.findById(dto.getClientId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Client not found, id: " + dto.getClientId()));
+    private Customer resolveCustomer(OrderRequestDTO dto) {
+        if (dto.getCustomerId() != null) {
+            return customerRepository.findById(dto.getCustomerId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Customer not found, id: " + dto.getCustomerId()));
         }
 
-        if (dto.getClient() != null) {
-            return buildNewClient(dto.getClient());
+        if (dto.getCustomer() != null) {
+            return buildNewCustomer(dto.getCustomer());
         }
 
-        throw new OrderException("It is necessary to provide either clientId or client data.");
+        throw new OrderException("It is necessary to provide either customerId or customer data.");
     }
 
-    private Client buildNewClient(ClientRequestDTO dto) {
+    private Customer buildNewCustomer(CustomerRequestDTO dto) {
         return switch (dto.getType().toUpperCase()) {
             case "INDIVIDUAL" -> {
                 if (dto.getCpf() == null || dto.getCpf().isBlank()) {
-                    throw new OrderException("CPF is required for INDIVIDUAL clients.");
+                    throw new OrderException("CPF is required for INDIVIDUAL customers.");
                 }
-                yield new IndividualClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
+                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
             }
             case "CORPORATE" -> {
                 if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {
-                    throw new OrderException("CNPJ is required for CORPORATE clients.");
+                    throw new OrderException("CNPJ is required for CORPORATE customers.");
                 }
-                yield new CorporateClient(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());
+                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());
             }
-            default -> throw new OrderException("Invalid client type: " + dto.getType());
+            default -> throw new OrderException("Invalid customer type: " + dto.getType());
         };
     }
 
