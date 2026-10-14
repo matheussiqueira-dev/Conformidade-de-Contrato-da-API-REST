@@ -370,6 +370,16 @@ class SalesApiTest {
         assertError(call(get("/sales/orders").param("size", "101"), fx.manager), 400, "VALIDATION_FAILED");
     }
 
+    @Test
+    @DisplayName("[regressao] GET /orders legado lista venda de retirada (sem endereco) sem erro 500")
+    void legacyOrderListAcceptsPickupSales() throws Exception {
+        long id = created(sell(fx.ana, UUID.randomUUID(), order(item(mouse, 1))));
+        MvcResult legacy = call(get("/orders"), fx.manager);
+        assertThat(legacy.getResponse().getStatus()).as(legacy.getResponse().getContentAsString()).isEqualTo(200);
+        assertThat(body(legacy).get(0).get("id").asLong()).isEqualTo(id);
+        assertThat(call(get("/orders/" + id), fx.manager).getResponse().getStatus()).isEqualTo(200);
+    }
+
     // ---------------- pagamento e cancelamento ----------------
 
     @Test
