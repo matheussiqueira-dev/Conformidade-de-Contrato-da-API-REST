@@ -7,19 +7,20 @@ Equipe: Matheus Siqueira, Gabriel Sousa, Allan Barros e Francisco Ferreira.
 ## O que tem
 
 - **PDV**: busca por SKU ou nome, carrinho com preço e desconto calculados no servidor, Pix, cartão (só os 4 últimos dígitos) ou boleto, retirada ou entrega, reserva de estoque na venda e baixa na confirmação do pagamento.
-- **Clientes**: pessoa física e jurídica com dígito verificador, documento mascarado para o vendedor e histórico de pedidos.
+- **Clientes**: pessoa física e jurídica com dígito verificador (CNPJ numérico ou alfanumérico), documento mascarado para o vendedor, histórico de pedidos e perfil com indicadores de compra.
 - **Backoffice do gerente**: produtos e insumos, categorias, preço com motivo e histórico, entradas com custo médio, ajustes com motivo, estoque mínimo e extrato.
-- **Gestão**: faturamento, lucro e margem (com "—" quando falta custo), metas da loja e da equipe, Meu desempenho, estornos, promoções e análises.
-- **Segurança**: sessão HttpOnly + CSRF, hierarquia GERENTE > VENDEDOR em três barreiras (URL, método e dono do dado), bloqueio após 5 falhas de login e matriz de acesso executável.
+- **Gestão**: faturamento, lucro e margem ("Não informado" quando falta custo), metas da loja e da equipe, Meu desempenho, estornos, promoções, desconto manual com alçada (vendedor 5%, gerente 20%) e análises.
+- **Usuários**: cadastro pelo gerente com senha provisória, papel, situação, desbloqueio e redefinição de senha; a sessão do usuário cai na requisição seguinte a qualquer dessas mudanças, e sempre existe um gerente ativo.
+- **Segurança**: sessão HttpOnly + CSRF, hierarquia GERENTE > VENDEDOR em três barreiras (URL, método e dono do dado), bloqueio após 5 falhas de login (contador atômico) e matriz de acesso executável.
 
 ## Stack
 
 | Camada | Tecnologia |
 | --- | --- |
 | API | Java 25, Spring Boot 4.1, Spring Security 7, `JdbcClient` nos módulos novos e JPA no legado, Springdoc |
-| Banco | PostgreSQL 18, Flyway V1–V7 (única fonte do esquema, Hibernate em `validate`), views do V6 para os painéis |
-| Frontend | Next.js 16, React 19, TypeScript estrito, Zod 4 gerado do contrato (orval), TanStack Query |
-| Testes | JUnit 5, MockMvc, PostgreSQL descartável, Playwright + axe, Ajv para o contrato, pacote SQL por `psql` |
+| Banco | PostgreSQL 18, Flyway V1–V11 (única fonte do esquema, Hibernate em `validate`), views do V6 e do V9 para os painéis e o resumo do cliente |
+| Frontend | Next.js 16, React 19, TypeScript estrito, Zod 4 gerado do contrato (orval), TanStack Query, marca SBI v1.0 |
+| Testes | JUnit 5, MockMvc, PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432), Playwright + axe, Ajv para o contrato, pacote SQL por `psql` |
 
 Detalhes em [docs/arquitetura.md](docs/arquitetura.md) e versões em [docs/decisoes/stack.md](docs/decisoes/stack.md).
 
@@ -69,7 +70,7 @@ Execute no PowerShell, na raiz do repositório, com JDK 25 em `JAVA_HOME` e Dock
 
 ```powershell
 .\mvnw.cmd -q verify                                                                        # unitários (233)
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\test.ps1 -Mode Integration     # integração (544), JaCoCo, PMD, CPD, SpotBugs
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\test.ps1 -Mode Integration     # integração (649), JaCoCo, PMD, CPD, SpotBugs
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\test-contract.ps1 -HttpOnly -Frontend  # contrato ao vivo + E2E e axe
 npm test; node scripts\audit-contract.mjs                                                  # auditoria estática do contrato
 cd frontend; npm run typecheck; npm run api:check; npm test; npm run build
@@ -78,8 +79,8 @@ node scripts\quality-metrics.mjs reports\metricas\r1 "R1"                       
 
 A CI (`.github/workflows/ci.yml`) roda quatro jobs, cada um com seus relatórios como artefato:
 - `test (backend)`;
-- `bd`: Flyway, seed demo e pacote SQL com 51 PASS;
-- `contract`: auditoria estática e verificação ao vivo das 45 operações do v4;
+- `bd`: Flyway, seed demo e pacote SQL com 60 PASS, mais 10 PASS da massa Olist;
+- `contract`: auditoria estática e verificação ao vivo das 58 operações do contrato v5;
 - `frontend`: typecheck, schemas sem diff, testes unitários, build, E2E e axe.
 
 ## Documentação
@@ -87,11 +88,12 @@ A CI (`.github/workflows/ci.yml`) roda quatro jobs, cada um com seus relatórios
 | Assunto | Documento |
 | --- | --- |
 | Arquitetura, fluxo de venda e segurança | [docs/arquitetura.md](docs/arquitetura.md) |
-| Roteiro de demonstração (10 minutos) | [docs/roteiro-demonstracao.md](docs/roteiro-demonstracao.md) |
+| Roteiro de demonstração (12 minutos) | [docs/roteiro-demonstracao.md](docs/roteiro-demonstracao.md) |
 | Relatório final com números reais | [docs/relatorio-final.md](docs/relatorio-final.md) |
 | Requisitos, critérios e rastreabilidade | [docs/requisitos.md](docs/requisitos.md), [docs/criterios-aceitacao.md](docs/criterios-aceitacao.md), [docs/rastreabilidade.md](docs/rastreabilidade.md) |
 | Plano de testes, defeitos e métricas | [docs/plano-testes.md](docs/plano-testes.md), [docs/defeitos.md](docs/defeitos.md), [reports/metricas/comparativo-r0-r1.md](reports/metricas/comparativo-r0-r1.md) |
 | Modelo de dados e pacote SQL | [docs/bd/modelo-erp-pdv.md](docs/bd/modelo-erp-pdv.md), [docs/bd/pacote-sql/](docs/bd/pacote-sql/) |
-| Decisões | [docs/decisoes/](docs/decisoes/) (ERP/PDV, matriz de acesso, autenticação, dinheiro, stack) |
-| Contrato | [config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json](config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json) e Swagger em `/swagger-ui/index.html` |
+| Decisões | [docs/decisoes/](docs/decisoes/) (ERP/PDV, evolução D-EVO, matriz de acesso, autenticação, dinheiro, stack) |
+| Marca SBI v1.0 aplicada | [reports/marca/](reports/marca/) (capturas de todas as telas nos dois papéis) |
+| Contrato | [config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json](config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json) e Swagger em `/swagger-ui/index.html` |
 | Rotas legadas (`/orders`, `/payment`, `/address`) | [docs/api-legada.md](docs/api-legada.md) |
