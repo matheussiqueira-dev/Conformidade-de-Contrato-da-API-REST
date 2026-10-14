@@ -79,6 +79,45 @@ Este documento inicia a matriz RF -> CA -> CT -> execucao -> defeito. Os casos d
 | CA-16-02 | Dado vendedor autenticado, quando abrir a interface, entao a navegacao mostra Meu desempenho e Vender, sem Estoque administrativo. |
 | CA-16-03 | Dado erro de rede ou API, quando carregar qualquer area, entao a interface mostra estado de erro recuperavel. |
 
+### RF-17 a RF-23 - Evolucao ERP/PDV (14/10/2026)
+
+Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato v4.
+
+| ID | Criterio |
+| --- | --- |
+| CA-17-01 | Dado gerente autenticado, quando acessar qualquer operacao liberada ao vendedor, entao a API nao retorna 401 nem 403, tanto na regra de URL quanto na regra de metodo. |
+| CA-17-02 | Dado vendedor autenticado, quando acessar operacao exclusiva do gerente, entao a API retorna 403 `FORBIDDEN`. |
+| CA-17-03 | Dado usuario autenticado, quando consultar `GET /auth/me`, entao `areas` lista VENDER, VENDAS, CLIENTES e MEU_DESEMPENHO para o vendedor e acrescenta GESTAO, PRODUTOS, ESTOQUE, PROMOCOES e ANALISES para o gerente. |
+| CA-18-01 | Dada conta ativa, quando ocorrerem 4 falhas seguidas, entao a conta nao e bloqueada; na 5a falha, fica bloqueada por 15 minutos. |
+| CA-18-02 | Dada conta bloqueada, quando a senha correta for enviada, entao a API retorna 401 com corpo igual (salvo timestamp) ao de usuario inexistente. |
+| CA-18-03 | Dada conta bloqueada ha 15 minutos, quando a senha correta for enviada, entao a API retorna 200 e zera o contador de falhas. |
+| CA-18-04 | Dada conta inativa, quando a senha correta for enviada, entao a API retorna o mesmo 401. |
+| CA-18-05 | Dado qualquer um dos quatro casos de falha, quando o login for processado, entao a comparacao BCrypt e executada e um `audit_event` e gravado sem senha e com o e-mail apenas como SHA-256. |
+| CA-19-01 | Dado vendedor no PDV, quando buscar por SKU ou prefixo do nome, entao o SKU exato vem primeiro e a resposta nao contem custo, saldo fisico nem margem. |
+| CA-19-02 | Dado carrinho, quando cotar, entao preco, desconto e total vem do servidor sem efeito colateral; corpo de venda com vendedor, preco, desconto ou total retorna 400 sem criar pedido. |
+| CA-19-03 | Dada a mesma `Idempotency-Key` e o mesmo corpo, quando a venda for reenviada, entao a API retorna 200 com o mesmo pedido; com corpo diferente, 409 `IDEMPOTENCY_CONFLICT`. |
+| CA-19-04 | Dado item sem estoque suficiente, quando finalizar a venda, entao a API retorna 409 `STOCK_INSUFFICIENT` e nenhuma reserva do pedido permanece. |
+| CA-19-05 | Dada venda pendente, quando o pagamento for confirmado duas vezes, entao o estoque baixa uma unica vez e a segunda chamada retorna 200 sem efeito. |
+| CA-19-06 | Dada a ultima unidade, quando 10 vendas simultaneas tentarem reserva-la, entao exatamente uma e criada e nove recebem 409; o disponivel nunca fica negativo. |
+| CA-19-07 | Dada venda pendente do proprio vendedor, quando ele cancelar, entao a reserva e liberada; venda de outro vendedor retorna 404; venda paga retorna 409 `STATE_CONFLICT`. |
+| CA-20-01 | Dado CPF ou CNPJ com digito verificador invalido, quando cadastrar, entao a API retorna 400; documento valido com mascara e gravado so com digitos. |
+| CA-20-02 | Dado documento ja cadastrado, quando cadastrar outro cliente com ele, entao a API retorna 409 `DUPLICATE_DOCUMENT`. |
+| CA-20-03 | Dado vendedor autenticado, quando listar ou abrir cliente, entao o documento vem mascarado. |
+| CA-20-04 | Dada edicao de cliente, quando o corpo trouxer `cpf` ou `cnpj`, entao a API retorna 400; com `version` desatualizada, 409 `CONCURRENT_UPDATE`. |
+| CA-20-05 | Dado vendedor, quando excluir cliente, entao a API retorna 403; dado gerente e cliente com pedido, 409 `RESOURCE_IN_USE`. |
+| CA-21-01 | Dado cliente com pedidos, quando consultar o historico, entao os pedidos vem paginados do mais recente para o mais antigo, com itens. |
+| CA-21-02 | Dado vendedor, quando consultar o historico, entao total e vendedor aparecem so nos pedidos dele, e nenhum pedido traz custo ou margem. |
+| CA-22-01 | Dado gerente, quando alterar preco com motivo de 5 a 200 caracteres, entao o historico registra autor e motivo, e itens vendidos antes mantem o preco antigo. |
+| CA-22-02 | Dada entrada de estoque com custo, quando registrada, entao o custo medio ponderado e recalculado pelo gatilho; entrada sem custo deixa o custo medio desconhecido. |
+| CA-22-03 | Dado ajuste de saida acima do disponivel, quando registrado, entao a API retorna 409 `STOCK_INSUFFICIENT`; ajuste sem motivo retorna 400; ajuste de entrada nao altera o custo medio. |
+| CA-22-04 | Dado produto ja vendido, quando o gerente tentar exclui-lo, entao a API retorna 409; inativado, ele some do PDV. |
+| CA-22-05 | Dado insumo (`sellable = false`), quando buscar no PDV, entao ele nao aparece; venda que o inclua retorna 409 `STATE_CONFLICT`. |
+| CA-22-06 | Dado extrato de movimentos, quando filtrar por produto, tipo e periodo, entao cada movimento traz tipo, quantidade, motivo, pedido e autor. |
+| CA-22-07 | Dado estoque minimo definido, quando o disponivel ficar igual ou abaixo dele, entao a posicao marca `belowMin` e o painel conta o produto no alerta. |
+| CA-23-01 | Dado gerente, quando consultar faturamento do periodo, entao o liquido e vendas pagas menos estornos do periodo, lido das views do V6. |
+| CA-23-02 | Dado item vendido sem custo no periodo, quando consultar faturamento, entao lucro bruto e margem vem nulos e a cobertura de custo e informada. |
+| CA-23-03 | Dado painel de gestao aberto, quando a aba estiver visivel, entao os dados sao recarregados a cada 15 s; com a aba oculta, nao; erro de carga nunca aparece como zero. |
+
 ## Matriz inicial de rastreabilidade
 
 | RF | Criterios | Casos de teste planejados | Execucao | Defeito |
@@ -99,6 +138,13 @@ Este documento inicia a matriz RF -> CA -> CT -> execucao -> defeito. Os casos d
 | RF-14 | CA-14-01 a CA-14-03 | CT-COST-001 a CT-COST-003 | Pendente | - |
 | RF-15 | CA-15-01, CA-15-02 | CT-E2E-001, CT-E2E-002 | Pendente | - |
 | RF-16 | CA-16-01 a CA-16-03 | CT-UI-001 a CT-UI-003 | Pendente | - |
+| RF-17 | CA-17-01 a CA-17-03 | CT-SEC-101, CT-SEC-103, CT-SEC-114, CT-WEB-103 | Pendente | - |
+| RF-18 | CA-18-01 a CA-18-05 | CT-AUTH-101, CT-AUTH-102 | Pendente | - |
+| RF-19 | CA-19-01 a CA-19-07 | CT-SALE-101 a CT-SALE-104, CT-STOCK-101 a CT-STOCK-107, CT-SEC-110 a CT-SEC-113, CT-SEC-116, CT-WEB-101, CT-WEB-104 | Pendente | - |
+| RF-20 | CA-20-01 a CA-20-05 | CT-CRM-101, CT-CRM-102, CT-CRM-104, CT-CRM-105, CT-CONTRACT-101 | Pendente | - |
+| RF-21 | CA-21-01, CA-21-02 | CT-CRM-103, CT-SEC-113 | Pendente | - |
+| RF-22 | CA-22-01 a CA-22-07 | CT-STOCK-108, CT-STOCK-109, CT-SALE-104, CT-WEB-105, CT-WEB-106 | Pendente | - |
+| RF-23 | CA-23-01 a CA-23-03 | CT-CONTRACT-102, CT-WEB-102 | Pendente | - |
 
 ## Regras para atualizar a matriz
 

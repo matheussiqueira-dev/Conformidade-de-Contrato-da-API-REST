@@ -76,6 +76,12 @@ A rodada seguinte criou `config/openapi/target-loja-gestao-openapi-2026-10-03-v2
 
 A v2 fecha campos extras nas projeções de vendedor e declara papéis propostos via `x-roles`. Sete testes da auditoria estrutural passaram; o diagnóstico legado rejeitou custo/equipe e margem aninhada. A biblioteca disponível não suporta 2020-12, e não houve teste HTTP. Consulte `docs/decisoes/contract-testing.md` para decisão, limitações e pendências antes de adotar o contrato.
 
+## Contrato alvo v4 — ERP/PDV (rascunho de 14/10/2026)
+
+`config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json`, SHA-256 `7F5E2E5748D01AB9D8574EE2114929EE156F3555562C214808B5E178E26FF712`: 35 caminhos, 45 operações e 95 schemas, com `x-contract-status: target-v4` e todas as operações em `x-status: planned`. Acrescenta PDV (`/sales/catalog`, `/sales/quote`, `/sales/orders`), clientes com histórico, backoffice de produtos, categorias, estoque, promoções, faturamento e análises; reconcilia as divergências do v3 e substitui `ApiErrorResponse` por `ErrorResponse` com `code`. O v3 e o v2 continuam preservados. Decisões: [erp-pdv.md](erp-pdv.md); matriz cruzada com `x-roles`: [matriz-acesso.md](matriz-acesso.md).
+
+Verificação de 14/10: `node scripts/audit-contract.mjs <v4>` sem achados (inclui o cruzamento com `src/test/resources/security/access-matrix.csv`), `node scripts/validate-contract.mjs <v4>` com o schema oficial OpenAPI 3.1 e 195 pontos de schema sem achados (`reports/contrato/validacao/target-loja-gestao-openapi-2026-10-14-v4.json`), e 34 testes Node aprovados. Nenhuma operação do v4 está implementada.
+
 ## Regras de mudanca
 
 ### Revisão documentada de erros — 04/10/2026
