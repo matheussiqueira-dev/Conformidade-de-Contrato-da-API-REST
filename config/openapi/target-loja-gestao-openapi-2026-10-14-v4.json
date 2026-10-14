@@ -165,7 +165,7 @@
           "RF-15",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -225,7 +225,7 @@
           "RF-07",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -286,7 +286,7 @@
           "RF-15",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -363,7 +363,7 @@
           "RF-11",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -426,7 +426,7 @@
           "RF-11",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -465,7 +465,7 @@
           "RF-13",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -526,7 +526,7 @@
           "RF-13",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
