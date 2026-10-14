@@ -1,6 +1,6 @@
 {
   "scope": "baseline-http-isolated-database",
-  "timestamp": "2026-10-09T17:51:31.421Z",
+  "timestamp": "2026-10-14T05:53:48.780Z",
   "results": [
     {
       "name": "Live OpenAPI is 3.1 and includes baseline routes",
@@ -27,7 +27,7 @@
       "passed": true
     }
   ],
-  "contract": "baseline-errors-openapi-2026-10-04.json",
+  "contract": "baseline-errors-openapi-2026-10-14.json",
   "contractGaps": [
     "Error documentation scope: POST /products 400 and GET /products/{id} 404 only."
   ],

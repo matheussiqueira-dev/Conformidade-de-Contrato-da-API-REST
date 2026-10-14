@@ -47,7 +47,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -423,10 +423,10 @@
         ]
       }
     },
-    "/clients/{id}": {
+    "/customers/{id}": {
       "get": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "findById_2",
         "parameters": [
@@ -446,7 +446,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDTO"
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
                 }
               }
             }
@@ -463,7 +463,7 @@
       },
       "put": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "update_2",
         "parameters": [
@@ -490,7 +490,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClientRequestDTO"
+                "$ref": "#/components/schemas/CustomerRequestDTO"
               }
             }
           },
@@ -502,7 +502,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDTO"
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
                 }
               }
             }
@@ -522,7 +522,7 @@
       },
       "delete": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "delete_2",
         "parameters": [
@@ -775,7 +775,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1007,10 +1007,10 @@
         ]
       }
     },
-    "/clients": {
+    "/customers": {
       "get": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "findAll_3",
         "responses": {
@@ -1021,7 +1021,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClientResponseDTO"
+                    "$ref": "#/components/schemas/CustomerResponseDTO"
                   }
                 }
               }
@@ -1039,7 +1039,7 @@
       },
       "post": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "insert_3",
         "parameters": [
@@ -1057,7 +1057,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClientRequestDTO"
+                "$ref": "#/components/schemas/CustomerRequestDTO"
               }
             }
           },
@@ -1069,7 +1069,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDTO"
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
                 }
               }
             }
@@ -1088,10 +1088,10 @@
         ]
       }
     },
-    "/clients/{id}/address": {
+    "/customers/{id}/address": {
       "post": {
         "tags": [
-          "client-controller"
+          "customer-controller"
         ],
         "operationId": "updateAddress_1",
         "parameters": [
@@ -1130,7 +1130,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDTO"
+                  "$ref": "#/components/schemas/CustomerResponseDTO"
                 }
               }
             }
@@ -1182,7 +1182,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "type": "object"
                 }
               }
             }
@@ -1192,17 +1192,17 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "Credenciais invalidas",
+            "description": "Credenciais invalidas, conta bloqueada ou inativa",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1671,7 +1671,7 @@
           }
         }
       },
-      "ClientResponseDTO": {
+      "CustomerResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -1739,11 +1739,12 @@
               "PROCESSING",
               "PAID",
               "SHIPPED",
-              "DELIVERED"
+              "DELIVERED",
+              "CANCELED"
             ]
           },
-          "client": {
-            "$ref": "#/components/schemas/ClientResponseDTO"
+          "customer": {
+            "$ref": "#/components/schemas/CustomerResponseDTO"
           },
           "items": {
             "type": "array",
@@ -1799,7 +1800,7 @@
           "zipCode"
         ]
       },
-      "ClientRequestDTO": {
+      "CustomerRequestDTO": {
         "type": "object",
         "properties": {
           "type": {
@@ -1832,14 +1833,14 @@
           "type"
         ]
       },
-      "ApiErrorResponse": {
+      "ErrorResponse": {
         "type": "object",
         "description": "Erro retornado pela API",
         "properties": {
           "timestamp": {
             "type": "string",
-            "format": "local-date-time",
-            "description": "Data/hora local do backend, sem offset; nao representa um instante UTC"
+            "format": "date-time",
+            "description": "Instante RFC 3339 com offset"
           },
           "status": {
             "type": "integer",
@@ -1849,6 +1850,25 @@
           },
           "error": {
             "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "VALIDATION_FAILED",
+              "MALFORMED_REQUEST",
+              "UNAUTHENTICATED",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "METHOD_NOT_ALLOWED",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "STOCK_INSUFFICIENT",
+              "IDEMPOTENCY_CONFLICT",
+              "STATE_CONFLICT",
+              "DUPLICATE_DOCUMENT",
+              "RESOURCE_IN_USE",
+              "CONCURRENT_UPDATE",
+              "INTERNAL_ERROR"
+            ]
           },
           "message": {
             "type": "string"
@@ -1864,6 +1884,7 @@
           }
         },
         "required": [
+          "code",
           "error",
           "message",
           "status",
@@ -1930,12 +1951,12 @@
       "OrderRequestDTO": {
         "type": "object",
         "properties": {
-          "clientId": {
+          "customerId": {
             "type": "integer",
             "format": "int64"
           },
-          "client": {
-            "$ref": "#/components/schemas/ClientRequestDTO"
+          "customer": {
+            "$ref": "#/components/schemas/CustomerRequestDTO"
           },
           "items": {
             "type": "array",
@@ -2008,14 +2029,6 @@
           "password"
         ]
       },
-      "LoginResponse": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "$ref": "#/components/schemas/UserSession"
-          }
-        }
-      },
       "UserSession": {
         "type": "object",
         "properties": {
@@ -2035,19 +2048,25 @@
               "GERENTE",
               "VENDEDOR"
             ]
+          },
+          "areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
       "CsrfToken": {
         "type": "object",
         "properties": {
-          "headerName": {
-            "type": "string"
-          },
           "parameterName": {
             "type": "string"
           },
           "token": {
+            "type": "string"
+          },
+          "headerName": {
             "type": "string"
           }
         }
