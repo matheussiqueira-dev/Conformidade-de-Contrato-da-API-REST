@@ -15,7 +15,7 @@
 
  :: Spring Boot ::                (v4.1.0)
 
-2026-10-14T06:42:17.196-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.api.backoffice.BackofficeApiTest   : Starting BackofficeApiTest using Java 25.0.4.1 with PID 22864 (started by mathe in C:\Users\mathe\Documents\Programação\A3\noite)
+2026-10-14T06:42:17.196-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.api.backoffice.BackofficeApiTest   : Starting BackofficeApiTest using Java 25.0.4.1 with PID 22864 (started by &lt;user&gt; in &lt;repo&gt;)
 2026-10-14T06:42:17.197-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.api.backoffice.BackofficeApiTest   : The following 1 profile is active: "integration"
 2026-10-14T06:42:18.779-03:00  INFO 22864 --- [order-management-spring] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 2026-10-14T06:42:18.903-03:00  INFO 22864 --- [order-management-spring] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 103 ms. Found 7 JPA repository interfaces.
@@ -63,7 +63,7 @@
 2026-10-14T06:42:27.448-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 ]]></system-out>
     <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
-WARNING: A Java agent has been loaded dynamically (C:\Users\mathe\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.10\byte-buddy-agent-1.18.10.jar)
+WARNING: A Java agent has been loaded dynamically (&lt;home&gt;\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.10\byte-buddy-agent-1.18.10.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
 WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
 WARNING: Dynamic loading of agents will be disallowed by default in a future release
