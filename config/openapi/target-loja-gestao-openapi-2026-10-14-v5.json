@@ -562,6 +562,66 @@
         }
       }
     },
+    "/sales/orders/{id}/discount-approval": {
+      "post": {
+        "summary": "GERENTE aplica desconto acima da alcada do vendedor num pedido pendente",
+        "operationId": "approveOrderDiscount",
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "x-rf": [
+          "RF-19",
+          "RF-26"
+        ],
+        "description": "So PENDING_PAYMENT (409 STATE_CONFLICT nos demais). Recalcula itens, total e valor do pagamento; grava quem aprovou e audita DISCOUNT_APPROVED.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualDiscountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pedido com o desconto aprovado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
     "/orders/{id}/cancel": {
       "post": {
         "summary": "Cancela pedido pendente e libera a reserva (DEC-ERP-06)",
@@ -2854,6 +2914,98 @@
           }
         }
       }
+    },
+    "/discount-policy": {
+      "get": {
+        "summary": "Alcadas de desconto manual por papel",
+        "operationId": "listDiscountPolicies",
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "x-rf": [
+          "RF-26"
+        ],
+        "responses": {
+          "200": {
+            "description": "Alcadas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiscountPolicy"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/discount-policy/{role}": {
+      "put": {
+        "summary": "Altera a alcada de um papel com motivo",
+        "operationId": "updateDiscountPolicy",
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "x-rf": [
+          "RF-26"
+        ],
+        "description": "Audita DISCOUNT_POLICY_CHANGED com valores anterior e novo e motivo.",
+        "parameters": [
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountPolicyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alcada alterada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscountPolicy"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3451,6 +3603,9 @@
             },
             "minItems": 1,
             "maxItems": 50
+          },
+          "manualDiscount": {
+            "$ref": "#/components/schemas/ManualDiscountRequest"
           }
         },
         "additionalProperties": false
@@ -3698,7 +3853,7 @@
       },
       "SalesOrderRequest": {
         "type": "object",
-        "description": "Sem vendedor, preco, desconto ou total. shippingAddress obrigatorio somente em DELIVERY (restricao de classe). productId repetido -> 400.",
+        "description": "Sem vendedor, preco, desconto em valor ou total; o desconto manual vem so como percentual com motivo. shippingAddress obrigatorio somente em DELIVERY (restricao de classe). productId repetido -> 400.",
         "required": [
           "customerId",
           "items",
@@ -3727,6 +3882,9 @@
           },
           "shippingAddress": {
             "$ref": "#/components/schemas/AddressRequest"
+          },
+          "manualDiscount": {
+            "$ref": "#/components/schemas/ManualDiscountRequest"
           }
         },
         "additionalProperties": false
@@ -6605,6 +6763,157 @@
           }
         },
         "description": "Indicadores do cliente para a tela de perfil (G-05). Contagens e datas valem para a loja toda; valores so no escopo."
+      },
+      "ManualDiscountRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "percent",
+          "reason"
+        ],
+        "description": "Desconto manual sobre o subtotal ja promocionado. Nunca valor final nem preco: o servidor calcula (invariante 1). Acima da alcada do papel da sessao: 403 DISCOUNT_ABOVE_LIMIT com limitPercent em details. Item abaixo do custo medio conhecido, se a politica nao permitir: 409 BELOW_COST (sem revelar o custo).",
+        "properties": {
+          "percent": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 100,
+            "multipleOf": 0.01,
+            "description": "Percentual com ate 2 casas."
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          }
+        }
+      },
+      "ManualDiscountInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "percent",
+          "amount",
+          "reason",
+          "approvedBy"
+        ],
+        "description": "Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.",
+        "properties": {
+          "percent": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 100
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "GERENTE que aprovou acima da alcada do vendedor; null se veio na venda."
+          }
+        }
+      },
+      "DiscountPolicy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "role",
+          "maxPercent",
+          "allowBelowCost",
+          "updatedBy",
+          "updatedAt"
+        ],
+        "description": "Alcada de desconto manual por papel.",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "maxPercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "allowBelowCost": {
+            "type": "boolean"
+          },
+          "updatedBy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DiscountPolicyRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maxPercent",
+          "allowBelowCost",
+          "reason"
+        ],
+        "properties": {
+          "maxPercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "multipleOf": 0.01
+          },
+          "allowBelowCost": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          }
+        }
+      },
+      "SellerManualDiscount": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seller",
+          "orders",
+          "amount",
+          "approvedByManager"
+        ],
+        "description": "Descontos manuais em pedidos pagos no mes, por vendedor (v_descontos_manuais).",
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "orders": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "approvedByManager": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        }
       }
     }
   }
