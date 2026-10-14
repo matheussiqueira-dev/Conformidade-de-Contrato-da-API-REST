@@ -51,7 +51,7 @@ class FlywayMigrationTest {
             statement.execute("CREATE SCHEMA " + schema);
             try {
                 Flyway flyway = flyway(schema, null);
-                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(9);
+                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(10);
                 flyway.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO orders (status, seller_id) VALUES ('PENDING_PAYMENT', NULL)");
@@ -60,7 +60,7 @@ class FlywayMigrationTest {
                             .hasMessageContaining("fk_orders_seller");
                     try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success")) {
                         rows.next();
-                        assertThat(rows.getInt(1)).isEqualTo(9);
+                        assertThat(rows.getInt(1)).isEqualTo(10);
                     }
                 }
             } finally {
@@ -84,7 +84,7 @@ class FlywayMigrationTest {
                 // A real legacy database has no Flyway history. Baseline is a deliberate operator step.
                 Flyway upgrade = flyway(schema, null);
                 upgrade.baseline();
-                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(8);
+                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(9);
                 upgrade.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement();
                      ResultSet rows = sql.executeQuery("SELECT id, seller_id FROM orders WHERE id = 42")) {
@@ -274,6 +274,31 @@ class FlywayMigrationTest {
                 statement.execute("DROP SCHEMA " + schema + " CASCADE");
             }
         }
+    }
+
+    /** [CT-CRM-106] V10: CNPJ alfanumerico entra no CHECK; numerico continua valido; minuscula e mascara ficam de fora. */
+    @Test
+    void v10AcceptsAlphanumericCnpj() throws Exception {
+        inFreshSchema(schema -> {
+            flyway(schema, "9").migrate();
+            try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                sql.executeUpdate("INSERT INTO customer (customer_type, name, cnpj, company_name) VALUES ('CORPORATE', 'Antiga', '11222333000181', 'Antiga LTDA')");
+                assertThatThrownBy(() -> sql.executeUpdate("INSERT INTO customer (customer_type, name, cnpj, company_name) "
+                        + "VALUES ('CORPORATE', 'Nova', '12ABC34501DE35', 'Nova LTDA')")).hasMessageContaining("ck_customer_cnpj");
+            }
+            assertThat(flyway(schema, "10").migrate().migrationsExecuted).isEqualTo(1);
+            try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                sql.executeUpdate("INSERT INTO customer (customer_type, name, cnpj, company_name) VALUES ('CORPORATE', 'Nova', '12ABC34501DE35', 'Nova LTDA')");
+                assertThatThrownBy(() -> sql.executeUpdate("INSERT INTO customer (customer_type, name, cnpj, company_name) "
+                        + "VALUES ('CORPORATE', 'Minuscula', '12abc34501de35', 'Minuscula LTDA')")).hasMessageContaining("ck_customer_cnpj");
+                assertThatThrownBy(() -> sql.executeUpdate("INSERT INTO customer (customer_type, name, cnpj, company_name) "
+                        + "VALUES ('CORPORATE', 'Mascara', '12.ABC.345/01DE-35', 'Mascara LTDA')")).hasMessageContaining("ck_customer_cnpj");
+                try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM customer")) {
+                    rows.next();
+                    assertThat(rows.getInt(1)).isEqualTo(2);
+                }
+            }
+        });
     }
 
     /** D022: a V7 leva o final do cartao para card_last4, anula card_number e barra nova gravacao do numero. */

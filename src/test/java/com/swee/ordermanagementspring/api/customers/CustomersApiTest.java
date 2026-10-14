@@ -334,4 +334,20 @@ class CustomersApiTest {
         assertThat(summary.get("paymentMix")).isEmpty();
         assertError(call(get("/customers/999999/summary"), fx.allan), 404, "NOT_FOUND");
     }
+
+    @Test
+    @DisplayName("[CT-CRM-106] CNPJ alfanumerico: cadastro, duplicidade, mascara do VENDEDOR e busca exata")
+    void alphanumericCnpjIsSupported() throws Exception {
+        String company = CORPORATE.replace("11.222.333/0001-81", "12.ABC.345/01DE-35");
+        long id = create(company, fx.allan);
+        assertThat(fx.count("SELECT count(*) FROM customer WHERE cnpj = '12ABC34501DE35'")).isEqualTo(1);
+        assertThat(body(call(get("/customers/" + id), fx.manager)).get("document").asText()).isEqualTo("12.ABC.345/01DE-35");
+        assertThat(body(call(get("/customers/" + id), fx.allan)).get("document").asText()).isEqualTo("**.ABC.345/01DE-**");
+        assertError(send(post("/customers"), fx.francisco, CORPORATE.replace("11.222.333/0001-81", "12ABC34501DE35")), 409, "DUPLICATE_DOCUMENT");
+        assertError(send(post("/customers"), fx.francisco, CORPORATE.replace("11.222.333/0001-81", "12.ABC.345/01DE-36")), 400, "VALIDATION_FAILED");
+        assertError(send(post("/customers"), fx.francisco, CORPORATE.replace("11.222.333/0001-81", "12.abc.345/01de-35")), 400, "VALIDATION_FAILED");
+        JsonNode found = body(call(get("/customers").param("q", "12abc34501de35"), fx.francisco));
+        assertThat(found.get("totalElements").asLong()).isEqualTo(1);
+        assertThat(found.get("content").get(0).get("document").asText()).isEqualTo("**.ABC.345/01DE-**");
+    }
 }

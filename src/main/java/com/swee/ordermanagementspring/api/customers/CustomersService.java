@@ -64,7 +64,7 @@ public class CustomersService {
         session.apply(user.id(), null);
         Long addressId = request.address() == null ? null : Addresses.insert(jdbc, request.address());
         String cpf = request instanceof IndividualCustomerCreate i ? Documents.digitsOnly(i.cpf()) : null;
-        String cnpj = request instanceof CorporateCustomerCreate c ? Documents.digitsOnly(c.cnpj()) : null;
+        String cnpj = request instanceof CorporateCustomerCreate c ? Documents.cnpjKey(c.cnpj()) : null;
         long id = jdbc.sql("""
                 INSERT INTO customer(customer_type, name, company_name, cpf, cnpj, email, phone, birth_date, address_id, created_by)
                 VALUES (:type, :name, :company, :cpf, :cnpj, :email, :phone, :birth, :address, :user) RETURNING id""")
