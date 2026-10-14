@@ -36,14 +36,14 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void emptyDatabaseMigratesThroughV3AndRejectsUnknownSeller() throws Exception {
+    void emptyDatabaseMigratesThroughV4AndRejectsUnknownSeller() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
                 Flyway flyway = flyway(schema, null);
-                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(3);
+                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(4);
                 flyway.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO orders (status, seller_id) VALUES ('PENDING_PAYMENT', NULL)");
@@ -52,7 +52,7 @@ class FlywayMigrationTest {
                             .hasMessageContaining("fk_orders_seller");
                     try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success")) {
                         rows.next();
-                        assertThat(rows.getInt(1)).isEqualTo(3);
+                        assertThat(rows.getInt(1)).isEqualTo(4);
                     }
                 }
             } finally {
@@ -76,7 +76,7 @@ class FlywayMigrationTest {
                 // A real legacy database has no Flyway history. Baseline is a deliberate operator step.
                 Flyway upgrade = flyway(schema, null);
                 upgrade.baseline();
-                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(2);
+                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(3);
                 upgrade.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement();
                      ResultSet rows = sql.executeQuery("SELECT id, seller_id FROM orders WHERE id = 42")) {
@@ -91,13 +91,13 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void v3ConvertsLegacyDoubleMoneyToNumericHalfUp() throws Exception {
+    void v4ConvertsLegacyDoubleMoneyToNumericHalfUp() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
-                assertThat(flyway(schema, "2").migrate().migrationsExecuted).isEqualTo(2);
+                assertThat(flyway(schema, "3").migrate().migrationsExecuted).isEqualTo(3);
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     // Massa sintetica com valores tipicos de double: meio centavo e soma 0.1 + 0.2
                     sql.executeUpdate("INSERT INTO product (id, product_type, name, price) VALUES (1, 'DIGITAL', 'E-book', 1.005)");
@@ -124,13 +124,13 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void v3FailsInsteadOfTruncatingValuesAboveColumnLimit() throws Exception {
+    void v4FailsInsteadOfTruncatingValuesAboveColumnLimit() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
-                flyway(schema, "2").migrate();
+                flyway(schema, "3").migrate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO product (product_type, name, price) VALUES ('DIGITAL', 'Caro', 10000000000.00)");
                 }
