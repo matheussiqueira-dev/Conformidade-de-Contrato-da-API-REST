@@ -1,6 +1,7 @@
 package com.swee.ordermanagementspring.services;
 
 import com.swee.ordermanagementspring.dto.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,7 +35,7 @@ final class OrderFixtures {
     private static OrderPaymentRequestDTO pixPayment() {
         OrderPaymentRequestDTO payment = new OrderPaymentRequestDTO();
         payment.setType("PIX");
-        payment.setAmount(200.0);
+        payment.setAmount(new BigDecimal("200.0"));
         payment.setPixKey("marina@example.com");
         payment.setPixHolderName("Marina Costa");
         return payment;

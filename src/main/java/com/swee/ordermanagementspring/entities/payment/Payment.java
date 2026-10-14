@@ -3,10 +3,12 @@ package com.swee.ordermanagementspring.entities.payment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.swee.ordermanagementspring.entities.Money;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +25,8 @@ public abstract class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    protected Double amount;
+    @Column(precision = Money.PRECISION, scale = Money.SCALE)
+    protected BigDecimal amount;
     @Enumerated(EnumType.STRING)
     protected PaymentStatus status;
     protected LocalDateTime paymentDate;
@@ -36,8 +39,8 @@ public abstract class Payment {
 
     }
 
-    public Payment(Double amount, Order order) {
-        this.amount = amount;
+    public Payment(BigDecimal amount, Order order) {
+        this.amount = Money.of(amount);
         this.status = PaymentStatus.PENDING;
         this.order = order;
     }
@@ -46,12 +49,12 @@ public abstract class Payment {
         return id;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = Money.of(amount);
     }
 
     public PaymentStatus getStatus() {

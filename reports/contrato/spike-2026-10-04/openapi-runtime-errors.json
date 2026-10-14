@@ -1476,7 +1476,8 @@
           },
           "price": {
             "type": "number",
-            "format": "double"
+            "maximum": 9999999999.99,
+            "minimum": 0.005
           },
           "description": {
             "type": "string"
@@ -1509,8 +1510,7 @@
             "type": "string"
           },
           "price": {
-            "type": "number",
-            "format": "double"
+            "type": "number"
           },
           "description": {
             "type": "string"
@@ -1532,7 +1532,8 @@
           },
           "amount": {
             "type": "number",
-            "format": "double"
+            "maximum": 9999999999.99,
+            "minimum": 0.005
           },
           "orderId": {
             "type": "integer",
@@ -1579,8 +1580,7 @@
             "type": "string"
           },
           "amount": {
-            "type": "number",
-            "format": "double"
+            "type": "number"
           },
           "status": {
             "type": "string",
@@ -1717,8 +1717,7 @@
             "format": "int32"
           },
           "price": {
-            "type": "number",
-            "format": "double"
+            "type": "number"
           }
         }
       },
@@ -1759,8 +1758,7 @@
             "$ref": "#/components/schemas/AddressResponseDTO"
           },
           "total": {
-            "type": "number",
-            "format": "double"
+            "type": "number"
           }
         }
       },
@@ -1897,7 +1895,8 @@
           },
           "amount": {
             "type": "number",
-            "format": "double"
+            "maximum": 9999999999.99,
+            "minimum": 0.005
           },
           "cardNumber": {
             "type": "string"
@@ -2042,13 +2041,13 @@
       "CsrfToken": {
         "type": "object",
         "properties": {
+          "headerName": {
+            "type": "string"
+          },
           "parameterName": {
             "type": "string"
           },
           "token": {
-            "type": "string"
-          },
-          "headerName": {
             "type": "string"
           }
         }
