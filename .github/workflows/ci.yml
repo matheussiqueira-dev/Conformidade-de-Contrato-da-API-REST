@@ -69,7 +69,7 @@ jobs:
             --server.address=127.0.0.1 --server.port=18080 \
             --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
             --spring.datasource.username=postgres_test \
-            --spring.jpa.hibernate.ddl-auto=create-drop \
+            --a3.contract.disposable-database=true \
             --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
           api_pid=$!
           trap 'kill "$api_pid" 2>/dev/null || true' EXIT
