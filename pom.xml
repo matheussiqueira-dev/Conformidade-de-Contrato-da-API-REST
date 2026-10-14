@@ -28,7 +28,7 @@
     </scm>
     <properties>
         <java.version>25</java.version>
-        <test.excludedGroups>integration,known-defect</test.excludedGroups>
+        <test.excludedGroups>integration</test.excludedGroups>
     </properties>
     <dependencies>
         <dependency>
@@ -170,7 +170,7 @@
         <profile>
             <id>integration</id>
             <properties>
-                <test.excludedGroups>known-defect</test.excludedGroups>
+                <test.excludedGroups></test.excludedGroups>
             </properties>
         </profile>
     </profiles>
