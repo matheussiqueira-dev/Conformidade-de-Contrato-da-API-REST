@@ -56,6 +56,6 @@ Registrar esperado/obtido, commit, ferramenta, ambiente e nome do teste ou docum
 
 ## Falha, recuperação e limites
 
-Se alterar persistência, testar com dados sintéticos e backup antes de migração; nunca executar create-drop no banco da loja. Se regressão quebrar, manter card em andamento, reduzir caso e retestar antes de concluir. Não usar force push nem reescrever commits da equipe. Novos commits desta sincronização usam `autofix:`; futuras correções também identificam problema e evidência.
+Se alterar persistência, testar com dados sintéticos e backup antes de migração; nunca executar create-drop no banco da loja. Se regressão quebrar, manter card em andamento, reduzir caso e retestar antes de concluir. Não usar force push nem reescrever commits da equipe. Novos commits seguem Conventional Commits; correções identificam problema e evidência.
 
 Datas internas precisam de reestimativa com os integrantes; estes pontos/tempos são estimativas, não uma sprint aprovada. Nenhuma autorização docente, merge em main ou entrega final é presumida pelo briefing.

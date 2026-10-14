@@ -239,6 +239,13 @@ Saida para considerar rodada valida:
 
 Arquivos grandes podem ficar fora do Git se o pacote final guardar copia acessivel. O resumo versionado deve apontar para o artefato.
 
+## Atualizacao 09/10/2026 (rascunho para revisao)
+
+- A matriz de risco existe: [analise-risco.md](analise-risco.md). A prioridade da suite passa a seguir os riscos R01-R13: pagamento (R01) e total do pedido (R02) sao Criticos; status, autenticacao, dinheiro e migracao sao Altos.
+- O catalogo com 43 casos e os 10 campos do enunciado esta em [catalogo-casos.md](catalogo-casos.md); ele reaproveita os IDs desta tabela (CT-MONEY, CT-ORDER, CT-PAY, CT-AUTH) e os IDs ja usados nos testes.
+- O plano de qualidade (objetivos, atributos ISO/IEC 25010, criterios de entrada, saida e aprovacao) esta em [plano-qualidade.md](plano-qualidade.md); os criterios de entrada e saida desta pagina continuam validos e foram resumidos la.
+- Defeitos com os 13 campos: [defeitos.md](defeitos.md). Templates: [templates/](templates/README.md).
+
 ## Proximas acoes
 
 1. Criar seed minimo para cliente, produto, pedido e pagamento.

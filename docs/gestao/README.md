@@ -1,12 +1,19 @@
 # Gestão do projeto e registros por card
 
-Atualizado em 04/10/2026 por **Matheus Siqueira**. Quadro: https://trello.com/b/ombHh0vo
+Atualizado em 09/10/2026 por **Matheus Siqueira** (versão anterior: 04/10). Quadro: https://trello.com/b/ombHh0vo
 
-## O que já foi entregue
+## Situação em 09/10/2026
+
+- **Repositório oficial**: `matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST`, `main` em `3f10c37` (histórico reescrito em 08/10; quem clonou antes precisa clonar de novo). A branch `a3-contract-validation` é histórica e não recebe mais publicações.
+- **PRs abertos, todos com CI verde e sem revisão humana**: #5 FIX-01 (pagamentos), #6 card 19 (senhas fora do código + D021), #7 plano restante, #8 FIX-02 (status/exclusão), #9 DOM-02 (BigDecimal/NUMERIC). Ordem de merge obrigatória: **#5 → #8 → #9**, depois #6 e #7. A branch `fix/FIX-03-pagamento-dinheiro` (D017–D020) vira PR depois do #9.
+- **Defeitos**: D003, D004, D006, D012, D016 (FIX-01), D008, D010, D011 (FIX-02) e D017–D021 (achados na revisão dos PRs #6 e #9). Registro completo com os 13 campos do enunciado em `docs/defeitos.md` (card 16; rascunho em PR próprio).
+- **Prioridade definida em 09/10**: artefatos da rubrica (plano de qualidade, risco, catálogo, defeitos, inspeção, R1) antes da expansão do domínio. Detalhes, corte de escopo e cards novos em [plano restante, seção 9](plano-restante-2026-10-07.md#9-ajustes-da-avaliação-de-0910).
+
+## O que já foi entregue até 04/10
 
 Matheus implementou correção do preço unitário do pedido, validação OpenAPI 3.1/2020-12, contrato de erros, runners isolados e CI, autenticação Spring com sessão/CSRF/perfis e interface Next de acesso. A primeira fatia de autoria do pedido também está em andamento. Evidência: [sessão](../execucao-sessao.md), [relatório e capturas](../../reports/execucoes/run-2026-10-04-sessao-nextjs.md), [CI da autoria aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37198467104). Resultado atual: 15 Java + 23 contrato + 3 cliente + 12 HTTP + 2 E2E = 55 verificações; build Next aprovado. Essa soma não é catálogo acadêmico ou cobertura percentual.
 
-Publicação na branch `a3-contract-validation`; não foi feito merge em main. Revisão dos integrantes continua necessária. Dinheiro decimal, migração de banco real e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
+Em 04/10 a publicação era na branch `a3-contract-validation` (mesclada depois na `main` pelos PRs #1, #2 e #4). Revisão dos integrantes continua necessária. Dinheiro decimal, migração de banco real e acesso por vendedor, metas, estoque, pagamentos consistentes e quatro telas de negócio permanecem futuros.
 
 Fase seguinte iniciada: Matheus implementou V1/V2 Flyway para esquema vazio e vínculo de vendedor, documentou DER/dicionário e guia de adoção controlada. O [CI #22 aprovado](https://github.com/matheussiqueira-dev/Conformidade-de-Contrato-da-API-REST/actions/runs/37200555926) executou 17 testes Java e inicializou a API com Hibernate `validate` sobre V1/V2 em PostgreSQL 18. Migração de banco real e conversão monetária permanecem pendentes; detalhes em [BD-02](cards/FwvkkAdG.md).
 
@@ -91,10 +98,26 @@ Sequência: QA-08 e DOC-01 podem avançar com os artefatos atuais. DOM-02 depend
 | [[Matheus] 07 · Plano de testes](https://trello.com/c/1ZC4pKWK/10-matheus-07-plano-de-testes) | Matheus | Em revisão | [Briefing](cards/1ZC4pKWK.md) |
 | [[Matheus] 00 · Divisão de responsabilidades e acordo de trabalho](https://trello.com/c/KKPfn6ES/26-matheus-00-divis%C3%A3o-de-responsabilidades-e-acordo-de-trabalho) | Matheus | Concluído | [Briefing](cards/KKPfn6ES.md) |
 | [[Matheus] 00 · Alinhamento com os professores (BLOQUEADOR)](https://trello.com/c/3lLw8iW9/25-matheus-00-alinhamento-com-os-professores-bloqueador) | Matheus | Concluído | [Briefing](cards/3lLw8iW9.md) |
-| [[Gabriel] DOM-02 · Migrar dinheiro para BigDecimal e NUMERIC](https://trello.com/c/HxWdN6Fv/61-gabriel-dom-02-migrar-dinheiro-para-bigdecimal-e-numeric) | Gabriel | A fazer | [Briefing](cards/DOM-02.md) |
+| [[Gabriel] DOM-02 · Migrar dinheiro para BigDecimal e NUMERIC](https://trello.com/c/HxWdN6Fv/61-gabriel-dom-02-migrar-dinheiro-para-bigdecimal-e-numeric) | Gabriel | A fazer no quadro; implementado no PR #9 (aguarda revisão) | [Briefing](cards/DOM-02.md) |
 | [[Matheus] SEC-01 · Vincular autoria do pedido à sessão](https://trello.com/c/uBQH1dMy/62-matheus-sec-01-vincular-autoria-do-pedido-%C3%A0-sess%C3%A3o) | Matheus | Em andamento | [Briefing](cards/SEC-01.md) |
 | [[Allan] QA-08 · Revisar sessão e reproduzir preview no Windows](https://trello.com/c/PQ5Aikvp/63-allan-qa-08-revisar-sess%C3%A3o-e-reproduzir-preview-no-windows) | Allan | A fazer | [Briefing](cards/QA-08.md) |
 | [[Francisco] DOC-01 · Consolidar rubrica, rastreabilidade e autoria](https://trello.com/c/qT7awxOR/64-francisco-doc-01-consolidar-rubrica-rastreabilidade-e-autoria) | Francisco | A fazer | [Briefing](cards/DOC-01.md) |
+
+## Cards criados em 07/10 (briefing no próprio card e no plano restante)
+
+Estado conferido no quadro em 09/10.
+
+| Card | Responsável / revisor | Estado no quadro | Situação no GitHub |
+| --- | --- | --- | --- |
+| [[Matheus] QA-09 · Publicar suíte R1 e triar os testes que falham](https://trello.com/c/FonD1L1s) | Matheus / Gabriel | Em revisão | Suíte na `main` (`7a4270c`) |
+| [[Gabriel] FIX-01 · Corrigir defeitos de pagamento](https://trello.com/c/aCelHEUl) | Gabriel / Allan | Em revisão | PR #5 |
+| [[Francisco] FIX-02 · Exclusão inexistente, regressão de status e exceção de cliente](https://trello.com/c/ehll5z6g) | Francisco / Allan | A fazer | PR #8 |
+| [[Gabriel] GIT-01 · Publicar commits locais e integrar ao repositório da equipe](https://trello.com/c/6SYUXv1M) | Gabriel / Allan | A fazer | PR #2 mesclado; fork adotado como oficial em 08/10 |
+| [[Francisco] REV-01 · Rodada de revisões nominais](https://trello.com/c/1SXkSQHE) | Francisco / Matheus | A fazer | — |
+| [[Matheus] ENV-01 · Ambiente de demonstração](https://trello.com/c/hjpHIDSM) | Matheus / Gabriel | Backlog | Dividido em ENV-01a (infraestrutura) e ENV-01b (seed de metas, depois de API-02) |
+| [[Allan] CT-02 · Contrato v3 para metas, estoque e vendas](https://trello.com/c/ujKD2w54) | Allan / Gabriel | Backlog | — |
+
+Cards propostos em 09/10 (ainda não criados no quadro): GIT-02, REV-02, FIX-03, QA-10, QA-11, QA-12, DOC-02, SEC-02 e DEMO-01. Ver [plano restante, seção 9](plano-restante-2026-10-07.md#9-ajustes-da-avaliação-de-0910).
 
 ## Referências publicadas
 

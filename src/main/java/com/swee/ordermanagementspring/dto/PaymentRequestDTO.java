@@ -1,9 +1,12 @@
 package com.swee.ordermanagementspring.dto;
 
+import com.swee.ordermanagementspring.entities.Money;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.DecimalMin;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class PaymentRequestDTO {
@@ -12,8 +15,9 @@ public class PaymentRequestDTO {
     private String type; //CARD, PIX ou BOLETO
 
     @NotNull(message = "Value required.")
-    @Positive(message = "Value must be positive.")
-    private Double amount;
+    @DecimalMin(value = Money.MIN, message = "Value must be at least 0.01 after rounding to cents.")
+    @DecimalMax(value = Money.MAX, message = "Value exceeds the maximum of " + Money.MAX + ".")
+    private BigDecimal amount;
 
     @NotNull(message = "Order id required.")
     private Long orderId;
@@ -39,11 +43,11 @@ public class PaymentRequestDTO {
         this.type = type;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

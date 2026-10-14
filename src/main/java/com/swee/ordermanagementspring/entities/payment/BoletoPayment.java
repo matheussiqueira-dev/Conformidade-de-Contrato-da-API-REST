@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.exceptions.PaymentException;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ public class BoletoPayment extends Payment{
     private String barCode;
     private LocalDate dueDate;
 
-    public BoletoPayment(Double amount, Order order, String barCode, LocalDate dueDate) {
+    public BoletoPayment(BigDecimal amount, Order order, String barCode, LocalDate dueDate) {
         super(amount, order);
         this.barCode = barCode;
         this.dueDate = dueDate;
@@ -42,11 +43,20 @@ public class BoletoPayment extends Payment{
 
     @Override
     public boolean processPayment() {
+        return processPayment(LocalDate.now());
+    }
+
+    /** Data de referencia explicita: o teste de vencimento nao depende da virada do dia. */
+    boolean processPayment(LocalDate today) {
         if (barCode == null || barCode.isEmpty()) {
             throw new PaymentException("Invalid barcode");
         }
 
-        if (dueDate.isBefore(LocalDate.now())) {
+        if (dueDate == null) {
+            throw new PaymentException("dueDate is required for BOLETO payments");
+        }
+
+        if (dueDate.isBefore(today)) {
             this.status = PaymentStatus.EXPIRED;
             return false;
         }
