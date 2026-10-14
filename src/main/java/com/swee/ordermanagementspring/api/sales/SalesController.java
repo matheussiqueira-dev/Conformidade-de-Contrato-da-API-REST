@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,6 +45,8 @@ public class SalesController {
     }
 
     @PostMapping("/orders")
+    @ApiResponse(responseCode = "201", description = "Pedido criado")
+    @ApiResponse(responseCode = "200", description = "Repeticao com a mesma Idempotency-Key e o mesmo corpo")
     public ResponseEntity<SalesOrderResponse> create(@AuthenticationPrincipal AppPrincipal principal,
                                                      @RequestHeader("Idempotency-Key") UUID key,
                                                      @Valid @RequestBody SalesOrderRequest request) {

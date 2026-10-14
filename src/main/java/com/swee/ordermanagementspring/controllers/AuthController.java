@@ -59,7 +59,7 @@ public class AuthController {
 
     @GetMapping("/csrf")
     @Operation(summary = "Obtem token CSRF; renovar apos login/logout")
-    public ResponseEntity<CsrfResponse> csrf(CsrfToken csrf) {
+    public ResponseEntity<CsrfResponse> csrf(@io.swagger.v3.oas.annotations.Parameter(hidden = true) CsrfToken csrf) {
         return ResponseEntity.ok().header("Cache-Control", "no-store")
                 .body(new CsrfResponse(csrf.getHeaderName(), csrf.getToken()));
     }

@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class ProductsController {
     @PostMapping("/products")
     @ApiResponse(responseCode = "400", description = "Validacao ou regra de produto invalida",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> create(@AuthenticationPrincipal AppPrincipal principal,
                                           @Valid @RequestBody ProductCreateRequest request) {
         Product created = service.create(CurrentUser.of(principal), request);
@@ -48,6 +50,7 @@ public class ProductsController {
     }
 
     @GetMapping("/products/{id}")
+    @ApiResponse(responseCode = "200", description = "Produto")
     @ApiResponse(responseCode = "404", description = "Produto nao encontrado",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     public Product get(@PathVariable @Positive long id) {
@@ -61,6 +64,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/products/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id) {
         service.delete(CurrentUser.of(principal), id);
         return ResponseEntity.noContent().build();
@@ -91,6 +95,7 @@ public class ProductsController {
     }
 
     @PostMapping("/categories")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryRequest request) {
         Category created = service.createCategory(request);
         return ResponseEntity.created(URI.create("/categories/" + created.id())).body(created);

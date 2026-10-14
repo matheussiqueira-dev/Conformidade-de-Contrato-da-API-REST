@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class CustomersController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CustomerDetail> create(@AuthenticationPrincipal AppPrincipal principal,
                                                  @Valid @RequestBody CustomerCreateRequest request) {
         CustomerDetail created = service.create(CurrentUser.of(principal), request);
@@ -52,6 +54,7 @@ public class CustomersController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id) {
         service.delete(CurrentUser.of(principal), id);
         return ResponseEntity.noContent().build();
