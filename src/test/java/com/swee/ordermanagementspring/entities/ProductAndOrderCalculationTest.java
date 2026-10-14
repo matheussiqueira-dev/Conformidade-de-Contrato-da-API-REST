@@ -44,7 +44,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-MONEY-004] pedido sem itens tem total zero")
     void emptyOrderTotalsZero() {
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), TestData.seller(1L));
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), TestData.seller(1L));
         assertThat(order.total()).isZero();
     }
 
@@ -58,7 +58,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-MONEY-001] soma de itens distintos: 4.500 + 1.200 = 5.700")
     void totalSumsAllItems() {
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), TestData.seller(1L));
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), TestData.seller(1L));
         PhysicalProduct phone = new PhysicalProduct(4500.0, "iPhone", "Fixture", 0.2);
         PhysicalProduct earbuds = new PhysicalProduct(1200.0, "AirPods", "Fixture", 0.1);
         order.setItems(List.of(new OrderItem(order, phone, 1, 4500.0), new OrderItem(order, earbuds, 1, 1200.0)));
@@ -68,7 +68,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-SEC-003] pedido novo exige vendedor")
     void newOrderRequiresSeller() {
-        assertThatThrownBy(() -> new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), null))
+        assertThatThrownBy(() -> new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), null))
                 .isInstanceOf(NullPointerException.class);
     }
 }
