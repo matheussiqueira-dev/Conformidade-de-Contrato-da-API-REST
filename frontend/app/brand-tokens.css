@@ -1,0 +1,44 @@
+/* SBI · tokens do manual de marca v1.0 (outubro de 2026). Substituem os tokens "v1.1" de globals.css. */
+:root {
+  /* principais */
+  --indigo: #3D4ED6;        /* ação: botão principal, link, item ativo (8% da tela) */
+  --indigo-deep: #2B39A8;   /* hover, texto de link, texto do item ativo */
+  --indigo-soft: #EBEDFC;   /* fundo do item ativo, selo informativo */
+  --ink: #141B26;           /* texto principal, painel do login, capas (20%) */
+  --mint: #5BD6B8;          /* só detalhe (2%) ou sobre Tinta; nunca texto sobre branco (1,8:1) */
+  --white: #FFFFFF;
+  /* apoio */
+  --slate: #556070;         /* texto secundário, legendas (6,4:1) */
+  --field: #8A93A3;         /* contorno de campos (3,1:1) */
+  --line: #DDE1E8;          /* divisórias e borda de cartões */
+  --mist: #F5F6F9;          /* fundo da aplicação (70% com branco) */
+  /* estados: sempre com texto */
+  --ok-ink: #14684F;   --ok-bg: #E3F6EF;
+  --warn-ink: #8A4C00; --warn-bg: #FFF6E5;
+  --err-ink: #B42318;  --err-bg: #FDECEA;
+  --info-ink: #2B39A8; --info-bg: #EBEDFC;
+  /* dados, nesta ordem; meta = --data-3 tracejado */
+  --data-1: #3D4ED6; --data-2: #138A8A; --data-3: #B26400; --data-4: #8A4FB0;
+  /* forma */
+  --radius-control: 10px; --radius-card: 14px; --radius-symbol: 12px;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px; --space-6: 48px;
+  --touch: 44px;
+  /* tipografia */
+  --font-display: var(--font-space-grotesk), 'Segoe UI', sans-serif;   /* títulos e logo: 500/600/700 */
+  --font-sans: var(--font-plex-sans), 'Segoe UI', system-ui, sans-serif; /* texto e interface: 400/500/600 */
+  --font-mono: var(--font-plex-mono), Consolas, ui-monospace, monospace; /* valores, SKU, IDs: 500 */
+
+  /* aliases para o CSS existente (remover depois da migração) */
+  --bg: var(--mist); --card: var(--white); --muted: var(--slate);
+  --primary: var(--indigo); --primary-hover: var(--indigo-deep);
+  --radius: var(--radius-card); --radius-sm: var(--radius-control);
+}
+
+h1, h2, h3, .display { font-family: var(--font-display); font-weight: 600; letter-spacing: 0; }
+h1 { font-size: clamp(26px, 3vw, 32px); line-height: 38px; }   /* título de tela 32/38 */
+h2 { font-size: 20px; line-height: 28px; }                     /* título de seção 20/28 */
+.kpi-value, .money { font-family: var(--font-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.kpi-value { font-size: clamp(28px, 3vw, 36px); }
+.caption { font-size: 13px; line-height: 19px; color: var(--slate); }
+.card { border: 1px solid var(--line); border-radius: var(--radius-card); }
+a { color: var(--indigo); } a:hover { color: var(--indigo-deep); }
