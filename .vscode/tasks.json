@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SBI: iniciar tudo",
+      "dependsOn": ["SBI: API", "SBI: frontend"],
+      "dependsOrder": "parallel",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "SBI: banco",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 -Part Db",
+      "presentation": { "group": "sbi", "reveal": "always" },
+      "problemMatcher": []
+    },
+    {
+      "label": "SBI: API",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 -Part Api",
+      "dependsOn": "SBI: banco",
+      "isBackground": true,
+      "presentation": { "group": "sbi", "reveal": "always" },
+      "problemMatcher": {
+        "owner": "sbi-api",
+        "pattern": { "regexp": "^__sem_problemas__$" },
+        "background": {
+          "activeBegins": true,
+          "beginsPattern": "^__inicio__$",
+          "endsPattern": "Started \\w+ in|APPLICATION FAILED TO START|BUILD FAILURE|Porta \\d+ ocupada"
+        }
+      }
+    },
+    {
+      "label": "SBI: frontend",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 -Part Web",
+      "isBackground": true,
+      "presentation": { "group": "sbi", "reveal": "always" },
+      "problemMatcher": {
+        "owner": "sbi-web",
+        "pattern": { "regexp": "^__sem_problemas__$" },
+        "background": {
+          "activeBegins": true,
+          "beginsPattern": "^__inicio__$",
+          "endsPattern": "Ready in|Porta \\d+ ocupada"
+        }
+      }
+    },
+    {
+      "label": "SBI: parar banco",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 -Part Stop",
+      "problemMatcher": []
+    }
+  ]
+}
