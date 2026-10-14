@@ -1,14 +1,14 @@
 package com.swee.ordermanagementspring.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.swee.ordermanagementspring.entities.client.Client;
-import com.swee.ordermanagementspring.entities.client.CorporateClient;
-import com.swee.ordermanagementspring.entities.client.IndividualClient;
+import com.swee.ordermanagementspring.entities.customer.Customer;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
+import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
 
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClientResponseDTO {
+public class CustomerResponseDTO {
 
     private Long id;
     private String type;
@@ -19,7 +19,7 @@ public class ClientResponseDTO {
     private String cnpj;
     private String companyName;
 
-    public ClientResponseDTO(Long id, String type, String name, String email, LocalDate birthDate,
+    public CustomerResponseDTO(Long id, String type, String name, String email, LocalDate birthDate,
                              String cpf, String cnpj, String companyName) {
         this.id = id;
         this.type = type;
@@ -31,27 +31,27 @@ public class ClientResponseDTO {
         this.companyName = companyName;
     }
 
-    public static ClientResponseDTO from(Client client) {
-        ClientResponseDTO dto = new ClientResponseDTO(
-                client.getId(),
-                switch (client) {
-                    case IndividualClient i -> "INDIVIDUAL";
-                    case CorporateClient c -> "CORPORATE";
+    public static CustomerResponseDTO from(Customer customer) {
+        CustomerResponseDTO dto = new CustomerResponseDTO(
+                customer.getId(),
+                switch (customer) {
+                    case IndividualCustomer i -> "INDIVIDUAL";
+                    case CorporateCustomer c -> "CORPORATE";
                     default -> "UNKNOWN";
                 },
-                client.getName(),
-                client.getEmail(),
-                client.getBirthDate(),
+                customer.getName(),
+                customer.getEmail(),
+                customer.getBirthDate(),
                 null,
                 null,
                 null
         );
 
-        if (client instanceof IndividualClient individual) {
+        if (customer instanceof IndividualCustomer individual) {
             dto.cpf = individual.getCpf();
         }
 
-        if (client instanceof CorporateClient corporate) {
+        if (customer instanceof CorporateCustomer corporate) {
             dto.cnpj = corporate.getCnpj();
             dto.companyName = corporate.getCompanyName();
         }

@@ -8,10 +8,10 @@ import java.util.List;
 
 public class OrderRequestDTO {
 
-    private Long clientId; //cliente já existente
+    private Long customerId; //cliente já existente
 
     @Valid
-    private ClientRequestDTO client; //cliente novo
+    private CustomerRequestDTO customer; //cliente novo
 
     @NotEmpty(message = "The order must contain at least one item.")
     @Valid
@@ -25,20 +25,20 @@ public class OrderRequestDTO {
     @Valid
     private AddressRequestDTO shippingAddress;
 
-    public Long getClientId() {
-        return clientId;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public ClientRequestDTO getClient() {
-        return client;
+    public CustomerRequestDTO getCustomer() {
+        return customer;
     }
 
-    public void setClient(ClientRequestDTO client) {
-        this.client = client;
+    public void setCustomer(CustomerRequestDTO customer) {
+        this.customer = customer;
     }
 
     public List<OrderItemRequestDTO> getItems() {
