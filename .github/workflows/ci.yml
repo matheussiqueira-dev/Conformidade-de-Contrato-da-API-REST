@@ -85,8 +85,9 @@ jobs:
             target/flyway-ci.log
 
   bd:
-    # Entrega de Banco de Dados: Flyway V1-V7 + massa demo (perfil demo), depois RBAC/RLS, CRUD,
-    # testes 06a/b/c e a corrida CC-01 por psql. Falha em qualquer FAIL ou ERROR.
+    # Entrega de Banco de Dados: Flyway + massa demo (perfil demo), depois RBAC/RLS, CRUD,
+    # testes 06a/b/c/d e a corrida CC-01 por psql. Em etapa separada, a massa Olist (07, 08, 09 e CT-DEMO-05
+    # pela API), sem alterar os numeros dos testes 06*. Falha em qualquer FAIL ou ERROR.
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -113,17 +114,25 @@ jobs:
           java-version: "25"
           cache: maven
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
       - name: Build
         run: |
           chmod +x mvnw
           ./mvnw -B -q -DskipTests package
 
-      - name: Migrate V1-V8 with demo seed
+      - name: Migrate with demo seed
         shell: bash
         env:
           SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
         run: |
           export SBI_DEMO_PASSWORD="$(openssl rand -hex 16)"
+          # A mesma senha volta na etapa Olist (CT-DEMO-05 entra com as contas demo pela API).
+          echo "::add-mask::$SBI_DEMO_PASSWORD"
+          echo "SBI_DEMO_PASSWORD=$SBI_DEMO_PASSWORD" >> "$GITHUB_ENV"
           timeout 300 java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
             --spring.profiles.active=demo \
             --spring.main.web-application-type=none \
@@ -141,6 +150,18 @@ jobs:
           OUT: target/resultado_bd.txt
         run: bash docs/bd/pacote-sql/run_bd.sh
 
+      - name: Olist demo dataset by psql (07 twice, 08, 09) and masking by the API (CT-DEMO-05)
+        shell: bash
+        env:
+          CONTAINER: ${{ job.services.postgres.id }}
+          DB: order_management_test
+          SUPERUSER: postgres_test
+          JAR: target/order-management-spring-0.0.1-SNAPSHOT.jar
+          JDBC_URL: jdbc:postgresql://localhost:15432/order_management_test
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+          OUT: target/resultado_olist.txt
+        run: bash docs/bd/pacote-sql/run_olist_bd.sh
+
       - name: Preserve database reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -149,6 +170,7 @@ jobs:
           path: |
             target/bd-demo.log
             target/resultado_bd.txt
+            target/resultado_olist.txt
 
   contract:
     # Auditoria estatica do contrato e verificacao ao vivo (CT-CONTRACT-102) contra a API isolada.
