@@ -88,9 +88,13 @@ jobs:
           node scripts/http-session.mjs
           node scripts/live-contract.mjs
           cd frontend
+          # Rewrites (build) e layouts do servidor (start) usam a mesma API isolada.
+          export BACKEND_ORIGIN=http://127.0.0.1:18080
           npm ci --no-audit --no-fund
+          npm run typecheck
+          npm run api:check
           npm test
-          BACKEND_ORIGIN=http://127.0.0.1:18080 npm run build
+          npm run build
           npx playwright install --with-deps chromium
           npm run test:e2e
           cd ..
