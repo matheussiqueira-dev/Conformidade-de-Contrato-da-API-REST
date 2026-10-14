@@ -899,6 +899,48 @@
         }
       }
     },
+    "/customers/{id}/summary": {
+      "get": {
+        "summary": "Indicadores de compra do cliente",
+        "operationId": "getCustomerSummary",
+        "x-rf": [
+          "RF-21",
+          "RF-25"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "description": "Para o VENDEDOR, valores (total, ticket medio e formas de pagamento) so dos pedidos dele (scope OWN) e sem estornos da loja.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Indicadores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerPurchaseSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/performance/me": {
       "get": {
         "summary": "Meta e realizado do usuario da sessao",
@@ -6403,6 +6445,164 @@
             "x-constraint": "StrongPassword"
           }
         }
+      },
+      "CustomerTopProduct": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "productId",
+          "name",
+          "quantity"
+        ],
+        "description": "Produto mais comprado pelo cliente (loja toda, sem valores).",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        }
+      },
+      "CustomerPaymentMix": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "method",
+          "orders",
+          "amount"
+        ],
+        "description": "Pedidos pagos por forma de pagamento, no mesmo escopo de totalSpent.",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "CARD",
+              "PIX",
+              "BOLETO"
+            ]
+          },
+          "orders": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          }
+        }
+      },
+      "CustomerPurchaseSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "customerId",
+          "scope",
+          "firstPurchaseAt",
+          "lastPurchaseAt",
+          "ordersPaid",
+          "pendingOrders",
+          "canceledOrders",
+          "totalSpent",
+          "averageTicket",
+          "refundsTotal",
+          "topProducts",
+          "paymentMix"
+        ],
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "STORE",
+              "OWN"
+            ],
+            "description": "STORE: totalSpent, averageTicket e paymentMix da loja toda (GERENTE). OWN: so dos pedidos do vendedor da sessao."
+          },
+          "firstPurchaseAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Primeiro pagamento aprovado (loja toda); null sem compras."
+          },
+          "lastPurchaseAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Ultimo pagamento aprovado (loja toda); null sem compras."
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "description": "Pedidos com pagamento aprovado (loja toda)."
+          },
+          "pendingOrders": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "description": "Pedidos aguardando pagamento (loja toda); fora dos totais."
+          },
+          "canceledOrders": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "description": "Pedidos cancelados (loja toda); fora dos totais."
+          },
+          "totalSpent": {
+            "$ref": "#/components/schemas/Money",
+            "description": "Vendas pagas menos estornos, no escopo indicado (mesma regra do faturamento)."
+          },
+          "averageTicket": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "totalSpent dividido pelos pedidos pagos do mesmo escopo; null sem pedidos."
+          },
+          "refundsTotal": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Estornos da loja toda; null para o VENDEDOR."
+          },
+          "topProducts": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "$ref": "#/components/schemas/CustomerTopProduct"
+            }
+          },
+          "paymentMix": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerPaymentMix"
+            }
+          }
+        },
+        "description": "Indicadores do cliente para a tela de perfil (G-05). Contagens e datas valem para a loja toda; valores so no escopo."
       }
     }
   }

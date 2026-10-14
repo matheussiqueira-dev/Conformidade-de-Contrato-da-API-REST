@@ -1149,6 +1149,79 @@ export const ListCustomerOrdersResponse = zod.strictObject({
 
 
 /**
+ * Para o VENDEDOR, valores (total, ticket medio e formas de pagamento) so dos pedidos dele (scope OWN) e sem estornos da loja.
+ * @summary Indicadores de compra do cliente
+ */
+
+
+
+export const GetCustomerSummaryParams = zod.strictObject({
+  "id": zod.int().min(1)
+})
+
+export const getCustomerSummaryResponseOrdersPaidMin = 0;
+
+export const getCustomerSummaryResponsePendingOrdersMin = 0;
+
+export const getCustomerSummaryResponseCanceledOrdersMin = 0;
+
+export const getCustomerSummaryResponseTotalSpentAmountMin = 0;
+export const getCustomerSummaryResponseTotalSpentAmountMax = 9999999999.99;
+
+export const getCustomerSummaryResponseAverageTicketOneAmountMin = 0;
+export const getCustomerSummaryResponseAverageTicketOneAmountMax = 9999999999.99;
+
+export const getCustomerSummaryResponseRefundsTotalOneAmountMin = 0;
+export const getCustomerSummaryResponseRefundsTotalOneAmountMax = 9999999999.99;
+
+export const getCustomerSummaryResponseTopProductsItemQuantityMin = 0;
+
+export const getCustomerSummaryResponseTopProductsMax = 5;
+
+export const getCustomerSummaryResponsePaymentMixItemOrdersMin = 0;
+
+export const getCustomerSummaryResponsePaymentMixItemAmountAmountMin = 0;
+export const getCustomerSummaryResponsePaymentMixItemAmountAmountMax = 9999999999.99;
+
+
+
+export const GetCustomerSummaryResponse = zod.strictObject({
+  "customerId": zod.int(),
+  "scope": zod.enum(['STORE', 'OWN']).describe('STORE: totalSpent, averageTicket e paymentMix da loja toda (GERENTE). OWN: so dos pedidos do vendedor da sessao.'),
+  "firstPurchaseAt": zod.iso.datetime({"offset":true}).nullable().describe('Primeiro pagamento aprovado (loja toda); null sem compras.'),
+  "lastPurchaseAt": zod.iso.datetime({"offset":true}).nullable().describe('Ultimo pagamento aprovado (loja toda); null sem compras.'),
+  "ordersPaid": zod.int().min(getCustomerSummaryResponseOrdersPaidMin).describe('Pedidos com pagamento aprovado (loja toda).'),
+  "pendingOrders": zod.int().min(getCustomerSummaryResponsePendingOrdersMin).describe('Pedidos aguardando pagamento (loja toda); fora dos totais.'),
+  "canceledOrders": zod.int().min(getCustomerSummaryResponseCanceledOrdersMin).describe('Pedidos cancelados (loja toda); fora dos totais.'),
+  "totalSpent": zod.strictObject({
+  "amount": zod.number().min(getCustomerSummaryResponseTotalSpentAmountMin).max(getCustomerSummaryResponseTotalSpentAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Vendas pagas menos estornos, no escopo indicado (mesma regra do faturamento).'),
+  "averageTicket": zod.union([zod.strictObject({
+  "amount": zod.number().min(getCustomerSummaryResponseAverageTicketOneAmountMin).max(getCustomerSummaryResponseAverageTicketOneAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]).describe('totalSpent dividido pelos pedidos pagos do mesmo escopo; null sem pedidos.'),
+  "refundsTotal": zod.union([zod.strictObject({
+  "amount": zod.number().min(getCustomerSummaryResponseRefundsTotalOneAmountMin).max(getCustomerSummaryResponseRefundsTotalOneAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]).describe('Estornos da loja toda; null para o VENDEDOR.'),
+  "topProducts": zod.array(zod.strictObject({
+  "productId": zod.int(),
+  "name": zod.string(),
+  "quantity": zod.int().min(getCustomerSummaryResponseTopProductsItemQuantityMin)
+}).describe('Produto mais comprado pelo cliente (loja toda, sem valores).')).max(getCustomerSummaryResponseTopProductsMax),
+  "paymentMix": zod.array(zod.strictObject({
+  "method": zod.enum(['CARD', 'PIX', 'BOLETO']),
+  "orders": zod.int().min(getCustomerSummaryResponsePaymentMixItemOrdersMin),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(getCustomerSummaryResponsePaymentMixItemAmountAmountMin).max(getCustomerSummaryResponsePaymentMixItemAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Pedidos pagos por forma de pagamento, no mesmo escopo de totalSpent.'))
+}).describe('Indicadores do cliente para a tela de perfil (G-05). Contagens e datas valem para a loja toda; valores so no escopo.')
+
+
+/**
  * @summary Meta e realizado do usuario da sessao
  */
 export const getMyPerformanceQueryPeriodRegExp = new RegExp('^\\d{4}-(0[1-9]|1[0-2])$');
