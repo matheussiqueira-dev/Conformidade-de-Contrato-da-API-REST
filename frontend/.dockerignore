@@ -1,0 +1,7 @@
+node_modules
+.next
+test-results
+playwright-report
+.npm-cache
+*.tsbuildinfo
+next-env.d.ts
