@@ -1136,7 +1136,6 @@ export const getMyPerformanceResponsePeriodRegExp = new RegExp('^\\d{4}-(0[1-9]|
 export const getMyPerformanceResponseGoalAmountMin = 0;
 export const getMyPerformanceResponseGoalAmountMax = 9999999999.99;
 
-export const getMyPerformanceResponseRealizedAmountMin = 0;
 export const getMyPerformanceResponseRealizedAmountMax = 9999999999.99;
 
 export const getMyPerformanceResponseRemainingAmountMin = 0;
@@ -1155,9 +1154,9 @@ export const GetMyPerformanceResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "realized": zod.strictObject({
-  "amount": zod.number().min(getMyPerformanceResponseRealizedAmountMin).max(getMyPerformanceResponseRealizedAmountMax),
+  "amount": zod.number().max(getMyPerformanceResponseRealizedAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),
   "remaining": zod.strictObject({
   "amount": zod.number().min(getMyPerformanceResponseRemainingAmountMin).max(getMyPerformanceResponseRemainingAmountMax),
   "currency": zod.literal("BRL")
@@ -1282,7 +1281,6 @@ export const getManagementSummaryResponsePeriodRegExp = new RegExp('^\\d{4}-(0[1
 export const getManagementSummaryResponseStoreGoalAmountMin = 0;
 export const getManagementSummaryResponseStoreGoalAmountMax = 9999999999.99;
 
-export const getManagementSummaryResponseStoreRealizedAmountMin = 0;
 export const getManagementSummaryResponseStoreRealizedAmountMax = 9999999999.99;
 
 export const getManagementSummaryResponseRemainingAmountMin = 0;
@@ -1291,7 +1289,6 @@ export const getManagementSummaryResponseRemainingAmountMax = 9999999999.99;
 export const getManagementSummaryResponseTeamItemGoalAmountMin = 0;
 export const getManagementSummaryResponseTeamItemGoalAmountMax = 9999999999.99;
 
-export const getManagementSummaryResponseTeamItemRealizedAmountMin = 0;
 export const getManagementSummaryResponseTeamItemRealizedAmountMax = 9999999999.99;
 
 
@@ -1303,9 +1300,9 @@ export const GetManagementSummaryResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "storeRealized": zod.strictObject({
-  "amount": zod.number().min(getManagementSummaryResponseStoreRealizedAmountMin).max(getManagementSummaryResponseStoreRealizedAmountMax),
+  "amount": zod.number().max(getManagementSummaryResponseStoreRealizedAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),
   "remaining": zod.strictObject({
   "amount": zod.number().min(getManagementSummaryResponseRemainingAmountMin).max(getManagementSummaryResponseRemainingAmountMax),
   "currency": zod.literal("BRL")
@@ -1322,9 +1319,9 @@ export const GetManagementSummaryResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "realized": zod.strictObject({
-  "amount": zod.number().min(getManagementSummaryResponseTeamItemRealizedAmountMin).max(getManagementSummaryResponseTeamItemRealizedAmountMax),
+  "amount": zod.number().max(getManagementSummaryResponseTeamItemRealizedAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),
   "achievementPercent": zod.number().nullable().describe('1 casa decimal; null quando a meta e zero.'),
   "state": zod.enum(['SEM_META', 'EM_ANDAMENTO', 'META_ATINGIDA'])
 }))
@@ -1344,34 +1341,27 @@ export const getRevenueReportResponseGrossRevenueAmountMax = 9999999999.99;
 export const getRevenueReportResponseRefundsAmountMin = 0;
 export const getRevenueReportResponseRefundsAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseNetRevenueAmountMin = 0;
 export const getRevenueReportResponseNetRevenueAmountMax = 9999999999.99;
 
 export const getRevenueReportResponseAverageTicketOneAmountMin = 0;
 export const getRevenueReportResponseAverageTicketOneAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseGrossProfitOneAmountMin = 0;
 export const getRevenueReportResponseGrossProfitOneAmountMax = 9999999999.99;
 
 export const getRevenueReportResponseCostCoveragePercentMin = 0;
 export const getRevenueReportResponseCostCoveragePercentMax = 100;
 
-export const getRevenueReportResponseDailyItemNetRevenueAmountMin = 0;
 export const getRevenueReportResponseDailyItemNetRevenueAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseDailyItemGrossProfitOneAmountMin = 0;
 export const getRevenueReportResponseDailyItemGrossProfitOneAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseByPaymentMethodItemNetRevenueAmountMin = 0;
 export const getRevenueReportResponseByPaymentMethodItemNetRevenueAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseBySellerItemNetRevenueAmountMin = 0;
 export const getRevenueReportResponseBySellerItemNetRevenueAmountMax = 9999999999.99;
 
 export const getRevenueReportResponseTopProductsItemNetRevenueAmountMin = 0;
 export const getRevenueReportResponseTopProductsItemNetRevenueAmountMax = 9999999999.99;
 
-export const getRevenueReportResponseTopProductsItemGrossProfitOneAmountMin = 0;
 export const getRevenueReportResponseTopProductsItemGrossProfitOneAmountMax = 9999999999.99;
 
 export const getRevenueReportResponseTopProductsMax = 20;
@@ -1395,9 +1385,9 @@ export const GetRevenueReportResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "netRevenue": zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseNetRevenueAmountMin).max(getRevenueReportResponseNetRevenueAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseNetRevenueAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),
   "ordersPaid": zod.int(),
   "unitsSold": zod.int(),
   "averageTicket": zod.union([zod.strictObject({
@@ -1405,29 +1395,29 @@ export const GetRevenueReportResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]),
   "grossProfit": zod.union([zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseGrossProfitOneAmountMin).max(getRevenueReportResponseGrossProfitOneAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseGrossProfitOneAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),zod.null()]),
   "grossMarginPercent": zod.number().nullable(),
   "costCoveragePercent": zod.number().min(getRevenueReportResponseCostCoveragePercentMin).max(getRevenueReportResponseCostCoveragePercentMax),
   "daily": zod.array(zod.strictObject({
   "date": zod.iso.date(),
   "netRevenue": zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseDailyItemNetRevenueAmountMin).max(getRevenueReportResponseDailyItemNetRevenueAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseDailyItemNetRevenueAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),
   "grossProfit": zod.union([zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseDailyItemGrossProfitOneAmountMin).max(getRevenueReportResponseDailyItemGrossProfitOneAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseDailyItemGrossProfitOneAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()])
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),zod.null()])
 })),
   "byPaymentMethod": zod.array(zod.strictObject({
   "method": zod.enum(['PIX', 'CARD', 'BOLETO']),
   "ordersPaid": zod.int(),
   "netRevenue": zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseByPaymentMethodItemNetRevenueAmountMin).max(getRevenueReportResponseByPaymentMethodItemNetRevenueAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseByPaymentMethodItemNetRevenueAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).')
 })),
   "bySeller": zod.array(zod.strictObject({
   "seller": zod.strictObject({
@@ -1436,9 +1426,9 @@ export const GetRevenueReportResponse = zod.strictObject({
 }).describe('Referencia minima a usuario da equipe.'),
   "ordersPaid": zod.int(),
   "netRevenue": zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseBySellerItemNetRevenueAmountMin).max(getRevenueReportResponseBySellerItemNetRevenueAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseBySellerItemNetRevenueAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).')
 })),
   "topProducts": zod.array(zod.strictObject({
   "productId": zod.int(),
@@ -1450,9 +1440,9 @@ export const GetRevenueReportResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "grossProfit": zod.union([zod.strictObject({
-  "amount": zod.number().min(getRevenueReportResponseTopProductsItemGrossProfitOneAmountMin).max(getRevenueReportResponseTopProductsItemGrossProfitOneAmountMax),
+  "amount": zod.number().max(getRevenueReportResponseTopProductsItemGrossProfitOneAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()])
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),zod.null()])
 })).max(getRevenueReportResponseTopProductsMax),
   "lowStockCount": zod.int(),
   "pendingPaymentCount": zod.int(),
@@ -2576,10 +2566,8 @@ export const GetSalesAnalyticsQueryParams = zod.strictObject({
 })
 
 export const getSalesAnalyticsResponseMonthRegExp = new RegExp('^\\d{4}-(0[1-9]|1[0-2])$');
-export const getSalesAnalyticsResponseWeeklyItemRealizedAmountMin = 0;
 export const getSalesAnalyticsResponseWeeklyItemRealizedAmountMax = 9999999999.99;
 
-export const getSalesAnalyticsResponseByPaymentMethodItemNetRevenueAmountMin = 0;
 export const getSalesAnalyticsResponseByPaymentMethodItemNetRevenueAmountMax = 9999999999.99;
 
 export const getSalesAnalyticsResponseProductMarginsItemNetRevenueAmountMin = 0;
@@ -2588,7 +2576,6 @@ export const getSalesAnalyticsResponseProductMarginsItemNetRevenueAmountMax = 99
 export const getSalesAnalyticsResponseProductMarginsItemCostOneAmountMin = 0;
 export const getSalesAnalyticsResponseProductMarginsItemCostOneAmountMax = 9999999999.99;
 
-export const getSalesAnalyticsResponseProductMarginsItemGrossMarginOneAmountMin = 0;
 export const getSalesAnalyticsResponseProductMarginsItemGrossMarginOneAmountMax = 9999999999.99;
 
 export const getSalesAnalyticsResponsePromotionUsageItemDiscountTotalAmountMin = 0;
@@ -2605,17 +2592,17 @@ export const GetSalesAnalyticsResponse = zod.strictObject({
   "start": zod.iso.date(),
   "end": zod.iso.date(),
   "realized": zod.strictObject({
-  "amount": zod.number().min(getSalesAnalyticsResponseWeeklyItemRealizedAmountMin).max(getSalesAnalyticsResponseWeeklyItemRealizedAmountMax),
+  "amount": zod.number().max(getSalesAnalyticsResponseWeeklyItemRealizedAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).')
 })),
   "byPaymentMethod": zod.array(zod.strictObject({
   "method": zod.enum(['PIX', 'CARD', 'BOLETO']),
   "ordersPaid": zod.int(),
   "netRevenue": zod.strictObject({
-  "amount": zod.number().min(getSalesAnalyticsResponseByPaymentMethodItemNetRevenueAmountMin).max(getSalesAnalyticsResponseByPaymentMethodItemNetRevenueAmountMax),
+  "amount": zod.number().max(getSalesAnalyticsResponseByPaymentMethodItemNetRevenueAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).')
 })),
   "productMargins": zod.array(zod.strictObject({
   "productId": zod.int(),
@@ -2630,9 +2617,9 @@ export const GetSalesAnalyticsResponse = zod.strictObject({
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]),
   "grossMargin": zod.union([zod.strictObject({
-  "amount": zod.number().min(getSalesAnalyticsResponseProductMarginsItemGrossMarginOneAmountMin).max(getSalesAnalyticsResponseProductMarginsItemGrossMarginOneAmountMax),
+  "amount": zod.number().max(getSalesAnalyticsResponseProductMarginsItemGrossMarginOneAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]),
+}).describe('Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).'),zod.null()]),
   "marginPercent": zod.number().nullable(),
   "itemsWithoutCost": zod.int()
 })),
