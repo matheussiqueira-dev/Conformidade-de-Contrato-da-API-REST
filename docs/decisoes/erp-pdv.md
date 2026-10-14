@@ -95,6 +95,15 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | A2A-3 | O número completo do cartão no `/payment` legado é o defeito D022 (N-05), corrigido na ETAPA 2C (serviço grava só os 4 últimos dígitos, migração mascara os dados existentes, teste); a ETAPA 2A não cria CHECK em `card_number`. |
 | A2A-4 | O seed demo fica em `db/demo` como `V6_1`/`V6_2` e exige o perfil `demo` ativo desde a primeira migração do banco, com `outOfOrder` desligado: ativar o perfil num banco já migrado além da V6 faz o Flyway recusar as versões pendentes, e o banco deve ser recriado. |
 
+## Decisões da execução noturna
+
+| ID | Decisão |
+| --- | --- |
+| D-NOITE-01 | A hora da loja (B-10) vem de `entities/StoreTime`, um `Clock` fixo em America/Fortaleza usado por `Order.moment` e pelas datas de pagamento, em vez de um `Clock` no construtor dos serviços, que quebraria os testes montados com `@InjectMocks`. |
+| D-NOITE-02 | As entidades de cliente só removem a máscara do documento (`Documents.digitsOnly`); os serviços que recebem DTO validam o tamanho (`Documents.cpf/cnpj`, 400) e o CHECK da V5 continua como última barreira. |
+| D-NOITE-03 | A lista das 17 tabelas de negócio esvaziadas por `TRUNCATE ... RESTART IDENTITY CASCADE` fica em `config/BusinessTables.java`, compartilhada pelos testes com transação confirmada e pelo runner de contrato. |
+| D-NOITE-04 | O job `bd` aplica V1–V6 e a massa demo subindo o jar com o perfil `demo` e `web-application-type=none`, e roda o pacote por `psql` dentro do contêiner do PostgreSQL (`docs/bd/pacote-sql/run_bd.sh`), exigindo exatamente 51 PASS. |
+
 ## Processo
 
 | ID | Decisão |

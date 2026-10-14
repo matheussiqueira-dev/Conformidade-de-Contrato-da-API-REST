@@ -1,0 +1,51 @@
+PASS BD-01 Allan 68.400 / 80.000 = 85,5%
+PASS BD-02 Francisco 77,5% e Gabriel 70,0%
+PASS BD-03 Loja 186.400 / 240.000 = 77,7%, falta 53.600
+PASS BD-04 Evolucao semanal 38.200/41.600/36.800/42.300/27.500
+PASS BD-05 Pendentes de 01/10 fora do realizado
+PASS BD-06 Saldo, reservado e disponivel
+PASS BD-07 Margem NULL quando ha item sem custo
+PASS BD-08 Margem calculada quando custo conhecido (Apple Watch 32,1%)
+PASS BD-09 Apple Watch abaixo do minimo e iPhone fora do alerta
+PASS BD-10 quantidade 0 rejeitada
+PASS BD-11 quantidade 1 aceita
+PASS BD-12 preco 0,00 rejeitado (minimo 0,01)
+PASS BD-13 desconto 100,01% rejeitado
+PASS BD-14 promocao exige gerente
+PASS BD-15 reservado <= saldo garantido pelo banco
+PASS BD-16 distribuicao divergente rejeitada
+PASS BD-17 Meta zero -> Sem meta e atingimento NULL
+PASS BD-18 Custo medio ponderado = 150,00
+PASS BD-19 Segunda confirmacao sem efeito; iPhone 9/1/8
+PASS BD-20 Realizado de outubro do Allan = 5.700 apos confirmacao
+PASS BD-21 Cancelamento libera reserva (iPhone reservado 2 -> 1)
+PASS BD-22 Estorno de 1.200 entra como -1.200 na data do estorno; setembro preservado
+PASS BD-23 estorno acima do pago rejeitado
+PASS BD-24 Historico de preco com autor gerente
+PASS BD-25 Item vendido mantem preco 4.500 apos reajuste
+PASS BD-26 Desconto 10% sobre 2 x 300 = 60; total 540
+PASS BD-27 promocao fora do escopo rejeitada
+PASS BD-28 venda acima do disponivel rejeitada (LJ409 -> HTTP 409)
+PASS BD-29 pedido sem usuario rejeitado
+PASS RB-01 tabela product (custo) negada ao vendedor
+PASS RB-02 margem negada ao vendedor
+PASS RB-03 resultado da loja negado ao vendedor
+PASS RB-04 coluna unit_cost negada ao vendedor
+PASS RB-05 coluna card_number negada ao vendedor
+PASS RB-06 alteracao de estoque negada
+PASS RB-07 criacao de promocao negada
+PASS RB-08 estorno negado ao vendedor
+PASS RB-09 Catalogo do vendedor sem colunas de custo
+PASS RB-10 Vendedor ve somente os proprios pedidos (BOLA)
+PASS RB-11 Meu desempenho retorna somente o Allan
+PASS RB-12 Minha evolucao semanal = 12.000/15.000/13.400/18.000/10.000
+PASS RB-13 cancelamento de pedido alheio negado
+PASS RB-14 Pedido criado pela vendedora tem seller = Allan
+PASS RG-01 Gerente ve todos os pedidos
+PASS RG-02 Gerente le posicao de estoque com custo
+PASS RG-03 Atualizacao de preco registra gerente e motivo
+PASS RG-04 Gerente libera promocao, visivel como ativa
+PASS RG-05 Entrada de estoque soma saldo e recalcula custo (2x1900 + 5x1950)
+PASS RG-06 saldo so muda por entrada/movimento
+PASS RG-07 exclusao fisica de pedidos negada
+PASS CC-01 duas reservas simultaneas da ultima unidade: exatamente uma aceita

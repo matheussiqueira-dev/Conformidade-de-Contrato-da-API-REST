@@ -22,12 +22,12 @@ public class IndividualCustomer extends Customer{
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        this.cpf = Documents.digitsOnly(cpf);
     }
 
     public IndividualCustomer(String name, String email, LocalDate birthDate, String cpf) {
         super(name, email, birthDate);
-        this.cpf = cpf;
+        this.cpf = Documents.digitsOnly(cpf);
 
 
     }
