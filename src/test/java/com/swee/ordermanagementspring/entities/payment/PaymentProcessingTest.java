@@ -82,14 +82,15 @@ class PaymentProcessingTest {
         @ParameterizedTest(name = "[CT-BB-BOL-02] vencimento hoje{0} dia(s) -> {1}")
         @CsvSource({"-1, EXPIRED, false", "0, APPROVED, true", "1, APPROVED, true"})
         void dueDateBoundary(int offsetDays, PaymentStatus expected, boolean approved) {
-            BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", LocalDate.now().plusDays(offsetDays));
-            assertThat(payment.processPayment()).isEqualTo(approved);
+            LocalDate today = LocalDate.of(2026, 10, 9);
+            BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", today.plusDays(offsetDays));
+            assertThat(payment.processPayment(today)).isEqualTo(approved);
             assertThat(payment.getStatus()).isEqualTo(expected);
             assertThat(payment.getPaymentDate() != null).isEqualTo(approved);
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D006] boleto sem vencimento gera erro de negocio, nao NullPointerException")
         void missingDueDateIsABusinessError() {
             BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", null);
