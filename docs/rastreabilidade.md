@@ -9,7 +9,7 @@ Situação em 14/10/2026, na branch `ci/full-pipeline`, que empilha as etapas 2A
 - **Lógica do frontend**: `frontend/tests/` (`npm test`, 20 testes).
 - **Contrato**: `scripts/live-contract.mjs` (45 operações, 0 divergências), `scripts/http-contract.mjs` e `scripts/http-session.mjs`, no job `contract`.
 - **Banco**: `docs/bd/pacote-sql/run_bd.sh`, com 51 PASS no job `bd`.
-- **CI de referência**: run `38543403142`, com os quatro jobs verdes (`test (backend)`, `bd`, `contract`, `frontend`) no commit `8fafed2`. As rodadas seguintes desta branch ficam em `gh run list --branch ci/full-pipeline`.
+- **CI de referência**: run `38543403142`, com os quatro jobs verdes (`test (backend)`, `bd`, `contract`, `frontend`) no commit `8fafed2`. A branch foi integrada à `main` e apagada; as rodadas seguintes ficam em `gh run list --branch main`.
 
 ## Matriz
 
