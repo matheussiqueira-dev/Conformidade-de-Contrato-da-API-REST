@@ -28,11 +28,33 @@ public class PaymentService {
     private OrderRepository orderRepository;
 
 
+    /**
+     * D019: processa com as linhas do pedido e do pagamento bloqueadas ate o commit. Uma segunda requisicao
+     * simultanea espera, le o pagamento ja processado e e recusada pela regra D004. Ordem fixa dos bloqueios
+     * (pedido, depois pagamento), a mesma de OrderService.updateStatus, para nao haver deadlock.
+     */
+    @Transactional
+    public Payment process(Long id) {
+        Long orderId = paymentRepository.findOrderIdById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found, id: " + id));
+        orderRepository.findWithLockById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found, id: " + orderId));
+        Payment payment = paymentRepository.findWithLockById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment not found, id: " + id));
+        return processAndSave(payment);
+    }
+
     @Transactional
     public Payment processAndSave(Payment payment) {
         // D004: pagamento ja aprovado, recusado ou expirado nao e processado de novo
         if (payment.getStatus() != PaymentStatus.PENDING) {
             throw new PaymentException("Only payments with PENDING status can be processed");
+        }
+
+        // D018: pagamento tardio nao pode fazer um pedido enviado ou entregue voltar para PAID (regra D010)
+        OrderStatus current = payment.getOrder().getStatus();
+        if (!current.canMoveTo(OrderStatus.PAID)) {
+            throw new PaymentException("Payment cannot be processed: order is already " + current);
         }
 
         boolean approved = payment.processPayment();

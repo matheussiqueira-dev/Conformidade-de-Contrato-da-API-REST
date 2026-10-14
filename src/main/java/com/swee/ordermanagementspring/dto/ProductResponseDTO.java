@@ -5,18 +5,20 @@ import com.swee.ordermanagementspring.entities.product.DigitalProduct;
 import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
 import com.swee.ordermanagementspring.entities.product.Product;
 
+import java.math.BigDecimal;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponseDTO {
 
     private Long id;
     private String type;
     private String name;
-    private Double price;
+    private BigDecimal price;
     private String description;
     private Double weight;
     private String downloadLink;
 
-    public ProductResponseDTO(Long id, String type, String name, Double price, String description,
+    public ProductResponseDTO(Long id, String type, String name, BigDecimal price, String description,
                               Double weight, String downloadLink) {
         this.id = id;
         this.type = type;
@@ -65,7 +67,7 @@ public class ProductResponseDTO {
         return name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 

@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.exceptions.PaymentException;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ public class BoletoPayment extends Payment{
     private String barCode;
     private LocalDate dueDate;
 
-    public BoletoPayment(Double amount, Order order, String barCode, LocalDate dueDate) {
+    public BoletoPayment(BigDecimal amount, Order order, String barCode, LocalDate dueDate) {
         super(amount, order);
         this.barCode = barCode;
         this.dueDate = dueDate;

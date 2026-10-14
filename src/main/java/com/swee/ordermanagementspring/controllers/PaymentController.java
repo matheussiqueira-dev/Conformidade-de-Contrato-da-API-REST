@@ -40,8 +40,7 @@ public class PaymentController {
 
     @PostMapping("/{id}/process")
     public ResponseEntity<PaymentResponseDTO> process(@PathVariable Long id) {
-        Payment payment = paymentService.findById(id);
-        Payment processedPayment = paymentService.processAndSave(payment);
+        Payment processedPayment = paymentService.process(id);
         return ResponseEntity.ok(PaymentResponseDTO.from(processedPayment));
     }
 

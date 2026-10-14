@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swee.ordermanagementspring.entities.product.Product;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class OrderItem {
 
@@ -11,7 +13,8 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer quantity;
-    private Double price;
+    @Column(precision = Money.PRECISION, scale = Money.SCALE)
+    private BigDecimal price;
     @ManyToOne
     @JsonIgnore
     private Order order; //composicao
@@ -22,11 +25,11 @@ public class OrderItem {
 
     }
 
-    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+    public OrderItem(Order order, Product product, Integer quantity, BigDecimal price) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.price = price;
+        this.price = Money.of(price);
     }
 
     public Order getOrder() {
@@ -48,12 +51,12 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPrice(BigDecimal price) {
+        this.price = Money.of(price);
     }
 
     public Product getProduct() {
@@ -64,8 +67,9 @@ public class OrderItem {
         this.product = product;
     }
 
-    public Double subTotal(){
-        return quantity * price;
+    /** Preco historico x quantidade, uma unica multiplicacao (QA-04). */
+    public BigDecimal subTotal(){
+        return Money.of(price.multiply(BigDecimal.valueOf(quantity)));
     }
 
 }
