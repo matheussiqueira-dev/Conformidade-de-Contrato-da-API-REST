@@ -1,7 +1,8 @@
 package com.swee.ordermanagementspring.entities.audit;
 
-/** Acoes aceitas por ck_audit_event_action (V5). */
+/** Acoes aceitas por ck_audit_event_action (V5, ampliada na V8 com as operacoes de usuario). */
 public enum AuditAction {
     LOGIN_SUCCEEDED, LOGIN_FAILED, ACCOUNT_LOCKED, LOGOUT, CUSTOMER_CREATED, CUSTOMER_UPDATED,
-    CUSTOMER_DELETED, STOCK_ADJUSTED, PRODUCT_STATUS_CHANGED, ORDER_CANCELED
+    CUSTOMER_DELETED, STOCK_ADJUSTED, PRODUCT_STATUS_CHANGED, ORDER_CANCELED,
+    USER_CREATED, USER_UPDATED, USER_ROLE_CHANGED, USER_STATUS_CHANGED, ACCOUNT_UNLOCKED, PASSWORD_RESET, PASSWORD_CHANGED
 }
