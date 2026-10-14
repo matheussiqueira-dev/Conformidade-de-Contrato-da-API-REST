@@ -1,6 +1,6 @@
 {
   "scope": "real-session-http-disposable-database",
-  "timestamp": "2026-10-14T09:27:12.582Z",
+  "timestamp": "2026-10-14T09:40:26.063Z",
   "results": [
     {
       "name": "Anonymous me returns 401; login without CSRF returns 403",
