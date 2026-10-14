@@ -10,20 +10,24 @@ Fontes: card 16 do Trello (D003–D016, registrados em 08/10), revisão dos PRs 
 | --- | --- | --- | --- | --- | --- |
 | H-01 | Quantidade multiplicada duas vezes no total do pedido | Crítica | Alta | Corrigido e retestado | `main` (03/10) |
 | H-02 | Erro genérico devolvia HTTP 500 com `status: 400` no corpo | Média | Média | Corrigido e retestado | `main` (04/10) |
-| D003 | Boleto vencido marca o pedido como PAID | Alta | Alta | Corrigido, aguardando merge | PR #5 |
-| D004 | Pagamento não PENDING é processado de novo | Alta | Alta | Corrigido, aguardando merge | PR #5 |
-| D006 | Boleto sem vencimento aceito; processamento lança NullPointerException | Alta | Alta | Corrigido, aguardando merge | PR #5 |
-| D008 | Cliente sem CPF/CNPJ lança `ProductException` | Baixa | Baixa | Corrigido, aguardando merge | PR #8 |
-| D010 | Status do pedido regride (ex.: DELIVERED → PENDING_PAYMENT) | Alta | Alta | Corrigido, aguardando merge | PR #8 |
-| D011 | DELETE de recurso inexistente não retorna 404 | Média | Média | Corrigido, aguardando merge | PR #8 |
-| D012 | Pagamento com valor diferente do total do pedido é aceito | Crítica | Alta | Corrigido, aguardando merge | PR #5 |
-| D016 | Tipo de pagamento depende do locale da JVM | Média | Média | Corrigido, aguardando merge | PR #5 |
-| D017 | Valor abaixo de meio centavo é aceito e gravado como 0,00 | Alta | Alta | Corrigido em branch local | `fix/FIX-03` |
-| D018 | Pagamento tardio volta pedido enviado/entregue para PAID | Alta | Alta | Corrigido em branch local | `fix/FIX-03` |
-| D019 | Requisições simultâneas passam pela validação de status | Média | Alta | Corrigido em branch local | `fix/FIX-03` |
-| D020 | Migração V3 arredonda antes de conferir o limite da coluna | Baixa | Média | Corrigido em branch local | `fix/FIX-03` |
-| D021 | Senha do banco ausente gera erro de autenticação confuso | Baixa | Média | Corrigido em branch local | PR #6 (commit novo) |
+| D003 | Boleto vencido marca o pedido como PAID | Alta | Alta | Corrigido na main | `192f068` |
+| D004 | Pagamento não PENDING é processado de novo | Alta | Alta | Corrigido na main | `192f068` |
+| D006 | Boleto sem vencimento aceito; processamento lança NullPointerException | Alta | Alta | Corrigido na main | `192f068` |
+| D008 | Cliente sem CPF/CNPJ lança `ProductException` | Baixa | Baixa | Corrigido na main | `a5e3b51` |
+| D010 | Status do pedido regride (ex.: DELIVERED → PENDING_PAYMENT) | Alta | Alta | Corrigido na main | `a5e3b51` |
+| D011 | DELETE de recurso inexistente não retorna 404 | Média | Média | Corrigido na main | `a5e3b51` |
+| D012 | Pagamento com valor diferente do total do pedido é aceito | Crítica | Alta | Corrigido na main | `192f068` |
+| D016 | Tipo de pagamento depende do locale da JVM | Média | Média | Corrigido na main | `192f068` |
+| D017 | Valor abaixo de meio centavo é aceito e gravado como 0,00 | Alta | Alta | Corrigido na main | `ac064e4` |
+| D018 | Pagamento tardio volta pedido enviado/entregue para PAID | Alta | Alta | Corrigido na main | `ac064e4` |
+| D019 | Requisições simultâneas passam pela validação de status | Média | Alta | Corrigido na main | `ac064e4` |
+| D020 | Migração V3 arredonda antes de conferir o limite da coluna | Baixa | Média | Corrigido na main | `ac064e4` |
+| D021 | Senha do banco ausente gera erro de autenticação confuso | Baixa | Média | Corrigido na main | `5bc0736` |
 | D022 | Rota legada de pagamento grava o número completo do cartão | Alta | Média | Corrigido | ETAPA 2C |
+| D023 | `GET /orders` legado responde 500 quando existe pedido de retirada (sem endereço) | Média | Alta | Corrigido | ETAPA 2C (`5995323`) |
+| D024 | Inteiro do corpo aceita decimal: quantidade `1.5` vira `1` | Média | Alta | Corrigido | ETAPA 2C (`cbcd7a1`) |
+| D025 | Contrato v4 rejeita `StockMovement.reason` nulo (tipo aceita `null`, `enum` não) | Baixa | Média | Corrigido | ETAPA 2C (`0c48a1a`, D-EXEC-06) |
+| D026 | OpenAPI ao vivo diverge do v4: `GET /auth/csrf` com parâmetro `csrf` e códigos 201/204 não documentados | Média | Média | Corrigido | ETAPA 2C (`b478ebf`) |
 
 IDs D001, D002, D005, D007, D009 e D013–D015 não aparecem no repositório nem na descrição do card 16. **Allan deve conferir no quadro** se foram descartados (duplicata, erro de teste) e registrar o motivo aqui. H-01 e H-02 são defeitos de 03–04/10 que nunca receberam ID; se D001/D002 estiverem livres, podem ser atribuídos a eles.
 
