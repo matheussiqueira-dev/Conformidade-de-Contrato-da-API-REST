@@ -1,5 +1,7 @@
 package com.swee.ordermanagementspring.entities.payment;
 
+import com.swee.ordermanagementspring.entities.StoreTime;
+
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
@@ -59,7 +61,7 @@ public class CardPayment extends Payment {
             throw new PaymentException("Invalid number");
         }
         this.status = PaymentStatus.APPROVED;
-        this.paymentDate = LocalDateTime.now();
+        this.paymentDate = StoreTime.now();
         return true;
     }
 }

@@ -1,5 +1,7 @@
 package com.swee.ordermanagementspring.entities.payment;
 
+import com.swee.ordermanagementspring.entities.StoreTime;
+
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
@@ -87,7 +89,7 @@ public class PixPayment extends Payment{
 
         this.transactionId = "PIX-" + System.currentTimeMillis();
         this.status = PaymentStatus.APPROVED;
-        this.paymentDate = LocalDateTime.now();
+        this.paymentDate = StoreTime.now();
         return true;
 
     }
