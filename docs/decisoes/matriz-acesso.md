@@ -40,6 +40,7 @@ Regras de leitura:
 | GET, PUT | `/customers/{id}` | 401 | PERMIT | PERMIT |
 | DELETE | `/customers/{id}` | 401 | 403 | PERMIT |
 | GET | `/customers/{id}/orders` | 401 | PERMIT | PERMIT |
+| GET | `/customers/{id}/summary` (contrato v5; valores do VENDEDOR so dos pedidos dele) | 401 | PERMIT | PERMIT |
 | POST | `/customers/{id}/address` (legado) | 401 | 403 | PERMIT |
 | GET | `/performance/me`, `/promotions/active` | 401 | PERMIT | PERMIT |
 | GET, POST | `/promotions`; POST `/promotions/{id}/close` | 401 | 403 | PERMIT |

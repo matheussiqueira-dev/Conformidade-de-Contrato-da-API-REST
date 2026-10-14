@@ -255,6 +255,10 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-CONTRACT-104 | G-01/G-03 | Integracao | - | Verde | `ErrorContractTest.errorCodesMatchTheContract` (enum `ErrorCode` do servidor igual ao do contrato v5) e `frontend/tests/users.test.ts` (todo codigo tem mensagem pt-BR) |
 | CT-WEB-110 | G-01 | E2E | Particionamento | Verde | `e2e/users.spec.ts`: mensagem unica para conta inexistente e senha errada, aviso de bloqueio, `?next=` externo ignorado |
 | CT-WEB-112 | G-01/G-03 | E2E/Acessibilidade | Transicao de estados | Verde | `e2e/users.spec.ts`: cadastro na tela, troca obrigatoria da senha provisoria, foco no campo com erro, desativacao derruba a sessao com aviso; axe WCAG 2.2 AA e 320 px em `/gestao/usuarios` e `/conta/senha` |
+| CT-CUS-121 | G-05 | Integracao/BD | Particionamento | Verde | `CustomersApiTest.managerSummaryCoversTheWholeStore` (pagos menos estornos, pendentes e cancelados fora dos totais, formas de pagamento) e BD-31 no job `bd` (`v_cliente_resumo` soma R$ 186.400 em 65 pedidos pagos do seed e iguala `v_faturamento_diario`) |
+| CT-CUS-122 | G-05 | Integracao | Particionamento | Verde | `CustomersApiTest.sellerSummaryIsScopedToOwnOrders` (scope OWN, `refundsTotal` nulo, formas de pagamento so dos pedidos do vendedor) |
+| CT-CUS-123 | G-05 | Integracao | Valor limite | Verde | `CustomersApiTest.customerWithoutPurchasesHasZeros` (zeros, datas e ticket nulos, listas vazias, 404 para inexistente) |
+| CT-WEB-111 | G-05 | E2E/Acessibilidade | Particionamento | Verde | `e2e/customers.spec.ts`: indicadores e abas com teclado, axe WCAG 2.2 AA e 320 px nos dois papeis, rotulo "Suas vendas para este cliente", nova venda com o cliente pre-selecionado |
 
 ## Selecao inicial da suite
 
