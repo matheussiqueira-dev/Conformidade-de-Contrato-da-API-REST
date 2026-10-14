@@ -105,7 +105,7 @@ Separar o que já existe do que será acrescentado evita a impressão de que a a
 | springdoc / Swagger / OpenAPI | 2.8.5 observado | Documentação da API. Para Boot 4, investigar linha 3.x e registrar a versão efetivamente validada. [S4] |
 | JUnit Jupiter, Mockito, AssertJ | A consolidar | Testes Java e simulação de dependências. Preferir versões gerenciadas pelo Spring Boot. |
 | REST Assured + validador OpenAPI | A implementar | Chamadas HTTP e validação do contrato. Provar suporte ao dialeto OpenAPI escolhido. |
-| Docker + Testcontainers | A configurar | PostgreSQL real e descartável nos testes. Fixar ciclo de vida e isolamento. |
+| PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432) | Configurado | PostgreSQL real e descartável nos testes de integração (perfil `integration`, tabelas de negócio esvaziadas por `TRUNCATE`); a CI usa o mesmo PostgreSQL 18 como serviço. Decisão da equipe em 14/10/2026: Testcontainers não é usado (D-EVO-38). |
 | JaCoCo + Surefire/Failsafe | A configurar | Cobertura e relatórios. JaCoCo 0.8.14 adicionou suporte oficial a Java 25. [S5] |
 | Análise estática | A escolher e configurar | Ao menos uma ferramenta é exigida. Começar com PMD; complementar com SpotBugs e/ou Sonar conforme viabilidade. |
 | Flyway + SQL + DBeaver | Proposta para BD | Migrações, consultas, inspeção e evidências do modelo. |
@@ -141,7 +141,7 @@ Detalhes que afetam escopo, esforço e a confiabilidade da demonstração.
 
 | Tema | Ajuste recomendado |
 | --- | --- |
-| Compatibilidade | Confirmar JDK, Boot, springdoc, JUnit, Mockito, JaCoCo, Testcontainers e validador juntos. Não prometer que uma troca isolada de versão resolverá tudo. |
+| Compatibilidade | Confirmar JDK, Boot, springdoc, JUnit, Mockito, JaCoCo, PostgreSQL 18 e validador juntos. Não prometer que uma troca isolada de versão resolverá tudo. |
 | Descoberta dos testes | Tags classificam testes, mas não configuram o Maven sozinhas. Usar *Test no Surefire e *IT no Failsafe; ligar integration-test e verify e evitar execução duplicada. |
 | Dados e migrações | Separar dados fictícios de teste das migrações permanentes. Não inserir massa de demonstração em V2 de produção por padrão. |
 | Modelo físico | O plano cita dtype, mas o código declara client_type, product_type e payment_type. Conferir esquema real antes de escrever SQL. |
@@ -244,7 +244,7 @@ Cada teste precisa de uma pergunta clara, um resultado esperado e uma evidência
 | Nível / técnica | Implementação proposta | O que prova |
 | --- | --- | --- |
 | Unitário | JUnit Jupiter + Mockito; serviços isolados, sem Spring ou banco. | Decisões e regras locais, incluindo caminhos de falha. |
-| Integração | JPA/JDBC com PostgreSQL em Testcontainers. | Mapeamento, constraints, consultas e transações reais. |
+| Integração | JPA/JDBC com PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432). | Mapeamento, constraints, consultas e transações reais. |
 | Sistema / HTTP | Spring Boot em porta aleatória + REST Assured. | Requisição percorre a aplicação até o banco e volta. |
 | Aceitação | Cenários Dado/Quando/Então associados aos RF. | Critério aprovado está atendido do ponto de vista de uso. |
 | Regressão | Reexecutar casos após correção, preservando vínculo ao defeito. | A correção resolve o caso e não quebra cenários já aprovados. |
@@ -255,7 +255,7 @@ Cada teste precisa de uma pergunta clara, um resultado esperado e uma evidência
 
 Usar fixtures com dados fictícios próprios, capturar IDs retornados e limpar/recriar o estado de forma determinística. Requisições HTTP em outra thread não são desfeitas automaticamente pela transação do método de teste. Não compartilhar dados mutáveis entre casos; iniciar sem paralelismo até provar isolamento.
 
-Escolher um ciclo de vida para containers e mantê-lo consistente com o contexto Spring. Um container compartilhado por métodos de uma classe não significa compartilhamento seguro entre todas as classes. Testar novamente em base vazia. [S9]
+O banco de teste é um só para a suíte (o contêiner do `docker-compose.test.yml`), então cada classe deixa as tabelas de negócio no estado que encontrou: a limpeza por `TRUNCATE` (`BusinessTables`) roda antes de cada teste. Testar novamente em base vazia (`docker compose -f docker-compose.test.yml down -v`).
 
 ### Fuzzing como complemento
 
@@ -427,7 +427,7 @@ docker version
 
 Na primeira semana, preparar e revisar uma configuração de banco local com versão fixa, banco exclusivo e credencial de desenvolvimento externa ao código. Recomenda-se um arquivo Compose documentado pela equipe. Ele ainda não existe como entrega deste manual. Não reutilizar dados reais ou um banco compartilhado para testes destrutivos.
 
-Após externalizar a configuração, fornecer SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME e SPRING_DATASOURCE_PASSWORD no ambiente local. Conferir host, porta e banco. Dados e logs da aplicação devem apontar ao banco de desenvolvimento; a suíte Testcontainers usa seu próprio banco descartável.
+Após externalizar a configuração, fornecer SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME e SPRING_DATASOURCE_PASSWORD no ambiente local. Conferir host, porta e banco. Dados e logs da aplicação devem apontar ao banco de desenvolvimento; a suíte de integração usa o PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432).
 
 ### 3. Iniciar, explorar e executar
 
@@ -542,7 +542,7 @@ Ensaiar também criar um caso, alterar um valor e provocar falha, executar suít
 
 ### Responsabilidade e uso de dados
 
-Usar massa sintética; remover segredos e dados pessoais de logs e capturas; preservar autoria e licença da API original; revisar e compreender qualquer código auxiliado por IA. Discutir consequências de falhas: total incorreto, pedido pago indevidamente, perda de integridade e exposição de dados. A ausência de autenticação limita o uso a ambiente controlado; este trabalho não certifica conformidade legal ou operação financeira real.
+Usar massa sintética; remover segredos e dados pessoais de logs e capturas; preservar autoria e licença da API original; revisar e compreender todo código incorporado ao projeto antes do commit. Discutir consequências de falhas: total incorreto, pedido pago indevidamente, perda de integridade e exposição de dados. A ausência de autenticação limita o uso a ambiente controlado; este trabalho não certifica conformidade legal ou operação financeira real.
 
 ## Glossário para ninguém ficar perdido
 
@@ -588,7 +588,7 @@ Fontes consultadas em 26/09/2026. Documentações online podem mudar; fixar vers
 | S6 / testes no Spring Boot | https://docs.spring.io/spring-boot/reference/testing/index.html |
 | S7 / JUnit Jupiter | https://docs.junit.org/current/user-guide/ |
 | S8 / OpenAPI 3.1 | https://spec.openapis.org/oas/v3.1.0.html |
-| S9 / Testcontainers | https://java.testcontainers.org/test_framework_integration/junit_5/ |
+| S9 / Docker Compose | https://docs.docker.com/compose/ (Testcontainers foi avaliado e não adotado, D-EVO-38) |
 | S10 / Maven Failsafe | https://maven.apache.org/surefire/maven-failsafe-plugin/usage.html |
 | S11 / Schemathesis | https://schemathesis.readthedocs.io/en/stable/ |
 
