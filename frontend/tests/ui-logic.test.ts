@@ -29,6 +29,11 @@ test('CPF e CNPJ conferem digito verificador', () => {
   assert.ok(!isValidCpf('111.111.111-11'));
   assert.ok(isValidCnpj('11.222.333/0001-81'));
   assert.ok(!isValidCnpj('11.222.333/0001-82'));
+  // CNPJ alfanumerico: exemplo oficial da Receita; minuscula vira maiuscula antes do calculo.
+  assert.ok(isValidCnpj('12.ABC.345/01DE-35'));
+  assert.ok(isValidCnpj('12abc34501de35'));
+  assert.ok(!isValidCnpj('12.ABC.345/01DE-36'));
+  assert.ok(!isValidCnpj('12.ABC.345/01DE-3A'));
   assert.equal(digits('(85) 99999-0000'), '85999990000');
 });
 

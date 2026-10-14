@@ -56,3 +56,37 @@ test('[CT-WEB-111] perfil do cliente com indicadores, abas e axe nos dois papeis
   await expect(page.getByRole('region', { name: 'Cliente' }).getByText(data.customerName)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Trocar cliente' })).toBeVisible();
 });
+
+/** CNPJ alfanumerico valido e unico por execucao (modulo 11 com valor ASCII - 48). */
+function alphanumericCnpj(): string {
+  const chars = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const base = ['1', '2', ...Array.from({ length: 10 }, (_, i) => (i % 3 === 0 ? String(Math.floor(Math.random() * 10)) : chars[Math.floor(Math.random() * chars.length)] ?? 'A'))];
+  const dv = (values: string[]) => {
+    const weights = values.length === 12 ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2] : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    const rest = values.reduce((sum, c, i) => sum + (c.charCodeAt(0) - 48) * (weights[i] ?? 0), 0) % 11;
+    return String(rest < 2 ? 0 : 11 - rest);
+  };
+  const first = dv(base);
+  return [...base, first, dv([...base, first])].join('');
+}
+
+test('[CT-WEB-113] vendedor cadastra empresa com CNPJ alfanumerico e ve o documento mascarado', async ({ page }) => {
+  const cnpj = alphanumericCnpj();
+  const masked = `**.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8, 12)}-**`;
+  await login(page, 'seller@example.test');
+  await page.goto('/clientes');
+  await page.getByRole('button', { name: 'Cadastrar cliente' }).click();
+  const form = page.getByRole('dialog');
+  await form.getByText('Pessoa jurídica').click();
+  await form.getByLabel('Nome fantasia').fill(`Loja Nova ${cnpj}`);
+  await form.getByLabel('Razão social').fill('Loja Nova LTDA');
+  await form.getByLabel('CNPJ').fill(cnpj.toLowerCase());
+  await form.getByLabel('E-mail').fill(`contato${cnpj.toLowerCase()}@cliente.test`);
+  await form.getByLabel('Telefone').fill('85999990000');
+  await form.getByRole('button', { name: 'Cadastrar cliente' }).click();
+  await expect(page.getByRole('heading', { name: `Loja Nova ${cnpj}`, level: 1 })).toBeVisible();
+  await expect(page.getByText(masked).first()).toBeVisible();
+  await page.goto('/clientes');
+  await page.getByLabel('Buscar cliente').fill(cnpj.toLowerCase());
+  await expect(page.getByText(masked).first()).toBeVisible();
+});
