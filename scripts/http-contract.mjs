@@ -10,7 +10,7 @@ if (process.env.A3_CONTRACT_ISOLATED !== '1') {
 
 // Fixed loopback port; the PowerShell runner owns an isolated API and database.
 const origin = 'http://127.0.0.1:18080';
-const baseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-04.json', import.meta.url), 'utf8'));
+const baseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-06.json', import.meta.url), 'utf8'));
 const results = [];
 let liveContract;
 const directory = new URL('../reports/contrato/spike-2026-10-04/', import.meta.url);
@@ -75,7 +75,7 @@ await run('Missing product returns 404', async () => {
   assert.ok(live.valid, JSON.stringify(live.errors));
 });
 const report = { scope: 'baseline-http-isolated-database', timestamp: new Date().toISOString(), results,
-  contract: 'baseline-errors-openapi-2026-10-04.json',
+  contract: 'baseline-errors-openapi-2026-10-06.json',
   contractGaps: ['Error documentation scope: POST /products 400 and GET /products/{id} 404 only.'],
   excluded: ['Seller projections, sales, inventory and goals require the dedicated domain endpoints.'],
   authentication: 'Manager session; CSRF token on mutations.' };

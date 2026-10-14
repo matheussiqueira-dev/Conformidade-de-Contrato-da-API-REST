@@ -36,14 +36,14 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void emptyDatabaseMigratesThroughV2AndRejectsUnknownSeller() throws Exception {
+    void emptyDatabaseMigratesThroughV3AndRejectsUnknownSeller() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
                 Flyway flyway = flyway(schema, null);
-                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(2);
+                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(3);
                 flyway.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO orders (status, seller_id) VALUES ('PENDING_PAYMENT', NULL)");
@@ -52,7 +52,7 @@ class FlywayMigrationTest {
                             .hasMessageContaining("fk_orders_seller");
                     try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success")) {
                         rows.next();
-                        assertThat(rows.getInt(1)).isEqualTo(2);
+                        assertThat(rows.getInt(1)).isEqualTo(3);
                     }
                 }
             } finally {
@@ -76,7 +76,7 @@ class FlywayMigrationTest {
                 // A real legacy database has no Flyway history. Baseline is a deliberate operator step.
                 Flyway upgrade = flyway(schema, null);
                 upgrade.baseline();
-                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(1);
+                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(2);
                 upgrade.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement();
                      ResultSet rows = sql.executeQuery("SELECT id, seller_id FROM orders WHERE id = 42")) {
