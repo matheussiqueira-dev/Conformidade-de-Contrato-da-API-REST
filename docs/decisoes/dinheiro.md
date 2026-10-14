@@ -130,3 +130,15 @@ Todos com massa sintética e bancos descartáveis; nenhum banco da loja foi migr
 - Executar o relatório de arredondamento e a V4 em uma cópia do banco real antes de qualquer migração em produção.
 - Regenerar os baselines OpenAPI quando a equipe decidir atualizar o contrato publicado.
 - Revisão nominal do card DOM-02.
+
+## Valores com sinal no contrato v4 (14/10/2026)
+
+`Money` continua com `minimum: 0` para preço, custo, desconto, total de pedido e valores sempre positivos. Resultados que descontam estorno ou custo usam `SignedMoney`, o mesmo objeto `{amount, currency: "BRL"}` sem `minimum`. São eles:
+- `RevenueReport.netRevenue` e `grossProfit`;
+- `DailyRevenue.netRevenue` e `grossProfit`;
+- `PaymentMethodRevenue.netRevenue` e `SellerRevenue.netRevenue`;
+- `ProductRevenue.grossProfit` e `ProductMargin.grossMargin`;
+- `ManagementSummary.storeRealized`, `SellerMetric.realized`, `SellerPerformance.realized` e `WeeklyRevenue.realized`.
+
+Exemplo: um estorno no período de uma venda paga antes dele deixa o líquido negativo. Evidência: `ManagementApiTest.refundAboveSalesGivesNegativeNet` e o teste de `SignedMoney` em `scripts/validate-contract.test.mjs`.
+
