@@ -2522,6 +2522,26 @@
         },
         "additionalProperties": false
       },
+      "SignedMoney": {
+        "type": "object",
+        "description": "Valor monetario que pode ser negativo (resultado liquido de estornos ou lucro abaixo do custo); 2 casas, HALF_UP (DEC-ERP-08).",
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "maximum": 9999999999.99
+          },
+          "currency": {
+            "type": "string",
+            "const": "BRL"
+          }
+        },
+        "additionalProperties": false
+      },
       "ErrorResponse": {
         "type": "object",
         "description": "Formato unico de erro (A5). Substitui ApiErrorResponse; mantem os campos atuais e acrescenta code.",
@@ -3917,7 +3937,7 @@
             "$ref": "#/components/schemas/Money"
           },
           "realized": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           },
           "remaining": {
             "$ref": "#/components/schemas/Money"
@@ -3952,7 +3972,7 @@
             "$ref": "#/components/schemas/Money"
           },
           "realized": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           },
           "achievementPercent": {
             "type": [
@@ -3991,7 +4011,7 @@
             "$ref": "#/components/schemas/Money"
           },
           "storeRealized": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           },
           "remaining": {
             "$ref": "#/components/schemas/Money"
@@ -4127,12 +4147,12 @@
             "format": "date"
           },
           "netRevenue": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           },
           "grossProfit": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/Money"
+                "$ref": "#/components/schemas/SignedMoney"
               },
               {
                 "type": "null"
@@ -4158,7 +4178,7 @@
             "format": "int64"
           },
           "netRevenue": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           }
         },
         "additionalProperties": false
@@ -4179,7 +4199,7 @@
             "format": "int64"
           },
           "netRevenue": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           }
         },
         "additionalProperties": false
@@ -4215,7 +4235,7 @@
           "grossProfit": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/Money"
+                "$ref": "#/components/schemas/SignedMoney"
               },
               {
                 "type": "null"
@@ -4277,7 +4297,7 @@
             "$ref": "#/components/schemas/Money"
           },
           "netRevenue": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           },
           "ordersPaid": {
             "type": "integer",
@@ -4300,7 +4320,7 @@
           "grossProfit": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/Money"
+                "$ref": "#/components/schemas/SignedMoney"
               },
               {
                 "type": "null"
@@ -5406,7 +5426,7 @@
             "format": "date"
           },
           "realized": {
-            "$ref": "#/components/schemas/Money"
+            "$ref": "#/components/schemas/SignedMoney"
           }
         },
         "additionalProperties": false
@@ -5451,7 +5471,7 @@
           "grossMargin": {
             "oneOf": [
               {
-                "$ref": "#/components/schemas/Money"
+                "$ref": "#/components/schemas/SignedMoney"
               },
               {
                 "type": "null"
