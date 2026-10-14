@@ -29,7 +29,7 @@ Confirmadas nesta sessao: somente gerente concede desconto e cancela pedido de o
 
 | ID | Decisao | Opcao inicial recomendada | Motivo |
 | --- | --- | --- | --- |
-| PEND-DOM-01 | Quem altera desconto? | Somente gerente, confirmado por Matheus em 04/10. Teto numerico ainda nao definido. | Reduz risco de margem e auditoria no MVP. |
+| PEND-DOM-01 | Quem altera desconto? | Resolvida em 14/10/2026 (decisao da equipe, abaixo). Promocoes continuam so do gerente; desconto manual no balcao tem alcada por papel. | Reduz risco de margem e auditoria no MVP. |
 | PEND-DOM-02 | Pedido de outro vendedor pode ser alterado? | Gerente pode alterar/cancelar; vendedor pode consultar historico permitido, mas nao alterar pedido alheio. | Protege autoria e evita conflito de comissao/meta. |
 | PEND-DOM-03 | Como registrar auditoria? | Registrar usuario, data/hora, operacao e antes/depois para desconto, cancelamento, estorno, entrada e preco. | Necessario para rastreabilidade e relatorio de qualidade. |
 | PEND-DOM-04 | Metodo de custo por venda. | Custo medio ponderado confirmado por Matheus em 04/10. | Preservar custo atribuido historico por venda; novas entradas nao recalculam vendas antigas. |
@@ -66,8 +66,22 @@ O enum atual de pedido nao possui `CANCELED` e o enum atual de pagamento nao pos
 
 ## Perguntas para revisao
 
-- Definir o teto numérico de desconto e o formato da auditoria; gerente como único perfil já foi aprovado por Matheus.
+- Teto numérico de desconto: decidido pela equipe em 14/10/2026 (DEC-01, abaixo).
 - Implementar custo médio ponderado aprovado por Matheus; FIFO é referência histórica superada.
 - Sera criado status `CANCELED` para pedido e `REFUNDED` para pagamento?
 - O professor espera modelagem relacional detalhada de estoque/custo para a rubrica de Banco de Dados?
 - As decisoes de dominio serao aplicadas antes ou depois da exportacao do contrato baseline?
+
+## Decisao da equipe em 14/10/2026: alcada de desconto manual (DEC-01)
+
+Decisao definitiva da equipe, aplicada na V11 (`discount_policy`), no seed e nos testes:
+
+| Papel | Desconto manual maximo | Venda abaixo do custo medio |
+| --- | --- | --- |
+| VENDEDOR | 5% | Nao permitida |
+| GERENTE | 20% | Nao permitida |
+
+- O desconto manual e um percentual com motivo, aplicado sobre o subtotal ja promocionado; o valor e sempre calculado pelo servidor.
+- Acima da alcada do vendedor, o GERENTE aplica o desconto no pedido pendente (`POST /sales/orders/{id}/discount-approval`), com registro de quem aprovou e auditoria.
+- O GERENTE pode alterar a alcada (`PUT /discount-policy/{role}`) com motivo; a alteracao e auditada. Detalhes em [evolucao.md](evolucao.md) (D-EVO-20 a D-EVO-26).
+

@@ -261,6 +261,15 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-WEB-111 | G-05 | E2E/Acessibilidade | Particionamento | Verde | `e2e/customers.spec.ts`: indicadores e abas com teclado, axe WCAG 2.2 AA e 320 px nos dois papeis, rotulo "Suas vendas para este cliente", nova venda com o cliente pre-selecionado |
 | CT-CRM-106 | WP-EVO-4 | Unitario/Integracao/BD | Particionamento, valor limite | Verde | `api/customers/AlphanumericCnpjTest` (exemplo oficial 12.ABC.345/01DE-35, numerico continua valido, DV errado, minuscula, mascara do VENDEDOR, busca), `CustomersApiTest.alphanumericCnpjIsSupported` (cadastro, 409 duplicado, 400) e `FlywayMigrationTest.v10AcceptsAlphanumericCnpj` |
 | CT-WEB-113 | WP-EVO-4 | E2E | Particionamento | Verde | `e2e/customers.spec.ts`: vendedor cadastra PJ com CNPJ alfanumerico digitado em minusculas e ve `**.XXX.XXX/XXXX-**` no perfil e na busca |
+| CT-DISC-101 | G-04 | Integracao | Particionamento | Verde | `ManualDiscountApiTest.discountWithinTheLimit` (cotacao e venda com 5%: 190,00; rateio no item; pagamento igual ao total) |
+| CT-DISC-102 | G-04 | Integracao | Valor limite | Verde | `ManualDiscountApiTest.discountAboveTheLimitIsForbidden` (5,01% do vendedor e 20,5% do gerente: 403 com `limitPercent`; nenhum pedido nem reserva) |
+| CT-DISC-103 | G-04 | Integracao | Particionamento | Verde | `ManualDiscountApiTest.belowCostIsRejectedWithoutRevealingCost` (409 sem custo no corpo; com a politica permitindo, 201) |
+| CT-DISC-104 | G-04 | Integracao | Transicao de estados | Verde | `ManualDiscountApiTest.managerApprovesAboveTheSellerLimit` (aprovacao 15%: total, pagamento, aprovador, auditoria; acima de 20% 403; pedido pago 409; relatorio do mes) |
+| CT-DISC-105 | G-04 | Unitario/Integracao | Valor limite | Verde | `ManualDiscountPricingTest` (HALF_UP, ordem bruto -> promocao -> manual, rateio exato) e `ManualDiscountApiTest.manualDiscountAfterPromotion` (210,00 -> 183,67; uso da promocao sem a parte manual) |
+| CT-DISC-106 | G-04 | Integracao | Particionamento | Verde | `ManualDiscountApiTest.clientValuesAreRejected` (total, valor do desconto e percentual fora da regra: 400) |
+| CT-DISC-107 | G-04 | Integracao | Tabela de decisao | Verde | `ManualDiscountApiTest.policiesAreManagerOnly` (GERENTE consulta e altera com motivo e auditoria; VENDEDOR 403; 101% e papel inexistente 400) |
+| CT-WEB-114 | G-04 | E2E/Acessibilidade | Transicao de estados | Verde | `e2e/discount.spec.ts`: desconto de 5% no carrinho, 10% barrado com o limite, aprovacao de 12% pelo gerente no pedido, alcadas em Promocoes; axe WCAG 2.2 AA e 320 px |
+| BD-32 | G-04 | BD | Tabela de decisao | Verde | `06d_testes_evolucao.sql` no job `bd` (alcadas iniciais, motivo obrigatorio, parte manual nunca maior que o desconto do item) |
 
 ## Selecao inicial da suite
 
