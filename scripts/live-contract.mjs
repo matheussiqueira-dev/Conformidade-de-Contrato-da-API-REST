@@ -147,6 +147,9 @@ const second = record('/sales/orders', 'post', await seller.request('/sales/orde
 record('/orders/{id}/cancel', 'post', await seller.request(`/orders/${second.id}/cancel`, 'POST'), 200);
 record('/orders/{id}/cancel', 'post', await seller.request(`/orders/${order.id}/cancel`, 'POST'), 409);
 record('/customers/{id}/orders', 'get', await seller.request(`/customers/${customer.id}/orders`), 200);
+record('/customers/{id}/summary', 'get', await seller.request(`/customers/${customer.id}/summary`), 200);
+record('/customers/{id}/summary', 'get', await manager.request(`/customers/${customer.id}/summary`), 200);
+record('/customers/{id}/summary', 'get', await seller.request('/customers/999999/summary'), 404);
 
 // Gestao (GERENTE) e Meu desempenho
 const month = new Date().toISOString().slice(0, 7);

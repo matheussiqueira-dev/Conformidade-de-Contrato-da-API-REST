@@ -90,7 +90,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/auth/password").hasRole(VENDEDOR)
                         // Balcao: VENDEDOR e, pela hierarquia, GERENTE. O dono do pedido e conferido no servico (404).
                         .requestMatchers(HttpMethod.GET, "/sales/catalog", "/sales/orders", "/sales/orders/{id}",
-                                "/customers", "/customers/{id}", "/customers/{id}/orders", "/performance/me",
+                                "/customers", "/customers/{id}", "/customers/{id}/orders", "/customers/{id}/summary", "/performance/me",
                                 "/promotions/active").hasRole(VENDEDOR)
                         .requestMatchers(HttpMethod.POST, "/sales/quote", "/sales/orders", "/sales/orders/{id}/payment",
                                 "/orders/{id}/cancel", "/customers").hasRole(VENDEDOR)
