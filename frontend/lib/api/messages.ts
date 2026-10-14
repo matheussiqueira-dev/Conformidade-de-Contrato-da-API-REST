@@ -1,0 +1,28 @@
+// ErrorResponse.code -> mensagem em pt-BR. A tela nunca mostra codigo HTTP (WP-3.3, voz do SBI v1.1).
+export const ERROR_MESSAGES: Readonly<Record<string, string>> = {
+  VALIDATION_FAILED: 'Revise os campos destacados e tente de novo.',
+  MALFORMED_REQUEST: 'Não conseguimos ler os dados enviados. Atualize a página e tente de novo.',
+  UNAUTHENTICATED: 'Sua sessão terminou. Entre novamente para continuar.',
+  FORBIDDEN: 'Sem acesso a esta área.',
+  NOT_FOUND: 'Não encontramos este registro.',
+  METHOD_NOT_ALLOWED: 'Esta operação não está disponível.',
+  UNSUPPORTED_MEDIA_TYPE: 'Esta operação não está disponível.',
+  STOCK_INSUFFICIENT: 'Estoque insuficiente para concluir.',
+  IDEMPOTENCY_CONFLICT: 'Esta venda já foi enviada com outros dados. Revise o carrinho.',
+  STATE_CONFLICT: 'Não é possível fazer isso na situação atual do registro.',
+  DUPLICATE_DOCUMENT: 'Já existe um cliente com este documento.',
+  RESOURCE_IN_USE: 'Este registro está em uso e não pode ser excluído.',
+  CONCURRENT_UPDATE: 'Os dados mudaram desde que você abriu a tela. Recarregue e tente de novo.',
+  INTERNAL_ERROR: 'Algo deu errado do nosso lado. Tente novamente.',
+};
+
+export const NETWORK_MESSAGE = 'Sem conexão com o sistema. Verifique a rede e tente novamente.';
+export const LOGIN_FAILED_MESSAGE = 'E-mail ou senha inválidos.';
+
+export function messageFor(code: string | undefined, status: number): string {
+  if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code];
+  if (status === 401) return ERROR_MESSAGES.UNAUTHENTICATED ?? NETWORK_MESSAGE;
+  if (status === 403) return ERROR_MESSAGES.FORBIDDEN ?? NETWORK_MESSAGE;
+  if (status === 404) return ERROR_MESSAGES.NOT_FOUND ?? NETWORK_MESSAGE;
+  return ERROR_MESSAGES.INTERNAL_ERROR ?? NETWORK_MESSAGE;
+}
