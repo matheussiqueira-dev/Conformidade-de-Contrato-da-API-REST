@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import com.swee.ordermanagementspring.support.SyntheticAccounts;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,18 +37,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class ErrorContractTest {
 
     @Autowired WebApplicationContext context;
+    @Autowired JdbcTemplate jdbc;
     private final ObjectMapper json = new ObjectMapper();
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        SyntheticAccounts.reset(jdbc);
     }
 
     private static AppPrincipal as(UserRole role) {
-        AppUser user = new AppUser(role.name(), role.name().toLowerCase() + "@example.test", "hash", role);
-        ReflectionTestUtils.setField(user, "id", role == UserRole.GERENTE ? 1L : 2L);
-        return new AppPrincipal(user);
+        return SyntheticAccounts.principal(role);
     }
 
     private JsonNode expect(MockHttpServletRequestBuilder request, int status, String code) throws Exception {

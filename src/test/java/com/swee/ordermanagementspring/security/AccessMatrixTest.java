@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import com.swee.ordermanagementspring.support.SyntheticAccounts;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -82,18 +84,18 @@ class AccessMatrixTest {
     }
 
     @Autowired WebApplicationContext context;
+    @Autowired JdbcTemplate jdbc;
     private final ObjectMapper json = new ObjectMapper();
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        SyntheticAccounts.reset(jdbc);
     }
 
     private static AppPrincipal principal(UserRole role) {
-        AppUser user = new AppUser(role.name(), role.name().toLowerCase() + "@example.test", "hash", role);
-        ReflectionTestUtils.setField(user, "id", role == UserRole.GERENTE ? 1L : 2L);
-        return new AppPrincipal(user);
+        return SyntheticAccounts.principal(role);
     }
 
     @ParameterizedTest(name = "[CT-SEC-101] {0} {1} como {2} -> {3}")
