@@ -62,7 +62,7 @@ Registro completo em [defeitos.md](defeitos.md).
 
 ## 5. Conformidade de contrato
 
-- O contrato v4 tem as 45 operações `implemented`. Cada uma só mudou de status com teste verde.
+- O contrato v4 tem as 45 operações `implemented`. Cada uma só mudou de status com teste verde. Resultados que podem ficar negativos (líquido de estornos, lucro, realizado) usam `SignedMoney`, sem mínimo; os demais valores continuam em `Money` ≥ 0 ([decisoes/dinheiro.md](decisoes/dinheiro.md)).
 - O `live-contract.mjs` compara o `/v3/api-docs` com o v4 (caminho, método, parâmetros, corpo e códigos de sucesso) e valida com Ajv as respostas reais de sucesso e de erro.
 - Os schemas Zod do frontend são gerados do v4, e a CI falha se houver diff (`npm run api:check`).
 - Limite conhecido: os schemas do OpenAPI gerado não são comparados campo a campo (D-EXEC-07).
@@ -79,5 +79,4 @@ Registro completo em [defeitos.md](defeitos.md).
 - Revisão humana e integração na ordem #13 → #14 → #15 → #16 → #17 → PR desta etapa (squash merge, feito pela equipe).
 - Recriar o banco de desenvolvimento `postgres-order` com `pg_dump` antes (A2A-2): a V7 é nova.
 - Decidir metas de qualidade (PMD, SpotBugs, cobertura) em `docs/decisoes/`.
-- Revisar no contrato o mínimo 0 de `Money` em lucro e faturamento líquido, que podem ficar negativos.
 - Ensaiar o [roteiro de demonstração](roteiro-demonstracao.md) com a equipe.
