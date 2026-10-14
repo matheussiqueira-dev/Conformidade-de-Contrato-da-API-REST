@@ -8,9 +8,12 @@ export const MENU: readonly MenuItem[] = [
   { area: 'VENDER', href: '/vender', label: 'Vender' },
   { area: 'VENDAS', href: '/vendas', label: 'Vendas' },
   { area: 'CLIENTES', href: '/clientes', label: 'Clientes' },
+  { area: 'MEU_DESEMPENHO', href: '/meu-desempenho', label: 'Meu desempenho' },
   { area: 'GESTAO', href: '/gestao', label: 'Gestão' },
   { area: 'ESTOQUE', href: '/gestao/estoque', label: 'Estoque' },
   { area: 'PRODUTOS', href: '/gestao/produtos', label: 'Produtos' },
+  { area: 'PROMOCOES', href: '/gestao/promocoes', label: 'Promoções' },
+  { area: 'ANALISES', href: '/gestao/analises', label: 'Análises' },
 ];
 
 /** Menu na ordem fixa, filtrado pelas areas do usuario. */

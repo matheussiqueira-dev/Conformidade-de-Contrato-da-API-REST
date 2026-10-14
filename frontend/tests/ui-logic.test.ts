@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { landingPath, menuFor } from '../lib/areas.ts';
 import { isValidCnpj, isValidCpf } from '../lib/documents.ts';
-import { digits, formatPercent, money } from '../lib/format.ts';
+import { digits, formatPercent, money, parseDecimal } from '../lib/format.ts';
 import { messageFor } from '../lib/api/messages.ts';
 import { contractResolver } from '../lib/forms.ts';
 import { CreateCustomerBody } from '../lib/api/generated/sbi.zod.ts';
@@ -11,7 +11,8 @@ const SELLER = ['VENDER', 'VENDAS', 'CLIENTES', 'MEU_DESEMPENHO'];
 const MANAGER = [...SELLER, 'GESTAO', 'PRODUTOS', 'ESTOQUE', 'PROMOCOES', 'ANALISES'];
 
 test('menu vem das areas do servidor; vendedor nao ve Gestao (CT-WEB-103)', () => {
-  assert.deepEqual(menuFor(SELLER).map(i => i.href), ['/vender', '/vendas', '/clientes']);
+  assert.deepEqual(menuFor(SELLER).map(i => i.href), ['/vender', '/vendas', '/clientes', '/meu-desempenho']);
+  assert.equal(menuFor(MANAGER).length, 9);
   assert.ok(menuFor(MANAGER).some(i => i.href === '/gestao'));
   assert.deepEqual(menuFor([]), []);
 });
@@ -51,4 +52,11 @@ test('formulario de cliente validado pelo schema gerado do contrato', async () =
   const valid = await resolver({ type: 'INDIVIDUAL', name: 'Ana Souza', cpf: '529.982.247-25', email: 'ana@cliente.test', phone: '85999990000' },
     undefined, { fields: {}, shouldUseNativeValidation: false });
   assert.deepEqual(valid.errors, {});
+});
+
+test('valor digitado aceita virgula ou ponto decimal', () => {
+  assert.equal(parseDecimal('59.90'), 59.9);
+  assert.equal(parseDecimal('59,90'), 59.9);
+  assert.equal(parseDecimal('1.234,56'), 1234.56);
+  assert.ok(Number.isNaN(parseDecimal('abc')));
 });
