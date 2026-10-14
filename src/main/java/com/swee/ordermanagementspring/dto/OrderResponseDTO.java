@@ -12,19 +12,19 @@ public class OrderResponseDTO {
     private Long id;
     private LocalDateTime moment;
     private OrderStatus status;
-    private ClientResponseDTO client;
+    private CustomerResponseDTO customer;
     private List<OrderItemResponseDTO> items;
     private PaymentResponseDTO payment;
     private AddressResponseDTO shippingAddress;
     private BigDecimal total;
 
-    public OrderResponseDTO(Long id, LocalDateTime moment, OrderStatus status, ClientResponseDTO client,
+    public OrderResponseDTO(Long id, LocalDateTime moment, OrderStatus status, CustomerResponseDTO customer,
                             List<OrderItemResponseDTO> items, PaymentResponseDTO payment,
                             AddressResponseDTO shippingAddress, BigDecimal total) {
         this.id = id;
         this.moment = moment;
         this.status = status;
-        this.client = client;
+        this.customer = customer;
         this.items = items;
         this.payment = payment;
         this.shippingAddress = shippingAddress;
@@ -36,7 +36,7 @@ public class OrderResponseDTO {
                 order.getId(),
                 order.getMoment(),
                 order.getStatus(),
-                ClientResponseDTO.from(order.getClient()),
+                CustomerResponseDTO.from(order.getCustomer()),
                 order.getItems().stream().map(OrderItemResponseDTO::from).toList(),
                 order.getPayment() != null ? PaymentResponseDTO.from(order.getPayment()) : null,
                 AddressResponseDTO.from(order.getShippingAddress()),
@@ -56,8 +56,8 @@ public class OrderResponseDTO {
         return status;
     }
 
-    public ClientResponseDTO getClient() {
-        return client;
+    public CustomerResponseDTO getCustomer() {
+        return customer;
     }
 
     public List<OrderItemResponseDTO> getItems() {

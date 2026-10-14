@@ -44,7 +44,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-MONEY-004] pedido sem itens tem total zero")
     void emptyOrderTotalsZero() {
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), TestData.seller(1L));
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), TestData.seller(1L));
         assertThat(order.total()).isZero();
     }
 
@@ -58,7 +58,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-MONEY-001] soma de itens distintos: 4.500 + 1.200 = 5.700")
     void totalSumsAllItems() {
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), TestData.seller(1L));
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), TestData.seller(1L));
         PhysicalProduct phone = new PhysicalProduct(new BigDecimal("4500.0"), "iPhone", "Fixture", 0.2);
         PhysicalProduct earbuds = new PhysicalProduct(new BigDecimal("1200.0"), "AirPods", "Fixture", 0.1);
         order.setItems(List.of(new OrderItem(order, phone, 1, phone.getPrice()), new OrderItem(order, earbuds, 1, earbuds.getPrice())));
@@ -83,7 +83,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[DOM-02] 0.10 + 0.20 = 0.30 sem erro de ponto flutuante")
     void itemsWithCentsAddExactly() {
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), TestData.seller(1L));
+        Order order = new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), TestData.seller(1L));
         PhysicalProduct a = new PhysicalProduct(new BigDecimal("0.10"), "Bala", "Fixture", 0.0);
         PhysicalProduct b = new PhysicalProduct(new BigDecimal("0.20"), "Chiclete", "Fixture", 0.0);
         order.setItems(List.of(new OrderItem(order, a, 1, a.getPrice()), new OrderItem(order, b, 1, b.getPrice())));
@@ -93,7 +93,7 @@ class ProductAndOrderCalculationTest {
     @Test
     @DisplayName("[CT-SEC-003] pedido novo exige vendedor")
     void newOrderRequiresSeller() {
-        assertThatThrownBy(() -> new Order(OrderStatus.PENDING_PAYMENT, TestData.client(), null))
+        assertThatThrownBy(() -> new Order(OrderStatus.PENDING_PAYMENT, TestData.customer(), null))
                 .isInstanceOf(NullPointerException.class);
     }
 }

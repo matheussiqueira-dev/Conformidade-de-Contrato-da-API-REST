@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 /**
  * DOM-02: regra unica de dinheiro (decisao DOM-01): duas casas decimais, HALF_UP.
- * Colunas monetarias sao NUMERIC(PRECISION, SCALE) (migracao V3).
+ * Colunas monetarias sao NUMERIC(PRECISION, SCALE) (migracao V4).
  */
 public final class Money {
 

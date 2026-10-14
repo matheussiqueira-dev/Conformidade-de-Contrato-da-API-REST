@@ -59,9 +59,9 @@ Mantidos como `Double`: `ProductRequestDTO.weight`, `ProductResponseDTO.weight` 
 
 O tipo no JSON continua `number`. Jackson serializa o `BigDecimal` com a escala da entidade (`200.00`); clientes JavaScript leem como `200`. Os baselines em `config/openapi/` (03/10 e 04/10) ainda registram `format: double` para esses campos; eles documentam o estado anterior e não foram regenerados. O CI de contrato, OpenAPI ao vivo e E2E passou com a mudança (ver Evidências).
 
-## Migração V3
+## Migração V4
 
-Arquivo: `src/main/resources/db/migration/V3__money_numeric.sql`.
+Arquivo: `src/main/resources/db/migration/V4__money_numeric.sql`.
 
 ```sql
 ALTER TABLE product    ALTER COLUMN price  TYPE numeric(12,2) USING round(price::numeric, 2);
@@ -71,12 +71,12 @@ ALTER TABLE payment    ALTER COLUMN amount TYPE numeric(12,2) USING round(amount
 
 - `round(numeric, 2)` do PostgreSQL arredonda metade para longe do zero, o que equivale a HALF_UP para os valores positivos validados pela API.
 - Por que 12,2: cobre até 9.999.999.999,99, muito acima de qualquer preço ou pedido da loja, e mantém o limite igual em coluna e DTO.
-- Valor legado acima do limite faz a migração **falhar**: a V3 confere `abs(valor) > 9999999999.99` **antes** de arredondar e aborta com mensagem própria (D020, FIX-03). Sem essa checagem, `9999999999.994` arredondaria para `9999999999.99` e passaria; só valores a partir de `9999999999.995` estouravam a coluna. O PostgreSQL executa a V3 em uma transação, então uma falha não deixa colunas meio convertidas.
-- Os pedidos existentes mantêm o preço histórico do item: a V3 só arredonda `order_item.price` e não lê `product.price`.
+- Valor legado acima do limite faz a migração **falhar**: a V4 confere `abs(valor) > 9999999999.99` **antes** de arredondar e aborta com mensagem própria (D020, FIX-03). Sem essa checagem, `9999999999.994` arredondaria para `9999999999.99` e passaria; só valores a partir de `9999999999.995` estouravam a coluna. O PostgreSQL executa a V4 em uma transação, então uma falha não deixa colunas meio convertidas.
+- Os pedidos existentes mantêm o preço histórico do item: a V4 só arredonda `order_item.price` e não lê `product.price`.
 
 ### Antes de migrar um banco real
 
-Seguir o roteiro de [migracoes.md](../bd/migracoes.md) (backup, cópia, comparação de esquema, baseline explícito). Na cópia, antes da V3, gerar o relatório do que muda com o arredondamento:
+Seguir o roteiro de [migracoes.md](../bd/migracoes.md) (backup, cópia, comparação de esquema, baseline explícito). Na cópia, antes da V4, gerar o relatório do que muda com o arredondamento:
 
 ```sql
 SELECT 'product' AS tabela, id, price AS antes, round(price::numeric, 2) AS depois
@@ -97,7 +97,7 @@ Registrar o resultado (quantidade de linhas alteradas e maior diferença) junto 
 
 ### Rollback
 
-A aplicação depois da V3 espera `numeric` (Hibernate `validate`). Voltar só a coluna para `double precision` deixaria a versão nova sem subir, e a versão antiga perderia os valores já arredondados. O rollback suportado é: interromper escritas, restaurar o backup ensaiado e voltar para a versão da aplicação anterior ao DOM-02. Não usar `flyway clean`.
+A aplicação depois da V4 espera `numeric` (Hibernate `validate`). Voltar só a coluna para `double precision` deixaria a versão nova sem subir, e a versão antiga perderia os valores já arredondados. O rollback suportado é: interromper escritas, restaurar o backup ensaiado e voltar para a versão da aplicação anterior ao DOM-02. Não usar `flyway clean`.
 
 ## Evidências
 
@@ -108,11 +108,11 @@ A aplicação depois da V3 espera `numeric` (Hibernate `validate`). Voltar só a
 | 0.10 + 0.20 = 0.30 | `ProductAndOrderCalculationTest.itemsWithCentsAddExactly` | passou |
 | Valor zero, negativo ou acima do limite rejeitado pela validação do DTO (que o `GlobalExceptionHandler` já converte em 400) | `MoneyValidationTest.productPriceLimits`, `paymentAmountLimits` | passou |
 | Valor não numérico (`"abc"`) → 400 | sem teste automatizado; coberto só pelo handler `HttpMessageNotReadableException` | não verificado por teste |
-| Migração de massa sintética double → numeric (1.005 → 1.01; 0.1 + 0.2 → 0.30; 1.004 → 1.00) | `FlywayMigrationTest.v3ConvertsLegacyDoubleMoneyToNumericHalfUp` | passou |
-| Limite da coluna sem overflow silencioso | `FlywayMigrationTest.v3FailsInsteadOfTruncatingValuesAboveColumnLimit` | passou |
+| Migração de massa sintética double → numeric (1.005 → 1.01; 0.1 + 0.2 → 0.30; 1.004 → 1.00) | `FlywayMigrationTest.v4ConvertsLegacyDoubleMoneyToNumericHalfUp` | passou |
+| Limite da coluna sem overflow silencioso | `FlywayMigrationTest.v4FailsInsteadOfTruncatingValuesAboveColumnLimit` | passou |
 | D017: valor abaixo de meio centavo rejeitado nos três DTOs | `MoneyValidationTest.subCentValuesThatRoundToZeroAreRejected` | falhou antes do FIX-03 (`fc58a4b`), passou depois |
-| D020: `9999999999.994` legado rejeitado antes do arredondamento | `FlywayMigrationTest.v3RejectsLegacyValueJustAboveLimitBeforeRounding` | falhou antes do FIX-03 (`fc58a4b`), passou depois |
-| Instalação limpa V1 → V3 | `FlywayMigrationTest.emptyDatabaseMigratesThroughV3AndRejectsUnknownSeller` | passou |
+| D020: `9999999999.994` legado rejeitado antes do arredondamento | `FlywayMigrationTest.v4RejectsLegacyValueJustAboveLimitBeforeRounding` | falhou antes do FIX-03 (`fc58a4b`), passou depois |
+| Instalação limpa V1 → V4 | `FlywayMigrationTest.emptyDatabaseMigratesThroughV4AndRejectsUnknownSeller` | passou |
 
 Execução local em 09/10/2026 (Windows, JDK 25 portátil, PostgreSQL 18 via `docker-compose.test.yml`): `scripts/test.ps1 -Mode Unit` com 130 testes e 0 falhas; `scripts/test.ps1 -Mode Integration` com 137 testes e 0 falhas.
 
@@ -127,6 +127,6 @@ Todos com massa sintética e bancos descartáveis; nenhum banco da loja foi migr
 
 - Adicionar teste HTTP (MockMvc ou `scripts/http-contract.mjs`) para `"price": "abc"` → 400 sem persistência.
 - Decidir se entrada com mais de 2 casas deve ser rejeitada (`@Digits`) em vez de normalizada.
-- Executar o relatório de arredondamento e a V3 em uma cópia do banco real antes de qualquer migração em produção.
+- Executar o relatório de arredondamento e a V4 em uma cópia do banco real antes de qualquer migração em produção.
 - Regenerar os baselines OpenAPI quando a equipe decidir atualizar o contrato publicado.
 - Revisão nominal do card DOM-02.

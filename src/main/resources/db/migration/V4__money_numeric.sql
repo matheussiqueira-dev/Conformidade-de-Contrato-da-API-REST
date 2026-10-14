@@ -7,7 +7,7 @@ BEGIN
     IF EXISTS (SELECT 1 FROM product WHERE abs(price::numeric) > 9999999999.99)
        OR EXISTS (SELECT 1 FROM order_item WHERE abs(price::numeric) > 9999999999.99)
        OR EXISTS (SELECT 1 FROM payment WHERE abs(amount::numeric) > 9999999999.99) THEN
-        RAISE EXCEPTION 'V3: valor monetario acima de 9999999999.99 antes do arredondamento; corrija os dados legados antes de migrar';
+        RAISE EXCEPTION 'V4: valor monetario acima de 9999999999.99 antes do arredondamento; corrija os dados legados antes de migrar';
     END IF;
 END $$;
 

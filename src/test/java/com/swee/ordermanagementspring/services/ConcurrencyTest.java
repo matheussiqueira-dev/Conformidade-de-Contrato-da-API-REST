@@ -63,7 +63,7 @@ class ConcurrencyTest {
                 "synthetic-hash", UserRole.VENDEDOR));
         OrderRequestDTO request = orderRequest(product.getId(), 2);
         // Transacoes confirmadas: cada rodada precisa de um CPF sintetico proprio (constraint unica).
-        request.getClient().setCpf(String.format("%011d", ThreadLocalRandom.current().nextLong(1L, 99_999_999_999L)));
+        request.getCustomer().setCpf(String.format("%011d", ThreadLocalRandom.current().nextLong(1L, 99_999_999_999L)));
         return orderService.insert(request, new AppPrincipal(seller));
     }
 

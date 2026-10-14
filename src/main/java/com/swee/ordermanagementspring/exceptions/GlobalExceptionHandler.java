@@ -29,9 +29,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(ClientException.class)
-    public ResponseEntity<ErrorResponse> handleClientException(ClientException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Client Error", ex.getMessage());
+    @ExceptionHandler(CustomerException.class)
+    public ResponseEntity<ErrorResponse> handleCustomerException(CustomerException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Customer Error", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
