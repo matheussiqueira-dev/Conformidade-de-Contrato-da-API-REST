@@ -57,6 +57,7 @@ Status usados neste documento:
 | RF-23 | Painel de faturamento do Gerente atualizado a cada 15 segundos enquanto a aba estiver visivel. | Alvo | Evolucao ERP/PDV. Le `v_faturamento_diario` e demais views do V6 (A7). |
 | RF-24 | Cadastro de usuarios pelo Gerente (cadastrar com senha provisoria, editar, alterar papel, ativar/desativar, desbloquear, redefinir senha) e troca da propria senha; mudanca de papel, situacao, senha ou desbloqueio encerra as sessoes abertas do usuario; sempre existe pelo menos um Gerente ativo. | Alvo | Evolucao G-01/G-03 (14/10/2026). Substitui DEC-ERP-07; ver `docs/decisoes/evolucao.md`. |
 | RF-25 | Perfil do cliente com indicadores de compra (total comprado, ticket medio, pedidos pagos, pendentes e cancelados, primeira e ultima compra, produtos mais comprados e formas de pagamento); para o Vendedor, valores so das vendas dele. | Alvo | Evolucao G-05 (14/10/2026). Le `v_cliente_resumo` (V9); ver `docs/decisoes/evolucao.md`. |
+| RF-26 | Desconto manual no balcao com alcada por papel (VENDEDOR 5%, GERENTE 20%), motivo obrigatorio, sem venda abaixo do custo medio, aprovacao do Gerente no pedido pendente acima da alcada e relatorio de descontos concedidos. | Alvo | Evolucao G-04 (14/10/2026). Decisao da equipe DEC-01 em `docs/decisoes/regras-loja.md`; V11. |
 
 ## Requisitos nao funcionais
 

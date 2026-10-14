@@ -103,6 +103,11 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | CA-25-02 | Dado vendedor, quando consultar o resumo, entao total, ticket medio e formas de pagamento cobrem so os pedidos dele (`scope` OWN) e `refundsTotal` e nulo; contagens, datas e produtos mais comprados cobrem a loja toda. |
 | CA-25-03 | Dado cliente sem compras, quando consultar o resumo, entao contagens e total sao zero, ticket medio e datas sao nulos e as listas vem vazias. |
 | CA-20-06 | Dado CNPJ alfanumerico valido (ex.: 12.ABC.345/01DE-35), quando cadastrar pessoa juridica, entao a API grava sem mascara em maiusculas, mascara as pontas para o vendedor e acha o cliente pela busca exata; digito verificador errado ou letra minuscula no corpo retorna 400 `VALIDATION_FAILED`; repetido retorna 409 `DUPLICATE_DOCUMENT`. |
+| CA-26-01 | Dado vendedor, quando cotar ou vender com desconto manual ate 5% e motivo, entao a API calcula o valor sobre o subtotal ja promocionado (HALF_UP), rateia nos itens e grava o mesmo total no pedido e no pagamento. |
+| CA-26-02 | Dado desconto acima da alcada do papel da sessao, quando cotar ou vender, entao a API retorna 403 `DISCOUNT_ABOVE_LIMIT` com o limite em `details` e nao cria pedido nem reserva. |
+| CA-26-03 | Dado item que ficaria abaixo do custo medio conhecido, quando a politica nao permitir, entao a API retorna 409 `BELOW_COST` sem revelar o custo. |
+| CA-26-04 | Dado pedido pendente, quando o gerente aprovar um desconto ate 20%, entao total, itens e pagamento sao recalculados, o aprovador fica registrado e a auditoria grava `DISCOUNT_APPROVED`; pedido pago retorna 409. |
+| CA-26-05 | Dado relatorio de vendas do mes, quando houver descontos manuais em pedidos pagos, entao `manualDiscounts` mostra por vendedor pedidos, valor concedido e aprovados pelo gerente, e o uso de promocoes nao inclui a parte manual. |
 | CA-19-01 | Dado vendedor no PDV, quando buscar por SKU ou prefixo do nome, entao o SKU exato vem primeiro e a resposta nao contem custo, saldo fisico nem margem. |
 | CA-19-02 | Dado carrinho, quando cotar, entao preco, desconto e total vem do servidor sem efeito colateral; corpo de venda com vendedor, preco, desconto ou total retorna 400 sem criar pedido. |
 | CA-19-03 | Dada a mesma `Idempotency-Key` e o mesmo corpo, quando a venda for reenviada, entao a API retorna 200 com o mesmo pedido; com corpo diferente, 409 `IDEMPOTENCY_CONFLICT`. |
@@ -155,6 +160,7 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | RF-21 | CA-21-01, CA-21-02 | CT-CRM-103, CT-SEC-113 | Pendente | - |
 | RF-22 | CA-22-01 a CA-22-07 | CT-STOCK-108, CT-STOCK-109, CT-SALE-104, CT-WEB-105, CT-WEB-106 | Pendente | - |
 | RF-23 | CA-23-01 a CA-23-03 | CT-CONTRACT-102, CT-WEB-102 | Pendente | - |
+| RF-26 | CA-26-01 a CA-26-05 | CT-DISC-101 a CT-DISC-107, CT-WEB-114, BD-32 | Verde (14/10/2026) | `ManualDiscountApiTest`, `ManualDiscountPricingTest`, `e2e/discount.spec.ts`, job `bd` |
 | RF-25 | CA-25-01 a CA-25-03 | CT-CUS-121 a CT-CUS-123, CT-WEB-111 | Verde (14/10/2026) | `CustomersApiTest` (resumo), BD-31 no job `bd`, `e2e/customers.spec.ts` |
 | RF-24 | CA-24-01 a CA-24-06 | CT-USR-101 a CT-USR-107, CT-SEC-121, CT-SEC-122, CT-BD-30, CT-WEB-112 | Verde (14/10/2026) | `UsersApiTest`, `SessionRevocationTest`, `FlywayMigrationTest.v8KeepsOneActiveManager`, `06d_testes_evolucao.sql`, `e2e/users.spec.ts` |
 
