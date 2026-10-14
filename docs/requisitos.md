@@ -55,6 +55,7 @@ Status usados neste documento:
 | RF-21 | Perfil do cliente com historico paginado e rastreavel de pedidos. | Alvo | Evolucao ERP/PDV. Total e vendedor so nos pedidos proprios ou para o Gerente (DEC-ERP-02). |
 | RF-22 | Backoffice do Gerente: cadastro de produtos e insumos, preco com motivo, entradas, ajustes de entrada e saida com motivo, extrato de movimentos e estoque minimo. | Alvo | Evolucao ERP/PDV. Insumo = produto com `sellable = false` (DEC-ERP-03). |
 | RF-23 | Painel de faturamento do Gerente atualizado a cada 15 segundos enquanto a aba estiver visivel. | Alvo | Evolucao ERP/PDV. Le `v_faturamento_diario` e demais views do V6 (A7). |
+| RF-24 | Cadastro de usuarios pelo Gerente (cadastrar com senha provisoria, editar, alterar papel, ativar/desativar, desbloquear, redefinir senha) e troca da propria senha; mudanca de papel, situacao, senha ou desbloqueio encerra as sessoes abertas do usuario; sempre existe pelo menos um Gerente ativo. | Alvo | Evolucao G-01/G-03 (14/10/2026). Substitui DEC-ERP-07; ver `docs/decisoes/evolucao.md`. |
 
 ## Requisitos nao funcionais
 
