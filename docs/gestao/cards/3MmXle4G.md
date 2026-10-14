@@ -44,7 +44,7 @@ Ler os arquivos citados antes da execução; conferir comportamento existente e 
 1. Preparar (até 2h, estimativa): verificar branch/commit, ler o objetivo, os arquivos e a entrega; confirmar os dados necessários e registrar dependência ausente.
 2. Executar uma subentrega do briefing acima (até 4h por tarefa, estimativa). Se não couber, dividir em tarefas com entrada, saída e verificação próprias no checklist do card; não prometer a conclusão inteira nessa janela.
 3. Verificar (até 2h por conjunto, estimativa): comparar com critérios de aceite originais abaixo e registrar esperado/obtido, versão, ambiente e comandos. Para documentação, conferir links e consistência com código; para código, executar unitário/integração/contrato pertinente.
-4. Revisar (até 1h por rodada, estimativa): publicar arquivos/resultados, solicitar revisão de Equipe, registrar achados e reteste. Commit novo usa prefixo `autofix:` quando aplicável à correção/sincronização. Capacidade e datas devem ser combinadas com a equipe; estes tempos não são compromisso de sprint.
+4. Revisar (até 1h por rodada, estimativa): publicar arquivos/resultados, solicitar revisão de Equipe, registrar achados e reteste. Commit novo segue Conventional Commits (`fix:` para correção, `docs:` para sincronização). Capacidade e datas devem ser combinadas com a equipe; estes tempos não são compromisso de sprint.
 
 ### Critérios de aceite complementares
 
@@ -87,5 +87,5 @@ O texto abaixo registra o planejamento/contexto anterior e não substitui o esta
 Arquivos locais precisam ser publicados pela equipe no repositório/Drive para acesso compartilhado; não há link público confirmado para o novo guia. Os links acima foram preservados como referências informadas; acesso/commit remoto não foi auditado.
 
 ## Recursos opcionais para estudantes
-Consultar elegibilidade e termos nas páginas oficiais: GitHub Education (https://github.com/education/students), JetBrains (https://www.jetbrains.com/academy/student-pack/), Azure (https://azure.microsoft.com/pt-br/free/students), Gemini (https://gemini.google/students/), AWS Educate (https://aws.amazon.com/pt/education/awseducate/), Oracle Academy (https://academy.oracle.com/pt-br/solutions-cloud-program.html) e Google Cloud Education (https://cloud.google.com/edu/students?hl=pt-BR).
+Consultar elegibilidade e termos nas páginas oficiais: GitHub Education (https://github.com/education/students), JetBrains (https://www.jetbrains.com/academy/student-pack/), Azure (https://azure.microsoft.com/pt-br/free/students), AWS Educate (https://aws.amazon.com/pt/education/awseducate/), Oracle Academy (https://academy.oracle.com/pt-br/solutions-cloud-program.html) e Google Cloud Education (https://cloud.google.com/edu/students?hl=pt-BR).
 Benefícios, valores, armazenamento e duração não foram confirmados; não tratá-los como garantidos nem como dependências do projeto.
