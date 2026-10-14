@@ -7,6 +7,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Secret opcional; sem ele, cada execucao usa um valor deterministico do run (banco descartavel).
+      # A mesma expressao se repete em services.postgres.env: o contexto env nao existe em services.
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
 
     services:
       postgres:
@@ -14,7 +18,7 @@ jobs:
         env:
           POSTGRES_DB: order_management_test
           POSTGRES_USER: postgres_test
-          POSTGRES_PASSWORD: local_test_only
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
         ports:
           - 15432:5432
         options: >-
@@ -55,6 +59,7 @@ jobs:
         shell: bash
         env:
           A3_CONTRACT_ISOLATED: "1"
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
         run: |
           export A3_TEST_PASSWORD="$(openssl rand -hex 16)"
           java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
@@ -62,7 +67,6 @@ jobs:
             --server.address=127.0.0.1 --server.port=18080 \
             --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
             --spring.datasource.username=postgres_test \
-            --spring.datasource.password=local_test_only \
             --spring.jpa.hibernate.ddl-auto=create-drop \
             --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
           api_pid=$!
@@ -91,13 +95,14 @@ jobs:
 
       - name: Verify Flyway schema with Hibernate validation
         shell: bash
+        env:
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
         run: |
           java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
             --spring.profiles.active=migration \
             --server.address=127.0.0.1 --server.port=18081 \
             --spring.datasource.url='jdbc:postgresql://localhost:15432/order_management_test?currentSchema=ci_flyway' \
             --spring.datasource.username=postgres_test \
-            --spring.datasource.password=local_test_only \
             --spring.flyway.schemas=ci_flyway \
             --spring.jpa.show-sql=false > target/flyway-ci.log 2>&1 &
           api_pid=$!
