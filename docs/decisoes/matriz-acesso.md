@@ -35,6 +35,7 @@ Regras de leitura:
 | POST | `/sales/orders` | 401 | PERMIT | PERMIT |
 | GET | `/sales/orders`, `/sales/orders/{id}` | 401 | OWN | PERMIT |
 | POST | `/sales/orders/{id}/payment` | 401 | OWN | PERMIT |
+| POST | `/sales/orders/{id}/discount-approval` (contrato v5) | 401 | 403 | PERMIT |
 | POST | `/orders/{id}/cancel` | 401 | OWN | PERMIT |
 | GET, POST | `/customers` | 401 | PERMIT | PERMIT |
 | GET, PUT | `/customers/{id}` | 401 | PERMIT | PERMIT |
@@ -50,6 +51,7 @@ Regras de leitura:
 | GET, PUT | `/goals/monthly` | 401 | 403 | PERMIT |
 | GET | `/management/summary`, `/management/revenue`, `/analytics/sales`, `/analytics/stock` | 401 | 403 | PERMIT |
 | POST | `/payment/{id}/refund` | 401 | 403 | PERMIT |
+| GET | `/discount-policy`; PUT `/discount-policy/{role}` (contrato v5) | 401 | 403 | PERMIT |
 | GET, POST | `/users`; GET, PUT `/users/{id}`; PATCH `/users/{id}/role`, `/users/{id}/status`; POST `/users/{id}/unlock`, `/users/{id}/password-reset` (contrato v5) | 401 | 403 | PERMIT |
 | todos | `/orders/**` legado (exceto `cancel`), `/payment/**` legado (exceto `refund`), `/address/**` | 401 | 403 | PERMIT |
 
