@@ -26,7 +26,7 @@
           "RF-01",
           "RF-18"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [],
         "security": [],
         "parameters": [
@@ -84,7 +84,7 @@
           "RF-01",
           "RF-02"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [],
         "security": [],
         "responses": {
@@ -108,7 +108,7 @@
         "x-rf": [
           "RF-01"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [],
         "security": [],
         "parameters": [
@@ -135,7 +135,7 @@
           "RF-02",
           "RF-17"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -5320,7 +5320,8 @@
               "AVARIA",
               "USO_INTERNO",
               "INVENTARIO",
-              "DEVOLUCAO_FORNECEDOR"
+              "DEVOLUCAO_FORNECEDOR",
+              null
             ]
           },
           "note": {

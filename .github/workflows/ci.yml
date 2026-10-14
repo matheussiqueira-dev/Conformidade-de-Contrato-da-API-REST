@@ -86,6 +86,7 @@ jobs:
           curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
           node scripts/http-contract.mjs
           node scripts/http-session.mjs
+          node scripts/live-contract.mjs
           cd frontend
           npm ci --no-audit --no-fund
           npm test

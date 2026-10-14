@@ -124,6 +124,8 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-EXEC-03 | `GET /analytics/sales` calcula o uso de promoções do mês com a mesma regra de `v_margem_produto` (itens de pagamentos confirmados no mês), porque `v_uso_promocoes` não tem período e somaria todos os meses. |
 | D-EXEC-04 | `GET /analytics/stock` considera só produtos ativos; `valueAtCost` fica nulo se algum produto com saldo não tiver custo (custo ausente nunca vira zero). |
 | D-EXEC-05 | `GET /performance/me` lê a meta em `v_meu_desempenho` (filtrada por `app.user_id`) e calcula o realizado em `v_lancamento_realizado`, para o vendedor sem meta também ver o realizado, com estado `SEM_META` e sem percentual. |
+| D-EXEC-06 | O v4 declarava `StockMovement.reason` com tipo `string` ou `null`, mas o `enum` sem `null`, o que rejeitava todo movimento sem motivo (entrada, reserva, saída). O `null` entra no `enum`; nenhum valor válido muda. |
+| D-EXEC-07 | A verificação ao vivo (`scripts/live-contract.mjs`, CT-CONTRACT-102) compara com o v4, em toda operação, caminho, método, parâmetros, presença de corpo e códigos de sucesso do `/v3/api-docs`, e valida com Ajv as respostas reais de sucesso e de erro de cada operação; os schemas do OpenAPI gerado não são comparados campo a campo. Com divergência zero, as operações de autenticação passam a `implemented` (D-NOITE-06). |
 
 ## Processo
 

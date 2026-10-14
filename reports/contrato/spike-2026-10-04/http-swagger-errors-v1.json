@@ -1,6 +1,6 @@
 {
   "scope": "baseline-http-isolated-database",
-  "timestamp": "2026-10-14T05:53:48.780Z",
+  "timestamp": "2026-10-14T08:41:16.251Z",
   "results": [
     {
       "name": "Live OpenAPI is 3.1 and includes baseline routes",
@@ -11,11 +11,11 @@
       "passed": true
     },
     {
-      "name": "GET products matches baseline response schema",
+      "name": "GET products matches v4 response schema",
       "passed": true
     },
     {
-      "name": "Synthetic product creation and retrieval match baseline",
+      "name": "Synthetic product creation and retrieval match v4",
       "passed": true
     },
     {

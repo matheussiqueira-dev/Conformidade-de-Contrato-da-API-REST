@@ -14,9 +14,9 @@
     "/products/{id}": {
       "get": {
         "tags": [
-          "product-controller"
+          "products-controller"
         ],
-        "operationId": "findById",
+        "operationId": "get",
         "parameters": [
           {
             "name": "id",
@@ -30,11 +30,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Produto",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductResponseDTO"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -61,7 +61,7 @@
       },
       "put": {
         "tags": [
-          "product-controller"
+          "products-controller"
         ],
         "operationId": "update",
         "parameters": [
@@ -88,7 +88,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductRequestDTO"
+                "$ref": "#/components/schemas/ProductUpdateRequest"
               }
             }
           },
@@ -100,7 +100,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductResponseDTO"
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -120,7 +120,7 @@
       },
       "delete": {
         "tags": [
-          "product-controller"
+          "products-controller"
         ],
         "operationId": "delete",
         "parameters": [
@@ -144,8 +144,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Sessao ausente ou expirada"
@@ -166,7 +166,7 @@
         "tags": [
           "payment-controller"
         ],
-        "operationId": "findById_1",
+        "operationId": "findById",
         "parameters": [
           {
             "name": "id",
@@ -423,12 +423,101 @@
         ]
       }
     },
+    "/goals/monthly": {
+      "get": {
+        "tags": [
+          "goals-controller"
+        ],
+        "operationId": "get_1",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthlyGoals"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "goals-controller"
+        ],
+        "operationId": "save",
+        "parameters": [
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonthlyGoalsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthlyGoals"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
     "/customers/{id}": {
       "get": {
         "tags": [
-          "customer-controller"
+          "customers-controller"
         ],
-        "operationId": "findById_2",
+        "operationId": "get_2",
         "parameters": [
           {
             "name": "id",
@@ -446,7 +535,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerResponseDTO"
+                  "$ref": "#/components/schemas/CustomerDetail"
                 }
               }
             }
@@ -463,7 +552,7 @@
       },
       "put": {
         "tags": [
-          "customer-controller"
+          "customers-controller"
         ],
         "operationId": "update_2",
         "parameters": [
@@ -490,7 +579,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CustomerRequestDTO"
+                "$ref": "#/components/schemas/CustomerUpdateRequest"
               }
             }
           },
@@ -502,7 +591,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerResponseDTO"
+                  "$ref": "#/components/schemas/CustomerDetail"
                 }
               }
             }
@@ -522,7 +611,7 @@
       },
       "delete": {
         "tags": [
-          "customer-controller"
+          "customers-controller"
         ],
         "operationId": "delete_2",
         "parameters": [
@@ -546,8 +635,69 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/categories/{id}": {
+      "put": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "renameCategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
           },
           "401": {
             "description": "Sessao ausente ou expirada"
@@ -568,7 +718,7 @@
         "tags": [
           "address-controller"
         ],
-        "operationId": "findById_3",
+        "operationId": "findById_1",
         "parameters": [
           {
             "name": "id",
@@ -703,22 +853,243 @@
         ]
       }
     },
-    "/products": {
-      "get": {
+    "/stock/products/{id}/entries": {
+      "post": {
         "tags": [
-          "product-controller"
+          "stock-controller"
         ],
-        "operationId": "findAll",
+        "operationId": "entry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockEntryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockEntryResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/products/{id}/adjustments": {
+      "post": {
+        "tags": [
+          "stock-controller"
+        ],
+        "operationId": "adjust",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockAdjustmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockMovement"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/sales/quote": {
+      "post": {
+        "tags": [
+          "sales-controller"
+        ],
+        "operationId": "quote",
+        "parameters": [
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProductResponseDTO"
-                  }
+                  "$ref": "#/components/schemas/QuoteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/sales/orders": {
+      "get": {
+        "tags": [
+          "sales-controller"
+        ],
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING_PAYMENT",
+                "PROCESSING",
+                "PAID",
+                "SHIPPED",
+                "DELIVERED",
+                "CANCELED"
+              ]
+            }
+          },
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseSalesOrderSummary"
                 }
               }
             }
@@ -735,9 +1106,199 @@
       },
       "post": {
         "tags": [
-          "product-controller"
+          "sales-controller"
         ],
-        "operationId": "insert",
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Repeticao com a mesma Idempotency-Key e o mesmo corpo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Pedido criado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/sales/orders/{id}/payment": {
+      "post": {
+        "tags": [
+          "sales-controller"
+        ],
+        "operationId": "confirmPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentConfirmationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/promotions": {
+      "get": {
+        "tags": [
+          "promotions-controller"
+        ],
+        "operationId": "list_1",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePromotion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "promotions-controller"
+        ],
+        "operationId": "create_1",
         "parameters": [
           {
             "name": "X-CSRF-TOKEN",
@@ -753,19 +1314,207 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProductRequestDTO"
+                "$ref": "#/components/schemas/PromotionRequest"
               }
             }
           },
           "required": true
         },
         "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Promotion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/promotions/{id}/close": {
+      "post": {
+        "tags": [
+          "promotions-controller"
+        ],
+        "operationId": "close",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductResponseDTO"
+                  "$ref": "#/components/schemas/Promotion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "list_2",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "maxLength": 120,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "sellable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseProduct"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "create_2",
+        "parameters": [
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/DigitalProductCreate"
+                  },
+                  {
+                    "$ref": "#/components/schemas/PhysicalProductCreate"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
                 }
               }
             }
@@ -799,7 +1548,7 @@
         "tags": [
           "payment-controller"
         ],
-        "operationId": "findAll_1",
+        "operationId": "findAll",
         "responses": {
           "200": {
             "description": "OK",
@@ -828,7 +1577,7 @@
         "tags": [
           "payment-controller"
         ],
-        "operationId": "insert_1",
+        "operationId": "insert",
         "parameters": [
           {
             "name": "X-CSRF-TOKEN",
@@ -857,6 +1606,67 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/PaymentResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/payment/{id}/refund": {
+      "post": {
+        "tags": [
+          "refund-controller"
+        ],
+        "operationId": "refund",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponse"
                 }
               }
             }
@@ -931,7 +1741,7 @@
         "tags": [
           "order-controller"
         ],
-        "operationId": "findAll_2",
+        "operationId": "findAll_1",
         "responses": {
           "200": {
             "description": "OK",
@@ -960,7 +1770,7 @@
         "tags": [
           "order-controller"
         ],
-        "operationId": "insert_2",
+        "operationId": "insert_1",
         "parameters": [
           {
             "name": "X-CSRF-TOKEN",
@@ -1007,22 +1817,106 @@
         ]
       }
     },
-    "/customers": {
-      "get": {
+    "/orders/{id}/cancel": {
+      "post": {
         "tags": [
-          "customer-controller"
+          "order-cancel-controller"
         ],
-        "operationId": "findAll_3",
+        "operationId": "cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponseDTO"
-                  }
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/customers": {
+      "get": {
+        "tags": [
+          "customers-controller"
+        ],
+        "operationId": "search",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "maxLength": 120,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseCustomerSummary"
                 }
               }
             }
@@ -1039,9 +1933,9 @@
       },
       "post": {
         "tags": [
-          "customer-controller"
+          "customers-controller"
         ],
-        "operationId": "insert_3",
+        "operationId": "create_3",
         "parameters": [
           {
             "name": "X-CSRF-TOKEN",
@@ -1057,19 +1951,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CustomerRequestDTO"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CorporateCustomerCreate"
+                  },
+                  {
+                    "$ref": "#/components/schemas/IndividualCustomerCreate"
+                  }
+                ]
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerResponseDTO"
+                  "$ref": "#/components/schemas/CustomerDetail"
                 }
               }
             }
@@ -1131,6 +2032,87 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/CustomerResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "categories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "createCategory",
+        "parameters": [
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
@@ -1219,7 +2201,7 @@
         "tags": [
           "address-controller"
         ],
-        "operationId": "findAll_4",
+        "operationId": "findAll_2",
         "responses": {
           "200": {
             "description": "OK",
@@ -1248,7 +2230,7 @@
         "tags": [
           "address-controller"
         ],
-        "operationId": "insert_4",
+        "operationId": "insert_2",
         "parameters": [
           {
             "name": "X-CSRF-TOKEN",
@@ -1295,12 +2277,627 @@
         ]
       }
     },
+    "/stock/products/{id}/min-level": {
+      "patch": {
+        "tags": [
+          "stock-controller"
+        ],
+        "operationId": "changeMinLevel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MinLevelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockProduct"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/products/{id}/status": {
+      "patch": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "changeStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/products/{id}/price": {
+      "patch": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "changePrice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "X-CSRF-TOKEN",
+            "in": "header",
+            "description": "Token retornado por GET /auth/csrf",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PriceChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          },
+          "403": {
+            "description": "Perfil sem permissao ou token CSRF invalido"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/products": {
+      "get": {
+        "tags": [
+          "stock-controller"
+        ],
+        "operationId": "list_3",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "maxLength": 120,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "belowMin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sellable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseStockProduct"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/movements": {
+      "get": {
+        "tags": [
+          "stock-controller"
+        ],
+        "operationId": "movements",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ENTRADA",
+                "RESERVA",
+                "LIBERACAO",
+                "SAIDA",
+                "DEVOLUCAO",
+                "AJUSTE_ENTRADA",
+                "AJUSTE_SAIDA"
+              ]
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseStockMovement"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/sales/orders/{id}": {
+      "get": {
+        "tags": [
+          "sales-controller"
+        ],
+        "operationId": "get_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/sales/catalog": {
+      "get": {
+        "tags": [
+          "sales-controller"
+        ],
+        "operationId": "catalog",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "maxLength": 120,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "onlyAvailable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseCatalogItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/promotions/active": {
+      "get": {
+        "tags": [
+          "promotions-controller"
+        ],
+        "operationId": "active",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivePromotion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/products/{id}/price-history": {
+      "get": {
+        "tags": [
+          "products-controller"
+        ],
+        "operationId": "priceHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePriceChange"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/performance/me": {
+      "get": {
+        "tags": [
+          "goals-controller"
+        ],
+        "operationId": "mine",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerPerformance"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
     "/orders/{id}": {
       "get": {
         "tags": [
           "order-controller"
         ],
-        "operationId": "findById_4",
+        "operationId": "findById_2",
         "parameters": [
           {
             "name": "id",
@@ -1376,6 +2973,151 @@
         ]
       }
     },
+    "/management/summary": {
+      "get": {
+        "tags": [
+          "management-controller"
+        ],
+        "operationId": "summary",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/management/revenue": {
+      "get": {
+        "tags": [
+          "management-controller"
+        ],
+        "operationId": "revenue",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TODAY",
+                "D7",
+                "D30",
+                "D90"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevenueReport"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/customers/{id}/orders": {
+      "get": {
+        "tags": [
+          "customers-controller"
+        ],
+        "operationId": "orders",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseCustomerOrderSummary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
     "/auth/me": {
       "get": {
         "tags": [
@@ -1411,16 +3153,6 @@
         ],
         "summary": "Obtem token CSRF; renovar apos login/logout",
         "operationId": "csrf",
-        "parameters": [
-          {
-            "name": "csrf",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/CsrfToken"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1434,6 +3166,73 @@
           }
         },
         "security": []
+      }
+    },
+    "/analytics/stock": {
+      "get": {
+        "tags": [
+          "analytics-controller"
+        ],
+        "operationId": "stock",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockAnalytics"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
+      }
+    },
+    "/analytics/sales": {
+      "get": {
+        "tags": [
+          "analytics-controller"
+        ],
+        "operationId": "sales",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesAnalytics"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sessao ausente ou expirada"
+          }
+        },
+        "security": [
+          {
+            "sessionAuth": []
+          }
+        ]
       }
     },
     "/auth/logout": {
@@ -1465,38 +3264,79 @@
   },
   "components": {
     "schemas": {
-      "ProductRequestDTO": {
+      "ProductUpdateRequest": {
         "type": "object",
         "properties": {
-          "type": {
-            "type": "string"
+          "sku": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$"
           },
           "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "maximum": 9999999999.99,
-            "minimum": 0.005
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 0
           },
-          "weight": {
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sellable": {
+            "type": "boolean"
+          },
+          "weightKg": {
             "type": "number",
-            "format": "double"
+            "maximum": 1000,
+            "minimum": 0
           },
           "downloadLink": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1
           }
         },
         "required": [
           "name",
-          "price",
-          "type"
+          "sellable",
+          "sku"
         ]
       },
-      "ProductResponseDTO": {
+      "CategoryRef": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "MoneyDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "maximum": 9999999999.99,
+            "minimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "BRL"
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ]
+      },
+      "Product": {
         "type": "object",
         "properties": {
           "id": {
@@ -1506,21 +3346,36 @@
           "type": {
             "type": "string"
           },
-          "name": {
+          "sku": {
             "type": "string"
           },
-          "price": {
-            "type": "number"
+          "name": {
+            "type": "string"
           },
           "description": {
             "type": "string"
           },
-          "weight": {
-            "type": "number",
-            "format": "double"
+          "category": {
+            "$ref": "#/components/schemas/CategoryRef"
+          },
+          "price": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "sellable": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "weightKg": {
+            "type": "number"
           },
           "downloadLink": {
             "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -1763,6 +3618,34 @@
           }
         }
       },
+      "ProductResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "downloadLink": {
+            "type": "string"
+          }
+        }
+      },
       "AddressRequestDTO": {
         "type": "object",
         "properties": {
@@ -1800,36 +3683,1000 @@
           "zipCode"
         ]
       },
-      "CustomerRequestDTO": {
+      "MonthlyGoalsRequest": {
         "type": "object",
         "properties": {
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "sellers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerGoalRequest"
+            },
+            "maxItems": 200,
+            "minItems": 0
+          }
+        },
+        "required": [
+          "period",
+          "sellers",
+          "storeGoal"
+        ]
+      },
+      "SellerGoalRequest": {
+        "type": "object",
+        "properties": {
+          "sellerId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "goal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        },
+        "required": [
+          "goal",
+          "sellerId"
+        ]
+      },
+      "MonthlyGoals": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "sellers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerGoal"
+            }
+          }
+        }
+      },
+      "SellerGoal": {
+        "type": "object",
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "UserRef": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AddressRequest": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 0
+          },
+          "number": {
+            "type": "string",
+            "maxLength": 10,
+            "minLength": 0
+          },
+          "complement": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 0
+          },
+          "neighborhood": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 0
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 0
+          },
+          "state": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "zipCode": {
+            "type": "string",
+            "pattern": "^[0-9]{8}$"
+          }
+        },
+        "required": [
+          "city",
+          "neighborhood",
+          "number",
+          "state",
+          "street",
+          "zipCode"
+        ]
+      },
+      "CustomerUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2
+          },
+          "companyName": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "minLength": 0
+          },
+          "phone": {
+            "type": "string",
+            "pattern": "^[0-9()+\\-. ]{10,20}$"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressRequest"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "phone",
+          "version"
+        ]
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "type": {
             "type": "string"
           },
           "name": {
             "type": "string"
           },
+          "companyName": {
+            "type": "string"
+          },
+          "document": {
+            "type": "string"
+          },
           "email": {
+            "type": "string"
+          },
+          "phone": {
             "type": "string"
           },
           "birthDate": {
             "type": "string",
             "format": "date"
           },
-          "cpf": {
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/NamedRef"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NamedRef": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CategoryRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 2
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StockEntryRequest": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 100000,
+            "minimum": 1
+          },
+          "unitCost": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "salePrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "quantity"
+        ]
+      },
+      "ProductRef": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
             "type": "string"
           },
-          "cnpj": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StockEntryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductRef"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitCost": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "note": {
             "type": "string"
           },
-          "companyName": {
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stock": {
+            "$ref": "#/components/schemas/StockProduct"
+          }
+        }
+      },
+      "StockProduct": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sellable": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "onHand": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reserved": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "available": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "belowMin": {
+            "type": "boolean"
+          },
+          "avgCost": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "StockAdjustmentRequest": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "IN",
+              "OUT"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 100000,
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "PERDA",
+              "AVARIA",
+              "USO_INTERNO",
+              "INVENTARIO",
+              "DEVOLUCAO_FORNECEDOR"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "direction",
+          "quantity",
+          "reason"
+        ]
+      },
+      "StockMovement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductRef"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/NamedRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "QuoteRequest": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemRequest"
+            },
+            "maxItems": 50,
+            "minItems": 1
+          },
+          "eachProductOnce": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "SaleItemRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 999,
+            "minimum": 1
+          },
+          "promotionId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "productId",
+          "quantity"
+        ]
+      },
+      "QuoteItem": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "discount": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "available": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "QuoteResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteItem"
+            }
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "total": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "BoletoPaymentRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SalePaymentRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dueDate": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        ],
+        "required": [
+          "dueDate"
+        ]
+      },
+      "CardPaymentRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SalePaymentRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "cardLast4": {
+                "type": "string",
+                "pattern": "^[0-9]{4}$"
+              },
+              "installments": {
+                "type": "integer",
+                "format": "int32",
+                "maximum": 12,
+                "minimum": 1
+              },
+              "authorizationCode": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9]{1,20}$"
+              }
+            }
+          }
+        ],
+        "required": [
+          "cardLast4",
+          "installments"
+        ]
+      },
+      "PixPaymentRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SalePaymentRequest"
+          }
+        ]
+      },
+      "SalePaymentRequest": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type"
+        },
+        "properties": {
+          "type": {
             "type": "string"
           }
         },
         "required": [
-          "birthDate",
-          "email",
+          "type"
+        ]
+      },
+      "SalesOrderRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemRequest"
+            },
+            "maxItems": 50,
+            "minItems": 1
+          },
+          "payment": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BoletoPaymentRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CardPaymentRequest"
+              },
+              {
+                "$ref": "#/components/schemas/PixPaymentRequest"
+              }
+            ]
+          },
+          "fulfillment": {
+            "type": "string",
+            "enum": [
+              "PICKUP",
+              "DELIVERY"
+            ]
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/AddressRequest"
+          },
+          "addressPresentForDelivery": {
+            "type": "boolean"
+          },
+          "eachProductOnce": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "customerId",
+          "fulfillment",
+          "items",
+          "payment"
+        ]
+      },
+      "SalesOrderItem": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "discount": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "SalesOrderPayment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "SalesOrderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesOrderItem"
+            }
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "total": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "payment": {
+            "$ref": "#/components/schemas/SalesOrderPayment"
+          },
+          "fulfillment": {
+            "type": "string",
+            "enum": [
+              "PICKUP",
+              "DELIVERY"
+            ]
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PaymentConfirmationRequest": {
+        "type": "object",
+        "properties": {
+          "authorizationCode": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]{1,20}$"
+          }
+        }
+      },
+      "PromotionRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "AMOUNT"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "maximum": 9999999999.99,
+            "minimum": 0
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "windowValid": {
+            "type": "boolean"
+          },
+          "percentInRange": {
+            "type": "boolean"
+          },
+          "singleScope": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "endsAt",
+          "kind",
           "name",
+          "startsAt",
+          "value"
+        ]
+      },
+      "Promotion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductRef"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryRef"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DigitalProductCreate": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductCreateRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "sku": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 0
+              },
+              "categoryId": {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 1
+              },
+              "sellable": {
+                "type": "boolean"
+              },
+              "price": {
+                "$ref": "#/components/schemas/MoneyDto"
+              },
+              "downloadLink": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 0
+              },
+              "minLevel": {
+                "type": "integer",
+                "format": "int32",
+                "maximum": 100000,
+                "minimum": 0
+              }
+            }
+          }
+        ],
+        "required": [
+          "downloadLink",
+          "name",
+          "price",
+          "sellable",
+          "sku"
+        ]
+      },
+      "PhysicalProductCreate": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductCreateRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "sku": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 0
+              },
+              "categoryId": {
+                "type": "integer",
+                "format": "int64",
+                "minimum": 1
+              },
+              "sellable": {
+                "type": "boolean"
+              },
+              "price": {
+                "$ref": "#/components/schemas/MoneyDto"
+              },
+              "weightKg": {
+                "type": "number",
+                "maximum": 1000,
+                "minimum": 0
+              },
+              "minLevel": {
+                "type": "integer",
+                "format": "int32",
+                "maximum": 100000,
+                "minimum": 0
+              }
+            }
+          }
+        ],
+        "required": [
+          "name",
+          "price",
+          "sellable",
+          "sku",
+          "weightKg"
+        ]
+      },
+      "ProductCreateRequest": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "type"
+        },
+        "properties": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
           "type"
         ]
       },
@@ -1889,6 +4736,88 @@
           "message",
           "status",
           "timestamp"
+        ]
+      },
+      "RefundRequest": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 5
+          }
+        },
+        "required": [
+          "amount",
+          "reason"
+        ]
+      },
+      "RefundResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "refundedTotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CustomerRequestDTO": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "cnpj": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "birthDate",
+          "email",
+          "name",
+          "type"
         ]
       },
       "OrderItemRequestDTO": {
@@ -1977,35 +4906,107 @@
           "shippingAddress"
         ]
       },
-      "Address": {
+      "CorporateCustomerCreate": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CustomerCreateRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              "companyName": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              "cnpj": {
+                "type": "string",
+                "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$"
+              },
+              "email": {
+                "type": "string",
+                "maxLength": 254,
+                "minLength": 0
+              },
+              "phone": {
+                "type": "string",
+                "pattern": "^[0-9()+\\-. ]{10,20}$"
+              },
+              "address": {
+                "$ref": "#/components/schemas/AddressRequest"
+              }
+            }
+          }
+        ],
+        "required": [
+          "cnpj",
+          "companyName",
+          "email",
+          "name",
+          "phone"
+        ]
+      },
+      "CustomerCreateRequest": {
         "type": "object",
+        "discriminator": {
+          "propertyName": "type"
+        },
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "street": {
-            "type": "string"
-          },
-          "number": {
-            "type": "string"
-          },
-          "complement": {
-            "type": "string"
-          },
-          "neighborhood": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "zipCode": {
+          "type": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "IndividualCustomerCreate": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CustomerCreateRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              "cpf": {
+                "type": "string",
+                "pattern": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+              },
+              "email": {
+                "type": "string",
+                "maxLength": 254,
+                "minLength": 0
+              },
+              "phone": {
+                "type": "string",
+                "pattern": "^[0-9()+\\-. ]{10,20}$"
+              },
+              "birthDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "address": {
+                "$ref": "#/components/schemas/AddressRequest"
+              }
+            }
+          }
+        ],
+        "required": [
+          "cpf",
+          "email",
+          "name",
+          "phone"
+        ]
       },
       "LoginRequest": {
         "type": "object",
@@ -2028,6 +5029,711 @@
           "email",
           "password"
         ]
+      },
+      "MinLevelRequest": {
+        "type": "object",
+        "properties": {
+          "minLevel": {
+            "type": "integer",
+            "format": "int32",
+            "maximum": 100000,
+            "minimum": 0
+          }
+        },
+        "required": [
+          "minLevel"
+        ]
+      },
+      "ProductStatusRequest": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "active"
+        ]
+      },
+      "PriceChangeRequest": {
+        "type": "object",
+        "properties": {
+          "newPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 5
+          }
+        },
+        "required": [
+          "newPrice",
+          "reason"
+        ]
+      },
+      "PageResponseStockProduct": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockProduct"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PageResponseStockMovement": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockMovement"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PageResponseSalesOrderSummary": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesOrderSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "SalesOrderSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "total": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "paymentType": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string"
+          },
+          "fulfillment": {
+            "type": "string",
+            "enum": [
+              "PICKUP",
+              "DELIVERY"
+            ]
+          },
+          "itemsCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ActivePromotion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CatalogItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryRef"
+          },
+          "price": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "available": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "activePromotion": {
+            "$ref": "#/components/schemas/ActivePromotion"
+          }
+        }
+      },
+      "PageResponseCatalogItem": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogItem"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PageResponsePromotion": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Promotion"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PageResponseProduct": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PageResponsePriceChange": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceChange"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PriceChange": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "oldPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "newPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "changedBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SellerPerformance": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "achievementPercent": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "SEM_META",
+              "EM_ANDAMENTO",
+              "META_ATINGIDA"
+            ]
+          }
+        }
+      },
+      "ManagementSummary": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "storeRealized": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "achievementPercent": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "SEM_META",
+              "EM_ANDAMENTO",
+              "META_ATINGIDA"
+            ]
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerMetric"
+            }
+          }
+        }
+      },
+      "SellerMetric": {
+        "type": "object",
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "achievementPercent": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "SEM_META",
+              "EM_ANDAMENTO",
+              "META_ATINGIDA"
+            ]
+          }
+        }
+      },
+      "DailyRevenue": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "grossProfit": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date"
+          },
+          "to": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "PaymentMethodRevenue": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "ProductRevenue": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unitsSold": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "grossProfit": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "RevenueReport": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "grossRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "refunds": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "unitsSold": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageTicket": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "grossProfit": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "grossMarginPercent": {
+            "type": "number"
+          },
+          "costCoveragePercent": {
+            "type": "number"
+          },
+          "daily": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyRevenue"
+            }
+          },
+          "byPaymentMethod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodRevenue"
+            }
+          },
+          "bySeller": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerRevenue"
+            }
+          },
+          "topProducts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductRevenue"
+            }
+          },
+          "lowStockCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pendingPaymentCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pendingPaymentAmount": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SellerRevenue": {
+        "type": "object",
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "CustomerSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "document": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "ordersCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastOrderAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PageResponseCustomerSummary": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "CustomerOrderItem": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CustomerOrderSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "moment": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "fulfillment": {
+            "type": "string",
+            "enum": [
+              "PICKUP",
+              "DELIVERY"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerOrderItem"
+            }
+          },
+          "total": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "sellerFirstName": {
+            "type": "string"
+          },
+          "own": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageResponseCustomerOrderSummary": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerOrderSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
       },
       "UserSession": {
         "type": "object",
@@ -2057,20 +5763,6 @@
           }
         }
       },
-      "CsrfToken": {
-        "type": "object",
-        "properties": {
-          "parameterName": {
-            "type": "string"
-          },
-          "token": {
-            "type": "string"
-          },
-          "headerName": {
-            "type": "string"
-          }
-        }
-      },
       "CsrfResponse": {
         "type": "object",
         "properties": {
@@ -2079,6 +5771,141 @@
           },
           "token": {
             "type": "string"
+          }
+        }
+      },
+      "StockAnalytics": {
+        "type": "object",
+        "properties": {
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "products": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "units": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "valueAtCost": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "valueAtPrice": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "productsWithoutCost": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "belowMin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockProduct"
+            }
+          }
+        }
+      },
+      "ProductMargin": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "units": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "cost": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "grossMargin": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "marginPercent": {
+            "type": "number"
+          },
+          "itemsWithoutCost": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PromotionUsage": {
+        "type": "object",
+        "properties": {
+          "promotionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        }
+      },
+      "SalesAnalytics": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string"
+          },
+          "weekly": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeeklyRevenue"
+            }
+          },
+          "byPaymentMethod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodRevenue"
+            }
+          },
+          "productMargins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductMargin"
+            }
+          },
+          "promotionUsage": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PromotionUsage"
+            }
+          }
+        }
+      },
+      "WeeklyRevenue": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       }
