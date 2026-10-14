@@ -242,4 +242,96 @@ class CustomersApiTest {
         assertThat(summary.get("lastOrderAt").isNull()).isFalse();
         assertError(call(get("/customers/999999/orders"), fx.ana), 404, "NOT_FOUND");
     }
+
+    private JsonNode order(long seller, long product, String payment) throws Exception {
+        MvcResult result = call(post("/sales/orders").header("Idempotency-Key", UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON).content("""
+                        {"customerId":%d,"items":[{"productId":%d,"quantity":1}],"payment":%s,"fulfillment":"PICKUP"}"""
+                        .formatted(fx.customer, product, payment)), seller);
+        assertThat(result.getResponse().getStatus()).isEqualTo(201);
+        return body(result);
+    }
+
+    private JsonNode paid(long seller, long product, String payment) throws Exception {
+        JsonNode created = order(seller, product, payment);
+        MvcResult paidResult = call(post("/sales/orders/" + created.get("id").asLong() + "/payment"), seller);
+        assertThat(paidResult.getResponse().getStatus()).isEqualTo(200);
+        return body(paidResult);
+    }
+
+    /** Ana: duas vendas pagas (Pix), uma com estorno de 5; Bruno: uma paga (cartao), uma pendente e uma cancelada. */
+    private void purchases() throws Exception {
+        long product = fx.product("CAB-001", "Cabo USB", "10.00", 20, "4.00");
+        long charger = fx.product("CAR-001", "Carregador", "30.00", 20, "12.00");
+        JsonNode first = paid(fx.ana, product, "{\"type\":\"PIX\"}");
+        paid(fx.ana, product, "{\"type\":\"PIX\"}");
+        paid(fx.bruno, charger, "{\"type\":\"CARD\",\"cardLast4\":\"4242\",\"installments\":1}");
+        order(fx.bruno, product, "{\"type\":\"PIX\"}");
+        JsonNode canceled = order(fx.bruno, charger, "{\"type\":\"PIX\"}");
+        assertThat(call(post("/orders/" + canceled.get("id").asLong() + "/cancel"), fx.bruno).getResponse().getStatus()).isEqualTo(200);
+        MvcResult refund = call(post("/payment/" + first.get("payment").get("id").asLong() + "/refund")
+                .contentType(MediaType.APPLICATION_JSON).content("{\"amount\":{\"amount\":5,\"currency\":\"BRL\"},\"reason\":\"Troca parcial\"}"),
+                fx.manager);
+        assertThat(refund.getResponse().getStatus()).isEqualTo(201);
+    }
+
+    private static String amount(JsonNode money) {
+        return money.isNull() ? null : money.get("amount").decimalValue().setScale(2).toPlainString();
+    }
+
+    @Test
+    @DisplayName("[CT-CUS-121] resumo do GERENTE: loja toda, liquido de estornos, pendentes e cancelados fora dos totais")
+    void managerSummaryCoversTheWholeStore() throws Exception {
+        purchases();
+        JsonNode summary = body(call(get("/customers/" + fx.customer + "/summary"), fx.manager));
+        assertThat(summary.get("scope").asText()).isEqualTo("STORE");
+        assertThat(summary.get("ordersPaid").asLong()).isEqualTo(3);
+        assertThat(summary.get("pendingOrders").asLong()).isEqualTo(1);
+        assertThat(summary.get("canceledOrders").asLong()).isEqualTo(1);
+        assertThat(amount(summary.get("totalSpent"))).isEqualTo("45.00");
+        assertThat(amount(summary.get("averageTicket"))).isEqualTo("15.00");
+        assertThat(amount(summary.get("refundsTotal"))).isEqualTo("5.00");
+        assertThat(summary.get("firstPurchaseAt").isNull()).isFalse();
+        assertThat(summary.get("lastPurchaseAt").asText()).matches("\\d{4}-\\d{2}-\\d{2}T.*-03:00");
+        assertThat(summary.get("topProducts").get(0).get("name").asText()).isEqualTo("Cabo USB");
+        assertThat(summary.get("topProducts").get(0).get("quantity").asLong()).isEqualTo(2);
+        assertThat(summary.get("topProducts").get(1).get("quantity").asLong()).isEqualTo(1);
+        assertThat(summary.get("paymentMix").findValuesAsText("method")).containsExactly("CARD", "PIX");
+        assertThat(amount(summary.get("paymentMix").get(1).get("amount"))).isEqualTo("20.00");
+        assertThat(summary.toString()).doesNotContain("cost", "Cost", "margin");
+    }
+
+    @Test
+    @DisplayName("[CT-CUS-122] resumo do VENDEDOR: valores so dos pedidos dele, sem estornos da loja")
+    void sellerSummaryIsScopedToOwnOrders() throws Exception {
+        purchases();
+        JsonNode ana = body(call(get("/customers/" + fx.customer + "/summary"), fx.ana));
+        assertThat(ana.get("scope").asText()).isEqualTo("OWN");
+        assertThat(ana.get("ordersPaid").asLong()).isEqualTo(3);
+        assertThat(amount(ana.get("totalSpent"))).isEqualTo("15.00");
+        assertThat(amount(ana.get("averageTicket"))).isEqualTo("7.50");
+        assertThat(ana.get("refundsTotal").isNull()).isTrue();
+        assertThat(ana.get("paymentMix").findValuesAsText("method")).containsExactly("PIX");
+        assertThat(ana.get("topProducts")).hasSize(2);
+
+        JsonNode bruno = body(call(get("/customers/" + fx.customer + "/summary"), fx.bruno));
+        assertThat(amount(bruno.get("totalSpent"))).isEqualTo("30.00");
+        assertThat(bruno.get("paymentMix").findValuesAsText("method")).containsExactly("CARD");
+    }
+
+    @Test
+    @DisplayName("[CT-CUS-123] cliente sem compras: zeros e datas nulas, sem numero ficticio; inexistente 404")
+    void customerWithoutPurchasesHasZeros() throws Exception {
+        JsonNode summary = body(call(get("/customers/" + fx.customer + "/summary"), fx.manager));
+        assertThat(summary.get("ordersPaid").asLong()).isZero();
+        assertThat(summary.get("pendingOrders").asLong()).isZero();
+        assertThat(amount(summary.get("totalSpent"))).isEqualTo("0.00");
+        assertThat(summary.get("averageTicket").isNull()).isTrue();
+        assertThat(amount(summary.get("refundsTotal"))).isEqualTo("0.00");
+        assertThat(summary.get("firstPurchaseAt").isNull()).isTrue();
+        assertThat(summary.get("lastPurchaseAt").isNull()).isTrue();
+        assertThat(summary.get("topProducts")).isEmpty();
+        assertThat(summary.get("paymentMix")).isEmpty();
+        assertError(call(get("/customers/999999/summary"), fx.ana), 404, "NOT_FOUND");
+    }
 }
