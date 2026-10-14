@@ -566,7 +566,7 @@
       "post": {
         "summary": "GERENTE aplica desconto acima da alcada do vendedor num pedido pendente",
         "operationId": "approveOrderDiscount",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2919,7 +2919,7 @@
       "get": {
         "summary": "Alcadas de desconto manual por papel",
         "operationId": "listDiscountPolicies",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2953,7 +2953,7 @@
       "put": {
         "summary": "Altera a alcada de um papel com motivo",
         "operationId": "updateDiscountPolicy",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -3179,7 +3179,9 @@
           "SESSION_REVOKED",
           "LAST_MANAGER",
           "SELF_CHANGE_FORBIDDEN",
-          "PASSWORD_CHANGE_REQUIRED"
+          "PASSWORD_CHANGE_REQUIRED",
+          "DISCOUNT_ABOVE_LIMIT",
+          "BELOW_COST"
         ]
       },
       "Money": {
@@ -3652,7 +3654,9 @@
           "items",
           "subtotal",
           "discountTotal",
-          "total"
+          "total",
+          "manualDiscount",
+          "manualDiscountLimitPercent"
         ],
         "properties": {
           "items": {
@@ -3669,6 +3673,23 @@
           },
           "total": {
             "$ref": "#/components/schemas/Money"
+          },
+          "manualDiscount": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Valor do desconto manual (ja incluido em discountTotal); null sem desconto manual."
+          },
+          "manualDiscountLimitPercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Alcada de desconto manual do papel da sessao."
           }
         },
         "additionalProperties": false
@@ -3991,7 +4012,8 @@
           "payment",
           "fulfillment",
           "shippingAddress",
-          "createdAt"
+          "createdAt",
+          "manualDiscount"
         ],
         "properties": {
           "id": {
@@ -4042,6 +4064,16 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "manualDiscount": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ManualDiscountInfo"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false
@@ -6217,7 +6249,8 @@
           "weekly",
           "byPaymentMethod",
           "productMargins",
-          "promotionUsage"
+          "promotionUsage",
+          "manualDiscounts"
         ],
         "properties": {
           "month": {
@@ -6249,6 +6282,12 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PromotionUsage"
+            }
+          },
+          "manualDiscounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerManualDiscount"
             }
           }
         },

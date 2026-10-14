@@ -147,6 +147,24 @@ const second = record('/sales/orders', 'post', await seller.request('/sales/orde
 record('/orders/{id}/cancel', 'post', await seller.request(`/orders/${second.id}/cancel`, 'POST'), 200);
 record('/orders/{id}/cancel', 'post', await seller.request(`/orders/${order.id}/cancel`, 'POST'), 409);
 record('/customers/{id}/orders', 'get', await seller.request(`/customers/${customer.id}/orders`), 200);
+
+// Desconto manual com alcada (contrato v5, G-04): VENDEDOR 5% e GERENTE 20% (valores iniciais da V11)
+const manualItems = [{ productId: product.id, quantity: 1 }];
+record('/sales/quote', 'post', await seller.request('/sales/quote', 'POST', { items: manualItems, manualDiscount: { percent: 5, reason: 'Cliente fiel do contrato' } }), 200);
+record('/sales/quote', 'post', await seller.request('/sales/quote', 'POST', { items: manualItems, manualDiscount: { percent: 9, reason: 'Acima da alcada' } }), 403);
+const discounted = record('/sales/orders', 'post', await seller.request('/sales/orders', 'POST',
+  { ...sale, items: manualItems, manualDiscount: { percent: 5, reason: 'Cliente fiel do contrato' } }, { headers: { 'Idempotency-Key': randomUUID() } }), 201).body;
+record('/sales/orders/{id}/discount-approval', 'post', await manager.request(`/sales/orders/${discounted.id}/discount-approval`, 'POST',
+  { percent: 12, reason: 'Aprovado no contrato' }), 200);
+record('/sales/orders/{id}/discount-approval', 'post', await manager.request(`/sales/orders/${discounted.id}/discount-approval`, 'POST',
+  { percent: 30, reason: 'Acima da gerencia' }), 403);
+record('/sales/orders/{id}/discount-approval', 'post', await manager.request(`/sales/orders/${order.id}/discount-approval`, 'POST',
+  { percent: 10, reason: 'Pedido ja pago' }), 409);
+record('/orders/{id}/cancel', 'post', await seller.request(`/orders/${discounted.id}/cancel`, 'POST'), 200);
+record('/discount-policy', 'get', await manager.request('/discount-policy'), 200);
+record('/discount-policy', 'get', await seller.request('/discount-policy'), 403);
+record('/discount-policy/{role}', 'put', await manager.request('/discount-policy/VENDEDOR', 'PUT', { maxPercent: 5, allowBelowCost: false, reason: 'Conferencia do contrato' }), 200);
+record('/discount-policy/{role}', 'put', await manager.request('/discount-policy/VENDEDOR', 'PUT', { maxPercent: 101, allowBelowCost: false, reason: 'Invalido' }), 400);
 record('/customers/{id}/summary', 'get', await seller.request(`/customers/${customer.id}/summary`), 200);
 record('/customers/{id}/summary', 'get', await manager.request(`/customers/${customer.id}/summary`), 200);
 record('/customers/{id}/summary', 'get', await seller.request('/customers/999999/summary'), 404);

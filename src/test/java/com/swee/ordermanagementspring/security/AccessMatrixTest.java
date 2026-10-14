@@ -99,7 +99,7 @@ class AccessMatrixTest {
     @ParameterizedTest(name = "[CT-SEC-101] {0} {1} como {2} -> {3}")
     @MethodSource("cases")
     void matrixRowIsEnforced(String method, String path, String actor, String expected, String key) throws Exception {
-        String uri = path.replace("{id}", MISSING_ID).replace("**", "index.html");
+        String uri = path.replace("{id}", MISSING_ID).replace("{role}", "VENDEDOR").replace("**", "index.html");
         MockHttpServletRequestBuilder request = request(HttpMethod.valueOf(method), uri)
                 .contentType(MediaType.APPLICATION_JSON).content("{}").with(csrf());
         if (!actor.equals("ANONIMO")) request.with(user(principal(UserRole.valueOf(actor))));

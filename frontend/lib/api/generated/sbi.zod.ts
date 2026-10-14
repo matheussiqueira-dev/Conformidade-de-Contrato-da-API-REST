@@ -228,6 +228,12 @@ export const quoteSaleResponseDiscountTotalAmountMax = 9999999999.99;
 export const quoteSaleResponseTotalAmountMin = 0;
 export const quoteSaleResponseTotalAmountMax = 9999999999.99;
 
+export const quoteSaleResponseManualDiscountOneAmountMin = 0;
+export const quoteSaleResponseManualDiscountOneAmountMax = 9999999999.99;
+
+export const quoteSaleResponseManualDiscountLimitPercentMin = 0;
+export const quoteSaleResponseManualDiscountLimitPercentMax = 100;
+
 
 
 export const QuoteSaleResponse = zod.strictObject({
@@ -259,7 +265,12 @@ export const QuoteSaleResponse = zod.strictObject({
   "total": zod.strictObject({
   "amount": zod.number().min(quoteSaleResponseTotalAmountMin).max(quoteSaleResponseTotalAmountMax),
   "currency": zod.literal("BRL")
-}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "manualDiscount": zod.union([zod.strictObject({
+  "amount": zod.number().min(quoteSaleResponseManualDiscountOneAmountMin).max(quoteSaleResponseManualDiscountOneAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),zod.null()]).describe('Valor do desconto manual (ja incluido em discountTotal); null sem desconto manual.'),
+  "manualDiscountLimitPercent": zod.number().min(quoteSaleResponseManualDiscountLimitPercentMin).max(quoteSaleResponseManualDiscountLimitPercentMax).describe('Alcada de desconto manual do papel da sessao.')
 }).describe('Unica fonte do total exibido no carrinho. Sem efeito colateral.')
 
 
@@ -363,6 +374,12 @@ export const createSaleOrderResponseDiscountTotalAmountMax = 9999999999.99;
 export const createSaleOrderResponseTotalAmountMin = 0;
 export const createSaleOrderResponseTotalAmountMax = 9999999999.99;
 
+export const createSaleOrderResponseManualDiscountOnePercentMin = 0.01;
+export const createSaleOrderResponseManualDiscountOnePercentMax = 100;
+
+export const createSaleOrderResponseManualDiscountOneAmountAmountMin = 0;
+export const createSaleOrderResponseManualDiscountOneAmountAmountMax = 9999999999.99;
+
 
 
 export const CreateSaleOrderResponse = zod.strictObject({
@@ -421,7 +438,19 @@ export const CreateSaleOrderResponse = zod.strictObject({
   "state": zod.string(),
   "zipCode": zod.string()
 }),zod.null()]),
-  "createdAt": zod.iso.datetime({"offset":true})
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "manualDiscount": zod.union([zod.strictObject({
+  "percent": zod.number().min(createSaleOrderResponseManualDiscountOnePercentMin).max(createSaleOrderResponseManualDiscountOnePercentMax),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(createSaleOrderResponseManualDiscountOneAmountAmountMin).max(createSaleOrderResponseManualDiscountOneAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "reason": zod.string(),
+  "approvedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]).describe('GERENTE que aprovou acima da alcada do vendedor; null se veio na venda.')
+}).describe('Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.'),zod.null()])
 }).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
 
 
@@ -512,6 +541,12 @@ export const getSalesOrderResponseDiscountTotalAmountMax = 9999999999.99;
 export const getSalesOrderResponseTotalAmountMin = 0;
 export const getSalesOrderResponseTotalAmountMax = 9999999999.99;
 
+export const getSalesOrderResponseManualDiscountOnePercentMin = 0.01;
+export const getSalesOrderResponseManualDiscountOnePercentMax = 100;
+
+export const getSalesOrderResponseManualDiscountOneAmountAmountMin = 0;
+export const getSalesOrderResponseManualDiscountOneAmountAmountMax = 9999999999.99;
+
 
 
 export const GetSalesOrderResponse = zod.strictObject({
@@ -570,7 +605,19 @@ export const GetSalesOrderResponse = zod.strictObject({
   "state": zod.string(),
   "zipCode": zod.string()
 }),zod.null()]),
-  "createdAt": zod.iso.datetime({"offset":true})
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "manualDiscount": zod.union([zod.strictObject({
+  "percent": zod.number().min(getSalesOrderResponseManualDiscountOnePercentMin).max(getSalesOrderResponseManualDiscountOnePercentMax),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(getSalesOrderResponseManualDiscountOneAmountAmountMin).max(getSalesOrderResponseManualDiscountOneAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "reason": zod.string(),
+  "approvedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]).describe('GERENTE que aprovou acima da alcada do vendedor; null se veio na venda.')
+}).describe('Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.'),zod.null()])
 }).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
 
 
@@ -619,6 +666,12 @@ export const confirmSalePaymentResponseDiscountTotalAmountMax = 9999999999.99;
 
 export const confirmSalePaymentResponseTotalAmountMin = 0;
 export const confirmSalePaymentResponseTotalAmountMax = 9999999999.99;
+
+export const confirmSalePaymentResponseManualDiscountOnePercentMin = 0.01;
+export const confirmSalePaymentResponseManualDiscountOnePercentMax = 100;
+
+export const confirmSalePaymentResponseManualDiscountOneAmountAmountMin = 0;
+export const confirmSalePaymentResponseManualDiscountOneAmountAmountMax = 9999999999.99;
 
 
 
@@ -678,7 +731,19 @@ export const ConfirmSalePaymentResponse = zod.strictObject({
   "state": zod.string(),
   "zipCode": zod.string()
 }),zod.null()]),
-  "createdAt": zod.iso.datetime({"offset":true})
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "manualDiscount": zod.union([zod.strictObject({
+  "percent": zod.number().min(confirmSalePaymentResponseManualDiscountOnePercentMin).max(confirmSalePaymentResponseManualDiscountOnePercentMax),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(confirmSalePaymentResponseManualDiscountOneAmountAmountMin).max(confirmSalePaymentResponseManualDiscountOneAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "reason": zod.string(),
+  "approvedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]).describe('GERENTE que aprovou acima da alcada do vendedor; null se veio na venda.')
+}).describe('Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.'),zod.null()])
 }).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
 
 
@@ -732,6 +797,12 @@ export const approveOrderDiscountResponseDiscountTotalAmountMax = 9999999999.99;
 
 export const approveOrderDiscountResponseTotalAmountMin = 0;
 export const approveOrderDiscountResponseTotalAmountMax = 9999999999.99;
+
+export const approveOrderDiscountResponseManualDiscountOnePercentMin = 0.01;
+export const approveOrderDiscountResponseManualDiscountOnePercentMax = 100;
+
+export const approveOrderDiscountResponseManualDiscountOneAmountAmountMin = 0;
+export const approveOrderDiscountResponseManualDiscountOneAmountAmountMax = 9999999999.99;
 
 
 
@@ -791,7 +862,19 @@ export const ApproveOrderDiscountResponse = zod.strictObject({
   "state": zod.string(),
   "zipCode": zod.string()
 }),zod.null()]),
-  "createdAt": zod.iso.datetime({"offset":true})
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "manualDiscount": zod.union([zod.strictObject({
+  "percent": zod.number().min(approveOrderDiscountResponseManualDiscountOnePercentMin).max(approveOrderDiscountResponseManualDiscountOnePercentMax),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseManualDiscountOneAmountAmountMin).max(approveOrderDiscountResponseManualDiscountOneAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "reason": zod.string(),
+  "approvedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]).describe('GERENTE que aprovou acima da alcada do vendedor; null se veio na venda.')
+}).describe('Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.'),zod.null()])
 }).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
 
 
@@ -830,6 +913,12 @@ export const cancelOrderResponseDiscountTotalAmountMax = 9999999999.99;
 
 export const cancelOrderResponseTotalAmountMin = 0;
 export const cancelOrderResponseTotalAmountMax = 9999999999.99;
+
+export const cancelOrderResponseManualDiscountOnePercentMin = 0.01;
+export const cancelOrderResponseManualDiscountOnePercentMax = 100;
+
+export const cancelOrderResponseManualDiscountOneAmountAmountMin = 0;
+export const cancelOrderResponseManualDiscountOneAmountAmountMax = 9999999999.99;
 
 
 
@@ -889,7 +978,19 @@ export const CancelOrderResponse = zod.strictObject({
   "state": zod.string(),
   "zipCode": zod.string()
 }),zod.null()]),
-  "createdAt": zod.iso.datetime({"offset":true})
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "manualDiscount": zod.union([zod.strictObject({
+  "percent": zod.number().min(cancelOrderResponseManualDiscountOnePercentMin).max(cancelOrderResponseManualDiscountOnePercentMax),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(cancelOrderResponseManualDiscountOneAmountAmountMin).max(cancelOrderResponseManualDiscountOneAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "reason": zod.string(),
+  "approvedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]).describe('GERENTE que aprovou acima da alcada do vendedor; null se veio na venda.')
+}).describe('Desconto manual do pedido, ja rateado nos itens (discount) e em discountTotal.'),zod.null()])
 }).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
 
 
@@ -2818,6 +2919,13 @@ export const getSalesAnalyticsResponsePromotionUsageItemDiscountTotalAmountMax =
 export const getSalesAnalyticsResponsePromotionUsageItemNetRevenueAmountMin = 0;
 export const getSalesAnalyticsResponsePromotionUsageItemNetRevenueAmountMax = 9999999999.99;
 
+export const getSalesAnalyticsResponseManualDiscountsItemOrdersMin = 0;
+
+export const getSalesAnalyticsResponseManualDiscountsItemAmountAmountMin = 0;
+export const getSalesAnalyticsResponseManualDiscountsItemAmountAmountMax = 9999999999.99;
+
+export const getSalesAnalyticsResponseManualDiscountsItemApprovedByManagerMin = 0;
+
 
 
 export const GetSalesAnalyticsResponse = zod.strictObject({
@@ -2869,7 +2977,19 @@ export const GetSalesAnalyticsResponse = zod.strictObject({
   "amount": zod.number().min(getSalesAnalyticsResponsePromotionUsageItemNetRevenueAmountMin).max(getSalesAnalyticsResponsePromotionUsageItemNetRevenueAmountMax),
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
-}))
+})),
+  "manualDiscounts": zod.array(zod.strictObject({
+  "seller": zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),
+  "orders": zod.int().min(getSalesAnalyticsResponseManualDiscountsItemOrdersMin),
+  "amount": zod.strictObject({
+  "amount": zod.number().min(getSalesAnalyticsResponseManualDiscountsItemAmountAmountMin).max(getSalesAnalyticsResponseManualDiscountsItemAmountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "approvedByManager": zod.int().min(getSalesAnalyticsResponseManualDiscountsItemApprovedByManagerMin)
+}).describe('Descontos manuais em pedidos pagos no mes, por vendedor (v_descontos_manuais).'))
 })
 
 

@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
  * Tabelas de negocio que podem ser esvaziadas em banco descartavel (testes e runner de contrato).
- * Nunca inclui role nem flyway_schema_history: elas sao semeadas pelas migracoes.
+ * Nunca inclui role nem flyway_schema_history: elas sao semeadas pelas migracoes. discount_policy (V11) tambem e
+ * semeada pela migracao, mas referencia app_users (updated_by) e o CASCADE a esvaziaria: as alcadas sao guardadas
+ * antes e recolocadas depois, sem autor.
  */
 public final class BusinessTables {
 
@@ -19,6 +21,11 @@ public final class BusinessTables {
     }
 
     public static void truncate(JdbcTemplate jdbc) {
+        var policies = jdbc.queryForList("SELECT role, max_percent, allow_below_cost FROM discount_policy");
         jdbc.execute("TRUNCATE TABLE " + String.join(", ", NAMES) + " RESTART IDENTITY CASCADE");
+        for (var policy : policies) {
+            jdbc.update("INSERT INTO discount_policy(role, max_percent, allow_below_cost, updated_by) VALUES (?, ?, ?, NULL)",
+                    policy.get("role"), policy.get("max_percent"), policy.get("allow_below_cost"));
+        }
     }
 }
