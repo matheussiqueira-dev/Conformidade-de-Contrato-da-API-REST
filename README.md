@@ -42,6 +42,16 @@ Abra <http://localhost:3000> e entre com uma das contas abaixo, todas com a senh
 
 Para encerrar e apagar tudo: `docker compose -f docker-compose.demo.yml -p sbi-demo down`.
 
+### Massa de demonstração (Olist) e acesso ao banco por SQL
+
+Para mostrar um histórico de clientes volumoso (60 clientes, 219 pedidos, recorte do conjunto público da Olist, CC BY-NC-SA 4.0), carregue a massa por SQL depois de subir a stack:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -Check
+```
+
+O banco de demonstração fica acessível só nesta máquina, para o painel Database do IntelliJ, o DBeaver ou o `psql`: `jdbc:postgresql://127.0.0.1:5433/sbi_demo`, usuário `sbi`, senha de `SBI_DB_PASSWORD`. O roteiro de CRUD da apresentação é `docs/bd/pacote-sql/08_crud_clientes_olist.sql`. Detalhes em [docs/bd/massa-demonstracao.md](docs/bd/massa-demonstracao.md).
+
 ## Perfis da API
 
 | Perfil | Uso |
