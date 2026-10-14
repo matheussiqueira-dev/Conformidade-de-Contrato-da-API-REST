@@ -3,7 +3,8 @@
 // Uso: node scripts/quality-metrics.mjs <diretorio-de-saida> [rotulo]
 // Nao executa testes: apenas le target/ e grava metrics.json + resumo.md.
 import { readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync, cpSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, resolve, extname } from 'node:path';
+import { homedir, userInfo } from 'node:os';
 
 const root = resolve(import.meta.dirname, '..');
 const target = join(root, 'target');
@@ -22,6 +23,47 @@ const countBy = (items, key) => items.reduce((acc, item) => {
 /** Remove o bloco <properties> (ambiente da JVM) de um XML do Surefire. */
 export function stripEnvironment(xml) {
   return xml.replace(/\s*<properties>[\s\S]*?<\/properties>/, '');
+}
+
+const escapeRe = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// Um caminho local aparece com separador \, \\ ou / e, nos XML, com acento cru, em UTF-8 lido byte a byte ou como entidade.
+function pathPattern(dir) {
+  const segment = (part) => [...part].map((ch) => {
+    const code = ch.codePointAt(0);
+    if (code < 0x80) return escapeRe(ch);
+    const utf8 = [...Buffer.from(ch, 'utf8')].map((byte) => String.fromCharCode(byte)).join('');
+    return `(?:${[ch, utf8, `&#x${code.toString(16)};`, `&#${code};`].map(escapeRe).join('|')})`;
+  }).join('');
+  return new RegExp(dir.split(/[\\/]+/).filter(Boolean).map(segment).join('[\\\\/]+'), 'gi');
+}
+const localPaths = [
+  [pathPattern(root), 'repo'],
+  [pathPattern(homedir()), 'home'],
+];
+const startedBy = new RegExp(`started by ${escapeRe(userInfo().username)}\\b`, 'g');
+
+/** Troca caminhos e usuario da maquina local por <repo>, <home> e <user> (escapados em XML/HTML). */
+export function normalizePaths(text, markup = true) {
+  const tag = (name) => (markup ? `&lt;${name}&gt;` : `<${name}>`);
+  return localPaths
+    .reduce((out, [pattern, name]) => out.replace(pattern, tag(name)), text)
+    .replace(startedBy, `started by ${tag('user')}`);
+}
+
+/** Aplica normalizePaths aos relatorios de texto copiados (latin1 preserva cada byte do arquivo). */
+function normalizeTree(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      normalizeTree(path);
+      continue;
+    }
+    const ext = extname(entry.name);
+    if (!['.xml', '.html', '.csv', '.txt'].includes(ext)) continue;
+    const original = readFileSync(path, 'latin1');
+    const normalized = normalizePaths(original, ext === '.xml' || ext === '.html');
+    if (normalized !== original) writeFileSync(path, normalized, 'latin1');
+  }
 }
 
 function surefire() {
@@ -202,8 +244,10 @@ cpSync(join(target, 'surefire-reports'), join(outDir, 'surefire-reports'), {
 // O Surefire grava as propriedades da JVM (PATH, usuario, pastas locais) em cada XML: nao publicar o ambiente.
 for (const file of readdirSync(join(outDir, 'surefire-reports')).filter((f) => f.endsWith('.xml'))) {
   const path = join(outDir, 'surefire-reports', file);
-  writeFileSync(path, stripEnvironment(readFileSync(path, 'utf8')));
+  writeFileSync(path, stripEnvironment(readFileSync(path, 'latin1')), 'latin1');
 }
+// PMD, CPD, SpotBugs e JaCoCo gravam caminhos absolutos da maquina: publicar apenas caminhos relativos ao repositorio.
+normalizeTree(outDir);
 
 const t = metrics.tests;
 const c = metrics.coverage.total;

@@ -13,7 +13,7 @@
 
  :: Spring Boot ::                (v4.1.0)
 
-2026-10-14T06:42:41.305-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.s.LoginLockoutIntegrationTest      : Starting LoginLockoutIntegrationTest using Java 25.0.4.1 with PID 22864 (started by mathe in C:\Users\mathe\Documents\Programação\A3\noite)
+2026-10-14T06:42:41.305-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.s.LoginLockoutIntegrationTest      : Starting LoginLockoutIntegrationTest using Java 25.0.4.1 with PID 22864 (started by &lt;user&gt; in &lt;repo&gt;)
 2026-10-14T06:42:41.305-03:00  INFO 22864 --- [order-management-spring] [           main] c.s.o.s.LoginLockoutIntegrationTest      : The following 1 profile is active: "integration"
 2026-10-14T06:42:41.785-03:00  INFO 22864 --- [order-management-spring] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 2026-10-14T06:42:41.838-03:00  INFO 22864 --- [order-management-spring] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 7 JPA repository interfaces.
