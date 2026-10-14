@@ -4018,8 +4018,8 @@
           },
           "document": {
             "type": "string",
-            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$",
-            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**."
+            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$",
+            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**)."
           },
           "email": {
             "type": [
@@ -4118,8 +4118,8 @@
           },
           "document": {
             "type": "string",
-            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$",
-            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**."
+            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$",
+            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**)."
           },
           "email": {
             "type": [
@@ -4194,7 +4194,8 @@
           "cpf": {
             "type": "string",
             "pattern": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
-            "description": "@CPF; com ou sem mascara; gravado so com digitos."
+            "description": "@CPF; com ou sem mascara; gravado so com digitos.",
+            "x-constraint": "CPF"
           },
           "email": {
             "type": "string",
@@ -4245,8 +4246,9 @@
           },
           "cnpj": {
             "type": "string",
-            "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$",
-            "description": "@CNPJ; com ou sem mascara."
+            "pattern": "^[0-9A-Z]{2}\\.?[0-9A-Z]{3}\\.?[0-9A-Z]{3}/?[0-9A-Z]{4}-?\\d{2}$",
+            "description": "@CNPJ(format = ALPHANUMERIC): numerico ou alfanumerico (inscricoes da Receita a partir de 07/2026), letras maiusculas, com ou sem mascara; digitos verificadores pelo modulo 11 com valor ASCII - 48. Gravado sem mascara.",
+            "x-constraint": "CNPJ"
           },
           "email": {
             "type": "string",
