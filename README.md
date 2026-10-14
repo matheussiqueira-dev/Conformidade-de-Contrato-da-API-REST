@@ -53,6 +53,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -Chec
 
 O banco de demonstração fica acessível só nesta máquina, para o painel Database do IntelliJ, o DBeaver ou o `psql`: `jdbc:postgresql://127.0.0.1:5433/sbi_demo`, usuário `sbi`, senha de `SBI_DB_PASSWORD`. O roteiro de CRUD da apresentação é `docs/bd/pacote-sql/08_crud_clientes_olist.sql`. Detalhes em [docs/bd/massa-demonstracao.md](docs/bd/massa-demonstracao.md).
 
+## Desenvolvimento no VS Code (um atalho)
+
+Requisitos: Docker Desktop aberto, JDK 25 e Node. Com **Ctrl+Shift+B** (tarefa "SBI: iniciar tudo", em `.vscode/tasks.json`), o `scripts/dev.ps1` sobe um PostgreSQL descartável em `127.0.0.1:5434`, a API no perfil `demo` em <http://localhost:8080> e o frontend em <http://localhost:3000>, cada um no seu terminal. O banco é recriado a cada início, e o stack `sbi-demo` é parado se estiver ocupando a porta 3000.
+
+As senhas ficam em `.env.local` (fora do git), gerado na primeira execução: `SBI_DEMO_PASSWORD` é a senha das contas demo da tabela acima. Para encerrar, feche os terminais da tarefa e rode a tarefa "SBI: parar banco".
+
 ## Perfis da API
 
 | Perfil | Uso |
