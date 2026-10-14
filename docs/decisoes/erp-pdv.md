@@ -107,6 +107,9 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-NOITE-07 | A falha de gravação da auditoria de logout é registrada em log e não impede o logout; a sessão é invalidada de qualquer forma. |
 | D-NOITE-08 | O `/error` chamado diretamente (sem erro encaminhado pelo container) responde 404 `NOT_FOUND`, e não 500, porque não há erro a relatar. |
 | D-NOITE-04 | O job `bd` aplica V1–V6 e a massa demo subindo o jar com o perfil `demo` e `web-application-type=none`, e roda o pacote por `psql` dentro do contêiner do PostgreSQL (`docs/bd/pacote-sql/run_bd.sh`), exigindo exatamente 51 PASS. |
+| D-NOITE-09 | No `PUT /customers/{id}`, `companyName`, `birthDate` e `address` ausentes mantêm o valor atual; `companyName` em pessoa física responde 400, e a versão diferente da atual responde 409 `CONCURRENT_UPDATE`. |
+| D-NOITE-10 | A ETAPA 2C troca o `/customers` legado pelo `api/customers` do v4 (documento mascarado para o VENDEDOR) e encerra a restrição da D-NOITE-05; do controlador legado sobra só `POST /customers/{id}/address`, que continua com o GERENTE. |
+| D-NOITE-11 | Inteiros do corpo não aceitam decimal (`accept-float-as-int=false`): quantidade `1.5` responde 400 em vez de virar 1 (CT-STOCK-101). |
 
 ## Processo
 
