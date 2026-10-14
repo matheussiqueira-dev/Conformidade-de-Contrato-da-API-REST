@@ -1,0 +1,52 @@
+# Ambiente de demonstracao do SBI em um comando (WP-5.1): banco descartavel em memoria, API no perfil demo
+# (Flyway V1-V7 + contas e massa do seed) e frontend. Nao usa o banco de desenvolvimento postgres-order.
+#
+#   SBI_DEMO_PASSWORD=<senha das contas, 8 a 72 caracteres> SBI_DB_PASSWORD=<senha interna do banco> \
+#     docker compose -f docker-compose.demo.yml -p sbi-demo up --build
+#
+# Abrir http://localhost:3000 e entrar com matheussiqueira@sbi.tech (gerente) ou allanbarros@sbi.tech (vendedora).
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: sbi_demo
+      POSTGRES_USER: sbi
+      POSTGRES_PASSWORD: ${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao)}
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sbi -d sbi_demo"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: demo
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sbi_demo
+      SPRING_DATASOURCE_USERNAME: sbi
+      SPRING_DATASOURCE_PASSWORD: ${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD}
+      SBI_DEMO_PASSWORD: ${SBI_DEMO_PASSWORD:?Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao)}
+      # Demonstracao local por http://localhost: o cookie de sessao segue HttpOnly e SameSite=Lax.
+      SESSION_COOKIE_SECURE: "false"
+      SPRING_JPA_SHOW_SQL: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080'"]
+      interval: 3s
+      timeout: 3s
+      retries: 60
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_ORIGIN: http://api:8080
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
