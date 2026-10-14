@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
-import { menuFor } from '../../lib/areas.ts';
+import Link from 'next/link';
+import { menuFor, PASSWORD_PATH } from '../../lib/areas.ts';
 import { currentUser } from '../../lib/server/session.ts';
 import NavLinks from '../../components/nav-links.tsx';
 import LogoutButton from '../../components/logout-button.tsx';
@@ -9,6 +10,8 @@ import LogoutButton from '../../components/logout-button.tsx';
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const user = await currentUser();
   if (!user) redirect('/entrar');
+  // Senha provisoria: nenhuma area de trabalho ate a troca (a API responde 403 PASSWORD_CHANGE_REQUIRED).
+  if (user.areas.includes('TROCAR_SENHA')) redirect(PASSWORD_PATH);
   const menu = menuFor(user.areas);
   return (
     <div className="shell">
@@ -18,6 +21,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
         <NavLinks items={menu} />
         <div className="account-box">
           <span><strong>{user.name}</strong><br /><span className="muted">{user.role === 'GERENTE' ? 'Gerente' : 'Vendedor'}</span></span>
+          <Link href={PASSWORD_PATH} className="btn btn-ghost">Minha senha</Link>
           <LogoutButton />
         </div>
       </aside>
