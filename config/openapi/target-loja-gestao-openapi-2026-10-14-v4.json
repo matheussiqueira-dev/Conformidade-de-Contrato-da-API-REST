@@ -1,0 +1,5600 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Loja Gestao - contrato alvo",
+    "version": "2026-10-14-target-v4",
+    "description": "Contrato alvo v4 (ERP/PDV). Rascunho da ETAPA 1: todas as operacoes estao planned; cada etapa muda para implemented somente o que entrega com teste. O baseline executavel continua em baseline-errors-openapi-2026-10-06.json e o v3 permanece preservado. Rotas legadas (/orders, /payment, /address exceto cancel e refund) ficam fora deste contrato."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Ambiente local"
+    }
+  ],
+  "x-contract-status": "target-v4",
+  "security": [
+    {
+      "sessionAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Autentica gerente ou vendedor; bloqueio apos 5 falhas (RF-18)",
+        "operationId": "login",
+        "x-rf": [
+          "RF-01",
+          "RF-18"
+        ],
+        "x-status": "planned",
+        "x-roles": [],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sessao autenticada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            },
+            "headers": {
+              "Set-Cookie": {
+                "description": "JSESSIONID renovado, HttpOnly, SameSite=Lax; Secure fora de dev",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "description": "Senha errada, usuario inexistente, conta bloqueada e conta inativa respondem o mesmo 401 (corpo igual salvo timestamp) com tempo equivalente."
+      }
+    },
+    "/auth/csrf": {
+      "get": {
+        "summary": "Obtem token CSRF para a sessao atual ou anonima",
+        "operationId": "getCsrf",
+        "x-rf": [
+          "RF-01",
+          "RF-02"
+        ],
+        "x-status": "planned",
+        "x-roles": [],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Token CSRF; resposta nao armazenavel em cache",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CsrfResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Encerra e invalida a sessao",
+        "operationId": "logout",
+        "x-rf": [
+          "RF-01"
+        ],
+        "x-status": "planned",
+        "x-roles": [],
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sessao invalidada"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Usuario da sessao com areas liberadas",
+        "operationId": "getCurrentUser",
+        "x-rf": [
+          "RF-01",
+          "RF-02",
+          "RF-17"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSession"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/sales/catalog": {
+      "get": {
+        "summary": "Catalogo do PDV: SKU exato primeiro, depois prefixo do nome",
+        "operationId": "listSalesCatalog",
+        "x-rf": [
+          "RF-15",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 120
+            }
+          },
+          {
+            "name": "onlyAvailable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina do catalogo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageCatalogItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/sales/quote": {
+      "post": {
+        "summary": "Cota carrinho sem efeito colateral",
+        "operationId": "quoteSale",
+        "x-rf": [
+          "RF-07",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cotacao",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/sales/orders": {
+      "post": {
+        "summary": "Cria venda reservando estoque; vendedor = sessao",
+        "operationId": "createSaleOrder",
+        "x-rf": [
+          "RF-05",
+          "RF-06",
+          "RF-07",
+          "RF-13",
+          "RF-15",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SalesOrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedido criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Repeticao com a mesma Idempotency-Key e o mesmo corpo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "get": {
+        "summary": "Vendas: VENDEDOR so as proprias; GERENTE todas",
+        "operationId": "listSalesOrders",
+        "x-rf": [
+          "RF-11",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/OrderStatus"
+            }
+          },
+          {
+            "name": "sellerId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            },
+            "description": "Somente GERENTE; VENDEDOR com outro id -> 403."
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de vendas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageSalesOrderSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/sales/orders/{id}": {
+      "get": {
+        "summary": "Detalhe da venda; pedido de outro vendedor -> 404",
+        "operationId": "getSalesOrder",
+        "x-rf": [
+          "RF-11",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/sales/orders/{id}/payment": {
+      "post": {
+        "summary": "Confirma pagamento recebido: baixa estoque; repetir nao tem efeito",
+        "operationId": "confirmSalePayment",
+        "x-rf": [
+          "RF-08",
+          "RF-13",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentConfirmationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pedido pago",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/orders/{id}/cancel": {
+      "post": {
+        "summary": "Cancela pedido pendente e libera a reserva (DEC-ERP-06)",
+        "operationId": "cancelOrder",
+        "x-rf": [
+          "RF-08",
+          "RF-13",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pedido cancelado (repeticao sem efeito)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "summary": "Busca clientes: so digitos = documento exato; senao prefixo do nome",
+        "operationId": "listCustomers",
+        "x-rf": [
+          "RF-03",
+          "RF-20"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 120
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de clientes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageCustomerSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastra pessoa fisica ou juridica",
+        "operationId": "createCustomer",
+        "x-rf": [
+          "RF-03",
+          "RF-20"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cliente criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDetail"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "summary": "Perfil do cliente; documento mascarado para VENDEDOR",
+        "operationId": "getCustomer",
+        "x-rf": [
+          "RF-20",
+          "RF-21"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Edita cliente sem alterar documento",
+        "operationId": "updateCustomer",
+        "x-rf": [
+          "RF-20"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cliente atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui cliente sem pedidos",
+        "operationId": "deleteCustomer",
+        "x-rf": [
+          "RF-20"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cliente excluido"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/customers/{id}/orders": {
+      "get": {
+        "summary": "Historico do cliente, do mais recente ao mais antigo",
+        "operationId": "listCustomerOrders",
+        "x-rf": [
+          "RF-21"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina do historico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageCustomerOrderSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/performance/me": {
+      "get": {
+        "summary": "Meta e realizado do usuario da sessao",
+        "operationId": "getMyPerformance",
+        "x-rf": [
+          "RF-02",
+          "RF-10",
+          "RF-11"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Period"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Desempenho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerPerformance"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/goals/monthly": {
+      "get": {
+        "summary": "Meta da loja e distribuicao do mes",
+        "operationId": "getMonthlyGoals",
+        "x-rf": [
+          "RF-09",
+          "RF-10"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Period"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metas do mes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthlyGoals"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Salva meta da loja e distribuicao",
+        "operationId": "saveMonthlyGoals",
+        "x-rf": [
+          "RF-09"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonthlyGoalsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Metas salvas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonthlyGoals"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/management/summary": {
+      "get": {
+        "summary": "Resumo de metas da loja e da equipe",
+        "operationId": "getManagementSummary",
+        "x-rf": [
+          "RF-02",
+          "RF-10",
+          "RF-12"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Period"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resumo de metas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementSummary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/management/revenue": {
+      "get": {
+        "summary": "Faturamento, lucro bruto e alertas do periodo",
+        "operationId": "getRevenueReport",
+        "x-rf": [
+          "RF-12",
+          "RF-23"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RevenuePeriod"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relatorio de faturamento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevenueReport"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/payment/{id}/refund": {
+      "post": {
+        "summary": "Estorno parcial ou total; realizado descontado no mes do estorno",
+        "operationId": "refundPayment",
+        "x-rf": [
+          "RF-08",
+          "RF-10"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Estorno registrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundResponse"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/promotions/active": {
+      "get": {
+        "summary": "Promocoes vigentes",
+        "operationId": "listActivePromotions",
+        "x-rf": [
+          "RF-15",
+          "RF-19"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE",
+          "VENDEDOR"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Promocoes vigentes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivePromotion"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/promotions": {
+      "get": {
+        "summary": "Lista promocoes",
+        "operationId": "listPromotions",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de promocoes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagePromotion"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Libera promocao",
+        "operationId": "createPromotion",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromotionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Promocao criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Promotion"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/promotions/{id}/close": {
+      "post": {
+        "summary": "Encerra promocao",
+        "operationId": "closePromotion",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Promocao encerrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Promotion"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Produtos e insumos",
+        "operationId": "listProducts",
+        "x-rf": [
+          "RF-04",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 120
+            }
+          },
+          {
+            "name": "sellable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageProduct"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastra produto ou insumo",
+        "operationId": "createProduct",
+        "x-rf": [
+          "RF-04",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Detalhe do produto",
+        "operationId": "getProduct",
+        "x-rf": [
+          "RF-04",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Edita produto sem preco nem situacao",
+        "operationId": "updateProduct",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclui produto nunca vendido; vendido -> 409 (inativar)",
+        "operationId": "deleteProduct",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto excluido"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/products/{id}/price": {
+      "patch": {
+        "summary": "Altera preco com motivo; vendas antigas mantem o preco",
+        "operationId": "changeProductPrice",
+        "x-rf": [
+          "RF-07",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PriceChangeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto com novo preco",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/products/{id}/status": {
+      "patch": {
+        "summary": "Ativa ou inativa produto",
+        "operationId": "changeProductStatus",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produto atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/products/{id}/price-history": {
+      "get": {
+        "summary": "Historico de preco com autor e motivo",
+        "operationId": "listPriceHistory",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina do historico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagePriceChange"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "summary": "Lista categorias",
+        "operationId": "listCategories",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "responses": {
+          "200": {
+            "description": "Categorias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria categoria",
+        "operationId": "createCategory",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Categoria criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "put": {
+        "summary": "Renomeia categoria",
+        "operationId": "updateCategory",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria atualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/stock/products": {
+      "get": {
+        "summary": "Posicao de estoque com custo medio",
+        "operationId": "listStockProducts",
+        "x-rf": [
+          "RF-13",
+          "RF-14",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 120
+            }
+          },
+          {
+            "name": "belowMin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sellable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina da posicao",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageStockProduct"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/stock/products/{id}/entries": {
+      "post": {
+        "summary": "Registra entrada; gatilho recalcula custo medio",
+        "operationId": "createStockEntry",
+        "x-rf": [
+          "RF-14",
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockEntryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Entrada registrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockEntryResponse"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/stock/products/{id}/adjustments": {
+      "post": {
+        "summary": "Ajuste de entrada ou saida com motivo",
+        "operationId": "createStockAdjustment",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockAdjustmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Movimento registrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockMovement"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URI do recurso criado",
+                "schema": {
+                  "type": "string",
+                  "format": "uri-reference"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/stock/products/{id}/min-level": {
+      "patch": {
+        "summary": "Define estoque minimo",
+        "operationId": "changeMinLevel",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Csrf"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MinLevelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Posicao atualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockProduct"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/stock/movements": {
+      "get": {
+        "summary": "Extrato de movimentos",
+        "operationId": "listStockMovements",
+        "x-rf": [
+          "RF-22"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/MovementKind"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de movimentos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageStockMovement"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/sales": {
+      "get": {
+        "summary": "Analise mensal de vendas, margens e promocoes",
+        "operationId": "getSalesAnalytics",
+        "x-rf": [
+          "RF-12",
+          "RF-14"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+              "examples": [
+                "2026-09"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analise de vendas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesAnalytics"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/stock": {
+      "get": {
+        "summary": "Valor de estoque e itens abaixo do minimo",
+        "operationId": "getStockAnalytics",
+        "x-rf": [
+          "RF-13",
+          "RF-14"
+        ],
+        "x-status": "planned",
+        "x-roles": [
+          "GERENTE"
+        ],
+        "responses": {
+          "200": {
+            "description": "Analise de estoque",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockAnalytics"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "JSESSIONID",
+        "description": "Cookie HttpOnly; SameSite=Lax; Secure fora de dev; timeout de 30 min. Identificador renovado no login; sessao invalidada no logout."
+      }
+    },
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "Csrf": {
+        "name": "X-CSRF-TOKEN",
+        "in": "header",
+        "required": true,
+        "description": "Obter em GET /auth/csrf antes do login e renovar apos login/logout.",
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "description": "UUID gerado por carrinho. Mesma chave e mesmo corpo -> 200 com o mesmo pedido; corpo diferente -> 409 IDEMPOTENCY_CONFLICT. Escopo: vendedor da sessao.",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "Size": {
+        "name": "size",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "Period": {
+        "name": "period",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+          "examples": [
+            "2026-09"
+          ]
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Requisicao invalida (VALIDATION_FAILED ou MALFORMED_REQUEST)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Sessao ausente ou expirada (UNAUTHENTICATED)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Perfil sem permissao ou CSRF ausente/invalido (FORBIDDEN)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Recurso inexistente ou de outro dono (NOT_FOUND)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflito de estado, estoque, idempotencia, documento, uso ou versao",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Role": {
+        "type": "string",
+        "enum": [
+          "GERENTE",
+          "VENDEDOR"
+        ]
+      },
+      "Area": {
+        "type": "string",
+        "enum": [
+          "VENDER",
+          "VENDAS",
+          "CLIENTES",
+          "MEU_DESEMPENHO",
+          "GESTAO",
+          "PRODUTOS",
+          "ESTOQUE",
+          "PROMOCOES",
+          "ANALISES"
+        ],
+        "description": "Area de tela liberada pelo servidor a partir das autoridades alcancaveis na hierarquia."
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "VALIDATION_FAILED",
+          "MALFORMED_REQUEST",
+          "UNAUTHENTICATED",
+          "FORBIDDEN",
+          "NOT_FOUND",
+          "METHOD_NOT_ALLOWED",
+          "UNSUPPORTED_MEDIA_TYPE",
+          "STOCK_INSUFFICIENT",
+          "IDEMPOTENCY_CONFLICT",
+          "STATE_CONFLICT",
+          "DUPLICATE_DOCUMENT",
+          "RESOURCE_IN_USE",
+          "CONCURRENT_UPDATE",
+          "INTERNAL_ERROR"
+        ]
+      },
+      "Money": {
+        "type": "object",
+        "description": "Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).",
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "minimum": 0,
+            "maximum": 9999999999.99
+          },
+          "currency": {
+            "type": "string",
+            "const": "BRL"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "Formato unico de erro (A5). Substitui ApiErrorResponse; mantem os campos atuais e acrescenta code.",
+        "required": [
+          "timestamp",
+          "status",
+          "error",
+          "code",
+          "message",
+          "details"
+        ],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Instante RFC 3339 com offset."
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 400,
+            "maximum": 599
+          },
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "message": {
+            "type": "string",
+            "description": "Texto tecnico; o frontend exibe mensagem pt-BR derivada de code."
+          },
+          "details": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Mensagens por campo em VALIDATION_FAILED; null nos demais casos."
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRef": {
+        "type": "object",
+        "description": "Referencia minima a usuario da equipe.",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NamedRef": {
+        "type": "object",
+        "description": "Autor exibido sem identificador.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSession": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "areas"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "areas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Area"
+            },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthResponse": {
+        "type": "object",
+        "required": [
+          "user"
+        ],
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserSession"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 72
+          }
+        },
+        "additionalProperties": false
+      },
+      "CsrfResponse": {
+        "type": "object",
+        "required": [
+          "headerName",
+          "token"
+        ],
+        "properties": {
+          "headerName": {
+            "type": "string",
+            "const": "X-CSRF-TOKEN"
+          },
+          "token": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductRef": {
+        "type": "object",
+        "required": [
+          "id",
+          "sku",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryRef": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ActivePromotion": {
+        "type": "object",
+        "description": "Promocao vigente visivel ao vendedor; sem receita, uso ou autor.",
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "value",
+          "productId",
+          "categoryId",
+          "endsAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "AMOUNT"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal",
+            "exclusiveMinimum": 0
+          },
+          "productId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "categoryId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CatalogItem": {
+        "type": "object",
+        "description": "Item vendavel do PDV. Sem custo, saldo fisico ou margem.",
+        "required": [
+          "id",
+          "sku",
+          "name",
+          "category",
+          "price",
+          "available",
+          "activePromotion"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CategoryRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "available": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "on_hand - reserved; nunca o saldo fisico."
+          },
+          "activePromotion": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ActivePromotion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageCatalogItem": {
+        "type": "object",
+        "description": "Pagina de CatalogItem; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CatalogItem"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "SaleItemRequest": {
+        "type": "object",
+        "required": [
+          "productId",
+          "quantity"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 999
+          },
+          "promotionId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteRequest": {
+        "type": "object",
+        "description": "productId repetido na lista -> 400.",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemRequest"
+            },
+            "minItems": 1,
+            "maxItems": 50
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteItem": {
+        "type": "object",
+        "required": [
+          "productId",
+          "quantity",
+          "unitPrice",
+          "discount",
+          "subtotal",
+          "available"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "discount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "available": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteResponse": {
+        "type": "object",
+        "description": "Unica fonte do total exibido no carrinho. Sem efeito colateral.",
+        "required": [
+          "items",
+          "subtotal",
+          "discountTotal",
+          "total"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteItem"
+            }
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PixPaymentRequest": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "PIX"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardPaymentRequest": {
+        "type": "object",
+        "description": "Nunca o numero completo do cartao (DEC-ERP-04).",
+        "required": [
+          "type",
+          "cardLast4",
+          "installments"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "CARD"
+          },
+          "cardLast4": {
+            "type": "string",
+            "pattern": "^[0-9]{4}$"
+          },
+          "installments": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "authorizationCode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "pattern": "^[A-Za-z0-9]{1,20}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BoletoPaymentRequest": {
+        "type": "object",
+        "required": [
+          "type",
+          "dueDate"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "BOLETO"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Maior ou igual a hoje em America/Fortaleza (@FutureOrPresent)."
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalePaymentRequest": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PixPaymentRequest"
+          },
+          {
+            "$ref": "#/components/schemas/CardPaymentRequest"
+          },
+          {
+            "$ref": "#/components/schemas/BoletoPaymentRequest"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "PIX": "#/components/schemas/PixPaymentRequest",
+            "CARD": "#/components/schemas/CardPaymentRequest",
+            "BOLETO": "#/components/schemas/BoletoPaymentRequest"
+          }
+        }
+      },
+      "Fulfillment": {
+        "type": "string",
+        "enum": [
+          "PICKUP",
+          "DELIVERY"
+        ]
+      },
+      "AddressRequest": {
+        "type": "object",
+        "required": [
+          "street",
+          "number",
+          "neighborhood",
+          "city",
+          "state",
+          "zipCode"
+        ],
+        "properties": {
+          "street": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "number": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
+          },
+          "complement": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 60
+          },
+          "neighborhood": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "city": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "state": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "zipCode": {
+            "type": "string",
+            "pattern": "^[0-9]{8}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Address": {
+        "type": "object",
+        "required": [
+          "street",
+          "number",
+          "complement",
+          "neighborhood",
+          "city",
+          "state",
+          "zipCode"
+        ],
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "complement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderRequest": {
+        "type": "object",
+        "description": "Sem vendedor, preco, desconto ou total. shippingAddress obrigatorio somente em DELIVERY (restricao de classe). productId repetido -> 400.",
+        "required": [
+          "customerId",
+          "items",
+          "payment",
+          "fulfillment"
+        ],
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleItemRequest"
+            },
+            "minItems": 1,
+            "maxItems": 50
+          },
+          "payment": {
+            "$ref": "#/components/schemas/SalePaymentRequest"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Fulfillment"
+          },
+          "shippingAddress": {
+            "$ref": "#/components/schemas/AddressRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderStatus": {
+        "type": "string",
+        "enum": [
+          "PENDING_PAYMENT",
+          "PROCESSING",
+          "PAID",
+          "SHIPPED",
+          "DELIVERED",
+          "CANCELED"
+        ]
+      },
+      "PaymentType": {
+        "type": "string",
+        "enum": [
+          "PIX",
+          "CARD",
+          "BOLETO"
+        ]
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "enum": [
+          "PENDING",
+          "APPROVED",
+          "DECLINED",
+          "EXPIRED"
+        ]
+      },
+      "SalesOrderItem": {
+        "type": "object",
+        "required": [
+          "productId",
+          "sku",
+          "name",
+          "quantity",
+          "unitPrice",
+          "discount",
+          "subtotal"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "discount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderPayment": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderResponse": {
+        "type": "object",
+        "description": "Visao do pedido para vendedor e gerente. Sem custo ou margem.",
+        "required": [
+          "id",
+          "status",
+          "seller",
+          "customer",
+          "items",
+          "subtotal",
+          "discountTotal",
+          "total",
+          "payment",
+          "fulfillment",
+          "shippingAddress",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesOrderItem"
+            },
+            "minItems": 1
+          },
+          "subtotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "payment": {
+            "$ref": "#/components/schemas/SalesOrderPayment"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Fulfillment"
+          },
+          "shippingAddress": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderSummary": {
+        "type": "object",
+        "required": [
+          "id",
+          "createdAt",
+          "status",
+          "customer",
+          "seller",
+          "total",
+          "paymentType",
+          "paymentStatus",
+          "fulfillment",
+          "itemsCount"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "paymentType": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Fulfillment"
+          },
+          "itemsCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageSalesOrderSummary": {
+        "type": "object",
+        "description": "Pagina de SalesOrderSummary; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesOrderSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentConfirmationRequest": {
+        "type": "object",
+        "properties": {
+          "authorizationCode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "pattern": "^[A-Za-z0-9]{1,20}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerType": {
+        "type": "string",
+        "enum": [
+          "INDIVIDUAL",
+          "CORPORATE"
+        ]
+      },
+      "CustomerSummary": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "name",
+          "document",
+          "email",
+          "phone",
+          "ordersCount",
+          "lastOrderAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CustomerType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "document": {
+            "type": "string",
+            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$",
+            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**."
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ordersCount": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "lastOrderAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageCustomerSummary": {
+        "type": "object",
+        "description": "Pagina de CustomerSummary; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerDetail": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "name",
+          "companyName",
+          "document",
+          "email",
+          "phone",
+          "birthDate",
+          "address",
+          "createdAt",
+          "createdBy",
+          "version"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CustomerType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "document": {
+            "type": "string",
+            "pattern": "^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$",
+            "description": "Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**."
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "birthDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "address": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "IndividualCustomerCreate": {
+        "type": "object",
+        "required": [
+          "type",
+          "name",
+          "cpf",
+          "email",
+          "phone"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "INDIVIDUAL"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "cpf": {
+            "type": "string",
+            "pattern": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
+            "description": "@CPF; com ou sem mascara; gravado so com digitos."
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[0-9()+\\-. ]{10,20}$"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "@Past"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CorporateCustomerCreate": {
+        "type": "object",
+        "required": [
+          "type",
+          "name",
+          "companyName",
+          "cnpj",
+          "email",
+          "phone"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "CORPORATE"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "companyName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "cnpj": {
+            "type": "string",
+            "pattern": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$",
+            "description": "@CNPJ; com ou sem mascara."
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[0-9()+\\-. ]{10,20}$"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerCreateRequest": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IndividualCustomerCreate"
+          },
+          {
+            "$ref": "#/components/schemas/CorporateCustomerCreate"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "INDIVIDUAL": "#/components/schemas/IndividualCustomerCreate",
+            "CORPORATE": "#/components/schemas/CorporateCustomerCreate"
+          }
+        }
+      },
+      "CustomerUpdateRequest": {
+        "type": "object",
+        "description": "Sem type, cpf e cnpj: documento imutavel. Divergencia de version -> 409 CONCURRENT_UPDATE.",
+        "required": [
+          "name",
+          "email",
+          "phone",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "companyName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 20,
+            "pattern": "^[0-9()+\\-. ]{10,20}$"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "@Past; ignorado para CORPORATE."
+          },
+          "address": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AddressRequest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerOrderItem": {
+        "type": "object",
+        "required": [
+          "name",
+          "quantity"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerOrderSummary": {
+        "type": "object",
+        "description": "total e sellerFirstName so aparecem para pedido do vendedor da sessao ou para o GERENTE (DEC-ERP-02).",
+        "required": [
+          "id",
+          "moment",
+          "status",
+          "fulfillment",
+          "items",
+          "own"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "moment": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "fulfillment": {
+            "$ref": "#/components/schemas/Fulfillment"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerOrderItem"
+            }
+          },
+          "total": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "sellerFirstName": {
+            "type": "string"
+          },
+          "own": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageCustomerOrderSummary": {
+        "type": "object",
+        "description": "Pagina de CustomerOrderSummary; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerOrderSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "GoalState": {
+        "type": "string",
+        "enum": [
+          "SEM_META",
+          "EM_ANDAMENTO",
+          "META_ATINGIDA"
+        ]
+      },
+      "SellerPerformance": {
+        "type": "object",
+        "required": [
+          "period",
+          "seller",
+          "goal",
+          "realized",
+          "remaining",
+          "achievementPercent",
+          "state"
+        ],
+        "properties": {
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "examples": [
+              "2026-09"
+            ]
+          },
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "achievementPercent": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "1 casa decimal; null quando a meta e zero."
+          },
+          "state": {
+            "$ref": "#/components/schemas/GoalState"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SellerMetric": {
+        "type": "object",
+        "required": [
+          "seller",
+          "goal",
+          "realized",
+          "achievementPercent",
+          "state"
+        ],
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "achievementPercent": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "1 casa decimal; null quando a meta e zero."
+          },
+          "state": {
+            "$ref": "#/components/schemas/GoalState"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ManagementSummary": {
+        "type": "object",
+        "description": "Resumo de metas do mes (v3). Faturamento fica em /management/revenue.",
+        "required": [
+          "period",
+          "storeGoal",
+          "storeRealized",
+          "remaining",
+          "achievementPercent",
+          "state",
+          "team"
+        ],
+        "properties": {
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "examples": [
+              "2026-09"
+            ]
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "storeRealized": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "achievementPercent": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "1 casa decimal; null quando a meta e zero."
+          },
+          "state": {
+            "$ref": "#/components/schemas/GoalState"
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerMetric"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "SellerGoalRequest": {
+        "type": "object",
+        "required": [
+          "sellerId",
+          "goal"
+        ],
+        "properties": {
+          "sellerId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonthlyGoalsRequest": {
+        "type": "object",
+        "description": "Soma dos vendedores igual a meta da loja (gatilho adiado no COMMIT).",
+        "required": [
+          "period",
+          "storeGoal",
+          "sellers"
+        ],
+        "properties": {
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "examples": [
+              "2026-09"
+            ]
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "sellers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerGoalRequest"
+            },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SellerGoal": {
+        "type": "object",
+        "required": [
+          "seller",
+          "goal"
+        ],
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonthlyGoals": {
+        "type": "object",
+        "required": [
+          "period",
+          "storeGoal",
+          "sellers"
+        ],
+        "properties": {
+          "period": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "examples": [
+              "2026-09"
+            ]
+          },
+          "storeGoal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "sellers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerGoal"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "RevenuePeriod": {
+        "type": "string",
+        "enum": [
+          "TODAY",
+          "D7",
+          "D30",
+          "D90"
+        ]
+      },
+      "DailyRevenue": {
+        "type": "object",
+        "required": [
+          "date",
+          "netRevenue",
+          "grossProfit"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "grossProfit": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentMethodRevenue": {
+        "type": "object",
+        "required": [
+          "method",
+          "ordersPaid",
+          "netRevenue"
+        ],
+        "properties": {
+          "method": {
+            "$ref": "#/components/schemas/PaymentType"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SellerRevenue": {
+        "type": "object",
+        "required": [
+          "seller",
+          "ordersPaid",
+          "netRevenue"
+        ],
+        "properties": {
+          "seller": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductRevenue": {
+        "type": "object",
+        "required": [
+          "productId",
+          "sku",
+          "name",
+          "unitsSold",
+          "netRevenue",
+          "grossProfit"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unitsSold": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "grossProfit": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateRange": {
+        "type": "object",
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date"
+          },
+          "to": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RevenueReport": {
+        "type": "object",
+        "description": "Le v_faturamento_diario e demais views do V6. grossProfit e margem sao null quando falta custo.",
+        "required": [
+          "period",
+          "grossRevenue",
+          "refunds",
+          "netRevenue",
+          "ordersPaid",
+          "unitsSold",
+          "averageTicket",
+          "grossProfit",
+          "grossMarginPercent",
+          "costCoveragePercent",
+          "daily",
+          "byPaymentMethod",
+          "bySeller",
+          "topProducts",
+          "lowStockCount",
+          "pendingPaymentCount",
+          "pendingPaymentAmount",
+          "generatedAt"
+        ],
+        "properties": {
+          "period": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "grossRevenue": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "refunds": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "ordersPaid": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "unitsSold": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageTicket": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "grossProfit": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "grossMarginPercent": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "costCoveragePercent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "daily": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyRevenue"
+            }
+          },
+          "byPaymentMethod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodRevenue"
+            }
+          },
+          "bySeller": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SellerRevenue"
+            }
+          },
+          "topProducts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductRevenue"
+            },
+            "maxItems": 20
+          },
+          "lowStockCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pendingPaymentCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pendingPaymentAmount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefundRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "reason"
+        ],
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefundResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "paymentId",
+          "amount",
+          "reason",
+          "refundedTotal",
+          "remaining",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "paymentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "refundedTotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "remaining": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PromotionRequest": {
+        "type": "object",
+        "description": "No maximo um entre productId e categoryId; nenhum = loja toda. endsAt > startsAt.",
+        "required": [
+          "name",
+          "kind",
+          "value",
+          "startsAt",
+          "endsAt"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 120
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "AMOUNT"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal",
+            "exclusiveMinimum": 0,
+            "maximum": 9999999999.99,
+            "description": "PERCENT: ate 100. AMOUNT: valor em BRL por unidade."
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Promotion": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "value",
+          "product",
+          "category",
+          "startsAt",
+          "endsAt",
+          "active",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "AMOUNT"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "product": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ProductRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "category": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CategoryRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagePromotion": {
+        "type": "object",
+        "description": "Pagina de Promotion; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Promotion"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "Category": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryRequest": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhysicalProductCreate": {
+        "type": "object",
+        "required": [
+          "type",
+          "sku",
+          "name",
+          "sellable",
+          "price",
+          "weightKg"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "PHYSICAL"
+          },
+          "sku": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$",
+            "description": "Gravado em maiusculas."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 255
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sellable": {
+            "type": "boolean",
+            "description": "false = insumo (DEC-ERP-03)."
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "weightKg": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "minLevel": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 100000
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalProductCreate": {
+        "type": "object",
+        "required": [
+          "type",
+          "sku",
+          "name",
+          "sellable",
+          "price",
+          "downloadLink"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "DIGITAL"
+          },
+          "sku": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$",
+            "description": "Gravado em maiusculas."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 255
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sellable": {
+            "type": "boolean",
+            "description": "false = insumo (DEC-ERP-03)."
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "downloadLink": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 255
+          },
+          "minLevel": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 100000
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductCreateRequest": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PhysicalProductCreate"
+          },
+          {
+            "$ref": "#/components/schemas/DigitalProductCreate"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "PHYSICAL": "#/components/schemas/PhysicalProductCreate",
+            "DIGITAL": "#/components/schemas/DigitalProductCreate"
+          }
+        }
+      },
+      "ProductUpdateRequest": {
+        "type": "object",
+        "description": "Sem type, price e active: preco muda por PATCH /price (com motivo) e situacao por PATCH /status.",
+        "required": [
+          "sku",
+          "name",
+          "sellable"
+        ],
+        "properties": {
+          "sku": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$",
+            "description": "Gravado em maiusculas."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 255
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sellable": {
+            "type": "boolean",
+            "description": "false = insumo (DEC-ERP-03)."
+          },
+          "weightKg": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "downloadLink": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 255
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductType": {
+        "type": "string",
+        "enum": [
+          "PHYSICAL",
+          "DIGITAL"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "sku",
+          "name",
+          "description",
+          "category",
+          "price",
+          "sellable",
+          "active",
+          "weightKg",
+          "downloadLink",
+          "updatedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ProductType"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "category": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CategoryRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "sellable": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "weightKg": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "downloadLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageProduct": {
+        "type": "object",
+        "description": "Pagina de Product; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "PriceChangeRequest": {
+        "type": "object",
+        "required": [
+          "newPrice",
+          "reason"
+        ],
+        "properties": {
+          "newPrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductStatusRequest": {
+        "type": "object",
+        "required": [
+          "active"
+        ],
+        "properties": {
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PriceChange": {
+        "type": "object",
+        "required": [
+          "id",
+          "oldPrice",
+          "newPrice",
+          "reason",
+          "changedBy",
+          "changedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "oldPrice": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "newPrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "changedBy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagePriceChange": {
+        "type": "object",
+        "description": "Pagina de PriceChange; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PriceChange"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockProduct": {
+        "type": "object",
+        "description": "Posicao de estoque do GERENTE (divergencia b). avgCost null = custo nao informado.",
+        "required": [
+          "productId",
+          "sku",
+          "name",
+          "sellable",
+          "active",
+          "onHand",
+          "reserved",
+          "available",
+          "minLevel",
+          "belowMin",
+          "avgCost"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sellable": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "onHand": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reserved": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "available": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "belowMin": {
+            "type": "boolean"
+          },
+          "avgCost": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageStockProduct": {
+        "type": "object",
+        "description": "Pagina de StockProduct; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockProduct"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockEntryRequest": {
+        "type": "object",
+        "description": "unitCost null = custo desconhecido (avgCost passa a null). salePrice opcional: se diferente do atual, altera o preco com historico e motivo \"Entrada de estoque\" (divergencia a).",
+        "required": [
+          "quantity",
+          "unitCost"
+        ],
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "unitCost": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "salePrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockEntryResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "product",
+          "quantity",
+          "unitCost",
+          "note",
+          "createdBy",
+          "createdAt",
+          "stock"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductRef"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitCost": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/UserRef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stock": {
+            "$ref": "#/components/schemas/StockProduct"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockAdjustmentRequest": {
+        "type": "object",
+        "description": "IN aceita somente INVENTARIO e nao altera o custo medio. OUT acima do disponivel -> 409.",
+        "required": [
+          "direction",
+          "quantity",
+          "reason"
+        ],
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "IN",
+              "OUT"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "PERDA",
+              "AVARIA",
+              "USO_INTERNO",
+              "INVENTARIO",
+              "DEVOLUCAO_FORNECEDOR"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinLevelRequest": {
+        "type": "object",
+        "required": [
+          "minLevel"
+        ],
+        "properties": {
+          "minLevel": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 100000
+          }
+        },
+        "additionalProperties": false
+      },
+      "MovementKind": {
+        "type": "string",
+        "enum": [
+          "ENTRADA",
+          "RESERVA",
+          "LIBERACAO",
+          "SAIDA",
+          "DEVOLUCAO",
+          "AJUSTE_ENTRADA",
+          "AJUSTE_SAIDA"
+        ]
+      },
+      "StockMovement": {
+        "type": "object",
+        "required": [
+          "id",
+          "product",
+          "kind",
+          "quantity",
+          "reason",
+          "note",
+          "orderId",
+          "createdBy",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductRef"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/MovementKind"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "PERDA",
+              "AVARIA",
+              "USO_INTERNO",
+              "INVENTARIO",
+              "DEVOLUCAO_FORNECEDOR"
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "orderId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "createdBy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PageStockMovement": {
+        "type": "object",
+        "description": "Pagina de StockMovement; page comeca em 0.",
+        "required": [
+          "content",
+          "page",
+          "size",
+          "totalElements"
+        ],
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockMovement"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeeklyRevenue": {
+        "type": "object",
+        "required": [
+          "start",
+          "end",
+          "realized"
+        ],
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date"
+          },
+          "realized": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductMargin": {
+        "type": "object",
+        "required": [
+          "productId",
+          "name",
+          "units",
+          "netRevenue",
+          "cost",
+          "grossMargin",
+          "marginPercent",
+          "itemsWithoutCost"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "units": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "cost": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "grossMargin": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "marginPercent": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "itemsWithoutCost": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PromotionUsage": {
+        "type": "object",
+        "required": [
+          "promotionId",
+          "name",
+          "items",
+          "discountTotal",
+          "netRevenue"
+        ],
+        "properties": {
+          "promotionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "discountTotal": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "netRevenue": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesAnalytics": {
+        "type": "object",
+        "required": [
+          "month",
+          "weekly",
+          "byPaymentMethod",
+          "productMargins",
+          "promotionUsage"
+        ],
+        "properties": {
+          "month": {
+            "type": "string",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+            "examples": [
+              "2026-09"
+            ]
+          },
+          "weekly": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeeklyRevenue"
+            }
+          },
+          "byPaymentMethod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodRevenue"
+            }
+          },
+          "productMargins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductMargin"
+            }
+          },
+          "promotionUsage": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PromotionUsage"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "StockAnalytics": {
+        "type": "object",
+        "description": "valueAtCost null quando algum produto com saldo nao tem custo medio.",
+        "required": [
+          "generatedAt",
+          "products",
+          "units",
+          "valueAtCost",
+          "valueAtPrice",
+          "productsWithoutCost",
+          "belowMin"
+        ],
+        "properties": {
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "products": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "units": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "valueAtCost": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "valueAtPrice": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "productsWithoutCost": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "belowMin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockProduct"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
