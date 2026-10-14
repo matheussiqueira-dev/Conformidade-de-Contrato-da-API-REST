@@ -56,7 +56,7 @@ Fonte única: [`criterios-aceitacao.md`](criterios-aceitacao.md), no formato Dad
 | Nível | O que verifica | Ferramenta | Onde está | Comando |
 | --- | --- | --- | --- | --- |
 | Unitário | Regras isoladas com repositórios simulados | JUnit 5, Mockito, AssertJ | `src/test/java/.../services`, `entities`, `dto` | `scripts/test.ps1` |
-| Integração | JPA, constraints, transações, migrações Flyway, concorrência com banco real | Spring Boot Test, PostgreSQL 18 descartável | `OrderPersistenceTest`, `FlywayMigrationTest`, `ConcurrencyTest` (`@Tag("integration")`) | `scripts/test.ps1 -Mode Integration` |
+| Integração | JPA, constraints, transações, migrações Flyway, concorrência com banco real | Spring Boot Test, PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432) | `OrderPersistenceTest`, `FlywayMigrationTest`, `ConcurrencyTest` (`@Tag("integration")`) | `scripts/test.ps1 -Mode Integration` |
 | Sistema | API completa em execução, respostas HTTP contra o contrato e sessão | Node 24, Ajv 8 | `scripts/http-contract.mjs`, `scripts/http-session.mjs` | `scripts/test-contract.ps1 -HttpOnly` |
 | Aceitação | Critérios Dado/Quando/Então pela interface e pela API | Playwright 1.63 | `frontend/e2e/session.spec.mjs` (login/logout); demais telas em QA-07 | `scripts/test-contract.ps1 -Frontend` |
 | Regressão | Defeitos corrigidos não voltam | Tag `regression` + CI a cada push/PR | Testes `[Dxxx]` | CI GitHub Actions (`.github/workflows/ci.yml`) |

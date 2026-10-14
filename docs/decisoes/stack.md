@@ -59,4 +59,4 @@ O `postinstall` do `esbuild` (dependência do `orval`) não foi aprovado no `npm
 
 - Frontend Next.js e sessao HttpOnly confirmados por Matheus em 04/10/2026. Codigo de acesso adicionado; as quatro areas de dominio e detalhes de hospedagem seguem pendentes. Ver `execucao-sessao.md`.
 - Unitários padrão e integração com perfil/banco isolados foram executados: seis testes Java aprovados em duas rodadas. Seis casos HTTP da documentação/erros também passaram após a correção de details null.
-- Perfil de teste isolado foi adotado; Testcontainers não é necessário para a rodada atual.
+- Perfil de teste isolado foi adotado, com o PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432); Testcontainers não é usado (decisão da equipe, D-EVO-38).

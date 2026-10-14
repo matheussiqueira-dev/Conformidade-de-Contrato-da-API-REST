@@ -32,7 +32,7 @@ Fora do escopo planejado: gateway real de pagamento, dados reais, hospedagem pub
 | Maven Wrapper | Corrigido com `.mvn/wrapper/maven-wrapper.properties` apontando para Maven 3.9.11. | Usar `.\mvnw.cmd` nas execucoes formais. |
 | Maven no PATH | `mvn` nao encontrado no ambiente atual. | Resolvido pelo wrapper; nao depender de Maven global. |
 | JDK | Nao havia `java`/`javac` no PATH; JDK 25 portatil foi baixado para `tmp/tools/jdk-25`. | Definir `JAVA_HOME` para o JDK portatil ou instalar JDK 25 no sistema. |
-| PostgreSQL | Container Docker `postgres-order` criado conforme README. | Para automacao futura, preferir Testcontainers ou Compose versionado. |
+| PostgreSQL | Container Docker `postgres-order` criado conforme README. | Resolvido: os testes usam o PostgreSQL 18 descartavel via Docker Compose (`docker-compose.test.yml`, porta 15432); o `postgres-order` fica so para desenvolvimento (D-EVO-38). |
 | Stack frontend | Ainda nao definida. | Plano E2E usa Playwright/Cypress como placeholder ate ARQ-01. |
 | Autenticacao | Ainda nao implementada. | Casos de autorizacao ficam planejados ate API-01. |
 | Estoque/custo | Ainda nao implementados. | Casos de concorrencia ficam planejados ate API-03/API-04. |
@@ -42,7 +42,7 @@ Fora do escopo planejado: gateway real de pagamento, dados reais, hospedagem pub
 | Nivel | Objetivo | Ferramenta sugerida | Evidencia |
 | --- | --- | --- | --- |
 | Unitario | Regras isoladas: calculo monetario, metas, estados e validacoes. | JUnit 5, Mockito quando necessario. | Relatorio Surefire e cobertura. |
-| Integracao | Persistencia JPA, repositories, transacoes e rollback. | Spring Boot Test + Testcontainers PostgreSQL. | Logs, relatorios e seed usado. |
+| Integracao | Persistencia JPA, repositories, transacoes e rollback. | Spring Boot Test + PostgreSQL 18 descartavel via Docker Compose (`docker-compose.test.yml`, porta 15432). | Logs, relatorios e seed usado. |
 | API / contrato | Validar requests/responses HTTP e schema OpenAPI. | MockMvc/WebTestClient ou RestAssured; validador OpenAPI. | Requisicao/resposta sanitizada e relatorio. |
 | Sistema | Fluxos completos API + banco: pedido, pagamento, estoque, metas. | Teste HTTP contra app subindo com banco descartavel. | Run id, ambiente, dados e resultados. |
 | E2E interface | Fluxos de gerente/vendedor nas quatro telas. | A definir em ARQ-01. | Screenshots, video opcional e relatorio E2E. |
@@ -237,7 +237,7 @@ Executados na branch `feat/business-endpoints` com `scripts/test.ps1 -Mode Integ
 
 ### Casos da evolucao (G-01 a G-06, 14/10/2026)
 
-Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote por PR, na ordem WP-EVO-1 a WP-EVO-7.
+Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote por PR, na ordem da secao 9 do plano (WP-EVO-1 a 5, 8, 9 e 7); o WP-EVO-6 ficou como trabalho futuro (D-EVO-27).
 
 | Caso | Lacuna | Nivel | Tecnica | Situacao | Evidencia |
 | --- | --- | --- | --- | --- | --- |
@@ -300,7 +300,7 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 Entrada para execucao formal:
 
 - Ambiente Maven corrigido e versao registrada.
-- Banco isolado ou Testcontainers configurado.
+- Banco isolado: PostgreSQL 18 descartavel via Docker Compose (`docker-compose.test.yml`, porta 15432).
 - Contrato baseline exportado ou bloqueio documentado.
 - Seed sintetico versionado.
 - Casos selecionados vinculados a RF/CA.

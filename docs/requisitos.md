@@ -92,4 +92,4 @@ Venda demonstrativa: Marina Costa, iPhone 128 GB Preto por R$ 4.500 e AirPods Br
 | Definir stack de frontend, sessao, CORS e ferramenta E2E. | Bloqueia implementacao UI-01 a UI-05. |
 | Decidir regras de desconto, pedido de terceiros, custeio, estorno e devolucao. | Bloqueia regras de pedido, metas, estoque e aceitacao. |
 | Definir modelo de banco evolutivo. | Bloqueia API-02, API-04 e trilha BD. |
-| Automatizar banco isolado para testes. | Hoje a suite completa depende do PostgreSQL local/container `postgres-order`; Testcontainers ou Compose versionado reduzem atrito. |
+| Automatizar banco isolado para testes. | Atendido: a suite usa o PostgreSQL 18 descartavel via Docker Compose (`docker-compose.test.yml`, porta 15432), separado do `postgres-order` (D-EVO-38). |
