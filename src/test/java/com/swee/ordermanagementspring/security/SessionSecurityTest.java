@@ -41,6 +41,9 @@ class SessionSecurityTest {
         }
         @Bean AuditService audit() { return mock(AuditService.class); }
         @Bean LoginCounter counter() { return mock(LoginCounter.class); }
+        @Bean SessionStateReader sessionStates() {
+            return id -> java.util.Optional.of(new SessionStateReader.SessionState(true, 0));
+        }
         @Bean java.time.Clock clock() { return java.time.Clock.systemUTC(); }
     }
     @Autowired WebApplicationContext context;

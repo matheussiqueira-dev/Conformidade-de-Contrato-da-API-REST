@@ -24,6 +24,11 @@ public class AppUser {
     private short failedLoginAttempts;
     private Instant lockedUntil;
     private Instant lastLoginAt;
+    // V8: so leitura pela entidade; as escritas sao UPDATE explicitos (cadastro de usuarios, troca de senha)
+    @Column(insertable = false, updatable = false)
+    private int sessionVersion;
+    @Column(insertable = false, updatable = false)
+    private boolean mustChangePassword;
 
     protected AppUser() {}
     public AppUser(String name, String email, String passwordHash, UserRole role) {
@@ -41,6 +46,8 @@ public class AppUser {
     public int getFailedLoginAttempts() { return failedLoginAttempts; }
     public Instant getLockedUntil() { return lockedUntil; }
     public Instant getLastLoginAt() { return lastLoginAt; }
+    public int getSessionVersion() { return sessionVersion; }
+    public boolean isMustChangePassword() { return mustChangePassword; }
 
     public void deactivate() { this.active = false; }
 
