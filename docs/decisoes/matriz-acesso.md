@@ -52,6 +52,10 @@ Regras de leitura:
 
 O CSV lista cada método e caminho em uma linha (69 linhas além do cabeçalho), inclusive cada rota legada mapeada hoje no Spring.
 
+## Exceção temporária (ETAPA 2B)
+
+Até a ETAPA 2C, `GET`/`POST /customers` e `GET`/`PUT /customers/{id}` continuam só com o GERENTE (D-NOITE-05): o controlador legado devolve o documento completo, e a matriz só libera o VENDEDOR quando as projeções mascaradas existirem. O `AccessMatrixTest` trata essas quatro linhas como pendentes e espera 403 para o VENDEDOR; a lista é removida na 2C.
+
 ## Diferenças em relação ao SBI-EXECUCAO
 
 | Delta | Mudança |

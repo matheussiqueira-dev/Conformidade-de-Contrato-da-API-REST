@@ -1,5 +1,6 @@
 package com.swee.ordermanagementspring.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.swee.ordermanagementspring.dto.CustomerRequestDTO;
 import com.swee.ordermanagementspring.dto.CustomerResponseDTO;
 import com.swee.ordermanagementspring.entities.Address;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// Segunda barreira: o DTO legado expoe o documento completo; so GERENTE ate a ETAPA 2C (D-NOITE-05).
+@PreAuthorize("hasRole('GERENTE')")
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {

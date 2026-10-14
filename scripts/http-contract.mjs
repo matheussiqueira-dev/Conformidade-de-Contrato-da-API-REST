@@ -10,7 +10,7 @@ if (process.env.A3_CONTRACT_ISOLATED !== '1') {
 
 // Fixed loopback port; the PowerShell runner owns an isolated API and database.
 const origin = 'http://127.0.0.1:18080';
-const baseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-06.json', import.meta.url), 'utf8'));
+const baseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-14.json', import.meta.url), 'utf8'));
 const results = [];
 let liveContract;
 const directory = new URL('../reports/contrato/spike-2026-10-04/', import.meta.url);
@@ -40,8 +40,8 @@ await run('Live OpenAPI documents 400/404 error schemas and validates with offic
     const schema = liveContract.paths[path][method].responses[status]?.content?.['application/json']?.schema;
     assert.ok(schema, `Missing documented ${status}`);
     const resolved = schema.$ref ? schema.$ref.slice(2).split('/').reduce((value, key) => value[key], liveContract) : schema;
-    for (const field of ['timestamp', 'status', 'error', 'message']) assert.ok(resolved.required?.includes(field), `Missing required error field ${field}`);
-    assert.equal(resolved.properties.timestamp.format, 'local-date-time');
+    for (const field of ['timestamp', 'status', 'error', 'code', 'message']) assert.ok(resolved.required?.includes(field), `Missing required error field ${field}`);
+    assert.equal(resolved.properties.timestamp.format, 'date-time');
   }
   writeFileSync(new URL('openapi-runtime-errors.json', directory), JSON.stringify(liveContract, null, 2) + '\n');
 });
@@ -75,7 +75,7 @@ await run('Missing product returns 404', async () => {
   assert.ok(live.valid, JSON.stringify(live.errors));
 });
 const report = { scope: 'baseline-http-isolated-database', timestamp: new Date().toISOString(), results,
-  contract: 'baseline-errors-openapi-2026-10-06.json',
+  contract: 'baseline-errors-openapi-2026-10-14.json',
   contractGaps: ['Error documentation scope: POST /products 400 and GET /products/{id} 404 only.'],
   excluded: ['Seller projections, sales, inventory and goals require the dedicated domain endpoints.'],
   authentication: 'Manager session; CSRF token on mutations.' };

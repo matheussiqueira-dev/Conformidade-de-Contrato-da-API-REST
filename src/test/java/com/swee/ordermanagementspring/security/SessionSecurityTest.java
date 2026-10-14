@@ -29,16 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 class SessionSecurityTest {
     @Configuration @EnableWebMvc @Import({SecurityConfig.class, AuthController.class,
-            com.swee.ordermanagementspring.exceptions.GlobalExceptionHandler.class})
+            com.swee.ordermanagementspring.exceptions.GlobalExceptionHandler.class, LoginAttemptService.class, AreaResolver.class})
     static class TestConfig {
-        @Bean DatabaseUserDetailsService users() {
+        @Bean AppUserRepository users() {
             var repo = mock(AppUserRepository.class);
             var user = new AppUser("Ana", "seller@example.test", new BCryptPasswordEncoder(4).encode("synthetic-test-password"), UserRole.VENDEDOR);
             ReflectionTestUtils.setField(user, "id", 1L);
             when(repo.findByEmail(anyString())).thenReturn(Optional.empty());
             when(repo.findByEmail("seller@example.test")).thenReturn(Optional.of(user));
-            return new DatabaseUserDetailsService(repo);
+            return repo;
         }
+        @Bean AuditService audit() { return mock(AuditService.class); }
+        @Bean java.time.Clock clock() { return java.time.Clock.systemUTC(); }
     }
     @Autowired WebApplicationContext context;
     MockMvc mvc;
