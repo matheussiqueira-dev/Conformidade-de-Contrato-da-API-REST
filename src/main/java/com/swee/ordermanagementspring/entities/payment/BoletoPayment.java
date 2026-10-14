@@ -1,5 +1,7 @@
 package com.swee.ordermanagementspring.entities.payment;
 
+import com.swee.ordermanagementspring.entities.StoreTime;
+
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
@@ -43,7 +45,7 @@ public class BoletoPayment extends Payment{
 
     @Override
     public boolean processPayment() {
-        return processPayment(LocalDate.now());
+        return processPayment(StoreTime.today());
     }
 
     /** Data de referencia explicita: o teste de vencimento nao depende da virada do dia. */
@@ -61,7 +63,7 @@ public class BoletoPayment extends Payment{
             return false;
         }
     this.status = PaymentStatus.APPROVED;
-        this.paymentDate = LocalDateTime.now();
+        this.paymentDate = StoreTime.now();
         return true;
     }
 }

@@ -2,6 +2,7 @@ package com.swee.ordermanagementspring.entities;
 
 import com.swee.ordermanagementspring.entities.customer.Customer;
 import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.entities.enums.Fulfillment;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.payment.Payment;
 import jakarta.persistence.*;
@@ -19,9 +20,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime moment = LocalDateTime.now();
+    private LocalDateTime moment = StoreTime.now();
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    // N-07: derivado do endereco de entrega; o banco exige endereco em DELIVERY
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private Fulfillment fulfillment = Fulfillment.PICKUP;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Customer customer;
     // Null only for orders created before authenticated authorship was introduced.
@@ -105,6 +111,11 @@ public class Order {
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+        this.fulfillment = shippingAddress == null ? Fulfillment.PICKUP : Fulfillment.DELIVERY;
+    }
+
+    public Fulfillment getFulfillment() {
+        return fulfillment;
     }
 
     public BigDecimal total() {

@@ -85,7 +85,7 @@ Se `postgres-order` ja existir e tiver sido criado por `docker run`, o Compose p
 
 Diagnostico de inicializacao de 05/10: [banco parado, conflito de container e downloads npm](reports/execucoes/run-2026-10-05-debug-inicializacao.md). O runner `-Preview` agora instala o frontend antes de iniciar API/banco e limita as tentativas de download, para identificar problemas de rede mais cedo.
 
-O `ddl-auto=update` atual é um baseline de desenvolvimento. As migrações Flyway do produto ainda estão pendentes.
+O esquema vem só das migrações Flyway (V1–V6), com Hibernate em `validate` em todos os perfis. Para a massa de demonstração, suba com `--spring.profiles.active=demo` e `SBI_DEMO_PASSWORD` definida desde a primeira migração do banco; veja [migrações](docs/bd/migracoes.md).
 
 ### 1. Suba o PostgreSQL via Docker
 
@@ -106,7 +106,7 @@ spring.datasource.username=postgres
 # senha: variavel de ambiente SPRING_DATASOURCE_PASSWORD
 spring.datasource.driver-class-name=org.postgresql.Driver
 
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
 ```
 

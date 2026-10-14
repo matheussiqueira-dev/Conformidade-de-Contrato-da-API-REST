@@ -15,11 +15,14 @@ import com.swee.ordermanagementspring.repositories.OrderRepository;
 import com.swee.ordermanagementspring.repositories.PaymentRepository;
 import com.swee.ordermanagementspring.repositories.ProductRepository;
 import com.swee.ordermanagementspring.security.AppPrincipal;
+import com.swee.ordermanagementspring.config.BusinessTables;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -56,6 +59,13 @@ class ConcurrencyTest {
     @Autowired OrderRepository orders;
     @Autowired PaymentRepository payments;
     @Autowired AppUserRepository users;
+    @Autowired JdbcTemplate jdbc;
+
+    /** Transacoes confirmadas: sem create-drop, cada teste comeca com as tabelas de negocio vazias. */
+    @BeforeEach
+    void cleanBusinessTables() {
+        BusinessTables.truncate(jdbc);
+    }
 
     private Order newOrder() {
         PhysicalProduct product = products.save(new PhysicalProduct(new BigDecimal("100.00"), "Mouse", "Fixture sintetica", 0.2));

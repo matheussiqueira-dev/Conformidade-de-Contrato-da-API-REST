@@ -19,7 +19,7 @@ public class CorporateCustomer extends Customer{
 
     public CorporateCustomer(String name, String email, LocalDate birthDate, String cnpj, String companyName) {
         super(name, email, birthDate);
-        this.cnpj = cnpj;
+        this.cnpj = Documents.digitsOnly(cnpj);
         this.companyName = companyName;
     }
 
@@ -28,7 +28,7 @@ public class CorporateCustomer extends Customer{
     }
 
     public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+        this.cnpj = Documents.digitsOnly(cnpj);
     }
 
     public String getCompanyName() {

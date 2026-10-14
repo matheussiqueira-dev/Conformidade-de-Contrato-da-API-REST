@@ -59,13 +59,14 @@ try {
     $outputDirectory = Join-Path $projectDirectory 'reports/contrato/spike-2026-10-04'
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
     # Explicit disposable datasource; application-integration.properties is a test resource,
-    # so it is not bundled in the application jar.
+    # so it is not bundled in the application jar. Flyway migrates the schema and ContractUsersConfig
+    # empties the business tables before creating the synthetic accounts.
     $env:A3_CONTRACT_ISOLATED = '1'
     $env:A3_TEST_PASSWORD = [guid]::NewGuid().ToString('N')
     $arguments = @('-jar', ('"' + $jar + '"'), '--spring.profiles.active=contract', '--server.address=127.0.0.1', '--server.port=18080',
         '--spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test',
         '--spring.datasource.username=postgres_test',
-        '--spring.jpa.hibernate.ddl-auto=create-drop', '--spring.jpa.show-sql=false')
+        '--a3.contract.disposable-database=true', '--spring.jpa.show-sql=false')
     # D021: senha so pelo ambiente do processo filho; na linha de comando ela ficaria visivel e quebraria com espacos.
     $env:SPRING_DATASOURCE_PASSWORD = $env:TEST_DB_PASSWORD
     $apiProcess = Start-Process -FilePath (Join-Path $env:JAVA_HOME 'bin/java.exe') -ArgumentList $arguments -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $outputDirectory 'api-stdout.log') -RedirectStandardError (Join-Path $outputDirectory 'api-stderr.log')

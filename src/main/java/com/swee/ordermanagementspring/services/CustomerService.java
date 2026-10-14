@@ -2,6 +2,7 @@ package com.swee.ordermanagementspring.services;
 
 import com.swee.ordermanagementspring.dto.CustomerRequestDTO;
 import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.entities.customer.Documents;
 import com.swee.ordermanagementspring.entities.customer.Customer;
 import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
 import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
@@ -44,12 +45,12 @@ public class CustomerService {
         existing.setBirthDate(dto.getBirthDate());
 
         if (existing instanceof IndividualCustomer individual && dto.getCpf() != null) {
-            individual.setCpf(dto.getCpf());
+            individual.setCpf(Documents.cpf(dto.getCpf()));
         }
 
         if (existing instanceof CorporateCustomer corporate) {
             if (dto.getCnpj() != null) {
-                corporate.setCnpj(dto.getCnpj());
+                corporate.setCnpj(Documents.cnpj(dto.getCnpj()));
             }
             if (dto.getCompanyName() != null) {
                 corporate.setCompanyName(dto.getCompanyName());
@@ -70,13 +71,13 @@ public class CustomerService {
                 if (dto.getCpf() == null || dto.getCpf().isBlank()) {
                     throw new CustomerException("cpf é obrigatório para cliente INDIVIDUAL");
                 }
-                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
+                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cpf(dto.getCpf()));
             }
             case "CORPORATE" -> {
                 if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {
                     throw new CustomerException("cnpj é obrigatório para cliente CORPORATE");
                 }
-                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());
+                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cnpj(dto.getCnpj()), dto.getCompanyName());
             }
             default -> throw new CustomerException("Tipo de cliente inválido: " + dto.getType());
         };

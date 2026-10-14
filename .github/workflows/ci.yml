@@ -69,7 +69,7 @@ jobs:
             --server.address=127.0.0.1 --server.port=18080 \
             --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
             --spring.datasource.username=postgres_test \
-            --spring.jpa.hibernate.ddl-auto=create-drop \
+            --a3.contract.disposable-database=true \
             --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
           api_pid=$!
           trap 'kill "$api_pid" 2>/dev/null || true' EXIT
@@ -136,3 +136,73 @@ jobs:
             frontend/package-lock.json
             frontend/test-results/
             frontend/playwright-report/
+
+  bd:
+    # Entrega de Banco de Dados: Flyway V1-V6 + massa demo (perfil demo), depois RBAC/RLS, CRUD,
+    # testes 06a/b/c e a corrida CC-01 por psql. Falha em qualquer FAIL ou ERROR.
+    runs-on: ubuntu-latest
+    env:
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: order_management_test
+          POSTGRES_USER: postgres_test
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
+        ports:
+          - 15432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres_test -d order_management_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Build
+        run: |
+          chmod +x mvnw
+          ./mvnw -B -q -DskipTests package
+
+      - name: Migrate V1-V6 with demo seed
+        shell: bash
+        env:
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+        run: |
+          export SBI_DEMO_PASSWORD="$(openssl rand -hex 16)"
+          timeout 300 java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
+            --spring.profiles.active=demo \
+            --spring.main.web-application-type=none \
+            --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
+            --spring.datasource.username=postgres_test \
+            --spring.jpa.show-sql=false > target/bd-demo.log 2>&1 || { cat target/bd-demo.log; exit 1; }
+          grep "Successfully applied" target/bd-demo.log
+
+      - name: Run RBAC, CRUD, package tests and CC-01 by psql
+        shell: bash
+        env:
+          CONTAINER: ${{ job.services.postgres.id }}
+          DB: order_management_test
+          SUPERUSER: postgres_test
+          OUT: target/resultado_bd.txt
+        run: bash docs/bd/pacote-sql/run_bd.sh
+
+      - name: Preserve database reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bd-reports
+          path: |
+            target/bd-demo.log
+            target/resultado_bd.txt
