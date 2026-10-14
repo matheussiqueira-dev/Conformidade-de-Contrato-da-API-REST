@@ -162,6 +162,34 @@ record('/management/revenue', 'get', await manager.request('/management/revenue?
 record('/analytics/sales', 'get', await manager.request(`/analytics/sales?month=${month}`), 200);
 record('/analytics/stock', 'get', await manager.request('/analytics/stock'), 200);
 record('/promotions/{id}/close', 'post', await manager.request(`/promotions/${promotion.id}/close`, 'POST'), 200);
+
+// Usuarios (GERENTE) e troca da propria senha (contrato v5, G-01/G-03)
+const managerId = (await manager.request('/auth/me')).body.id;
+const email = `usuario${stamp}@contrato.test`;
+const user = { name: 'Usuario do contrato', email, role: 'VENDEDOR', temporaryPassword: `Provisoria-${stamp}` };
+const created = record('/users', 'post', await manager.request('/users', 'POST', user), 201).body;
+record('/users', 'post', await manager.request('/users', 'POST', { ...user, email: email.toUpperCase() }), 409);
+record('/users', 'post', await manager.request('/users', 'POST', { ...user, email: `fraca${stamp}@contrato.test`, temporaryPassword: 'curta-123' }), 400);
+record('/users', 'get', await manager.request('/users?role=VENDEDOR&active=true'), 200);
+record('/users', 'get', await seller.request('/users'), 403);
+record('/users/{id}', 'get', await manager.request(`/users/${created.id}`), 200);
+record('/users/{id}', 'get', await manager.request('/users/999999'), 404);
+const edit = { name: 'Usuario do contrato B', email, version: created.version };
+record('/users/{id}', 'put', await manager.request(`/users/${created.id}`, 'PUT', edit), 200);
+record('/users/{id}', 'put', await manager.request(`/users/${created.id}`, 'PUT', edit), 409);
+record('/users/{id}/role', 'patch', await manager.request(`/users/${created.id}/role`, 'PATCH', { role: 'GERENTE', reason: 'Promocao no contrato' }), 200);
+record('/users/{id}/role', 'patch', await manager.request(`/users/${managerId}/role`, 'PATCH', { role: 'VENDEDOR', reason: 'Proprio papel' }), 409);
+record('/users/{id}/status', 'patch', await manager.request(`/users/${created.id}/status`, 'PATCH', { active: false, reason: 'Pausa no contrato' }), 200);
+record('/users/{id}/status', 'patch', await manager.request(`/users/${created.id}/status`, 'PATCH', { active: true, reason: 'Retorno no contrato' }), 200);
+record('/users/{id}/unlock', 'post', await manager.request(`/users/${created.id}/unlock`, 'POST'), 204);
+record('/users/{id}/unlock', 'post', await manager.request('/users/999999/unlock', 'POST'), 404);
+record('/users/{id}/password-reset', 'post', await manager.request(`/users/${created.id}/password-reset`, 'POST', { temporaryPassword: 'curta-123' }), 400);
+record('/users/{id}/password-reset', 'post', await manager.request(`/users/${created.id}/password-reset`, 'POST', { temporaryPassword: `Outra-${stamp}` }), 204);
+const fresh = sessionClient(origin);
+if ((await fresh.login(email, `Outra-${stamp}`)).status !== 200) findings.push('new user could not log in with the temporary password');
+record('/auth/password', 'put', await fresh.request('/auth/password', 'PUT', { currentPassword: 'senha-errada', newPassword: `Definitiva-${stamp}` }), 401);
+record('/auth/password', 'put', await fresh.request('/auth/password', 'PUT', { currentPassword: `Outra-${stamp}`, newPassword: 'curta-123' }), 400);
+record('/auth/password', 'put', await fresh.request('/auth/password', 'PUT', { currentPassword: `Outra-${stamp}`, newPassword: `Definitiva-${stamp}` }), 204);
 record('/auth/logout', 'post', await seller.request('/auth/logout', 'POST'), 204);
 
 for (const { path, method, operation } of operations(v4)) {
