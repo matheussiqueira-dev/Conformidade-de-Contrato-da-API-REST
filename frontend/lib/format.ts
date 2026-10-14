@@ -4,6 +4,7 @@ export interface Money { amount: number; currency: string }
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const dateTime = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Fortaleza' });
 const date = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'America/Fortaleza' });
+const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Fortaleza' });
 const percent = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 /** Espaco nao separavel do Intl vira espaco comum para leitores de tela e testes. */
@@ -18,6 +19,11 @@ export function money(value: Money | number | null | undefined): string {
 
 export function formatDateTime(iso: string): string {
   return dateTime.format(new Date(iso));
+}
+
+/** Hora local da loja (HH:MM), usada em "Bloqueado até 10:15". */
+export function formatTime(iso: string): string {
+  return time.format(new Date(iso));
 }
 
 export function formatDate(isoDate: string): string {
