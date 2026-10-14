@@ -93,6 +93,12 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | CA-18-03 | Dada conta bloqueada ha 15 minutos, quando a senha correta for enviada, entao a API retorna 200 e zera o contador de falhas. |
 | CA-18-04 | Dada conta inativa, quando a senha correta for enviada, entao a API retorna o mesmo 401. |
 | CA-18-05 | Dado qualquer um dos quatro casos de falha, quando o login for processado, entao a comparacao BCrypt e executada e um `audit_event` e gravado sem senha e com o e-mail apenas como SHA-256. |
+| CA-24-01 | Dado gerente, quando cadastrar usuario, entao o e-mail e gravado em minusculas, a conta exige troca de senha e e-mail repetido em outra caixa retorna 409 `STATE_CONFLICT`; senha fora da politica retorna 400 `VALIDATION_FAILED`. |
+| CA-24-02 | Dado vendedor, quando acessar qualquer rota de `/users`, entao a API retorna 403 `FORBIDDEN`. |
+| CA-24-03 | Dada alteracao de papel, situacao, senha ou desbloqueio de um usuario, quando ele fizer a proxima requisicao com a sessao antiga, entao a API retorna 401 `SESSION_REVOKED`. |
+| CA-24-04 | Dado gerente, quando tentar alterar o proprio papel, a propria situacao ou redefinir a propria senha, entao a API retorna 409 `SELF_CHANGE_FORBIDDEN`; quando a operacao deixaria a loja sem gerente ativo, 409 `LAST_MANAGER`. |
+| CA-24-05 | Dada senha provisoria, quando o usuario entrar, entao `areas` traz apenas TROCAR_SENHA e as demais rotas retornam 403 `PASSWORD_CHANGE_REQUIRED` ate a troca; senha atual errada na troca retorna 401 e conta para o bloqueio. |
+| CA-24-06 | Dada qualquer operacao de usuario, quando a resposta ou o `audit_event` forem gravados, entao nenhum contem senha ou hash. |
 | CA-19-01 | Dado vendedor no PDV, quando buscar por SKU ou prefixo do nome, entao o SKU exato vem primeiro e a resposta nao contem custo, saldo fisico nem margem. |
 | CA-19-02 | Dado carrinho, quando cotar, entao preco, desconto e total vem do servidor sem efeito colateral; corpo de venda com vendedor, preco, desconto ou total retorna 400 sem criar pedido. |
 | CA-19-03 | Dada a mesma `Idempotency-Key` e o mesmo corpo, quando a venda for reenviada, entao a API retorna 200 com o mesmo pedido; com corpo diferente, 409 `IDEMPOTENCY_CONFLICT`. |
@@ -145,6 +151,7 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | RF-21 | CA-21-01, CA-21-02 | CT-CRM-103, CT-SEC-113 | Pendente | - |
 | RF-22 | CA-22-01 a CA-22-07 | CT-STOCK-108, CT-STOCK-109, CT-SALE-104, CT-WEB-105, CT-WEB-106 | Pendente | - |
 | RF-23 | CA-23-01 a CA-23-03 | CT-CONTRACT-102, CT-WEB-102 | Pendente | - |
+| RF-24 | CA-24-01 a CA-24-06 | CT-USR-101 a CT-USR-107, CT-SEC-121, CT-SEC-122, CT-BD-30, CT-WEB-112 | Verde (14/10/2026) | `UsersApiTest`, `SessionRevocationTest`, `FlywayMigrationTest.v8KeepsOneActiveManager`, `06d_testes_evolucao.sql`, `e2e/users.spec.ts` |
 
 Situacao atual de cada linha, com a evidencia executavel: [rastreabilidade.md](rastreabilidade.md) (14/10/2026).
 

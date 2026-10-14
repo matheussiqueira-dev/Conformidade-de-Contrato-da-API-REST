@@ -29,6 +29,7 @@ Regras de leitura:
 | GET | `/swagger-ui.html`, `/swagger-ui/**` | PERMIT | PERMIT | PERMIT |
 | * | `/error` | PERMIT | PERMIT | PERMIT |
 | GET | `/auth/me` | 401 | PERMIT | PERMIT |
+| PUT | `/auth/password` (troca da propria senha, contrato v5) | 401 | PERMIT | PERMIT |
 | GET | `/sales/catalog` | 401 | PERMIT | PERMIT |
 | POST | `/sales/quote` | 401 | PERMIT | PERMIT |
 | POST | `/sales/orders` | 401 | PERMIT | PERMIT |
@@ -48,6 +49,7 @@ Regras de leitura:
 | GET, PUT | `/goals/monthly` | 401 | 403 | PERMIT |
 | GET | `/management/summary`, `/management/revenue`, `/analytics/sales`, `/analytics/stock` | 401 | 403 | PERMIT |
 | POST | `/payment/{id}/refund` | 401 | 403 | PERMIT |
+| GET, POST | `/users`; GET, PUT `/users/{id}`; PATCH `/users/{id}/role`, `/users/{id}/status`; POST `/users/{id}/unlock`, `/users/{id}/password-reset` (contrato v5) | 401 | 403 | PERMIT |
 | todos | `/orders/**` legado (exceto `cancel`), `/payment/**` legado (exceto `refund`), `/address/**` | 401 | 403 | PERMIT |
 
 O CSV lista cada método e caminho em uma linha (69 linhas além do cabeçalho), inclusive cada rota legada mapeada hoje no Spring.
