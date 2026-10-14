@@ -86,7 +86,7 @@ try {
     & node scripts/http-session.mjs
     if ($LASTEXITCODE -ne 0) { throw 'Teste de sessao falhou. Consulte reports/contrato/session-2026-10-04/http-session.json.' }
     & node scripts/live-contract.mjs
-    if ($LASTEXITCODE -ne 0) { throw 'Contrato ao vivo diverge do v4. Consulte reports/contrato/live-v4/live-contract.json.' }
+    if ($LASTEXITCODE -ne 0) { throw 'Contrato ao vivo diverge do contrato alvo. Consulte reports/contrato/live-v5/live-contract.json.' }
     if ($Frontend) {
         Push-Location frontend
         try {
