@@ -11,8 +11,8 @@ import {
 } from '../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../lib/api/http.ts';
 import {
-  addProduct, availableFromDetails, clearCart, emptyCart, loadCart, refreshAvailability, removeProduct, saleItems, saveCart, setQuantity,
-  withIdempotencyKey, type Cart,
+  addProduct, availableFromDetails, clearCart, emptyCart, loadCart, manualDiscountBody, refreshAvailability, removeProduct, saleItems, saveCart,
+  setManualDiscount, setQuantity, withIdempotencyKey, type Cart,
 } from '../../../lib/cart.ts';
 import { label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../lib/format.ts';
 import { ErrorNotice, errorMessage } from '../../../components/feedback.tsx';
@@ -122,13 +122,21 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
 
   const lines = cart.lines;
   const items = useMemo(() => saleItems(cart), [cart]);
+  const manual = useMemo(() => manualDiscountBody(cart), [cart]);
   const debouncedItems = useDebounced(items, 300);
+  const debouncedManual = useDebounced(manual, 300);
   const quote = useQuery({
-    queryKey: ['quote', debouncedItems],
-    queryFn: ({ signal }) => api.request('/sales/quote', { method: 'POST', body: { items: debouncedItems }, signal, schema: QuoteSaleResponse }),
+    queryKey: ['quote', debouncedItems, debouncedManual],
+    queryFn: ({ signal }) => api.request('/sales/quote', { method: 'POST', signal, schema: QuoteSaleResponse,
+      body: { items: debouncedItems, ...(debouncedManual ? { manualDiscount: debouncedManual } : {}) } }),
     enabled: debouncedItems.length > 0,
     placeholderData: keepPreviousData,
+    retry: false,
   });
+  const discountProblem = quote.error instanceof ApiError && (quote.error.code === 'DISCOUNT_ABOVE_LIMIT' || quote.error.code === 'BELOW_COST');
+  const limit = quote.error instanceof ApiError && quote.error.code === 'DISCOUNT_ABOVE_LIMIT'
+    ? quote.error.details.find(d => d.startsWith('limitPercent='))?.split('=')[1]
+    : quote.data?.manualDiscountLimitPercent?.toString();
 
   function add(product: CatalogItem) {
     setCart(addProduct(cart, product));
@@ -207,13 +215,31 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
             );
           })}
         </div>}
-        <ErrorNotice error={quote.error} />
+        {lines.length > 0 && <fieldset className="stack-sm plain-fieldset">
+          <legend className="label">Desconto manual (opcional)</legend>
+          <div className="form-grid">
+            <Field id="desconto-percentual" label="Percentual (%)" hint={limit ? `Seu limite: ${limit.replace('.', ',')}%` : undefined}>
+              <input id="desconto-percentual" className="input" inputMode="decimal" maxLength={6} value={cart.manualDiscount?.percent ?? ''}
+                     onChange={event => setCart(setManualDiscount(cart, { percent: event.target.value, reason: cart.manualDiscount?.reason ?? '' }))} />
+            </Field>
+            <Field id="desconto-motivo" label="Motivo" hint="De 5 a 200 caracteres">
+              <input id="desconto-motivo" className="input" maxLength={200} value={cart.manualDiscount?.reason ?? ''}
+                     onChange={event => setCart(setManualDiscount(cart, { percent: cart.manualDiscount?.percent ?? '', reason: event.target.value }))} />
+            </Field>
+          </div>
+        </fieldset>}
+        {discountProblem
+          ? <p className="notice notice-error" role="alert">{quote.error instanceof ApiError && quote.error.code === 'DISCOUNT_ABOVE_LIMIT'
+              ? `Desconto acima do seu limite${limit ? ` de ${limit.replace('.', ',')}%` : ''}. Venda dentro do limite e peça ao gerente para aprovar o restante no pedido.`
+              : errorMessage(quote.error)}</p>
+          : <ErrorNotice error={quote.error} />}
         {lines.length > 0 && <dl className="totals" aria-live="polite">
           <div><dt>Subtotal</dt><dd className="num">{money(quote.data?.subtotal)}</dd></div>
           <div><dt>Descontos</dt><dd className="num">{money(quote.data?.discountTotal)}</dd></div>
+          {quote.data?.manualDiscount && <div><dt>Desconto manual</dt><dd className="num">{money(quote.data.manualDiscount)}</dd></div>}
           <div className="total"><dt>Total</dt><dd className="num">{money(quote.data?.total)}</dd></div>
         </dl>}
-        <button type="button" className="btn btn-primary btn-block" disabled={lines.length === 0} onClick={onNext}>Continuar para cliente e pagamento</button>
+        <button type="button" className="btn btn-primary btn-block" disabled={lines.length === 0 || discountProblem} onClick={onNext}>Continuar para cliente e pagamento</button>
       </section>
     </div>
   );
@@ -273,6 +299,7 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
     return {
       customerId: customer?.id ?? 0,
       items: saleItems(cart),
+      ...(manualDiscountBody(cart) ? { manualDiscount: manualDiscountBody(cart) } : {}),
       payment: paymentBody,
       fulfillment: delivery ? 'DELIVERY' : 'PICKUP',
       ...(delivery ? { shippingAddress: { ...shipping, zipCode: address.zipCode.replace(/\D/g, '') } } : {}),

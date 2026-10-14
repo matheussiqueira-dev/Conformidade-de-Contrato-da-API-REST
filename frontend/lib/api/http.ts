@@ -90,12 +90,19 @@ export function createClient({ fetcher = (input, init) => fetch(input, init), on
       });
     };
     let response = await send(mutation ? (csrf ?? await refreshCsrf(options.signal)) : null);
+    let failure: unknown;
     if (mutation && response.status === 403) {
       // O token CSRF muda no login e no logout; uma nova tentativa com token fresco cobre a troca de sessao.
-      response = await send(await refreshCsrf(options.signal));
+      // 403 de regra de negocio (DISCOUNT_ABOVE_LIMIT, PASSWORD_CHANGE_REQUIRED) nao se repete.
+      failure = await response.json().catch(() => null);
+      const code = errorDetails(failure).code;
+      if (code === undefined || code === 'FORBIDDEN') {
+        failure = undefined;
+        response = await send(await refreshCsrf(options.signal));
+      }
     }
     if (!response.ok) {
-      const body: unknown = await response.json().catch(() => null);
+      const body: unknown = failure !== undefined ? failure : await response.json().catch(() => null);
       const { code, details } = errorDetails(body);
       // Senha atual errada na troca de senha tambem responde 401, mas a sessao continua valida.
       const wrongCurrentPassword = path === '/auth/password' && code === 'UNAUTHENTICATED';

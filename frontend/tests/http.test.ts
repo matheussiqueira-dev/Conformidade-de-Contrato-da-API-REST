@@ -80,3 +80,11 @@ test('login: mesma mensagem generica no 401 e token renovado antes e depois', as
     (error: unknown) => error instanceof ApiError && error.message === 'E-mail ou senha inválidos.');
   assert.deepEqual(calls.map(c => c.path), ['/api/backend/auth/csrf', '/api/backend/auth/login']);
 });
+
+test('403 de regra de negocio (DISCOUNT_ABOVE_LIMIT) nao repete a mutacao e devolve os details', async () => {
+  const { fetcher, calls } = fake([CSRF, { status: 403, body: { code: 'DISCOUNT_ABOVE_LIMIT', details: ['limitPercent=5.00'] } }]);
+  const client = createClient({ fetcher });
+  await assert.rejects(client.request('/sales/quote', { method: 'POST', body: { items: [] } }), (error: unknown) =>
+    error instanceof ApiError && error.code === 'DISCOUNT_ABOVE_LIMIT' && error.details[0] === 'limitPercent=5.00');
+  assert.equal(calls.length, 2);
+});
