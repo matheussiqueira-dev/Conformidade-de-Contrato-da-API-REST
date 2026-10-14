@@ -126,6 +126,9 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-EXEC-05 | `GET /performance/me` lê a meta em `v_meu_desempenho` (filtrada por `app.user_id`) e calcula o realizado em `v_lancamento_realizado`, para o vendedor sem meta também ver o realizado, com estado `SEM_META` e sem percentual. |
 | D-EXEC-06 | O v4 declarava `StockMovement.reason` com tipo `string` ou `null`, mas o `enum` sem `null`, o que rejeitava todo movimento sem motivo (entrada, reserva, saída). O `null` entra no `enum`; nenhum valor válido muda. |
 | D-EXEC-07 | A verificação ao vivo (`scripts/live-contract.mjs`, CT-CONTRACT-102) compara com o v4, em toda operação, caminho, método, parâmetros, presença de corpo e códigos de sucesso do `/v3/api-docs`, e valida com Ajv as respostas reais de sucesso e de erro de cada operação; os schemas do OpenAPI gerado não são comparados campo a campo. Com divergência zero, as operações de autenticação passam a `implemented` (D-NOITE-06). |
+| D-EXEC-08 | O frontend fixa `typescript` 6.0.3: a 7.0.2 (mais nova) não expõe a API de compilador que o `next build` usa para checar tipos. |
+| D-EXEC-09 | Os formulários usam um resolver próprio (`frontend/lib/forms.ts`) que monta o corpo da requisição e o valida com o schema Zod gerado do v4; o `@hookform/resolvers` previsto no plano ficou sem uso e não foi mantido. |
+| D-EXEC-10 | Área não liberada para o perfil mostra "Sem acesso a esta área" no layout do servidor; rota que ainda não existe responde 404 (CT-WEB-103 cobre `/gestao` para o vendedor). |
 
 ## Processo
 
