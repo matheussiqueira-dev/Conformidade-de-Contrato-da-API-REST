@@ -30,15 +30,21 @@ public class PaymentService {
 
     @Transactional
     public Payment processAndSave(Payment payment) {
-        payment.processPayment();
+        // D004: pagamento ja aprovado, recusado ou expirado nao e processado de novo
+        if (payment.getStatus() != PaymentStatus.PENDING) {
+            throw new PaymentException("Only payments with PENDING status can be processed");
+        }
+
+        boolean approved = payment.processPayment();
 
         Payment saved = paymentRepository.save(payment);
 
-        Order order = saved.getOrder();
-        order.setStatus(OrderStatus.PAID);
+        // D003: so pagamento aprovado confirma o pedido; boleto vencido mantem PENDING_PAYMENT
+        if (approved) {
+            saved.getOrder().setStatus(OrderStatus.PAID);
+        }
 
         return saved;
-
     }
 
     public List<Payment> findAll() {
@@ -49,10 +55,12 @@ public class PaymentService {
         return paymentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Payment not found, id: " + id));
     }
 
+    @Transactional
     public Payment insert(PaymentRequestDTO dto) {
         Order order = orderRepository.findById(dto.getOrderId())
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found, id: " + dto.getOrderId()));
 
+        PaymentRules.requireAmountMatchesTotal(dto.getAmount(), order);
         Payment payment = buildPayment(dto, order);
 
         return paymentRepository.save(payment);
@@ -65,10 +73,13 @@ public class PaymentService {
             throw new PaymentException("Only payments with PENDING status can be edited");
         }
 
+        PaymentRules.requireAmountMatchesTotal(dto.getAmount(), existing.getOrder());
+        String type = PaymentRules.normalizeType(dto.getType());
+
         boolean typeChanged =
-                (dto.getType().equalsIgnoreCase("CARD") && !(existing instanceof CardPayment))
-                        || (dto.getType().equalsIgnoreCase("PIX") && !(existing instanceof PixPayment))
-                        || (dto.getType().equalsIgnoreCase("BOLETO") && !(existing instanceof BoletoPayment));
+                ("CARD".equals(type) && !(existing instanceof CardPayment))
+                        || ("PIX".equals(type) && !(existing instanceof PixPayment))
+                        || ("BOLETO".equals(type) && !(existing instanceof BoletoPayment));
 
         if (typeChanged) {
             Order order = existing.getOrder();
@@ -90,7 +101,7 @@ public class PaymentService {
             return paymentRepository.save(updated);
         }
 
-        switch (dto.getType().toUpperCase()) {
+        switch (type) {
 
             case "CARD" -> {
                 if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {
@@ -123,6 +134,8 @@ public class PaymentService {
                     throw new PaymentException("barCode is required for BOLETO payments");
                 }
 
+                PaymentRules.requireDueDate(dto.getDueDate());
+
                 BoletoPayment payment = (BoletoPayment) existing;
 
                 payment.setAmount(dto.getAmount());
@@ -139,7 +152,7 @@ public class PaymentService {
     }
 
     private Payment buildPayment(PaymentRequestDTO dto, Order order) {
-        return switch (dto.getType().toUpperCase()) {
+        return switch (PaymentRules.normalizeType(dto.getType())) {
             case "CARD" -> {
                 if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {
                     throw new PaymentException("cardNumber is required for CARD payments");
@@ -156,6 +169,7 @@ public class PaymentService {
                 if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {
                     throw new PaymentException("barCode is required for BOLETO payments");
                 }
+                PaymentRules.requireDueDate(dto.getDueDate());
                 yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());
             }
             default -> throw new PaymentException("Invalid payment type: " + dto.getType());
