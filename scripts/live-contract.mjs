@@ -1,5 +1,6 @@
-// CT-CONTRACT-102: o OpenAPI ao vivo e as respostas reais conferem com o contrato v4.
-// 1) Estrutura: toda operacao do v4 existe em /v3/api-docs com os mesmos parametros, corpo e codigos de sucesso.
+// CT-CONTRACT-102: o OpenAPI ao vivo e as respostas reais conferem com o contrato alvo (v5 = v4 + evolucao).
+// 1) Estrutura: toda operacao implemented existe em /v3/api-docs com os mesmos parametros, corpo e codigos de sucesso.
+//    Operacao planned ainda nao existe na API (C-02) e fica fora da comparacao.
 // 2) Comportamento: cada operacao e chamada na API isolada e a resposta (sucesso e erro) e validada com Ajv.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
@@ -10,7 +11,7 @@ if (process.env.A3_CONTRACT_ISOLATED !== '1' || !process.env.A3_TEST_PASSWORD) {
   throw new Error('Run scripts/test-contract.ps1: live checks require the disposable database runner.');
 }
 const origin = 'http://127.0.0.1:18080';
-const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url), 'utf8'));
+const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json', import.meta.url), 'utf8'));
 const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 const findings = [];
 const exercised = new Map();
@@ -34,6 +35,7 @@ function parameters(document, operation) {
 const anonymous = sessionClient(origin);
 const live = (await anonymous.request('/v3/api-docs')).body;
 for (const { path, method, operation } of operations(v4)) {
+  if (operation['x-status'] !== 'implemented') continue;
   const name = `${method.toUpperCase()} ${path}`;
   const liveOperation = live.paths?.[path]?.[method];
   if (!liveOperation) { findings.push(`${name}: missing in live OpenAPI`); continue; }
@@ -59,7 +61,7 @@ function record(path, method, response, expected) {
     const result = checkResponse(v4, path, method, response);
     if (!result.valid) findings.push(`${name} ${response.status}: ${JSON.stringify(result.errors).slice(0, 400)}`);
   }
-  if (!v4.paths[path][method].responses[String(response.status)]) findings.push(`${name}: status ${response.status} not in v4`);
+  if (!v4.paths[path][method].responses[String(response.status)]) findings.push(`${name}: status ${response.status} not in the contract`);
   exercised.set(name, [...(exercised.get(name) ?? []), response.status]);
   return response;
 }
@@ -167,10 +169,10 @@ for (const { path, method, operation } of operations(v4)) {
   if (operation['x-status'] === 'implemented' && !exercised.has(name)) findings.push(`${name}: implemented but not exercised`);
 }
 
-const directory = new URL('../reports/contrato/live-v4/', import.meta.url);
+const directory = new URL('../reports/contrato/live-v5/', import.meta.url);
 mkdirSync(directory, { recursive: true });
-const report = { scope: 'live OpenAPI and responses versus target v4', timestamp: new Date().toISOString(),
-  contract: 'target-loja-gestao-openapi-2026-10-14-v4.json', operations: operations(v4).length,
+const report = { scope: 'live OpenAPI and responses versus target v5', timestamp: new Date().toISOString(),
+  contract: 'target-loja-gestao-openapi-2026-10-14-v5.json', operations: operations(v4).length,
   exercised: Object.fromEntries([...exercised].sort()), divergences: findings,
   limits: ['Structural check covers path, method, parameters, request body presence and success status codes; schema bodies are checked on real responses.'] };
 writeFileSync(new URL('live-contract.json', directory), JSON.stringify(report, null, 2) + '\n');

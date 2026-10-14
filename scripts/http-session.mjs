@@ -4,8 +4,8 @@ import { sessionClient } from './session-client.mjs';
 import { checkResponse } from './response-contract.mjs';
 if (process.env.A3_CONTRACT_ISOLATED !== '1' || !process.env.A3_TEST_PASSWORD) throw new Error('Use the disposable database runner.');
 const origin = 'http://127.0.0.1:18080';
-// Contrato v4: UserSession com areas (REC-f).
-const target = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url)));
+// Contrato alvo (v5 = v4 + evolucao): UserSession com areas (REC-f).
+const target = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json', import.meta.url)));
 const results = [];
 async function run(name, work) {
   try { await work(); results.push({ name, passed: true }); }
