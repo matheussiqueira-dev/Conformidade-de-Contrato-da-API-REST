@@ -187,6 +187,13 @@ export const quoteSaleBodyItemsItemQuantityMax = 999;
 
 export const quoteSaleBodyItemsMax = 50;
 
+export const quoteSaleBodyManualDiscountPercentMin = 0.01;
+export const quoteSaleBodyManualDiscountPercentMax = 100;
+export const quoteSaleBodyManualDiscountPercentMultipleOf = 0.01;
+
+export const quoteSaleBodyManualDiscountReasonMin = 5;
+export const quoteSaleBodyManualDiscountReasonMax = 200;
+
 
 
 export const QuoteSaleBody = zod.strictObject({
@@ -194,7 +201,11 @@ export const QuoteSaleBody = zod.strictObject({
   "productId": zod.int().min(1),
   "quantity": zod.int().min(1).max(quoteSaleBodyItemsItemQuantityMax),
   "promotionId": zod.int().min(1).optional()
-})).min(1).max(quoteSaleBodyItemsMax)
+})).min(1).max(quoteSaleBodyItemsMax),
+  "manualDiscount": zod.strictObject({
+  "percent": zod.number().min(quoteSaleBodyManualDiscountPercentMin).max(quoteSaleBodyManualDiscountPercentMax).multipleOf(quoteSaleBodyManualDiscountPercentMultipleOf).describe('Percentual com ate 2 casas.'),
+  "reason": zod.string().min(quoteSaleBodyManualDiscountReasonMin).max(quoteSaleBodyManualDiscountReasonMax)
+}).optional().describe('Desconto manual sobre o subtotal ja promocionado. Nunca valor final nem preco: o servidor calcula (invariante 1). Acima da alcada do papel da sessao: 403 DISCOUNT_ABOVE_LIMIT com limitPercent em details. Item abaixo do custo medio conhecido, se a politica nao permitir: 409 BELOW_COST (sem revelar o custo).')
 }).describe('productId repetido na lista -> 400.')
 
 export const quoteSaleResponseItemsItemUnitPriceAmountMin = 0;
@@ -290,6 +301,13 @@ export const createSaleOrderBodyShippingAddressCityMax = 60;
 
 export const createSaleOrderBodyShippingAddressStateRegExp = new RegExp('^[A-Z]{2}$');
 export const createSaleOrderBodyShippingAddressZipCodeRegExp = new RegExp('^[0-9]{8}$');
+export const createSaleOrderBodyManualDiscountPercentMin = 0.01;
+export const createSaleOrderBodyManualDiscountPercentMax = 100;
+export const createSaleOrderBodyManualDiscountPercentMultipleOf = 0.01;
+
+export const createSaleOrderBodyManualDiscountReasonMin = 5;
+export const createSaleOrderBodyManualDiscountReasonMax = 200;
+
 
 
 export const CreateSaleOrderBody = zod.strictObject({
@@ -319,8 +337,12 @@ export const CreateSaleOrderBody = zod.strictObject({
   "city": zod.string().min(1).max(createSaleOrderBodyShippingAddressCityMax),
   "state": zod.string().regex(createSaleOrderBodyShippingAddressStateRegExp),
   "zipCode": zod.string().regex(createSaleOrderBodyShippingAddressZipCodeRegExp)
-}).optional()
-}).describe('Sem vendedor, preco, desconto ou total. shippingAddress obrigatorio somente em DELIVERY (restricao de classe). productId repetido -> 400.')
+}).optional(),
+  "manualDiscount": zod.strictObject({
+  "percent": zod.number().min(createSaleOrderBodyManualDiscountPercentMin).max(createSaleOrderBodyManualDiscountPercentMax).multipleOf(createSaleOrderBodyManualDiscountPercentMultipleOf).describe('Percentual com ate 2 casas.'),
+  "reason": zod.string().min(createSaleOrderBodyManualDiscountReasonMin).max(createSaleOrderBodyManualDiscountReasonMax)
+}).optional().describe('Desconto manual sobre o subtotal ja promocionado. Nunca valor final nem preco: o servidor calcula (invariante 1). Acima da alcada do papel da sessao: 403 DISCOUNT_ABOVE_LIMIT com limitPercent em details. Item abaixo do custo medio conhecido, se a politica nao permitir: 409 BELOW_COST (sem revelar o custo).')
+}).describe('Sem vendedor, preco, desconto em valor ou total; o desconto manual vem so como percentual com motivo. shippingAddress obrigatorio somente em DELIVERY (restricao de classe). productId repetido -> 400.')
 
 export const createSaleOrderResponseItemsItemUnitPriceAmountMin = 0;
 export const createSaleOrderResponseItemsItemUnitPriceAmountMax = 9999999999.99;
@@ -639,6 +661,119 @@ export const ConfirmSalePaymentResponse = zod.strictObject({
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "total": zod.strictObject({
   "amount": zod.number().min(confirmSalePaymentResponseTotalAmountMin).max(confirmSalePaymentResponseTotalAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "payment": zod.strictObject({
+  "id": zod.int(),
+  "type": zod.enum(['PIX', 'CARD', 'BOLETO']),
+  "status": zod.enum(['PENDING', 'APPROVED', 'DECLINED', 'EXPIRED'])
+}),
+  "fulfillment": zod.enum(['PICKUP', 'DELIVERY']),
+  "shippingAddress": zod.union([zod.strictObject({
+  "street": zod.string(),
+  "number": zod.string(),
+  "complement": zod.string().nullable(),
+  "neighborhood": zod.string(),
+  "city": zod.string(),
+  "state": zod.string(),
+  "zipCode": zod.string()
+}),zod.null()]),
+  "createdAt": zod.iso.datetime({"offset":true})
+}).describe('Visao do pedido para vendedor e gerente. Sem custo ou margem.')
+
+
+/**
+ * So PENDING_PAYMENT (409 STATE_CONFLICT nos demais). Recalcula itens, total e valor do pagamento; grava quem aprovou e audita DISCOUNT_APPROVED.
+ * @summary GERENTE aplica desconto acima da alcada do vendedor num pedido pendente
+ */
+
+
+
+export const ApproveOrderDiscountParams = zod.strictObject({
+  "id": zod.int().min(1)
+})
+
+
+
+
+export const ApproveOrderDiscountHeader = zod.strictObject({
+  "X-CSRF-TOKEN": zod.string().min(1).describe('Obter em GET /auth/csrf antes do login e renovar apos login/logout.')
+})
+
+export const approveOrderDiscountBodyPercentMin = 0.01;
+export const approveOrderDiscountBodyPercentMax = 100;
+export const approveOrderDiscountBodyPercentMultipleOf = 0.01;
+
+export const approveOrderDiscountBodyReasonMin = 5;
+export const approveOrderDiscountBodyReasonMax = 200;
+
+
+
+export const ApproveOrderDiscountBody = zod.strictObject({
+  "percent": zod.number().min(approveOrderDiscountBodyPercentMin).max(approveOrderDiscountBodyPercentMax).multipleOf(approveOrderDiscountBodyPercentMultipleOf).describe('Percentual com ate 2 casas.'),
+  "reason": zod.string().min(approveOrderDiscountBodyReasonMin).max(approveOrderDiscountBodyReasonMax)
+}).describe('Desconto manual sobre o subtotal ja promocionado. Nunca valor final nem preco: o servidor calcula (invariante 1). Acima da alcada do papel da sessao: 403 DISCOUNT_ABOVE_LIMIT com limitPercent em details. Item abaixo do custo medio conhecido, se a politica nao permitir: 409 BELOW_COST (sem revelar o custo).')
+
+export const approveOrderDiscountResponseItemsItemUnitPriceAmountMin = 0;
+export const approveOrderDiscountResponseItemsItemUnitPriceAmountMax = 9999999999.99;
+
+export const approveOrderDiscountResponseItemsItemDiscountAmountMin = 0;
+export const approveOrderDiscountResponseItemsItemDiscountAmountMax = 9999999999.99;
+
+export const approveOrderDiscountResponseItemsItemSubtotalAmountMin = 0;
+export const approveOrderDiscountResponseItemsItemSubtotalAmountMax = 9999999999.99;
+
+
+export const approveOrderDiscountResponseSubtotalAmountMin = 0;
+export const approveOrderDiscountResponseSubtotalAmountMax = 9999999999.99;
+
+export const approveOrderDiscountResponseDiscountTotalAmountMin = 0;
+export const approveOrderDiscountResponseDiscountTotalAmountMax = 9999999999.99;
+
+export const approveOrderDiscountResponseTotalAmountMin = 0;
+export const approveOrderDiscountResponseTotalAmountMax = 9999999999.99;
+
+
+
+export const ApproveOrderDiscountResponse = zod.strictObject({
+  "id": zod.int(),
+  "status": zod.enum(['PENDING_PAYMENT', 'PROCESSING', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELED']),
+  "seller": zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),
+  "customer": zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),
+  "items": zod.array(zod.strictObject({
+  "productId": zod.int(),
+  "sku": zod.string(),
+  "name": zod.string(),
+  "quantity": zod.int(),
+  "unitPrice": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseItemsItemUnitPriceAmountMin).max(approveOrderDiscountResponseItemsItemUnitPriceAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "discount": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseItemsItemDiscountAmountMin).max(approveOrderDiscountResponseItemsItemDiscountAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "subtotal": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseItemsItemSubtotalAmountMin).max(approveOrderDiscountResponseItemsItemSubtotalAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).')
+})).min(1),
+  "subtotal": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseSubtotalAmountMin).max(approveOrderDiscountResponseSubtotalAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "discountTotal": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseDiscountTotalAmountMin).max(approveOrderDiscountResponseDiscountTotalAmountMax),
+  "currency": zod.literal("BRL")
+}).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
+  "total": zod.strictObject({
+  "amount": zod.number().min(approveOrderDiscountResponseTotalAmountMin).max(approveOrderDiscountResponseTotalAmountMax),
   "currency": zod.literal("BRL")
 }).describe('Valor monetario com no maximo 2 casas; o servidor arredonda com HALF_UP (DEC-ERP-08).'),
   "payment": zod.strictObject({
@@ -3151,3 +3286,71 @@ export const ResetUserPasswordBody = zod.strictObject({
 })
 
 export const ResetUserPasswordResponse = zod.void()
+
+
+/**
+ * @summary Alcadas de desconto manual por papel
+ */
+export const listDiscountPoliciesResponseMaxPercentMin = 0;
+export const listDiscountPoliciesResponseMaxPercentMax = 100;
+
+
+
+export const ListDiscountPoliciesResponseItem = zod.strictObject({
+  "role": zod.enum(['GERENTE', 'VENDEDOR']),
+  "maxPercent": zod.number().min(listDiscountPoliciesResponseMaxPercentMin).max(listDiscountPoliciesResponseMaxPercentMax),
+  "allowBelowCost": zod.boolean(),
+  "updatedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]),
+  "updatedAt": zod.iso.datetime({"offset":true})
+}).describe('Alcada de desconto manual por papel.')
+export const ListDiscountPoliciesResponse = zod.array(ListDiscountPoliciesResponseItem)
+
+
+/**
+ * Audita DISCOUNT_POLICY_CHANGED com valores anterior e novo e motivo.
+ * @summary Altera a alcada de um papel com motivo
+ */
+export const UpdateDiscountPolicyParams = zod.strictObject({
+  "role": zod.enum(['GERENTE', 'VENDEDOR'])
+})
+
+
+
+
+export const UpdateDiscountPolicyHeader = zod.strictObject({
+  "X-CSRF-TOKEN": zod.string().min(1).describe('Obter em GET /auth/csrf antes do login e renovar apos login/logout.')
+})
+
+export const updateDiscountPolicyBodyMaxPercentMin = 0;
+export const updateDiscountPolicyBodyMaxPercentMax = 100;
+export const updateDiscountPolicyBodyMaxPercentMultipleOf = 0.01;
+
+export const updateDiscountPolicyBodyReasonMin = 5;
+export const updateDiscountPolicyBodyReasonMax = 200;
+
+
+
+export const UpdateDiscountPolicyBody = zod.strictObject({
+  "maxPercent": zod.number().min(updateDiscountPolicyBodyMaxPercentMin).max(updateDiscountPolicyBodyMaxPercentMax).multipleOf(updateDiscountPolicyBodyMaxPercentMultipleOf),
+  "allowBelowCost": zod.boolean(),
+  "reason": zod.string().min(updateDiscountPolicyBodyReasonMin).max(updateDiscountPolicyBodyReasonMax)
+})
+
+export const updateDiscountPolicyResponseMaxPercentMin = 0;
+export const updateDiscountPolicyResponseMaxPercentMax = 100;
+
+
+
+export const UpdateDiscountPolicyResponse = zod.strictObject({
+  "role": zod.enum(['GERENTE', 'VENDEDOR']),
+  "maxPercent": zod.number().min(updateDiscountPolicyResponseMaxPercentMin).max(updateDiscountPolicyResponseMaxPercentMax),
+  "allowBelowCost": zod.boolean(),
+  "updatedBy": zod.union([zod.strictObject({
+  "id": zod.int(),
+  "name": zod.string()
+}).describe('Referencia minima a usuario da equipe.'),zod.null()]),
+  "updatedAt": zod.iso.datetime({"offset":true})
+}).describe('Alcada de desconto manual por papel.')
