@@ -235,6 +235,14 @@ Executados na branch `feat/business-endpoints` com `scripts/test.ps1 -Mode Integ
 | CT-MGMT-001, CT-MGMT-002 | Verde | `api/management/ManagementApiTest`, `GoalsApiTest.managementSummary` |
 | D022 | Verde | `services/CardNumberStorageTest`, `FlywayMigrationTest.v7MasksLegacyCardNumbers` |
 
+### Casos da evolucao (G-01 a G-06, 14/10/2026)
+
+Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote por PR, na ordem WP-EVO-1 a WP-EVO-7.
+
+| Caso | Lacuna | Nivel | Tecnica | Situacao | Evidencia |
+| --- | --- | --- | --- | --- | --- |
+| CT-SEC-120 | G-02 | Integracao | Transicao de estados (concorrencia) | Verde | `security/LoginAttemptConcurrencyTest` (10 falhas em paralelo, 3 rodadas: conta bloqueada uma vez, 10 `LOGIN_FAILED`, 1 `ACCOUNT_LOCKED`); vermelho no codigo anterior (sem bloqueio) |
+
 ## Selecao inicial da suite
 
 | Prioridade | Casos | Motivo |
