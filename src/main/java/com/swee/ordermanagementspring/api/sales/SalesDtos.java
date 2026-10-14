@@ -3,6 +3,8 @@ package com.swee.ordermanagementspring.api.sales;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.swee.ordermanagementspring.api.common.Addresses.Address;
+import com.swee.ordermanagementspring.api.common.Addresses.AddressRequest;
 import com.swee.ordermanagementspring.api.common.MoneyDto;
 import com.swee.ordermanagementspring.api.common.Refs.CategoryRef;
 import com.swee.ordermanagementspring.api.common.Refs.UserRef;
@@ -12,7 +14,6 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -73,14 +74,6 @@ public final class SalesDtos {
         public String type() { return "BOLETO"; }
     }
 
-    public record AddressRequest(@NotBlank @Size(max = 120) String street,
-                                 @NotBlank @Size(max = 10) String number,
-                                 @Size(max = 60) String complement,
-                                 @NotBlank @Size(max = 60) String neighborhood,
-                                 @NotBlank @Size(max = 60) String city,
-                                 @NotNull @Pattern(regexp = "^[A-Z]{2}$") String state,
-                                 @NotNull @Pattern(regexp = "^[0-9]{8}$") String zipCode) { }
-
     public record SalesOrderRequest(@NotNull @Positive Long customerId,
                                     @NotNull @Size(min = 1, max = 50) List<@NotNull @Valid SaleItemRequest> items,
                                     @NotNull @Valid SalePaymentRequest payment,
@@ -116,9 +109,6 @@ public final class SalesDtos {
                                  MoneyDto discount, MoneyDto subtotal) { }
 
     public record SalesOrderPayment(long id, String type, String status) { }
-
-    public record Address(String street, String number, String complement, String neighborhood, String city,
-                          String state, String zipCode) { }
 
     public record SalesOrderResponse(long id, String status, UserRef seller, UserRef customer, List<SalesOrderItem> items,
                                      MoneyDto subtotal, MoneyDto discountTotal, MoneyDto total, SalesOrderPayment payment,

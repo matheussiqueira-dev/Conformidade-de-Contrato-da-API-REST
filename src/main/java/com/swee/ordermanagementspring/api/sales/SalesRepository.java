@@ -1,5 +1,7 @@
 package com.swee.ordermanagementspring.api.sales;
 
+import com.swee.ordermanagementspring.api.common.Addresses;
+import com.swee.ordermanagementspring.api.common.Addresses.Address;
 import com.swee.ordermanagementspring.api.common.MoneyDto;
 import com.swee.ordermanagementspring.api.common.Refs;
 import com.swee.ordermanagementspring.api.common.Refs.CategoryRef;
@@ -142,9 +144,7 @@ public class SalesRepository {
         BigDecimal discount = items.stream().map(i -> i.discount().amount()).reduce(BigDecimal.ZERO, BigDecimal::add);
         Long sellerId = rs.getObject("seller_id", Long.class);
         Long paymentId = rs.getObject("payment_id", Long.class);
-        Address address = rs.getObject("address_id", Long.class) == null ? null : new Address(rs.getString("street"),
-                rs.getString("number"), rs.getString("complement"), rs.getString("neighborhood"), rs.getString("city"),
-                rs.getString("state"), rs.getString("zip_code"));
+        Address address = Addresses.read(rs);
         return new SalesOrderResponse(rs.getLong("id"), rs.getString("status"),
                 sellerId == null ? null : new UserRef(sellerId, rs.getString("seller_name")),
                 new UserRef(rs.getLong("customer_id"), rs.getString("customer_name")), items,

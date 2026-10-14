@@ -1,5 +1,6 @@
 package com.swee.ordermanagementspring.api.sales;
 
+import com.swee.ordermanagementspring.api.common.Addresses;
 import com.swee.ordermanagementspring.api.common.CurrentUser;
 import com.swee.ordermanagementspring.api.common.DbSessionContext;
 import com.swee.ordermanagementspring.api.common.MoneyDto;
@@ -133,13 +134,7 @@ public class SalesService {
 
         Long addressId = null;
         if (request.fulfillment() == Fulfillment.DELIVERY) {
-            AddressRequest a = request.shippingAddress();
-            addressId = jdbc.sql("""
-                    INSERT INTO address(street, number, complement, neighborhood, city, state, zip_code)
-                    VALUES (:street, :number, :complement, :neighborhood, :city, :state, :zip) RETURNING id""")
-                    .param("street", a.street()).param("number", a.number()).param("complement", a.complement())
-                    .param("neighborhood", a.neighborhood()).param("city", a.city()).param("state", a.state())
-                    .param("zip", a.zipCode()).query(Long.class).single();
+            addressId = Addresses.insert(jdbc, request.shippingAddress());
         }
         // O pedido entra primeiro: a UNIQUE (seller_id, client_request_id) reivindica a chave.
         long orderId = jdbc.sql("""
