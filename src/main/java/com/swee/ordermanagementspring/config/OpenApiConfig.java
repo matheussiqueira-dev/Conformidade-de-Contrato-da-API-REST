@@ -50,7 +50,7 @@ public class OpenApiConfig {
             if (openApi.getComponents() == null || openApi.getComponents().getSchemas() == null) {
                 return;
             }
-            var errorSchema = openApi.getComponents().getSchemas().get("ApiErrorResponse");
+            var errorSchema = openApi.getComponents().getSchemas().get("ErrorResponse");
             if (errorSchema != null && errorSchema.getProperties() != null) {
                 // The array annotation resolver drops the null type in this Springdoc version.
                 // Express the actual nullable response using an OpenAPI 3.1 JSON Schema.
