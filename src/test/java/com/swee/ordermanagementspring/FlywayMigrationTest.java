@@ -44,14 +44,14 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void emptyDatabaseMigratesThroughV7AndRejectsUnknownSeller() throws Exception {
+    void emptyDatabaseMigratesThroughV8AndRejectsUnknownSeller() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
                 Flyway flyway = flyway(schema, null);
-                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(7);
+                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(8);
                 flyway.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO orders (status, seller_id) VALUES ('PENDING_PAYMENT', NULL)");
@@ -60,7 +60,7 @@ class FlywayMigrationTest {
                             .hasMessageContaining("fk_orders_seller");
                     try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success")) {
                         rows.next();
-                        assertThat(rows.getInt(1)).isEqualTo(7);
+                        assertThat(rows.getInt(1)).isEqualTo(8);
                     }
                 }
             } finally {
@@ -84,7 +84,7 @@ class FlywayMigrationTest {
                 // A real legacy database has no Flyway history. Baseline is a deliberate operator step.
                 Flyway upgrade = flyway(schema, null);
                 upgrade.baseline();
-                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(6);
+                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(7);
                 upgrade.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement();
                      ResultSet rows = sql.executeQuery("SELECT id, seller_id FROM orders WHERE id = 42")) {
@@ -200,7 +200,7 @@ class FlywayMigrationTest {
                 sql.executeUpdate("INSERT INTO orders (id, status, customer_id, address_id) VALUES (1, 'PAID', 1, 1)");
                 sql.executeUpdate("INSERT INTO orders (id, status, customer_id) VALUES (2, 'PENDING_PAYMENT', 2)");
             }
-            Flyway flyway = flyway(schema, null);
+            Flyway flyway = flyway(schema, "7");
             assertThat(flyway.migrate().migrationsExecuted).isEqualTo(3);
             flyway.validate();
             try (Connection database = connect(schema); Statement sql = database.createStatement()) {
@@ -223,6 +223,59 @@ class FlywayMigrationTest {
         });
     }
 
+    /** V8: o indice unico por e-mail em minusculas nao nasce sobre duplicidade; a migracao aborta sem corrigir dados. */
+    @Test
+    void v8AbortsOnCaseInsensitiveDuplicateEmails() throws Exception {
+        String schema = schema();
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
+             Statement statement = admin.createStatement()) {
+            statement.execute("CREATE SCHEMA " + schema);
+            try {
+                assertThat(flyway(schema, "7").migrate().migrationsExecuted).isEqualTo(7);
+                try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                    sql.executeUpdate("INSERT INTO app_users (name, email, password_hash, role) VALUES "
+                            + "('Allan', 'allan@example.test', 'x', 'VENDEDOR'), ('Allan B', 'ALLAN@example.test', 'x', 'VENDEDOR')");
+                }
+                assertThatThrownBy(() -> flyway(schema, null).migrate()).hasStackTraceContaining("V8: e-mails duplicados");
+            } finally {
+                statement.execute("DROP SCHEMA " + schema + " CASCADE");
+            }
+        }
+    }
+
+    /** [CT-BD-30] V8: o gatilho keep_one_active_manager impede rebaixar, desativar ou apagar o ultimo GERENTE ativo. */
+    @Test
+    void v8KeepsOneActiveManager() throws Exception {
+        String schema = schema();
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
+             Statement statement = admin.createStatement()) {
+            statement.execute("CREATE SCHEMA " + schema);
+            try {
+                flyway(schema, null).migrate();
+                try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                    sql.executeUpdate("INSERT INTO app_users (name, email, password_hash, role) VALUES "
+                            + "('Matheus', 'matheus@example.test', 'x', 'GERENTE'), ('Allan', 'allan@example.test', 'x', 'VENDEDOR')");
+                    assertThatThrownBy(() -> sql.executeUpdate("UPDATE app_users SET role = 'VENDEDOR' WHERE email = 'matheus@example.test'"))
+                            .hasMessageContaining("LAST_MANAGER");
+                    assertThatThrownBy(() -> sql.executeUpdate("UPDATE app_users SET active = false WHERE email = 'matheus@example.test'"))
+                            .hasMessageContaining("LAST_MANAGER");
+                    assertThatThrownBy(() -> sql.executeUpdate("DELETE FROM app_users WHERE email = 'matheus@example.test'"))
+                            .hasMessageContaining("LAST_MANAGER");
+                    // Com outro GERENTE ativo, rebaixar e desativar passam; o vendedor pode ser desativado.
+                    sql.executeUpdate("UPDATE app_users SET role = 'GERENTE' WHERE email = 'allan@example.test'");
+                    sql.executeUpdate("UPDATE app_users SET role = 'VENDEDOR' WHERE email = 'matheus@example.test'");
+                    sql.executeUpdate("UPDATE app_users SET active = false WHERE email = 'matheus@example.test'");
+                    try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM app_users WHERE role = 'GERENTE' AND active")) {
+                        rows.next();
+                        assertThat(rows.getInt(1)).isEqualTo(1);
+                    }
+                }
+            } finally {
+                statement.execute("DROP SCHEMA " + schema + " CASCADE");
+            }
+        }
+    }
+
     /** D022: a V7 leva o final do cartao para card_last4, anula card_number e barra nova gravacao do numero. */
     @Test
     void v7MasksLegacyCardNumbers() throws Exception {
@@ -233,7 +286,7 @@ class FlywayMigrationTest {
                 sql.executeUpdate("INSERT INTO payment (payment_type, amount, status, order_id, card_number) "
                         + "VALUES ('CARD', 10, 'PENDING', 1, '4111 1111 1111 1111'), ('PIX', 5, 'PENDING', 2, NULL)");
             }
-            Flyway flyway = flyway(schema, null);
+            Flyway flyway = flyway(schema, "7");
             assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
             flyway.validate();
             try (Connection database = connect(schema); Statement sql = database.createStatement()) {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Job bd: roda 03 (RBAC/RLS), 05 (CRUD), 06a/b/c (testes) e a corrida CC-01 sobre um banco que ja
-# recebeu V1-V7 e a massa demo pelo Flyway (perfil demo). Falha em qualquer FAIL ou ERROR.
+# Job bd: roda 03 (RBAC/RLS), 05 (CRUD), 06a/b/c/d (testes) e a corrida CC-01 sobre um banco que ja
+# recebeu V1-V8 e a massa demo pelo Flyway (perfil demo). Falha em qualquer FAIL ou ERROR.
 # Uso: CONTAINER=<id do conteiner PostgreSQL> DB=<banco> SUPERUSER=<dono do esquema> ./run_bd.sh
 # O psql roda dentro do conteiner (socket local), onde os logins de demonstracao sem senha funcionam.
 set -euo pipefail
@@ -8,7 +8,7 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 CONTAINER="${CONTAINER:?informe CONTAINER}"
 DB="${DB:?informe DB}"
 SUPERUSER="${SUPERUSER:?informe SUPERUSER}"
-EXPECTED_PASS="${EXPECTED_PASS:-51}"
+EXPECTED_PASS="${EXPECTED_PASS:-54}"
 OUT="${OUT:-$DIR/resultado_bd.txt}"
 
 psql_as() { local user="$1"; shift; docker exec -i "$CONTAINER" psql -X -q -U "$user" -d "$DB" "$@"; }
@@ -23,6 +23,7 @@ FRANCISCO=$(psql_as "$SUPERUSER" -At -c "SELECT o.id FROM orders o JOIN app_user
 psql_as "$SUPERUSER" < "$DIR/06a_testes_banco.sql" >> "$OUT" 2>&1 || true
 psql_as vendedor_allan -v francisco_pedido="$FRANCISCO" < "$DIR/06b_testes_vendedor.sql" >> "$OUT" 2>&1 || true
 psql_as gerente_matheus < "$DIR/06c_testes_gerente.sql" >> "$OUT" 2>&1 || true
+psql_as "$SUPERUSER" < "$DIR/06d_testes_evolucao.sql" >> "$OUT" 2>&1 || true
 
 # CC-01: duas vendas simultaneas da ultima unidade; so uma pode reservar.
 SETUP="SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE email = 'matheussiqueira@sbi.tech'), false);"
