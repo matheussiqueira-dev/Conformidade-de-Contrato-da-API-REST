@@ -101,7 +101,7 @@ class FlywayMigrationTest {
     @Test
     void v4ConvertsLegacyDoubleMoneyToNumericHalfUp() throws Exception {
         String schema = schema();
-        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
@@ -136,7 +136,7 @@ class FlywayMigrationTest {
     @Tag("regression")
     void v4RejectsLegacyValueJustAboveLimitBeforeRounding() throws Exception {
         String schema = schema();
-        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
@@ -154,7 +154,7 @@ class FlywayMigrationTest {
     @Test
     void v4FailsInsteadOfTruncatingValuesAboveColumnLimit() throws Exception {
         String schema = schema();
-        try (Connection admin = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
