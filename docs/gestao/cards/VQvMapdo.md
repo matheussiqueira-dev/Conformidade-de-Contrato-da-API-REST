@@ -1,6 +1,6 @@
 # [Francisco] 19 · Segurança, privacidade e ética
 
-Atualização: 04/10/2026. Card: https://trello.com/c/VQvMapdo/22-francisco-19-seguran%C3%A7a-privacidade-e-%C3%A9tica
+Atualização: 09/10/2026. Card: https://trello.com/c/VQvMapdo/22-francisco-19-seguran%C3%A7a-privacidade-e-%C3%A9tica
 
 ## Responsabilidades e crédito
 
@@ -70,6 +70,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-contract.ps1 
 ```
 
 O banco de teste é descartável; nunca aplicar create-drop no banco normal. Relatórios não incluem senha, token, cookie ou dados reais. O preview Windows depende de QA-08; CI Linux não prova a execução interativa no Windows.
+
+## Atualização 09/10/2026 — credenciais (PR #6)
+
+- Senhas removidas do código: o banco de teste usa `TEST_DB_PASSWORD` e o banco de desenvolvimento usa `SPRING_DATASOURCE_PASSWORD` (`application.properties`, `docker-compose.yml`, README). Sem a variável, a aplicação para na inicialização com mensagem clara (`DatasourcePasswordGuard`, defeito D021).
+- Os runners locais geram uma senha aleatória por execução. No CI, sem o secret `TEST_DB_PASSWORD`, o valor é **determinístico por execução** (`ci-<run_id>-<run_attempt>`), previsível a partir do ID público do run; ele só protege um banco descartável que existe durante o job. Configurar o secret elimina essa previsibilidade.
+- **Risco residual (não resolvido):** as senhas antigas de desenvolvimento e teste continuam no histórico do Git. A mitigação depende de cada integrante trocar a senha do próprio banco local e de ninguém ter reutilizado esses valores em outro banco; nenhuma verificação confirma isso. Rotação e confirmação ficam no card SEC-02.
+- No `docs/etica-seguranca.md`, citar este registro como risco residual documentado, não como evidência de que o sistema está seguro.
 
 ## Histórico preservado — descrição anterior
 

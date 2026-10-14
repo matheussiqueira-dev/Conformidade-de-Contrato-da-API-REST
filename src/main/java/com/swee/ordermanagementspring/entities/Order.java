@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.entities.payment.Payment;
 import jakarta.persistence.*;
 import org.hibernate.engine.internal.Cascade;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,10 +107,10 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public Double total() {
-        double sum = 0.0;
+    public BigDecimal total() {
+        BigDecimal sum = Money.of(BigDecimal.ZERO);
         for (OrderItem item : items) {
-            sum += item.subTotal();
+            sum = sum.add(item.subTotal());
         }
         return sum;
     }

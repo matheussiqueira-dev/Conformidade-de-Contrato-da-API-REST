@@ -7,6 +7,7 @@ import com.swee.ordermanagementspring.exceptions.PaymentException;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +22,7 @@ public class CardPayment extends Payment {
 
     }
 
-    public CardPayment(Double amount, Order order, String cardNumber, String cardHolder, Integer installments) {
+    public CardPayment(BigDecimal amount, Order order, String cardNumber, String cardHolder, Integer installments) {
         super(amount, order);
         this.cardNumber = cardNumber;
         this.cardHolder = cardHolder;
