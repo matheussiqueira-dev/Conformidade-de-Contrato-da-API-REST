@@ -106,3 +106,54 @@ test('400 and 404 error payloads validate with nullable details and local timest
   const missingMessage = { ...sample }; delete missingMessage.message;
   assert.equal(checkResponse(revisedBaseline, '/products', 'post', { status: 400, body: missingMessage }).valid, false);
 });
+
+const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url), 'utf8'));
+const brl = amount => ({ amount, currency: 'BRL' });
+const sale = () => ({ customerId: 1, items: [{ productId: 7, quantity: 2 }], payment: { type: 'PIX' }, fulfillment: 'PICKUP' });
+test('v4 document validates against the official OpenAPI 3.1 schema', () => {
+  assert.deepEqual(validateDocument(v4, officialSchema).findings, []);
+});
+test('v4 sale request rejects seller, price and total fields', () => {
+  const validate = compileProjection(v4, 'SalesOrderRequest');
+  assert.equal(validate(sale()), true);
+  for (const forged of [{ sellerId: 2 }, { total: brl(1) }, { discount: brl(1) }]) assert.equal(validate({ ...sale(), ...forged }), false);
+  const priced = sale(); priced.items[0].unitPrice = brl(1);
+  assert.equal(validate(priced), false);
+});
+test('v4 sale request enforces quantity bounds and payment variants', () => {
+  const validate = compileProjection(v4, 'SalesOrderRequest');
+  for (const quantity of [0, -1, 1.5, 1000]) {
+    const order = sale(); order.items[0].quantity = quantity;
+    assert.equal(validate(order), false, String(quantity));
+  }
+  assert.equal(validate({ ...sale(), payment: { type: 'CARD', installments: 1 } }), false);
+  assert.equal(validate({ ...sale(), payment: { type: 'CARD', cardLast4: '1234', installments: 3 } }), true);
+  assert.equal(validate({ ...sale(), payment: { type: 'CARD', cardLast4: '4111111111111111', installments: 1 } }), false);
+  assert.equal(validate({ ...sale(), payment: { type: 'BOLETO' } }), false);
+  assert.equal(validate({ ...sale(), items: Array.from({ length: 51 }, (_, i) => ({ productId: i + 1, quantity: 1 })) }), false);
+});
+test('v4 error response requires code and keeps details as strings or null', () => {
+  const validate = compileProjection(v4, 'ErrorResponse');
+  const error = { timestamp: '2026-10-14T10:00:00-03:00', status: 409, error: 'Conflict', code: 'STOCK_INSUFFICIENT', message: 'Insufficient stock', details: null };
+  assert.equal(validate(error), true);
+  assert.equal(validate({ ...error, details: ['quantity: must be at most 999'] }), true);
+  assert.equal(validate({ ...error, code: 'OUT_OF_STOCK' }), false);
+  const noCode = { ...error }; delete noCode.code;
+  assert.equal(validate(noCode), false);
+  assert.equal(validate({ ...error, details: { field: 'quantity' } }), false);
+});
+test('v4 customer projections mask documents and keep the document immutable', () => {
+  const summary = compileProjection(v4, 'CustomerSummary');
+  const customer = { id: 1, type: 'INDIVIDUAL', name: 'Marina Costa', document: '***.456.789-**', email: null, phone: null, ordersCount: 0, lastOrderAt: null };
+  assert.equal(summary(customer), true);
+  assert.equal(summary({ ...customer, document: '**.345.678/0001-**', type: 'CORPORATE' }), true);
+  assert.equal(summary({ ...customer, document: '12345678909' }), false);
+  const update = compileProjection(v4, 'CustomerUpdateRequest');
+  const body = { name: 'Marina Costa', email: 'marina@cliente.test', phone: '81999990000', version: 0 };
+  assert.equal(update(body), true);
+  assert.equal(update({ ...body, cpf: '12345678909' }), false);
+  const history = compileProjection(v4, 'CustomerOrderSummary');
+  const order = { id: 9, moment: '2026-10-01T09:40:00-03:00', status: 'PAID', fulfillment: 'PICKUP', items: [{ name: 'AirPods Branco', quantity: 1 }], own: false };
+  assert.equal(history(order), true);
+  assert.equal(history({ ...order, unitCost: brl(10) }), false);
+});

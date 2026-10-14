@@ -54,6 +54,8 @@ jobs:
           npm test
           node scripts/audit-contract.mjs
           npm run contract
+          node scripts/audit-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
+          node scripts/validate-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
 
       - name: Verify live OpenAPI and HTTP error responses
         shell: bash
@@ -129,6 +131,7 @@ jobs:
             target/api-ci.log
             target/flyway-ci.log
             reports/contrato/spike-2026-10-04/
+            reports/contrato/validacao/
             reports/contrato/session-2026-10-04/
             frontend/package-lock.json
             frontend/test-results/

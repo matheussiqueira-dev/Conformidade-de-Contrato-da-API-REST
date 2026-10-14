@@ -143,6 +143,59 @@ CT-MONEY-001 e a recarga de preço histórico de CT-MONEY-003 foram implementado
 | CT-UI-002 | CA-16-02 | E2E | Tabela de decisao | Vendedor ve Estoque administrativo. |
 | CT-UI-003 | CA-16-03 | E2E | Particionamento | Interface nao trata erro de API. |
 
+## Casos da evolucao ERP/PDV (RF-17 a RF-23)
+
+Planejados em 14/10/2026 (ETAPA 1). Nenhum foi executado. IDs a partir de 101 para nao colidir com os casos acima. A etapa indica onde o caso e implementado: 2A banco, 2B seguranca, 2C endpoints, 3 frontend, 4 suite final e CI.
+
+| Caso | Criterios | Nivel | Tecnica | Etapa | Risco coberto |
+| --- | --- | --- | --- | --- | --- |
+| CT-SALE-101 | CA-19-02 | Unitario | Analise de valor limite | 2C | Desconto percentual ou por valor calculado errado; desconto maior que o item; arredondamento diferente de HALF_UP (equivalente Java do BD-26). |
+| CT-SALE-102 | CA-19-03 | Unitario | Particionamento | 2C | Hash de idempotencia muda com a ordem das chaves do JSON. |
+| CT-SALE-103 | CA-19-03 | Integracao | Transicao de estados | 2C | Repeticao cria segundo pedido ou segunda reserva; corrida com a mesma chave cria dois pedidos. |
+| CT-SALE-104 | CA-22-04, CA-22-05 | Integracao | Particionamento | 2C | Produto inativo ou insumo vendido; preco alterado depois muda item antigo (BD-25). |
+| CT-CRM-101 | CA-20-01, CA-20-03 | Unitario | Particionamento | 2C | Mascara de CPF/CNPJ errada; normalizacao perde digitos. |
+| CT-CRM-102 | CA-20-01, CA-20-02 | Integracao | Particionamento | 2C | Digito verificador invalido aceito; documento duplicado aceito. |
+| CT-CRM-103 | CA-21-01, CA-21-02 | Integracao | Tabela de decisao | 2C | Historico fora de ordem, sem paginacao ou com custo. |
+| CT-CRM-104 | CA-20-04 | Integracao | Transicao de estados | 2C | Edicao concorrente sobrescreve dados; documento alterado pelo PUT. |
+| CT-CRM-105 | CA-20-05 | API | Tabela de decisao | 2C | Cliente com pedido excluido; vendedor exclui cliente. |
+| CT-AUTH-101 | CA-18-01 a CA-18-05 | Unitario | Analise de valor limite | 2B | Bloqueio na falha errada; sem desbloqueio; BCrypt pulado para conta bloqueada, inativa ou inexistente. |
+| CT-AUTH-102 | CA-18-02 a CA-18-04 | API | Transicao de estados | 2B | Resposta revela conta bloqueada ou inativa; desbloqueio nao ocorre apos 15 min (Clock). |
+| CT-CONTRACT-101 | CA-20-01, CA-19-02 | Unitario | Particionamento | 2C | Bean Validation aceita CPF/CNPJ invalido, entrega sem endereco ou cartao sem final. |
+| CT-CONTRACT-102 | CA-23-01 | Sistema | Particionamento | 2C | OpenAPI ao vivo diverge do v4 nas operacoes `implemented`, inclusive erros. |
+| CT-CONTRACT-103 | - | Build | - | 3 | Schemas Zod gerados divergem do contrato (`api:generate` com diff). |
+| CT-SEC-101 | CA-17-01, CA-17-02 | API | Tabela de decisao | 2B | Linha da matriz com status diferente do esperado; corpo de erro fora do `ErrorResponse`. |
+| CT-SEC-102 | CA-17-02 | API | Tabela de decisao | 2B | Endpoint mapeado sem linha na matriz (exposicao acidental). |
+| CT-SEC-103 | CA-17-01 | API | Tabela de decisao | 2B | Gerente barrado em operacao do vendedor (URL ou metodo). |
+| CT-SEC-104 | CA-17-02 | API | Particionamento | 2B | Mutacao sem CSRF ou com token de outra sessao aceita. |
+| CT-SEC-105 | CA-18-03 | API | Transicao de estados | 2B | ID de sessao mantido apos login; sessao valida apos logout. |
+| CT-SEC-110 | CA-19-02 | API | Particionamento | 2C | Vendedor injeta vendedor, preco, total ou desconto no corpo. |
+| CT-SEC-111 | CA-19-02 | API | Particionamento | 2C | Autoria forjada por header ou parametro. |
+| CT-SEC-112 | CA-19-07 | API | Tabela de decisao | 2C | Vendedor le, paga ou cancela pedido alheio; estoque alterado nessa tentativa. |
+| CT-SEC-113 | CA-19-01, CA-20-03, CA-21-02 | API | Particionamento | 2C | Custo, margem, documento completo ou dados de colega no JSON do vendedor. |
+| CT-SEC-114 | CA-17-02 | API | Tabela de decisao | 2C | Vendedor alcanca backoffice, legado ou exclusao de cliente. |
+| CT-SEC-115 | CA-17-02 | API | Particionamento | 2B | Variacao de caminho ou override de metodo abre acesso; firewall responde 500. |
+| CT-SEC-116 | CA-19-03 | API | Tabela de decisao | 2C | Mesma `Idempotency-Key` de outro vendedor devolve pedido alheio. |
+| CT-STOCK-101 | CA-19-02 | API | Analise de valor limite | 2C | Quantidade 0, negativa, decimal ou acima de 999 aceita. |
+| CT-STOCK-102 | CA-19-04 | Integracao | Analise de valor limite | 2C | Venda acima do disponivel aceita ou altera saldo (BD-28). |
+| CT-STOCK-103 | CA-19-04 | Integracao | Transicao de estados | 2C | Reserva parcial permanece quando o 2o item falha. |
+| CT-STOCK-104 | CA-19-06 | Integracao | Analise de valor limite | 2C | Duas vendas da ultima unidade (equivalente Java do CC-01). |
+| CT-STOCK-105 | CA-19-06 | Integracao | Transicao de estados | 2C | Deadlock entre vendas, confirmacoes e cancelamentos com itens em ordem inversa. |
+| CT-STOCK-106 | CA-19-05 | Integracao | Transicao de estados | 2C | Confirmacao repetida gera segunda SAIDA (BD-19). |
+| CT-STOCK-107 | CA-19-07 | Integracao | Transicao de estados | 2C | Cancelamento nao libera reserva (BD-21); pedido pago cancelado. |
+| CT-STOCK-108 | CA-22-03 | Integracao | Analise de valor limite | 2C | Ajuste de saida acima do disponivel; ajuste sem motivo; entrada altera custo medio. |
+| CT-STOCK-109 | CA-22-03 | Integracao/BD | Analise de valor limite | 2A/2C | Escrita que deixaria saldo negativo passa no banco ou vira 500 na API. |
+| CT-WEB-101 | CA-19-01 a CA-19-05 | E2E | Particionamento | 3 | Fluxo de venda com Pix nao conclui ou nao aparece em vendas e no historico. |
+| CT-WEB-102 | CA-23-01, CA-23-03 | E2E | Transicao de estados | 3 | Baixa de estoque ou faturamento nao aparece para o gerente em ate 15 s. |
+| CT-WEB-103 | CA-17-02 | E2E | Tabela de decisao | 3 | Vendedor abre Gestao ou ve o menu de Gestao. |
+| CT-WEB-104 | CA-19-03 | E2E | Transicao de estados | 3 | Duplo clique ou recarga cria dois pedidos. |
+| CT-WEB-105 | CA-22-02 | E2E | Transicao de estados | 4 | Entrada de estoque nao aumenta o disponivel no PDV. |
+| CT-WEB-106 | CA-22-01 | E2E | Transicao de estados | 4 | Historico de preco sem autor ou motivo; venda antiga muda de preco. |
+| CT-WEB-107 | CA-19-02 | E2E | Particionamento | 4 | Promocao liberada nao aparece no PDV ou nao entra na cotacao. |
+| CT-WEB-108 | CA-19-07 | E2E | Tabela de decisao | 4 | Vendedor ve pedido de colega. |
+| CT-WEB-109 | CA-23-03 | E2E/Acessibilidade | - | 4 | Violacao WCAG 2.2 AA (axe-core) ou rolagem horizontal em 320 px, nos dois perfis. |
+
+Os cenarios BD-19, BD-21, BD-25, BD-26, BD-28 e CC-01 do pacote SQL continuam no job `bd` (psql) e ganham os equivalentes Java CT-STOCK-106, CT-STOCK-107, CT-SALE-104, CT-SALE-101, CT-STOCK-102 e CT-STOCK-104, para que as duas implementacoes nao divirjam.
+
 ## Selecao inicial da suite
 
 | Prioridade | Casos | Motivo |
