@@ -39,7 +39,7 @@ await run('Login rotates session cookie and exposes only user projection', async
   assert.equal(me.body.id, response.body.user.id);
 });
 await run('Seller cannot read legacy customer, payment, product or order data', async () => {
-  for (const path of ['/products', '/clients', '/orders', '/payment', '/address']) assert.equal((await seller.request(path)).status, 403, path);
+  for (const path of ['/products', '/customers', '/orders', '/payment', '/address']) assert.equal((await seller.request(path)).status, 403, path);
 });
 await run('Mutations without CSRF fail even with manager session', async () => {
   const manager = sessionClient(origin);
