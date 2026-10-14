@@ -40,8 +40,8 @@ public class SalesController {
     }
 
     @PostMapping("/quote")
-    public QuoteResponse quote(@Valid @RequestBody QuoteRequest request) {
-        return service.quote(request);
+    public QuoteResponse quote(@AuthenticationPrincipal AppPrincipal principal, @Valid @RequestBody QuoteRequest request) {
+        return service.quote(CurrentUser.of(principal), request);
     }
 
     @PostMapping("/orders")
@@ -85,5 +85,12 @@ public class SalesController {
     public SalesOrderResponse confirmPayment(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
                                              @Valid @RequestBody(required = false) PaymentConfirmationRequest request) {
         return service.confirmPayment(CurrentUser.of(principal), id, request == null ? null : request.authorizationCode());
+    }
+
+    /** G-04: GERENTE aplica no pedido pendente o desconto acima da alcada do vendedor. */
+    @PostMapping("/orders/{id}/discount-approval")
+    public SalesOrderResponse approveDiscount(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
+                                              @Valid @RequestBody ManualDiscountRequest request) {
+        return service.approveDiscount(CurrentUser.of(principal), id, request);
     }
 }

@@ -17,6 +17,8 @@ export const ERROR_MESSAGES: Readonly<Record<string, string>> = {
   LAST_MANAGER: 'A loja precisa de pelo menos um gerente ativo.',
   SELF_CHANGE_FORBIDDEN: 'Você não pode alterar o próprio papel, a própria situação nem redefinir a própria senha por aqui.',
   PASSWORD_CHANGE_REQUIRED: 'Troque a senha provisória para continuar.',
+  DISCOUNT_ABOVE_LIMIT: 'Desconto acima do seu limite. Peça ao gerente para aprovar no pedido.',
+  BELOW_COST: 'Com esse desconto, um dos itens sairia abaixo do custo. Reduza o desconto ou fale com o gerente.',
   INTERNAL_ERROR: 'Algo deu errado do nosso lado. Tente novamente.',
 };
 

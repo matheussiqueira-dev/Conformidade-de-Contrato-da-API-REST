@@ -16,6 +16,7 @@ POST,/sales/orders,401,PERMIT,PERMIT
 GET,/sales/orders,401,OWN,PERMIT
 GET,/sales/orders/{id},401,OWN,PERMIT
 POST,/sales/orders/{id}/payment,401,OWN,PERMIT
+POST,/sales/orders/{id}/discount-approval,401,403,PERMIT
 POST,/orders/{id}/cancel,401,OWN,PERMIT
 GET,/customers,401,PERMIT,PERMIT
 POST,/customers,401,PERMIT,PERMIT
@@ -78,3 +79,5 @@ PATCH,/users/{id}/role,401,403,PERMIT
 PATCH,/users/{id}/status,401,403,PERMIT
 POST,/users/{id}/unlock,401,403,PERMIT
 POST,/users/{id}/password-reset,401,403,PERMIT
+GET,/discount-policy,401,403,PERMIT
+PUT,/discount-policy/{role},401,403,PERMIT

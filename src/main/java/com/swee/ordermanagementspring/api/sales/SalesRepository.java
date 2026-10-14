@@ -114,9 +114,12 @@ public class SalesRepository {
         return jdbc.sql("""
                 SELECT o.id, o.status, o.moment, o.fulfillment, o.seller_id, s.name AS seller_name, o.customer_id,
                        c.name AS customer_name, p.id AS payment_id, p.payment_type, p.status AS payment_status,
-                       a.id AS address_id, a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.zip_code
+                       a.id AS address_id, a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.zip_code,
+                       o.manual_discount, o.manual_discount_percent, o.manual_discount_reason, o.discount_approved_by,
+                       ap.name AS approver_name
                   FROM orders o
                   LEFT JOIN app_users s ON s.id = o.seller_id
+                  LEFT JOIN app_users ap ON ap.id = o.discount_approved_by
                   LEFT JOIN customer c ON c.id = o.customer_id
                   LEFT JOIN payment p ON p.order_id = o.id
                   LEFT JOIN address a ON a.id = o.address_id
@@ -150,7 +153,15 @@ public class SalesRepository {
                 new UserRef(rs.getLong("customer_id"), rs.getString("customer_name")), items,
                 MoneyDto.of(subtotal), MoneyDto.of(discount), MoneyDto.of(subtotal.subtract(discount)),
                 paymentId == null ? null : new SalesOrderPayment(paymentId, rs.getString("payment_type"), rs.getString("payment_status")),
-                Fulfillment.valueOf(rs.getString("fulfillment")), address, local(rs.getTimestamp("moment")));
+                Fulfillment.valueOf(rs.getString("fulfillment")), address, local(rs.getTimestamp("moment")), manual(rs));
+    }
+
+    private static ManualDiscountInfo manual(ResultSet rs) throws SQLException {
+        BigDecimal percent = rs.getBigDecimal("manual_discount_percent");
+        if (percent == null) return null;
+        Long approver = rs.getObject("discount_approved_by", Long.class);
+        return new ManualDiscountInfo(percent, MoneyDto.of(rs.getBigDecimal("manual_discount")), rs.getString("manual_discount_reason"),
+                approver == null ? null : new UserRef(approver, rs.getString("approver_name")));
     }
 
     private static final String LIST_FILTER = """

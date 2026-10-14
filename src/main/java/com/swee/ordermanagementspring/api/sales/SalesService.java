@@ -5,14 +5,18 @@ import com.swee.ordermanagementspring.api.common.CurrentUser;
 import com.swee.ordermanagementspring.api.common.DbSessionContext;
 import com.swee.ordermanagementspring.api.common.MoneyDto;
 import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.api.discounts.DiscountPolicyRepository;
 import com.swee.ordermanagementspring.api.sales.SalesDtos.*;
 import com.swee.ordermanagementspring.api.sales.SalesRepository.SaleProduct;
 import com.swee.ordermanagementspring.entities.StoreTime;
+import com.swee.ordermanagementspring.entities.Money;
 import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.entities.auth.UserRole;
 import com.swee.ordermanagementspring.entities.enums.Fulfillment;
 import com.swee.ordermanagementspring.exceptions.ApiException;
 import com.swee.ordermanagementspring.exceptions.ErrorCode;
 import com.swee.ordermanagementspring.security.AuditService;
+import tools.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +44,17 @@ public class SalesService {
     private final JdbcClient jdbc;
     private final DbSessionContext session;
     private final AuditService audit;
+    private final DiscountPolicyRepository policies;
+    private final ObjectMapper mapper;
 
-    public SalesService(SalesRepository sales, JdbcClient jdbc, DbSessionContext session, AuditService audit) {
+    public SalesService(SalesRepository sales, JdbcClient jdbc, DbSessionContext session, AuditService audit,
+                        DiscountPolicyRepository policies, ObjectMapper mapper) {
         this.sales = sales;
         this.jdbc = jdbc;
         this.session = session;
         this.audit = audit;
+        this.policies = policies;
+        this.mapper = mapper;
     }
 
     // ---------------- catalogo e cotacao ----------------
@@ -95,15 +105,70 @@ public class SalesService {
         return priced;
     }
 
+    // ---------------- desconto manual (G-04) ----------------
+
+    /** Desconto manual calculado: percentual, valor e parte de cada item (na ordem da lista de itens). */
+    record Manual(BigDecimal percent, BigDecimal amount, String reason, List<BigDecimal> shares) {
+        static Manual none(int items) {
+            return new Manual(null, Money.of(BigDecimal.ZERO), null, java.util.Collections.nCopies(items, Money.of(BigDecimal.ZERO)));
+        }
+
+        boolean present() {
+            return percent != null;
+        }
+    }
+
+    private static UserRole role(CurrentUser user) {
+        return user.manager() ? UserRole.GERENTE : UserRole.VENDEDOR;
+    }
+
+    /**
+     * Regras 2 a 4 de G-04: percentual sobre o subtotal ja promocionado, no maximo a alcada do papel (403
+     * DISCOUNT_ABOVE_LIMIT com o limite em details) e, se a politica nao permitir, nenhum item abaixo do custo medio
+     * conhecido (409 BELOW_COST sem revelar o custo).
+     */
+    private Manual manual(UserRole role, List<Long> productIds, List<Integer> quantities, List<BigDecimal> subtotals,
+                          ManualDiscountRequest request) {
+        if (request == null) return Manual.none(subtotals.size());
+        var limit = policies.forRole(role);
+        if (request.percent().compareTo(limit.maxPercent()) > 0) {
+            throw new ApiException(HttpStatus.FORBIDDEN, ErrorCode.DISCOUNT_ABOVE_LIMIT,
+                    "Manual discount above the limit of your role; ask a manager to approve it on the pending order",
+                    List.of("limitPercent=" + limit.maxPercent().toPlainString()));
+        }
+        BigDecimal base = subtotals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal amount = Pricing.manualDiscount(base, request.percent());
+        List<BigDecimal> shares = Pricing.allocate(subtotals, amount);
+        if (!limit.allowBelowCost()) {
+            Map<Long, BigDecimal> costs = policies.averageCosts(productIds);
+            for (int i = 0; i < productIds.size(); i++) {
+                BigDecimal cost = costs.get(productIds.get(i));
+                BigDecimal net = subtotals.get(i).subtract(shares.get(i));
+                if (cost != null && net.compareTo(Money.of(cost.multiply(BigDecimal.valueOf(quantities.get(i))))) < 0) {
+                    throw new ApiException(HttpStatus.CONFLICT, ErrorCode.BELOW_COST,
+                            "The manual discount would sell an item below its cost", List.of("productId=" + productIds.get(i)));
+                }
+            }
+        }
+        return new Manual(request.percent(), amount, request.reason().trim(), shares);
+    }
+
+    private Manual manual(UserRole role, List<PricedItem> priced, ManualDiscountRequest request) {
+        return manual(role, priced.stream().map(i -> i.product().id()).toList(), priced.stream().map(PricedItem::quantity).toList(),
+                priced.stream().map(PricedItem::subtotal).toList(), request);
+    }
+
     @PreAuthorize("hasRole('VENDEDOR')")
     @Transactional(readOnly = true)
-    public QuoteResponse quote(QuoteRequest request) {
+    public QuoteResponse quote(CurrentUser user, QuoteRequest request) {
         List<PricedItem> priced = price(request.items());
+        Manual manual = manual(role(user), priced, request.manualDiscount());
         List<QuoteItem> items = priced.stream().map(i -> new QuoteItem(i.product().id(), i.quantity(), MoneyDto.of(i.unitPrice()),
                 MoneyDto.of(i.discount()), MoneyDto.of(i.subtotal()), Math.max(i.product().available(), 0))).toList();
         BigDecimal gross = priced.stream().map(i -> Pricing.gross(i.unitPrice(), i.quantity())).reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal discount = priced.stream().map(PricedItem::discount).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return new QuoteResponse(items, MoneyDto.of(gross), MoneyDto.of(discount), MoneyDto.of(gross.subtract(discount)));
+        BigDecimal discount = priced.stream().map(PricedItem::discount).reduce(BigDecimal.ZERO, BigDecimal::add).add(manual.amount());
+        return new QuoteResponse(items, MoneyDto.of(gross), MoneyDto.of(discount), manual.present() ? MoneyDto.of(manual.amount()) : null,
+                policies.forRole(role(user)).maxPercent(), MoneyDto.of(gross.subtract(discount)));
     }
 
     // ---------------- venda ----------------
@@ -131,6 +196,7 @@ public class SalesService {
         }
         List<PricedItem> priced = price(request.items());
         priced.sort(Comparator.comparingLong(i -> i.product().id()));
+        Manual manual = manual(role(user), priced, request.manualDiscount());
 
         Long addressId = null;
         if (request.fulfillment() == Fulfillment.DELIVERY) {
@@ -138,14 +204,19 @@ public class SalesService {
         }
         // O pedido entra primeiro: a UNIQUE (seller_id, client_request_id) reivindica a chave.
         long orderId = jdbc.sql("""
-                INSERT INTO orders(moment, status, customer_id, seller_id, fulfillment, address_id, client_request_id, request_hash)
-                VALUES (:moment, 'PENDING_PAYMENT', :customer, :seller, :fulfillment, :address, :key, :hash) RETURNING id""")
+                INSERT INTO orders(moment, status, customer_id, seller_id, fulfillment, address_id, client_request_id, request_hash,
+                                   manual_discount, manual_discount_percent, manual_discount_reason)
+                VALUES (:moment, 'PENDING_PAYMENT', :customer, :seller, :fulfillment, :address, :key, :hash,
+                        :manual, :percent, :reason) RETURNING id""")
                 .param("moment", StoreTime.now()).param("customer", request.customerId()).param("seller", user.id())
                 .param("fulfillment", request.fulfillment().name()).param("address", addressId)
-                .param("key", key).param("hash", hash).query(Long.class).single();
+                .param("key", key).param("hash", hash).param("manual", manual.amount()).param("percent", manual.percent())
+                .param("reason", manual.reason()).query(Long.class).single();
 
         BigDecimal total = BigDecimal.ZERO;
-        for (PricedItem item : priced) {
+        for (int index = 0; index < priced.size(); index++) {
+            PricedItem item = priced.get(index);
+            BigDecimal share = manual.shares().get(index);
             int reserved = jdbc.sql("""
                     UPDATE stock_balance SET reserved = reserved + :q, updated_at = now()
                      WHERE product_id = :id AND on_hand - reserved >= :q""")
@@ -163,12 +234,12 @@ public class SalesService {
                     .param("product", item.product().id()).param("order", orderId).param("q", item.quantity())
                     .param("user", user.id()).update();
             jdbc.sql("""
-                    INSERT INTO order_item(quantity, price, order_id, product_id, promotion_id, discount)
-                    VALUES (:q, :price, :order, :product, :promotion, :discount)""")
+                    INSERT INTO order_item(quantity, price, order_id, product_id, promotion_id, discount, manual_discount)
+                    VALUES (:q, :price, :order, :product, :promotion, :discount, :manual)""")
                     .param("q", item.quantity()).param("price", item.unitPrice()).param("order", orderId)
                     .param("product", item.product().id()).param("promotion", item.promotion() == null ? null : item.promotion().id())
-                    .param("discount", item.discount()).update();
-            total = total.add(item.subtotal());
+                    .param("discount", item.discount().add(share)).param("manual", share).update();
+            total = total.add(item.subtotal().subtract(share));
         }
 
         var payment = request.payment();
@@ -264,6 +335,53 @@ public class SalesService {
         jdbc.sql("UPDATE payment SET status = 'DECLINED' WHERE order_id = :order").param("order", orderId).update();
         jdbc.sql("UPDATE orders SET status = 'CANCELED' WHERE id = :id").param("id", orderId).update();
         audit.record(AuditAction.ORDER_CANCELED, user.id(), "orders", orderId, null);
+        return sales.order(orderId).orElseThrow();
+    }
+
+    /**
+     * G-04, regra 5: o GERENTE aplica no pedido pendente o desconto que passou da alcada do vendedor. Recalcula as
+     * partes dos itens, o total e o valor do pagamento; grava quem aprovou e audita DISCOUNT_APPROVED.
+     */
+    @PreAuthorize("hasRole('GERENTE')")
+    @Transactional
+    public SalesOrderResponse approveDiscount(CurrentUser user, long orderId, ManualDiscountRequest request) {
+        session.apply(user.id(), request.reason().trim());
+        var head = sales.head(orderId, true).orElseThrow(() -> ApiException.notFound("Order not found, id: " + orderId));
+        if (!"PENDING_PAYMENT".equals(head.status())) {
+            throw ApiException.conflict(ErrorCode.STATE_CONFLICT, "Only pending orders accept a discount approval; order is " + head.status());
+        }
+        record Line(long id, long productId, int quantity, BigDecimal subtotal) { }
+        List<Line> lines = jdbc.sql("""
+                SELECT id, product_id, quantity, price * quantity - (discount - manual_discount) AS subtotal
+                  FROM order_item WHERE order_id = :id ORDER BY product_id, id""")
+                .param("id", orderId)
+                .query((rs, n) -> new Line(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"), rs.getBigDecimal("subtotal")))
+                .list();
+        BigDecimal previous = jdbc.sql("SELECT manual_discount_percent FROM orders WHERE id = :id").param("id", orderId)
+                .query(BigDecimal.class).optional().orElse(null);
+        Manual manual = manual(UserRole.GERENTE, lines.stream().map(Line::productId).toList(), lines.stream().map(Line::quantity).toList(),
+                lines.stream().map(Line::subtotal).toList(), request);
+        BigDecimal total = BigDecimal.ZERO;
+        for (int index = 0; index < lines.size(); index++) {
+            Line line = lines.get(index);
+            BigDecimal share = manual.shares().get(index);
+            jdbc.sql("UPDATE order_item SET discount = discount - manual_discount + :share, manual_discount = :share WHERE id = :id")
+                    .param("share", share).param("id", line.id()).update();
+            total = total.add(line.subtotal().subtract(share));
+        }
+        jdbc.sql("""
+                UPDATE orders SET manual_discount = :amount, manual_discount_percent = :percent, manual_discount_reason = :reason,
+                       discount_approved_by = :manager WHERE id = :id""")
+                .param("amount", manual.amount()).param("percent", manual.percent()).param("reason", manual.reason())
+                .param("manager", user.id()).param("id", orderId).update();
+        jdbc.sql("UPDATE payment SET amount = :total WHERE order_id = :id AND status = 'PENDING'")
+                .param("total", total).param("id", orderId).update();
+        Map<String, Object> detail = new LinkedHashMap<>();
+        detail.put("percent", manual.percent());
+        detail.put("previousPercent", previous);
+        detail.put("amount", manual.amount());
+        detail.put("reason", manual.reason());
+        audit.record(AuditAction.DISCOUNT_APPROVED, user.id(), "orders", orderId, mapper.writeValueAsString(detail));
         return sales.order(orderId).orElseThrow();
     }
 

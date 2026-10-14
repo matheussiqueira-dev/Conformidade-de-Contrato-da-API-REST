@@ -11,6 +11,10 @@ import com.swee.ordermanagementspring.api.common.Refs.UserRef;
 import com.swee.ordermanagementspring.entities.enums.Fulfillment;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -43,7 +47,12 @@ public final class SalesDtos {
         return items.stream().filter(Objects::nonNull).map(SaleItemRequest::productId).filter(Objects::nonNull).allMatch(seen::add);
     }
 
-    public record QuoteRequest(@NotNull @Size(min = 1, max = 50) List<@NotNull @Valid SaleItemRequest> items) {
+    /** G-04: so percentual e motivo; o valor e calculado no servidor (invariante 1). */
+    public record ManualDiscountRequest(@NotNull @DecimalMin("0.01") @DecimalMax("100.00") @Digits(integer = 3, fraction = 2) BigDecimal percent,
+                                        @NotBlank @Size(min = 5, max = 200) String reason) { }
+
+    public record QuoteRequest(@NotNull @Size(min = 1, max = 50) List<@NotNull @Valid SaleItemRequest> items,
+                               @Valid ManualDiscountRequest manualDiscount) {
         @AssertTrue(message = "items: productId must not repeat")
         public boolean isEachProductOnce() {
             return distinctProducts(items);
@@ -78,7 +87,8 @@ public final class SalesDtos {
                                     @NotNull @Size(min = 1, max = 50) List<@NotNull @Valid SaleItemRequest> items,
                                     @NotNull @Valid SalePaymentRequest payment,
                                     @NotNull Fulfillment fulfillment,
-                                    @Valid AddressRequest shippingAddress) {
+                                    @Valid AddressRequest shippingAddress,
+                                    @Valid ManualDiscountRequest manualDiscount) {
         @AssertTrue(message = "shippingAddress is required for DELIVERY")
         public boolean isAddressPresentForDelivery() {
             return fulfillment != Fulfillment.DELIVERY || shippingAddress != null;
@@ -103,7 +113,11 @@ public final class SalesDtos {
     public record QuoteItem(long productId, int quantity, MoneyDto unitPrice, MoneyDto discount, MoneyDto subtotal,
                             int available) { }
 
-    public record QuoteResponse(List<QuoteItem> items, MoneyDto subtotal, MoneyDto discountTotal, MoneyDto total) { }
+    public record QuoteResponse(List<QuoteItem> items, MoneyDto subtotal, MoneyDto discountTotal, MoneyDto manualDiscount,
+                                BigDecimal manualDiscountLimitPercent, MoneyDto total) { }
+
+    /** Desconto manual do pedido, ja rateado nos itens; approvedBy = GERENTE que aprovou acima da alcada. */
+    public record ManualDiscountInfo(BigDecimal percent, MoneyDto amount, String reason, UserRef approvedBy) { }
 
     public record SalesOrderItem(long productId, String sku, String name, int quantity, MoneyDto unitPrice,
                                  MoneyDto discount, MoneyDto subtotal) { }
@@ -112,7 +126,8 @@ public final class SalesDtos {
 
     public record SalesOrderResponse(long id, String status, UserRef seller, UserRef customer, List<SalesOrderItem> items,
                                      MoneyDto subtotal, MoneyDto discountTotal, MoneyDto total, SalesOrderPayment payment,
-                                     Fulfillment fulfillment, Address shippingAddress, OffsetDateTime createdAt) { }
+                                     Fulfillment fulfillment, Address shippingAddress, OffsetDateTime createdAt,
+                                     ManualDiscountInfo manualDiscount) { }
 
     @JsonInclude(JsonInclude.Include.ALWAYS)
     public record SalesOrderSummary(long id, OffsetDateTime createdAt, String status, UserRef customer, UserRef seller,

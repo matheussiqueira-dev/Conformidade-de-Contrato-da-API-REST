@@ -96,12 +96,13 @@ public class SecurityConfig {
                                 "/orders/{id}/cancel", "/customers").hasRole(VENDEDOR)
                         .requestMatchers(HttpMethod.PUT, "/customers/{id}").hasRole(VENDEDOR)
                         // Backoffice e rotas legadas: somente GERENTE.
+                        .requestMatchers(HttpMethod.POST, "/sales/orders/{id}/discount-approval").hasRole(GERENTE)
                         .requestMatchers(HttpMethod.DELETE, "/customers/{id}").hasRole(GERENTE)
                         .requestMatchers(HttpMethod.POST, "/customers/{id}/address", "/payment/{id}/refund").hasRole(GERENTE)
                         .requestMatchers("/products", "/products/**", "/categories", "/categories/**", "/stock/**",
                                 "/promotions", "/promotions/**", "/goals/**", "/management/**", "/analytics/**",
                                 "/orders", "/orders/**", "/payment", "/payment/**", "/address", "/address/**",
-                                "/users", "/users/**").hasRole(GERENTE)
+                                "/users", "/users/**", "/discount-policy", "/discount-policy/**").hasRole(GERENTE)
                         .anyRequest().denyAll())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, ex) -> SecurityJson.error(response, 401))

@@ -60,3 +60,25 @@ SELECT pg_temp.ok('BD-31c Marina Costa: primeira e ultima compra e pedidos pagos
   CROSS JOIN LATERAL (SELECT sum(pedidos_pagos) AS pedidos_pagos, min(primeira_compra) AS primeira, max(ultima_compra) AS ultima
                         FROM v_cliente_resumo WHERE customer_id = c.id) r
  WHERE c.name = 'Marina Costa';
+
+-- BD-32: desconto manual (V11)
+SELECT pg_temp.ok('BD-32a Alcadas iniciais: VENDEDOR 5% e GERENTE 20%, sem venda abaixo do custo',
+       (SELECT max_percent FROM discount_policy WHERE role = 'VENDEDOR') = 5
+       AND (SELECT max_percent FROM discount_policy WHERE role = 'GERENTE') = 20
+       AND NOT EXISTS (SELECT 1 FROM discount_policy WHERE allow_below_cost));
+DO $$ BEGIN
+  UPDATE orders SET manual_discount = 1, manual_discount_percent = 1 WHERE id = (SELECT min(id) FROM orders);
+  RAISE NOTICE 'FAIL BD-32b desconto manual sem motivo aceito';
+  RAISE EXCEPTION USING ERRCODE = 'LJ000';
+EXCEPTION
+  WHEN check_violation THEN RAISE NOTICE 'PASS BD-32b desconto manual exige motivo';
+  WHEN SQLSTATE 'LJ000' THEN NULL;
+END $$;
+DO $$ BEGIN
+  UPDATE order_item SET manual_discount = discount + 1 WHERE id = (SELECT min(id) FROM order_item);
+  RAISE NOTICE 'FAIL BD-32c parte manual maior que o desconto do item aceita';
+  RAISE EXCEPTION USING ERRCODE = 'LJ000';
+EXCEPTION
+  WHEN check_violation THEN RAISE NOTICE 'PASS BD-32c parte manual nunca passa do desconto do item';
+  WHEN SQLSTATE 'LJ000' THEN NULL;
+END $$;
