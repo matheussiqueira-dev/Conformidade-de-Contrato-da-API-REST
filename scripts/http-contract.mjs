@@ -45,24 +45,32 @@ await run('Live OpenAPI documents 400/404 error schemas and validates with offic
   }
   writeFileSync(new URL('openapi-runtime-errors.json', directory), JSON.stringify(liveContract, null, 2) + '\n');
 });
-await run('GET products matches baseline response schema', async () => {
+// ETAPA 2C: /products passou para o contrato v4 (paginado, Money, tipo em oneOf); o baseline continua valendo para os erros.
+const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url), 'utf8'));
+function validateV4(path, method, response) {
+  const result = checkResponse(v4, path, method, response);
+  assert.ok(result.valid, JSON.stringify(result.errors));
+}
+await run('GET products matches v4 response schema', async () => {
   const login = await client.login('manager@example.test', process.env.A3_TEST_PASSWORD);
   assert.equal(login.status, 200);
   const response = await request('/products'); assert.equal(response.status, 200);
-  validateResponse('/products', 'get', response);
+  validateV4('/products', 'get', response);
 });
-await run('Synthetic product creation and retrieval match baseline', async () => {
-  const response = await request('/products', 'POST', { type: 'PHYSICAL', name: 'HTTP contract synthetic product', price: 4500, weight: 1 });
-  assert.equal(response.status, 200); validateResponse('/products', 'post', response);
+await run('Synthetic product creation and retrieval match v4', async () => {
+  const response = await request('/products', 'POST', { type: 'PHYSICAL', sku: `http-${Date.now()}`, name: 'HTTP contract synthetic product',
+    sellable: true, price: { amount: 4500, currency: 'BRL' }, weightKg: 1 });
+  assert.equal(response.status, 201); validateV4('/products', 'post', response);
   assert.ok(Number.isSafeInteger(response.body.id));
   const found = await request(`/products/${response.body.id}`);
-  assert.equal(found.status, 200); validateResponse('/products/{id}', 'get', found);
-  assert.equal(found.body.price, 4500);
+  assert.equal(found.status, 200); validateV4('/products/{id}', 'get', found);
+  assert.equal(found.body.price.amount, 4500);
 });
 await run('Invalid product returns 400 validation error', async () => {
-  const response = await request('/products', 'POST', {});
+  const response = await request('/products', 'POST', { type: 'PHYSICAL' });
   assert.equal(response.status, 400); assert.equal(response.body.status, 400);
   validateResponse('/products', 'post', response);
+  validateV4('/products', 'post', response);
   const live = checkResponse(liveContract, '/products', 'post', response);
   assert.ok(live.valid, JSON.stringify(live.errors));
   assert.ok(Array.isArray(response.body.details) && response.body.details.length > 0);
@@ -71,6 +79,7 @@ await run('Missing product returns 404', async () => {
   const response = await request('/products/9223372036854775807');
   assert.equal(response.status, 404); assert.equal(response.body.status, 404);
   validateResponse('/products/{id}', 'get', response);
+  validateV4('/products/{id}', 'get', response);
   const live = checkResponse(liveContract, '/products/{id}', 'get', response);
   assert.ok(live.valid, JSON.stringify(live.errors));
 });

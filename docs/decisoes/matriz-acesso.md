@@ -54,7 +54,7 @@ O CSV lista cada método e caminho em uma linha (69 linhas além do cabeçalho),
 
 ## Exceção temporária (ETAPA 2B)
 
-Até a ETAPA 2C, `GET`/`POST /customers` e `GET`/`PUT /customers/{id}` continuam só com o GERENTE (D-NOITE-05): o controlador legado devolve o documento completo, e a matriz só libera o VENDEDOR quando as projeções mascaradas existirem. O `AccessMatrixTest` trata essas quatro linhas como pendentes e espera 403 para o VENDEDOR; a lista é removida na 2C.
+Na ETAPA 2C, `GET`/`POST /customers` e `GET`/`PUT /customers/{id}` passaram para o `api/customers` do v4, que mascara o documento para o VENDEDOR, e ficaram liberadas ao VENDEDOR como a matriz prevê (D-NOITE-10); a restrição temporária da D-NOITE-05 e a lista de pendências do `AccessMatrixTest` foram removidas.
 
 ## Diferenças em relação ao SBI-EXECUCAO
 

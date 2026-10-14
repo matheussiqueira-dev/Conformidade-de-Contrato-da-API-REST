@@ -145,7 +145,7 @@ CT-MONEY-001 e a recarga de preço histórico de CT-MONEY-003 foram implementado
 
 ## Casos da evolucao ERP/PDV (RF-17 a RF-23)
 
-Planejados em 14/10/2026 (ETAPA 1). Nenhum foi executado. IDs a partir de 101 para nao colidir com os casos acima. A etapa indica onde o caso e implementado: 2A banco, 2B seguranca, 2C endpoints, 3 frontend, 4 suite final e CI.
+Planejados em 14/10/2026 (ETAPA 1); a situacao dos casos da 2C esta na tabela seguinte. IDs a partir de 101 para nao colidir com os casos acima. A etapa indica onde o caso e implementado: 2A banco, 2B seguranca, 2C endpoints, 3 frontend, 4 suite final e CI.
 
 | Caso | Criterios | Nivel | Tecnica | Etapa | Risco coberto |
 | --- | --- | --- | --- | --- | --- |
@@ -195,6 +195,41 @@ Planejados em 14/10/2026 (ETAPA 1). Nenhum foi executado. IDs a partir de 101 pa
 | CT-WEB-109 | CA-23-03 | E2E/Acessibilidade | - | 4 | Violacao WCAG 2.2 AA (axe-core) ou rolagem horizontal em 320 px, nos dois perfis. |
 
 Os cenarios BD-19, BD-21, BD-25, BD-26, BD-28 e CC-01 do pacote SQL continuam no job `bd` (psql) e ganham os equivalentes Java CT-STOCK-106, CT-STOCK-107, CT-SALE-104, CT-SALE-101, CT-STOCK-102 e CT-STOCK-104, para que as duas implementacoes nao divirjam.
+
+### Situacao dos casos da ETAPA 2C (14/10/2026)
+
+Executados na branch `feat/business-endpoints` com `scripts/test.ps1 -Mode Integration` (541 testes, 0 falhas) e `scripts/test-contract.ps1 -HttpOnly` (contrato ao vivo sem divergencia). Pacote de teste: `src/test/java/com/swee/ordermanagementspring/`.
+
+| Caso | Situacao | Evidencia |
+| --- | --- | --- |
+| CT-SALE-101 | Verde | `api/sales/PricingTest` |
+| CT-SALE-102 | Verde | `api/sales/RequestHashTest` |
+| CT-SALE-103 | Verde | `SalesApiTest.repeatedKeyReturnsSameOrder`, `SalesConcurrencyTest.concurrentRepeatCreatesOneOrder` |
+| CT-SALE-104 | Verde | `SalesApiTest.inactiveOrSupplyIsNotSoldAndPriceIsFrozen` |
+| CT-CRM-101 | Verde | `api/customers/DocumentFormatTest` |
+| CT-CRM-102 | Verde | `CustomersApiTest.invalidCpfIsRejected`, `duplicateDocumentIsRejected` |
+| CT-CRM-103 | Verde | `CustomersApiTest.historyHidesOtherSellersTotals` |
+| CT-CRM-104 | Verde | `CustomersApiTest.updateUsesVersionAndKeepsDocument` (versao desatualizada responde 409; edicao em paralelo real nao e simulada) |
+| CT-CRM-105 | Verde | `CustomersApiTest.deleteRules` |
+| CT-CONTRACT-101 | Verde (nivel API) | `CustomersApiTest` (CPF/CNPJ), `SalesApiTest.deliveryRequiresAddress`, `cardStoresOnlyLastFourDigits` |
+| CT-CONTRACT-102 | Verde | `scripts/live-contract.mjs` (45 operacoes, escopo em D-EXEC-07), relatorio `reports/contrato/live-v4/live-contract.json` |
+| CT-SEC-110 | Verde | `SalesApiTest.unknownPropertiesAreRejected` |
+| CT-SEC-111 | Parcial | Corpo com `sellerId` responde 400 (`SalesApiTest`); autoria forjada por header nao tem teste dedicado |
+| CT-SEC-112 | Verde | `SalesApiTest.ownershipOnPaymentAndCancel`, `sellersSeeOnlyTheirOwnOrders` |
+| CT-SEC-113 | Verde | `SalesApiTest.catalogListsOnlySellableAvailableProducts`, `CustomersApiTest`, `GoalsApiTest.myPerformance` |
+| CT-SEC-114 | Verde | `AccessMatrixTest` (221 casos), `BackofficeApiTest`, `CustomersApiTest.deleteRules` |
+| CT-SEC-116 | Verde | `SalesApiTest.repeatedKeyReturnsSameOrder` |
+| CT-STOCK-101 | Verde | `SalesApiTest.invalidQuantityIsRejected` |
+| CT-STOCK-102 | Verde | `SalesApiTest.saleAboveAvailableIsRejected` |
+| CT-STOCK-103 | Verde | `SalesApiTest.failedSecondItemRollsBackFirstReservation` |
+| CT-STOCK-104 | Verde | `SalesConcurrencyTest.lastUnitIsSoldOnce` (10 rodadas) |
+| CT-STOCK-105 | Verde | `SalesConcurrencyTest.inverseItemOrderDoesNotDeadlock` |
+| CT-STOCK-106 | Verde | `SalesApiTest.paymentConfirmationIsIdempotent` |
+| CT-STOCK-107 | Verde | `SalesApiTest.cancelReleasesReservation` |
+| CT-STOCK-108 | Verde | `BackofficeApiTest.stockAdjustments` |
+| CT-STOCK-109 | Verde | `BackofficeApiTest.stockAdjustments` e `SalesApiTest` (409, nunca 500); `DataIntegrityMappingTest` (2B); job `bd` |
+| CT-MGMT-001, CT-MGMT-002 | Verde | `api/management/ManagementApiTest`, `GoalsApiTest.managementSummary` |
+| D022 | Verde | `services/CardNumberStorageTest`, `FlywayMigrationTest.v7MasksLegacyCardNumbers` |
 
 ## Selecao inicial da suite
 

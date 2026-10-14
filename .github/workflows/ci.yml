@@ -86,6 +86,7 @@ jobs:
           curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
           node scripts/http-contract.mjs
           node scripts/http-session.mjs
+          node scripts/live-contract.mjs
           cd frontend
           npm ci --no-audit --no-fund
           npm test
@@ -138,7 +139,7 @@ jobs:
             frontend/playwright-report/
 
   bd:
-    # Entrega de Banco de Dados: Flyway V1-V6 + massa demo (perfil demo), depois RBAC/RLS, CRUD,
+    # Entrega de Banco de Dados: Flyway V1-V7 + massa demo (perfil demo), depois RBAC/RLS, CRUD,
     # testes 06a/b/c e a corrida CC-01 por psql. Falha em qualquer FAIL ou ERROR.
     runs-on: ubuntu-latest
     env:
@@ -175,7 +176,7 @@ jobs:
           chmod +x mvnw
           ./mvnw -B -q -DskipTests package
 
-      - name: Migrate V1-V6 with demo seed
+      - name: Migrate V1-V7 with demo seed
         shell: bash
         env:
           SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}

@@ -44,14 +44,14 @@ class FlywayMigrationTest {
     }
 
     @Test
-    void emptyDatabaseMigratesThroughV6AndRejectsUnknownSeller() throws Exception {
+    void emptyDatabaseMigratesThroughV7AndRejectsUnknownSeller() throws Exception {
         String schema = schema();
         try (Connection admin = DriverManager.getConnection(URL, USER, password());
              Statement statement = admin.createStatement()) {
             statement.execute("CREATE SCHEMA " + schema);
             try {
                 Flyway flyway = flyway(schema, null);
-                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(6);
+                assertThat(flyway.migrate().migrationsExecuted).isEqualTo(7);
                 flyway.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                     sql.executeUpdate("INSERT INTO orders (status, seller_id) VALUES ('PENDING_PAYMENT', NULL)");
@@ -60,7 +60,7 @@ class FlywayMigrationTest {
                             .hasMessageContaining("fk_orders_seller");
                     try (ResultSet rows = sql.executeQuery("SELECT count(*) FROM flyway_schema_history WHERE success")) {
                         rows.next();
-                        assertThat(rows.getInt(1)).isEqualTo(6);
+                        assertThat(rows.getInt(1)).isEqualTo(7);
                     }
                 }
             } finally {
@@ -84,7 +84,7 @@ class FlywayMigrationTest {
                 // A real legacy database has no Flyway history. Baseline is a deliberate operator step.
                 Flyway upgrade = flyway(schema, null);
                 upgrade.baseline();
-                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(5);
+                assertThat(upgrade.migrate().migrationsExecuted).isEqualTo(6);
                 upgrade.validate();
                 try (Connection database = connect(schema); Statement sql = database.createStatement();
                      ResultSet rows = sql.executeQuery("SELECT id, seller_id FROM orders WHERE id = 42")) {
@@ -201,7 +201,7 @@ class FlywayMigrationTest {
                 sql.executeUpdate("INSERT INTO orders (id, status, customer_id) VALUES (2, 'PENDING_PAYMENT', 2)");
             }
             Flyway flyway = flyway(schema, null);
-            assertThat(flyway.migrate().migrationsExecuted).isEqualTo(2);
+            assertThat(flyway.migrate().migrationsExecuted).isEqualTo(3);
             flyway.validate();
             try (Connection database = connect(schema); Statement sql = database.createStatement()) {
                 try (ResultSet rows = sql.executeQuery("SELECT cpf, cnpj FROM customer ORDER BY id")) {
@@ -219,6 +219,36 @@ class FlywayMigrationTest {
                 assertThatThrownBy(() -> sql.executeUpdate(
                         "INSERT INTO customer (customer_type, name, cpf) VALUES ('INDIVIDUAL', 'Mascara', '111.444.777-35')"))
                         .hasMessageContaining("ck_customer_cpf");
+            }
+        });
+    }
+
+    /** D022: a V7 leva o final do cartao para card_last4, anula card_number e barra nova gravacao do numero. */
+    @Test
+    void v7MasksLegacyCardNumbers() throws Exception {
+        inFreshSchema(schema -> {
+            flyway(schema, "6").migrate();
+            try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                sql.executeUpdate("INSERT INTO orders (id, status) VALUES (1, 'PENDING_PAYMENT'), (2, 'PENDING_PAYMENT')");
+                sql.executeUpdate("INSERT INTO payment (payment_type, amount, status, order_id, card_number) "
+                        + "VALUES ('CARD', 10, 'PENDING', 1, '4111 1111 1111 1111'), ('PIX', 5, 'PENDING', 2, NULL)");
+            }
+            Flyway flyway = flyway(schema, null);
+            assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
+            flyway.validate();
+            try (Connection database = connect(schema); Statement sql = database.createStatement()) {
+                try (ResultSet rows = sql.executeQuery("SELECT card_number, card_last4 FROM payment ORDER BY order_id")) {
+                    rows.next();
+                    assertThat(rows.getString("card_number")).isNull();
+                    assertThat(rows.getString("card_last4")).isEqualTo("1111");
+                    rows.next();
+                    assertThat(rows.getString("card_number")).isNull();
+                    assertThat(rows.getString("card_last4")).isNull();
+                }
+                sql.executeUpdate("INSERT INTO orders (id, status) VALUES (3, 'PENDING_PAYMENT')");
+                assertThatThrownBy(() -> sql.executeUpdate("INSERT INTO payment (payment_type, amount, status, order_id, card_number) "
+                        + "VALUES ('CARD', 10, 'PENDING', 3, '4111111111111111')"))
+                        .hasMessageContaining("ck_payment_card_number_absent");
             }
         });
     }

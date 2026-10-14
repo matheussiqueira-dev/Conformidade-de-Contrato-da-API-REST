@@ -58,7 +58,7 @@ public class PaymentResponseDTO {
         );
 
         if (payment instanceof CardPayment card) {
-            dto.cardNumberMasked = maskCardNumber(card.getCardNumber());
+            dto.cardNumberMasked = maskCardNumber(card.getCardLast4());
             dto.cardHolder = card.getCardHolder();
             dto.installments = card.getInstallments();
         }

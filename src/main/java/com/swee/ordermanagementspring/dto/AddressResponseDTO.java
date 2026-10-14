@@ -27,7 +27,9 @@ public class AddressResponseDTO {
         this.zipCode = zipCode;
     }
 
+    /** Pedido de retirada (fulfillment PICKUP) nao tem endereco. */
     public static AddressResponseDTO from(Address address) {
+        if (address == null) return null;
         return new AddressResponseDTO(
                 address.getId(),
                 address.getStreet(),

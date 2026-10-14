@@ -40,8 +40,13 @@ await run('Login rotates session cookie and exposes only user projection', async
   assert.equal(me.status, 200); schema('/auth/me', 'get', me);
   assert.equal(me.body.id, response.body.user.id);
 });
-await run('Seller cannot read legacy customer, payment, product or order data', async () => {
-  for (const path of ['/products', '/customers', '/orders', '/payment', '/address']) assert.equal((await seller.request(path)).status, 403, path);
+await run('Seller cannot read legacy payment, product or order data', async () => {
+  for (const path of ['/products', '/orders', '/payment', '/address']) assert.equal((await seller.request(path)).status, 403, path);
+});
+await run('Seller reads customers with masked documents', async () => {
+  const response = await seller.request('/customers');
+  assert.equal(response.status, 200);
+  for (const customer of response.body.content) assert.match(customer.document, /^(\*{3}\.\d{3}\.\d{3}-\*{2}|\*{2}\.\d{3}\.\d{3}\/\d{4}-\*{2})$/);
 });
 await run('Mutations without CSRF fail even with manager session', async () => {
   const manager = sessionClient(origin);

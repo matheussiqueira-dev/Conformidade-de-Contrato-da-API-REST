@@ -110,6 +110,21 @@ test('400 and 404 error payloads validate with nullable details and local timest
 const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url), 'utf8'));
 const brl = amount => ({ amount, currency: 'BRL' });
 const sale = () => ({ customerId: 1, items: [{ productId: 7, quantity: 2 }], payment: { type: 'PIX' }, fulfillment: 'PICKUP' });
+test('SignedMoney accepts negative results while Money stays non-negative', () => {
+  const day = { date: '2026-10-14', netRevenue: brl(-50), grossProfit: brl(-50) };
+  const report = { period: { from: '2026-10-14', to: '2026-10-14' }, grossRevenue: brl(0), refunds: brl(50), netRevenue: brl(-50),
+    ordersPaid: 0, unitsSold: 0, averageTicket: null, grossProfit: brl(-50), grossMarginPercent: null, costCoveragePercent: 0,
+    daily: [day], byPaymentMethod: [{ method: 'PIX', ordersPaid: 0, netRevenue: brl(-50) }],
+    bySeller: [{ seller: { id: 2, name: 'Allan' }, ordersPaid: 0, netRevenue: brl(-50) }], topProducts: [], lowStockCount: 0,
+    pendingPaymentCount: 0, pendingPaymentAmount: brl(0), generatedAt: '2026-10-14T10:00:00-03:00' };
+  assert.equal(checkResponse(v4, '/management/revenue', 'get', { status: 200, body: report }).valid, true);
+  assert.equal(checkResponse(v4, '/management/revenue', 'get', { status: 200, body: { ...report, refunds: brl(-1) } }).valid, false);
+});
+test('checkResponse resolves v4 shared responses such as NotFound', () => {
+  const error = { timestamp: '2026-10-14T05:00:00-03:00', status: 404, error: 'Not Found', code: 'NOT_FOUND', message: 'Product not found', details: null };
+  assert.equal(checkResponse(v4, '/products/{id}', 'get', { status: 404, body: error }).valid, true);
+  assert.equal(checkResponse(v4, '/products/{id}', 'get', { status: 404, body: { ...error, code: undefined } }).valid, false);
+});
 test('v4 document validates against the official OpenAPI 3.1 schema', () => {
   assert.deepEqual(validateDocument(v4, officialSchema).findings, []);
 });
