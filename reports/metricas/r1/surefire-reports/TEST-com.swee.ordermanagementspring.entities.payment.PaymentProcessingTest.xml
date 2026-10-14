@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.entities.payment.PaymentProcessingTest" time="0.031" tests="17" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="validCardIsApproved" classname="CardPayment.processPayment" time="0.007"/>
+  <testcase name="invalidNumberIsRejected(String)[1]" classname="CardPayment.processPayment" time="0.0"/>
+  <testcase name="invalidNumberIsRejected(String)[2]" classname="CardPayment.processPayment" time="0.001"/>
+  <testcase name="invalidBarCodeIsRejected(String)[1]" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.001"/>
+  <testcase name="invalidBarCodeIsRejected(String)[2]" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.0"/>
+  <testcase name="dueDateBoundary(int, PaymentStatus, boolean)[1]" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.002"/>
+  <testcase name="dueDateBoundary(int, PaymentStatus, boolean)[2]" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.001"/>
+  <testcase name="dueDateBoundary(int, PaymentStatus, boolean)[3]" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.0"/>
+  <testcase name="missingDueDateIsABusinessError" classname="BoletoPayment.processPayment - vencimento como valor-limite" time="0.001"/>
+  <testcase name="keyTypeIsDetected(String, PixKeyType)[1]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.001"/>
+  <testcase name="keyTypeIsDetected(String, PixKeyType)[2]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.0"/>
+  <testcase name="keyTypeIsDetected(String, PixKeyType)[3]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.001"/>
+  <testcase name="keyTypeIsDetected(String, PixKeyType)[4]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.001"/>
+  <testcase name="keyTypeIsDetected(String, PixKeyType)[5]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.001"/>
+  <testcase name="presetKeyTypeIsKept" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.0"/>
+  <testcase name="invalidKeyIsRejected(String)[1]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.001"/>
+  <testcase name="invalidKeyIsRejected(String)[2]" classname="PixPayment.processPayment - 7 caminhos independentes" time="0.002"/>
+</testsuite>

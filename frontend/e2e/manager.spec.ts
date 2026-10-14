@@ -48,3 +48,11 @@ test('[CT-WEB-109] telas do gerente sem violacao WCAG 2.2 AA e sem rolagem horiz
   await page.goto('/gestao');
   await page.screenshot({ path: 'test-results/gestao-desktop.png', fullPage: true });
 });
+
+test('[CT-UI-001] menu do gerente traz as areas de venda e de gestao', async ({ page }) => {
+  await login(page);
+  const nav = page.getByRole('navigation', { name: 'Áreas' });
+  for (const name of ['Vender', 'Vendas', 'Clientes', 'Meu desempenho', 'Gestão', 'Estoque', 'Produtos', 'Promoções', 'Análises']) {
+    await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
+  }
+});

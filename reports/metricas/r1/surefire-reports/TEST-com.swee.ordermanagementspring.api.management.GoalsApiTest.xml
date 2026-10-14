@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.api.management.GoalsApiTest" time="0.386" tests="4" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="managementSummary" classname="com.swee.ordermanagementspring.api.management.GoalsApiTest" time="0.138">
+    <system-out><![CDATA[2026-10-14T06:42:29.640-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.management.GoalsApiTest]: GoalsApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:29.662-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.management.GoalsApiTest
+2026-10-14T06:42:29.663-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.management.GoalsApiTest]: GoalsApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:29.665-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.management.GoalsApiTest
+2026-10-14T06:42:29.668-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.668-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.669-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="noGoalMeansNoPercentage" classname="com.swee.ordermanagementspring.api.management.GoalsApiTest" time="0.04">
+    <system-out><![CDATA[2026-10-14T06:42:29.807-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.807-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.808-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="monthlyGoalsDistribution" classname="com.swee.ordermanagementspring.api.management.GoalsApiTest" time="0.081">
+    <system-out><![CDATA[2026-10-14T06:42:29.848-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.848-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.849-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="myPerformance" classname="com.swee.ordermanagementspring.api.management.GoalsApiTest" time="0.096">
+    <system-out><![CDATA[2026-10-14T06:42:29.930-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.930-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.930-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+</testsuite>

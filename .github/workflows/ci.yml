@@ -4,14 +4,17 @@ on:
   push:
   pull_request:
 
+# Quatro jobs independentes (WP-4.3): backend, banco, contrato e frontend. Cada um sobe o proprio PostgreSQL
+# descartavel e guarda seus relatorios como artefato.
+env:
+  # Secret opcional; sem ele, cada execucao usa um valor deterministico do run (banco descartavel).
+  # A mesma expressao se repete em services.postgres.env: o contexto env nao existe em services.
+  TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
+
 jobs:
   test:
+    name: test (backend)
     runs-on: ubuntu-latest
-    env:
-      # Secret opcional; sem ele, cada execucao usa um valor deterministico do run (banco descartavel).
-      # A mesma expressao se repete em services.postgres.env: o contexto env nao existe em services.
-      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
-
     services:
       postgres:
         image: postgres:18
@@ -26,7 +29,6 @@ jobs:
           --health-interval 5s
           --health-timeout 3s
           --health-retries 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,67 +40,10 @@ jobs:
           java-version: "25"
           cache: maven
 
-      - name: Test
+      - name: Unit, integration, JaCoCo, PMD, CPD and SpotBugs
         run: |
           chmod +x mvnw
-          ./mvnw -Pintegration verify
-
-      - name: Set up Node for structural contract audit
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-
-      - name: Audit planned contract
-        run: |
-          npm ci --ignore-scripts --no-audit --no-fund
-          npm test
-          node scripts/audit-contract.mjs
-          npm run contract
-          node scripts/audit-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
-          node scripts/validate-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
-
-      - name: Verify live OpenAPI and HTTP error responses
-        shell: bash
-        env:
-          A3_CONTRACT_ISOLATED: "1"
-          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
-        run: |
-          export A3_TEST_PASSWORD="$(openssl rand -hex 16)"
-          java -jar target/order-management-spring-0.0.1-SNAPSHOT.jar \
-            --spring.profiles.active=contract \
-            --server.address=127.0.0.1 --server.port=18080 \
-            --spring.datasource.url=jdbc:postgresql://localhost:15432/order_management_test \
-            --spring.datasource.username=postgres_test \
-            --a3.contract.disposable-database=true \
-            --spring.jpa.show-sql=false > target/api-ci.log 2>&1 &
-          api_pid=$!
-          trap 'kill "$api_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..60}; do
-            if ! kill -0 "$api_pid" 2>/dev/null; then
-              cat target/api-ci.log
-              exit 1
-            fi
-            if curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null; then
-              break
-            fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:18080/v3/api-docs > /dev/null
-          node scripts/http-contract.mjs
-          node scripts/http-session.mjs
-          node scripts/live-contract.mjs
-          cd frontend
-          # Rewrites (build) e layouts do servidor (start) usam a mesma API isolada.
-          export BACKEND_ORIGIN=http://127.0.0.1:18080
-          npm ci --no-audit --no-fund
-          npm run typecheck
-          npm run api:check
-          npm test
-          npm run build
-          npx playwright install --with-deps chromium
-          npm run test:e2e
-          cd ..
-          node scripts/ci-evidence.mjs
+          ./mvnw -B -Pintegration verify
 
       - name: Verify Flyway schema with Hibernate validation
         shell: bash
@@ -126,29 +71,23 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:18081/v3/api-docs > /dev/null
 
-      - name: Preserve test reports
+      - name: Preserve backend reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports
+          name: backend-reports
           path: |
             target/surefire-reports/
-            target/api-ci.log
+            target/site/jacoco/
+            target/pmd.xml
+            target/cpd.xml
+            target/spotbugsXml.xml
             target/flyway-ci.log
-            reports/contrato/spike-2026-10-04/
-            reports/contrato/validacao/
-            reports/contrato/session-2026-10-04/
-            frontend/package-lock.json
-            frontend/test-results/
-            frontend/playwright-report/
 
   bd:
     # Entrega de Banco de Dados: Flyway V1-V7 + massa demo (perfil demo), depois RBAC/RLS, CRUD,
     # testes 06a/b/c e a corrida CC-01 por psql. Falha em qualquer FAIL ou ERROR.
     runs-on: ubuntu-latest
-    env:
-      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
-
     services:
       postgres:
         image: postgres:18
@@ -163,7 +102,6 @@ jobs:
           --health-interval 5s
           --health-timeout 3s
           --health-retries 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -211,3 +149,151 @@ jobs:
           path: |
             target/bd-demo.log
             target/resultado_bd.txt
+
+  contract:
+    # Auditoria estatica do contrato e verificacao ao vivo (CT-CONTRACT-102) contra a API isolada.
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: order_management_test
+          POSTGRES_USER: postgres_test
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
+        ports:
+          - 15432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres_test -d order_management_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Static contract audit
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm test
+          node scripts/audit-contract.mjs
+          npm run contract
+          node scripts/audit-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
+          node scripts/validate-contract.mjs config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json
+
+      - name: Build API
+        run: |
+          chmod +x mvnw
+          ./mvnw -B -q -DskipTests package
+
+      - name: Live OpenAPI, HTTP errors, session and v4 responses
+        shell: bash
+        env:
+          A3_CONTRACT_ISOLATED: "1"
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+        run: |
+          export A3_TEST_PASSWORD="$(openssl rand -hex 16)"
+          bash scripts/ci-start-api.sh 18080 target/api-ci.log
+          trap 'kill "$(cat target/api-ci.pid)" 2>/dev/null || true' EXIT
+          node scripts/http-contract.mjs
+          node scripts/http-session.mjs
+          node scripts/live-contract.mjs
+
+      - name: Preserve contract reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contract-reports
+          path: |
+            target/api-ci.log
+            reports/contrato/spike-2026-10-04/
+            reports/contrato/validacao/
+            reports/contrato/session-2026-10-04/
+            reports/contrato/live-v4/
+
+  frontend:
+    # Build, testes de logica, schemas gerados sem diff e E2E com axe contra a API isolada.
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: order_management_test
+          POSTGRES_USER: postgres_test
+          POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
+        ports:
+          - 15432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres_test -d order_management_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      # Rewrites (build) e layouts do servidor (start) usam a mesma API isolada.
+      BACKEND_ORIGIN: http://127.0.0.1:18080
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Typecheck, generated schemas, unit tests and build
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+          npm run api:check
+          npm test
+          npm run build
+
+      - name: Build API
+        run: |
+          chmod +x mvnw
+          ./mvnw -B -q -DskipTests package
+
+      - name: End-to-end and accessibility (axe)
+        shell: bash
+        env:
+          A3_CONTRACT_ISOLATED: "1"
+          SPRING_DATASOURCE_PASSWORD: ${{ env.TEST_DB_PASSWORD }}
+        run: |
+          export A3_TEST_PASSWORD="$(openssl rand -hex 16)"
+          bash scripts/ci-start-api.sh 18080 target/api-ci.log
+          trap 'kill "$(cat target/api-ci.pid)" 2>/dev/null || true' EXIT
+          cd frontend
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+          cd ..
+          node scripts/ci-evidence.mjs
+
+      - name: Preserve frontend reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-reports
+          path: |
+            target/api-ci.log
+            frontend/package-lock.json
+            frontend/test-results/
+            frontend/playwright-report/

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.exceptions</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.exceptions;
+
+import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.PessimisticLockingFailureException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Formato unico de erro (A5) com code (contrato v4). Nenhuma entrada invalida responde 500; o 500 nunca
+ * expoe stack trace, SQL ou nome de classe.
+ */
+@RestControllerAdvice
+<span class="fc" id="L38">public class GlobalExceptionHandler {</span>
+
+<span class="fc" id="L40">    private static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);</span>
+<span class="fc" id="L41">    private static final Pattern CONSTRAINT = Pattern.compile(&quot;constraint \&quot;([^\&quot;]+)\&quot;&quot;);</span>
+
+    static ResponseEntity&lt;ErrorResponse&gt; respond(HttpStatus status, String error, ErrorCode code, String message) {
+<span class="fc" id="L44">        return respond(status, error, code, message, null);</span>
+    }
+
+    static ResponseEntity&lt;ErrorResponse&gt; respond(HttpStatus status, String error, ErrorCode code, String message,
+                                                 List&lt;String&gt; details) {
+<span class="fc" id="L49">        return ResponseEntity.status(status).body(new ErrorResponse(status.value(), error, code, message, details));</span>
+    }
+
+    @ExceptionHandler(PaymentException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handlePaymentException(PaymentException ex) {
+<span class="nc" id="L54">        return respond(HttpStatus.BAD_REQUEST, &quot;Payment Error&quot;, ErrorCode.VALIDATION_FAILED, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(ProductException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleProductException(ProductException ex) {
+<span class="nc" id="L59">        return respond(HttpStatus.BAD_REQUEST, &quot;Product Error&quot;, ErrorCode.VALIDATION_FAILED, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(CustomerException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleCustomerException(CustomerException ex) {
+<span class="nc" id="L64">        return respond(HttpStatus.BAD_REQUEST, &quot;Customer Error&quot;, ErrorCode.VALIDATION_FAILED, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleOrderException(OrderException ex) {
+<span class="nc" id="L69">        return respond(HttpStatus.BAD_REQUEST, &quot;Order Error&quot;, ErrorCode.VALIDATION_FAILED, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleApiException(ApiException ex) {
+<span class="fc" id="L74">        return respond(ex.getStatus(), ex.getStatus().getReasonPhrase(), ex.getCode(), ex.getMessage(), ex.getDetails());</span>
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(MethodArgumentNotValidException ex) {
+<span class="fc" id="L79">        List&lt;String&gt; details = ex.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();</span>
+<span class="pc" id="L80">        List&lt;String&gt; global = ex.getBindingResult().getGlobalErrors().stream().map(e -&gt; e.getDefaultMessage()).toList();</span>
+<span class="fc" id="L81">        return respond(HttpStatus.BAD_REQUEST, &quot;Validation Error&quot;, ErrorCode.VALIDATION_FAILED,</span>
+<span class="fc" id="L82">                &quot;One or more fields are invalid&quot;, concat(details, global));</span>
+    }
+
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleMethodValidation(HandlerMethodValidationException ex) {
+<span class="fc" id="L87">        List&lt;String&gt; details = ex.getAllErrors().stream().map(e -&gt; e.getDefaultMessage()).toList();</span>
+<span class="fc" id="L88">        return respond(HttpStatus.BAD_REQUEST, &quot;Validation Error&quot;, ErrorCode.VALIDATION_FAILED,</span>
+                &quot;One or more parameters are invalid&quot;, details);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleConstraintViolation(ConstraintViolationException ex) {
+<span class="nc" id="L94">        List&lt;String&gt; details = ex.getConstraintViolations().stream()</span>
+<span class="nc" id="L95">                .map(v -&gt; v.getPropertyPath() + &quot;: &quot; + v.getMessage()).sorted().toList();</span>
+<span class="nc" id="L96">        return respond(HttpStatus.BAD_REQUEST, &quot;Validation Error&quot;, ErrorCode.VALIDATION_FAILED,</span>
+                &quot;One or more fields are invalid&quot;, details);
+    }
+
+    // DOM-02: corpo invalido (ex.: &quot;price&quot;: &quot;abc&quot;), JSON malformado ou propriedade desconhecida e erro do cliente
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleNotReadable(HttpMessageNotReadableException ex) {
+<span class="fc" id="L103">        return respond(HttpStatus.BAD_REQUEST, &quot;Bad Request&quot;, ErrorCode.MALFORMED_REQUEST,</span>
+                &quot;Request body is malformed, has an unknown property or an invalid value&quot;);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+<span class="fc" id="L109">        return respond(HttpStatus.BAD_REQUEST, &quot;Bad Request&quot;, ErrorCode.MALFORMED_REQUEST,</span>
+<span class="fc" id="L110">                &quot;Parameter '&quot; + ex.getName() + &quot;' has an invalid value&quot;);</span>
+    }
+
+    @ExceptionHandler({MissingServletRequestParameterException.class, MissingRequestHeaderException.class})
+    public ResponseEntity&lt;ErrorResponse&gt; handleMissingParameter(Exception ex) {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        String name = ex instanceof MissingServletRequestParameterException p ? p.getParameterName()</span>
+<span class="fc" id="L116">                : ((MissingRequestHeaderException) ex).getHeaderName();</span>
+<span class="fc" id="L117">        return respond(HttpStatus.BAD_REQUEST, &quot;Validation Error&quot;, ErrorCode.VALIDATION_FAILED,</span>
+                &quot;Required parameter '&quot; + name + &quot;' is missing&quot;);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleResourceNotFoundException(ResourceNotFoundException ex) {
+<span class="fc" id="L123">        return respond(HttpStatus.NOT_FOUND, &quot;Not Found&quot;, ErrorCode.NOT_FOUND, ex.getMessage());</span>
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleNoResource(NoResourceFoundException ex) {
+<span class="fc" id="L128">        return respond(HttpStatus.NOT_FOUND, &quot;Not Found&quot;, ErrorCode.NOT_FOUND, &quot;Resource not found&quot;);</span>
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+<span class="fc" id="L133">        ResponseEntity&lt;ErrorResponse&gt; body = respond(HttpStatus.METHOD_NOT_ALLOWED, &quot;Method Not Allowed&quot;,</span>
+<span class="fc" id="L134">                ErrorCode.METHOD_NOT_ALLOWED, &quot;Method &quot; + ex.getMethod() + &quot; is not supported for this resource&quot;);</span>
+<span class="fc" id="L135">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (ex.getSupportedHttpMethods() != null) headers.setAllow(ex.getSupportedHttpMethods());</span>
+<span class="fc" id="L137">        return ResponseEntity.status(body.getStatusCode()).headers(headers).body(body.getBody());</span>
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleMediaType(HttpMediaTypeNotSupportedException ex) {
+<span class="fc" id="L142">        return respond(HttpStatus.UNSUPPORTED_MEDIA_TYPE, &quot;Unsupported Media Type&quot;, ErrorCode.UNSUPPORTED_MEDIA_TYPE,</span>
+                &quot;Content type is not supported; use application/json&quot;);
+    }
+
+    /** O cliente nao aceita JSON: nao ha corpo que ele consiga ler. */
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    public ResponseEntity&lt;Void&gt; handleNotAcceptable(HttpMediaTypeNotAcceptableException ex) {
+<span class="nc" id="L149">        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();</span>
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleOptimisticLock(ObjectOptimisticLockingFailureException ex) {
+<span class="fc" id="L154">        return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.CONCURRENT_UPDATE,</span>
+                &quot;The record was changed by another request; reload and try again&quot;);
+    }
+
+    @ExceptionHandler(PessimisticLockingFailureException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handlePessimisticLock(PessimisticLockingFailureException ex) {
+<span class="nc" id="L160">        return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.CONCURRENT_UPDATE,</span>
+                &quot;Concurrent update in progress; try again&quot;);
+    }
+
+    /** Ultima barreira: CHECK, UNIQUE e FK do banco viram 409 com code, sem SQL na resposta. */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+<span class="fc" id="L167">        String state = sqlState(ex);</span>
+<span class="fc" id="L168">        String constraint = constraintName(ex);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (&quot;23505&quot;.equals(state)) {</span>
+<span class="fc bfc" id="L170" title="All 4 branches covered.">            if (constraint.contains(&quot;cpf&quot;) || constraint.contains(&quot;cnpj&quot;)) {</span>
+<span class="fc" id="L171">                return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.DUPLICATE_DOCUMENT, &quot;Document already registered&quot;);</span>
+            }
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            if (constraint.equals(&quot;payment_order_id_key&quot;)) {</span>
+<span class="fc" id="L174">                return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.STATE_CONFLICT, &quot;This order already has a payment.&quot;);</span>
+            }
+<span class="fc bfc" id="L176" title="All 2 branches covered.">            if (constraint.equals(&quot;uq_orders_seller_request&quot;)) {</span>
+<span class="fc" id="L177">                return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.IDEMPOTENCY_CONFLICT, &quot;Idempotency key already used&quot;);</span>
+            }
+<span class="fc" id="L179">            return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.STATE_CONFLICT, &quot;Duplicate value&quot;);</span>
+        }
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (&quot;23503&quot;.equals(state)) {</span>
+<span class="fc" id="L182">            return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.RESOURCE_IN_USE, &quot;Record is referenced by other records&quot;);</span>
+        }
+<span class="pc bpc" id="L184" title="1 of 6 branches missed.">        if (&quot;23514&quot;.equals(state) &amp;&amp; (constraint.startsWith(&quot;stock_balance&quot;) || constraint.startsWith(&quot;ck_stock&quot;))) {</span>
+<span class="fc" id="L185">            return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.STOCK_INSUFFICIENT, &quot;Insufficient stock&quot;);</span>
+        }
+<span class="fc" id="L187">        return respond(HttpStatus.CONFLICT, &quot;Conflict&quot;, ErrorCode.STATE_CONFLICT, &quot;Operation violates a data integrity rule&quot;);</span>
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleAccessDeniedException(AccessDeniedException ex) {
+<span class="fc" id="L192">        return respond(HttpStatus.FORBIDDEN, &quot;Forbidden&quot;, ErrorCode.FORBIDDEN, &quot;Acesso negado&quot;);</span>
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleGenericException(Exception ex) {
+<span class="fc" id="L197">        LOG.error(&quot;Unexpected error&quot;, ex);</span>
+<span class="fc" id="L198">        return respond(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Internal Server Error&quot;, ErrorCode.INTERNAL_ERROR,</span>
+                &quot;Occurred an unexpected error&quot;);
+    }
+
+    private static List&lt;String&gt; concat(List&lt;String&gt; first, List&lt;String&gt; second) {
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">        if (second.isEmpty()) return first;</span>
+<span class="nc" id="L204">        return java.util.stream.Stream.concat(first.stream(), second.stream()).toList();</span>
+    }
+
+    private static String sqlState(Throwable ex) {
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">        for (Throwable cause = ex; cause != null; cause = cause.getCause()) {</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">            if (cause instanceof SQLException sql &amp;&amp; sql.getSQLState() != null) return sql.getSQLState();</span>
+        }
+<span class="nc" id="L211">        return &quot;&quot;;</span>
+    }
+
+    private static String constraintName(Throwable ex) {
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">        for (Throwable cause = ex; cause != null; cause = cause.getCause()) {</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (cause.getMessage() != null) {</span>
+<span class="fc" id="L217">                Matcher matcher = CONSTRAINT.matcher(cause.getMessage());</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">                if (matcher.find()) return matcher.group(1).toLowerCase(Locale.ROOT);</span>
+            }
+        }
+<span class="nc" id="L221">        return &quot;&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

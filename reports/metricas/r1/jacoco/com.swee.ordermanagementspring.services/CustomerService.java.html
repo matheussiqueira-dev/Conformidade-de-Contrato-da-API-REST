@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">CustomerService.java</span></div><h1>CustomerService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.CustomerRequestDTO;
+import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.entities.customer.Documents;
+import com.swee.ordermanagementspring.entities.customer.Customer;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
+import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
+import com.swee.ordermanagementspring.exceptions.CustomerException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CustomerService {
+
+    private final CustomerRepository repository;
+<span class="fc" id="L20">    public CustomerService (CustomerRepository repository){</span>
+<span class="fc" id="L21">        this.repository = repository;</span>
+<span class="fc" id="L22">    }</span>
+
+    public List&lt;Customer&gt; findAll() {
+<span class="nc" id="L25">        return repository.findAll();</span>
+    }
+
+    public Customer findById(Long id) {
+<span class="fc" id="L29">        return repository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Customer not found&quot;));</span>
+    }
+
+    public Customer updateAddress(Long id, Address address) {
+<span class="nc" id="L33">        Customer customer = findById(id);</span>
+
+<span class="nc" id="L35">        customer.setAddress(address);</span>
+
+<span class="nc" id="L37">        return repository.save(customer);</span>
+    }
+
+    public Customer update(Long id, CustomerRequestDTO dto) {
+<span class="fc" id="L41">        Customer existing = findById(id);</span>
+
+<span class="fc" id="L43">        existing.setName(dto.getName());</span>
+<span class="fc" id="L44">        existing.setEmail(dto.getEmail());</span>
+<span class="fc" id="L45">        existing.setBirthDate(dto.getBirthDate());</span>
+
+<span class="pc bpc" id="L47" title="1 of 4 branches missed.">        if (existing instanceof IndividualCustomer individual &amp;&amp; dto.getCpf() != null) {</span>
+<span class="nc" id="L48">            individual.setCpf(Documents.cpf(dto.getCpf()));</span>
+        }
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (existing instanceof CorporateCustomer corporate) {</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            if (dto.getCnpj() != null) {</span>
+<span class="fc" id="L53">                corporate.setCnpj(Documents.cnpj(dto.getCnpj()));</span>
+            }
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">            if (dto.getCompanyName() != null) {</span>
+<span class="fc" id="L56">                corporate.setCompanyName(dto.getCompanyName());</span>
+            }
+        }
+
+<span class="fc" id="L60">        return repository.save(existing);</span>
+    }
+
+    public Customer insert(CustomerRequestDTO dto) {
+<span class="fc" id="L64">        Customer customer = buildCustomer(dto);</span>
+<span class="fc" id="L65">        return repository.save(customer);</span>
+    }
+
+    private Customer buildCustomer(CustomerRequestDTO dto) {
+<span class="fc bfc" id="L69" title="All 3 branches covered.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;INDIVIDUAL&quot; -&gt; {
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">                if (dto.getCpf() == null || dto.getCpf().isBlank()) {</span>
+<span class="fc" id="L72">                    throw new CustomerException(&quot;cpf é obrigatório para cliente INDIVIDUAL&quot;);</span>
+                }
+<span class="fc" id="L74">                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cpf(dto.getCpf()));</span>
+            }
+            case &quot;CORPORATE&quot; -&gt; {
+<span class="pc bpc" id="L77" title="1 of 4 branches missed.">                if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {</span>
+<span class="fc" id="L78">                    throw new CustomerException(&quot;cnpj é obrigatório para cliente CORPORATE&quot;);</span>
+                }
+<span class="fc" id="L80">                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cnpj(dto.getCnpj()), dto.getCompanyName());</span>
+            }
+<span class="fc" id="L82">            default -&gt; throw new CustomerException(&quot;Tipo de cliente inválido: &quot; + dto.getType());</span>
+        };
+    }
+
+    public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (!repository.existsById(id)) {</span>
+<span class="fc" id="L89">            throw new ResourceNotFoundException(&quot;Customer not found, id: &quot; + id);</span>
+        }
+<span class="fc" id="L91">        repository.deleteById(id);</span>
+<span class="fc" id="L92">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

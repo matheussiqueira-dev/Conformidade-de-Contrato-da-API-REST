@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginAttemptService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.security</a> &gt; <span class="el_source">LoginAttemptService.java</span></div><h1>LoginAttemptService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.security;
+
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.Clock;
+import java.time.Duration;
+
+/**
+ * RF-18: 5 falhas seguidas bloqueiam a conta por 15 minutos; sucesso zera o contador. Tentativas durante o
+ * bloqueio nao o prolongam. Toda falha grava LOGIN_FAILED, existindo a conta ou nao.
+ */
+@Service
+public class LoginAttemptService {
+    public static final int MAX_FAILURES = 5;
+<span class="fc" id="L18">    public static final Duration LOCK_DURATION = Duration.ofMinutes(15);</span>
+
+    private final AppUserRepository users;
+    private final AuditService audit;
+    private final Clock clock;
+
+<span class="fc" id="L24">    public LoginAttemptService(AppUserRepository users, AuditService audit, Clock clock) {</span>
+<span class="fc" id="L25">        this.users = users;</span>
+<span class="fc" id="L26">        this.audit = audit;</span>
+<span class="fc" id="L27">        this.clock = clock;</span>
+<span class="fc" id="L28">    }</span>
+
+    public boolean isLocked(AppUser user) {
+<span class="fc" id="L31">        return user.isLockedAt(clock.instant());</span>
+    }
+
+    public void wrongPassword(AppUser user, String attemptedEmail) {
+<span class="fc" id="L35">        audit.record(AuditAction.LOGIN_FAILED, user.getId(), &quot;app_users&quot;, user.getId(), AuditService.emailDetail(attemptedEmail));</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (user.registerFailure() &gt;= MAX_FAILURES) {</span>
+<span class="fc" id="L37">            user.lockUntil(clock.instant().plus(LOCK_DURATION));</span>
+<span class="fc" id="L38">            audit.record(AuditAction.ACCOUNT_LOCKED, user.getId(), &quot;app_users&quot;, user.getId(), null);</span>
+        }
+<span class="fc" id="L40">        users.save(user);</span>
+<span class="fc" id="L41">    }</span>
+
+    /** Conta bloqueada, inativa ou inexistente: so registra a tentativa. */
+    public void rejected(AppUser user, String attemptedEmail) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        Long id = user == null ? null : user.getId();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        audit.record(AuditAction.LOGIN_FAILED, id, id == null ? null : &quot;app_users&quot;, id, AuditService.emailDetail(attemptedEmail));</span>
+<span class="fc" id="L47">    }</span>
+
+    public void succeeded(AppUser user) {
+<span class="fc" id="L50">        user.registerSuccess(clock.instant());</span>
+<span class="fc" id="L51">        users.save(user);</span>
+<span class="fc" id="L52">        audit.record(AuditAction.LOGIN_SUCCEEDED, user.getId(), &quot;app_users&quot;, user.getId(), null);</span>
+<span class="fc" id="L53">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

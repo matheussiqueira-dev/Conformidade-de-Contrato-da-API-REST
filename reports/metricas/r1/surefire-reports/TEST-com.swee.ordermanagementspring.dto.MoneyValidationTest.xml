@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.029" tests="13" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="subCentValuesThatRoundToZeroAreRejected(String, boolean)[1]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.007"/>
+  <testcase name="subCentValuesThatRoundToZeroAreRejected(String, boolean)[2]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.001"/>
+  <testcase name="subCentValuesThatRoundToZeroAreRejected(String, boolean)[3]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="subCentValuesThatRoundToZeroAreRejected(String, boolean)[4]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="subCentValuesThatRoundToZeroAreRejected(String, boolean)[5]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="paymentAmountLimits(String, boolean)[1]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="paymentAmountLimits(String, boolean)[2]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="paymentAmountLimits(String, boolean)[3]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="productPriceLimits(String, boolean)[1]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.001"/>
+  <testcase name="productPriceLimits(String, boolean)[2]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="productPriceLimits(String, boolean)[3]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.001"/>
+  <testcase name="productPriceLimits(String, boolean)[4]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+  <testcase name="productPriceLimits(String, boolean)[5]" classname="com.swee.ordermanagementspring.dto.MoneyValidationTest" time="0.0"/>
+</testsuite>

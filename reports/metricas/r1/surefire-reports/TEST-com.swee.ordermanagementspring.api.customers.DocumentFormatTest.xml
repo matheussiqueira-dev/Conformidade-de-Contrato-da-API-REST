@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.045" tests="13" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="invalidStoredDocumentIsNotShown" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.003"/>
+  <testcase name="searchDigits(String, String)[1]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="searchDigits(String, String)[2]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="searchDigits(String, String)[3]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="searchDigits(String, String)[4]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.0"/>
+  <testcase name="searchDigits(String, String)[5]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="searchDigits(String, String)[6]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.0"/>
+  <testcase name="searchDigits(String, String)[7]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.002"/>
+  <testcase name="normalizationKeepsAllDigits(String, String)[1]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.002"/>
+  <testcase name="normalizationKeepsAllDigits(String, String)[2]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="normalizationKeepsAllDigits(String, String)[3]" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+  <testcase name="cpf" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.0"/>
+  <testcase name="cnpj" classname="com.swee.ordermanagementspring.api.customers.DocumentFormatTest" time="0.001"/>
+</testsuite>

@@ -1,0 +1,5399 @@
+{
+  "label": "R1 - ETAPA 4 (ERP/PDV)",
+  "generatedAt": "2026-10-14T09:44:14.002Z",
+  "tests": {
+    "tests": 544,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "executed": 544,
+    "passed": 544,
+    "passRate": 100,
+    "failRate": 0,
+    "suites": [
+      {
+        "name": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.management.GoalsApiTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.management.ManagementApiTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.management.RefundAndAnalyticsApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.promotions.PromotionsApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.sales.RequestHashTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.sales.SalesConcurrencyTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.config.MethodSecurityHierarchyTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "tests": 36,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.OrderFulfillmentTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.payment.PaymentProcessingTest",
+        "tests": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "tests": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "tests": 9,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.OrderManagementSpringApplicationTests",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "tests": 221,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.LoginLockoutIntegrationTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.LoginLockoutPolicyTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.CardNumberStorageTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.CatalogServicesTest",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.ConcurrencyTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "tests": 31,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "tests": 26,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "db.demo.DemoAccountsTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "cases": [
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "productTypeRequiresItsField",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "stockEntries",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "priceAndStatus",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "stockPosition",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "createProducts",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "listAndUpdateProducts",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "stockAdjustments",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "movements",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "categories",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.backoffice.BackofficeApiTest",
+        "name": "deleteOnlyWithoutHistory",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "deleteRules",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "searchByDocumentOrNamePrefix",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "updateUsesVersionAndKeepsDocument",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "createAndMaskDocument",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "invalidCpfIsRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "invalidCpfIsRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "invalidCpfIsRejected(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "invalidCpfIsRejected(String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "historyHidesOtherSellersTotals",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.CustomersApiTest",
+        "name": "duplicateDocumentIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "invalidStoredDocumentIsNotShown",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "searchDigits(String, String)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "normalizationKeepsAllDigits(String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "normalizationKeepsAllDigits(String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "normalizationKeepsAllDigits(String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "cpf",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.customers.DocumentFormatTest",
+        "name": "cnpj",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.GoalsApiTest",
+        "name": "managementSummary",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.GoalsApiTest",
+        "name": "noGoalMeansNoPercentage",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.GoalsApiTest",
+        "name": "monthlyGoalsDistribution",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.GoalsApiTest",
+        "name": "myPerformance",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.ManagementApiTest",
+        "name": "revenueWithRefundAndUnknownCost",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.ManagementApiTest",
+        "name": "emptyPeriodHasNoFictitiousNumbers",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.ManagementApiTest",
+        "name": "profitAndMarginWithKnownCost",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.ManagementApiTest",
+        "name": "periodValidationAndAccess",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.RefundAndAnalyticsApiTest",
+        "name": "stockAnalytics",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.RefundAndAnalyticsApiTest",
+        "name": "salesAnalytics",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.management.RefundAndAnalyticsApiTest",
+        "name": "refunds",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.promotions.PromotionsApiTest",
+        "name": "createRules",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.promotions.PromotionsApiTest",
+        "name": "activeByProductScope",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.promotions.PromotionsApiTest",
+        "name": "closeAndList",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "bestPromotionPerUnit",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "noPromotionMeansZero",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.PricingTest",
+        "name": "discountUsesServerRules(String, String, String, int, String)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.RequestHashTest",
+        "name": "contentChangesHash",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.RequestHashTest",
+        "name": "keyOrderDoesNotMatter",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "catalogListsOnlySellableAvailableProducts",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "saleAboveAvailableIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "saleReservesStockAndUsesSessionSeller",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "invalidQuantityIsRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "invalidQuantityIsRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "invalidQuantityIsRejected(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "invalidQuantityIsRejected(String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "invalidQuantityIsRejected(String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "itemListLimits",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "explicitPromotionIsApplied",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "cancelReleasesReservation",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "ownershipOnPaymentAndCancel",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "legacyOrderListAcceptsPickupSales",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "repeatedKeyReturnsSameOrder",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "sellerComesOnlyFromSession",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "failedSecondItemRollsBackFirstReservation",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "paymentConfirmationIsIdempotent",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "quoteComputesTotalsWithoutSideEffects",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "sellersSeeOnlyTheirOwnOrders",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "deliveryRequiresAddress",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "historicalCostIsKept",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "unknownPropertiesAreRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "unknownPropertiesAreRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "unknownPropertiesAreRejected(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "cardStoresOnlyLastFourDigits",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "catalogShowsBestActivePromotion",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "saleNeedsKeyAndCustomer",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "inactiveOrSupplyIsNotSoldAndPriceIsFrozen",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesApiTest",
+        "name": "quoteRejectsUnknownOrInactiveProducts",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesConcurrencyTest",
+        "name": "concurrentRepeatCreatesOneOrder",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesConcurrencyTest",
+        "name": "lastUnitIsSoldOnce",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.api.sales.SalesConcurrencyTest",
+        "name": "inverseItemOrderDoesNotDeadlock",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "resolvedPasswordPasses",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "missingPasswordFailsFast",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "unresolvedOrBlankPasswordFailsFast(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "unresolvedOrBlankPasswordFailsFast(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "unresolvedOrBlankPasswordFailsFast(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.DatasourcePasswordGuardTest",
+        "name": "unresolvedOrBlankPasswordFailsFast(String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.MethodSecurityHierarchyTest",
+        "name": "sellerDoesNotReachManagerUseCase",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.MethodSecurityHierarchyTest",
+        "name": "managerReachesSellerUseCase",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.config.MethodSecurityHierarchyTest",
+        "name": "areasFollowHierarchy",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "subCentValuesThatRoundToZeroAreRejected(String, boolean)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "subCentValuesThatRoundToZeroAreRejected(String, boolean)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "subCentValuesThatRoundToZeroAreRejected(String, boolean)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "subCentValuesThatRoundToZeroAreRejected(String, boolean)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "subCentValuesThatRoundToZeroAreRejected(String, boolean)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "paymentAmountLimits(String, boolean)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "paymentAmountLimits(String, boolean)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "paymentAmountLimits(String, boolean)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "productPriceLimits(String, boolean)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "productPriceLimits(String, boolean)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "productPriceLimits(String, boolean)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "productPriceLimits(String, boolean)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.dto.MoneyValidationTest",
+        "name": "productPriceLimits(String, boolean)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "name": "cnpjWithWrongLengthIsABusinessError",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "name": "cpfWithWrongLengthIsABusinessError(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "name": "cpfWithWrongLengthIsABusinessError(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "name": "cpfWithWrongLengthIsABusinessError(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.customer.DocumentsTest",
+        "name": "cpfAndCnpjKeepOnlyDigits",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[8]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[9]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[10]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[11]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[12]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[13]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[14]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[15]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[16]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[17]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[18]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[19]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[20]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[21]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[22]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[23]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[24]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[25]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[26]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[27]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[28]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[29]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[30]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[31]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[32]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[33]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[34]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[35]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.enums.OrderStatusTest",
+        "name": "transitionTable(OrderStatus, OrderStatus, boolean)[36]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.OrderFulfillmentTest",
+        "name": "momentUsesStoreTimeZone",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.OrderFulfillmentTest",
+        "name": "shippingAddressDefinesFulfillment",
+        "status": "PASS"
+      },
+      {
+        "suite": "CardPayment.processPayment",
+        "name": "validCardIsApproved",
+        "status": "PASS"
+      },
+      {
+        "suite": "CardPayment.processPayment",
+        "name": "invalidNumberIsRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "CardPayment.processPayment",
+        "name": "invalidNumberIsRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "invalidBarCodeIsRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "invalidBarCodeIsRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "dueDateBoundary(int, PaymentStatus, boolean)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "dueDateBoundary(int, PaymentStatus, boolean)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "dueDateBoundary(int, PaymentStatus, boolean)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "BoletoPayment.processPayment - vencimento como valor-limite",
+        "name": "missingDueDateIsABusinessError",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "keyTypeIsDetected(String, PixKeyType)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "keyTypeIsDetected(String, PixKeyType)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "keyTypeIsDetected(String, PixKeyType)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "keyTypeIsDetected(String, PixKeyType)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "keyTypeIsDetected(String, PixKeyType)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "presetKeyTypeIsKept",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "invalidKeyIsRejected(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "PixPayment.processPayment - 7 caminhos independentes",
+        "name": "invalidKeyIsRejected(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "moneyUsesTwoDecimalsHalfUp(String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "moneyUsesTwoDecimalsHalfUp(String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "moneyUsesTwoDecimalsHalfUp(String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "moneyUsesTwoDecimalsHalfUp(String, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "negativeWeightIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "totalSumsAllItems",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "digitalProductHasNoShipping",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "emptyOrderTotalsZero",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "itemsWithCentsAddExactly",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "subtotalKeepsHistoricalUnitPrice",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest",
+        "name": "newOrderRequiresSeller",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "databaseViolationsBecome409WithCode(String, String, ErrorCode)[8]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "legacyDuplicatePaymentKeepsMessage",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest",
+        "name": "optimisticLockIsConcurrentUpdate",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v5NormalizesLegacyDocumentsAndClassifiesFulfillment",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "emptyDatabaseMigratesThroughV7AndRejectsUnknownSeller",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v4RejectsLegacyValueJustAboveLimitBeforeRounding",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v4FailsInsteadOfTruncatingValuesAboveColumnLimit",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "explicitlyBaselinedLegacyDatabaseKeepsOrders",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v5AbortsWhenDocumentsCollideAfterNormalization",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v7MasksLegacyCardNumbers",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v4ConvertsLegacyDoubleMoneyToNumericHalfUp",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.FlywayMigrationTest",
+        "name": "v5FunctionsWorkInTheMigratedSchemaAndChecksBlockNegativeStock",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.OrderManagementSpringApplicationTests",
+        "name": "contextLoads",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "managerInheritsEverySellerRow",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "everyMappedEndpointHasAMatrixRow",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[8]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[9]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[10]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[11]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[12]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[13]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[14]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[15]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[16]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[17]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[18]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[19]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[20]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[21]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[22]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[23]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[24]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[25]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[26]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[27]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[28]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[29]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[30]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[31]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[32]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[33]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[34]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[35]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[36]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[37]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[38]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[39]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[40]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[41]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[42]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[43]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[44]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[45]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[46]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[47]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[48]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[49]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[50]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[51]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[52]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[53]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[54]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[55]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[56]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[57]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[58]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[59]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[60]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[61]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[62]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[63]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[64]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[65]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[66]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[67]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[68]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[69]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[70]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[71]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[72]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[73]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[74]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[75]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[76]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[77]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[78]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[79]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[80]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[81]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[82]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[83]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[84]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[85]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[86]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[87]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[88]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[89]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[90]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[91]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[92]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[93]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[94]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[95]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[96]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[97]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[98]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[99]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[100]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[101]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[102]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[103]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[104]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[105]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[106]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[107]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[108]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[109]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[110]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[111]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[112]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[113]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[114]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[115]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[116]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[117]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[118]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[119]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[120]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[121]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[122]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[123]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[124]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[125]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[126]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[127]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[128]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[129]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[130]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[131]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[132]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[133]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[134]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[135]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[136]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[137]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[138]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[139]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[140]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[141]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[142]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[143]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[144]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[145]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[146]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[147]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[148]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[149]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[150]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[151]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[152]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[153]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[154]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[155]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[156]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[157]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[158]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[159]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[160]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[161]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[162]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[163]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[164]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[165]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[166]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[167]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[168]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[169]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[170]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[171]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[172]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[173]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[174]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[175]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[176]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[177]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[178]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[179]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[180]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[181]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[182]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[183]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[184]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[185]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[186]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[187]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[188]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[189]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[190]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[191]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[192]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[193]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[194]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[195]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[196]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[197]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[198]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[199]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[200]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[201]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[202]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[203]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[204]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[205]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[206]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[207]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[208]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[209]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[210]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[211]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[212]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[213]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[214]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[215]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[216]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[217]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[218]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.AccessMatrixTest",
+        "name": "matrixRowIsEnforced(String, String, String, String, String)[219]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "validationFailureListsDetails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "routingErrorsUseTheErrorFormat",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "pathAndMethodVariantsDoNotOpenAccess",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "malformedInputIsA400",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "firewallRejectionIsA400",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorContractTest",
+        "name": "mutationWithoutCsrfIsForbidden",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "name": "staleSessionReturns403WithoutLeakingAccountDetails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.ErrorResponseTest",
+        "name": "genericErrorBodyMatchesHttpStatusAndDoesNotLeakException",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutIntegrationTest",
+        "name": "loginReturnsAreas",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutIntegrationTest",
+        "name": "lockoutIsIndistinguishableAndExpires",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutIntegrationTest",
+        "name": "inactiveAccountGetsTheSame401",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutPolicyTest",
+        "name": "everyFailureIsAuditedWithoutPlainEmail",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutPolicyTest",
+        "name": "passwordEncoderRunsInEveryFailureCase",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutPolicyTest",
+        "name": "fifthFailureLocksForFifteenMinutes",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.LoginLockoutPolicyTest",
+        "name": "attemptsDuringLockDoNotExtendIt",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "loginWithoutCsrfIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "sessionRotatesPersistsAndLogoutInvalidatesIt",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "unauthenticatedReadReturnsJson401",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "bcryptByteLimitIsValidatedBeforeAuthentication",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.security.SessionSecurityTest",
+        "name": "wrongPasswordDoesNotEstablishSession",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.CardNumberStorageTest",
+        "name": "legacyCardPaymentStoresOnlyLastFourDigits",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "deletingExistingProductDeletes",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "decisionTable(String, Double, String, String)[7]",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "deletingMissingProductFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "updateKeepsWeightWhenAbsent",
+        "status": "PASS"
+      },
+      {
+        "suite": "ProductService",
+        "name": "missingProduct",
+        "status": "PASS"
+      },
+      {
+        "suite": "AddressService",
+        "name": "deletingMissingAddressFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "AddressService",
+        "name": "deletingExistingAddressDeletes",
+        "status": "PASS"
+      },
+      {
+        "suite": "AddressService",
+        "name": "missingAddress",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "invalidType",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "individualUpdateKeepsCpf",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "missingDocumentIsAClientError(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "missingDocumentIsAClientError(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "corporateWithCnpj",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "deletingExistingClientDeletes",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "corporateUpdate",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "deletingMissingCustomerFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "CustomerService",
+        "name": "individualWithCpf",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.ConcurrencyTest",
+        "name": "concurrentStatusUpdatesNeverMoveBack",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.ConcurrencyTest",
+        "name": "concurrentProcessingApprovesOnce",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "name": "demonstrationSalePersistsCustomerAddressPaymentAndTotal",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderPersistenceTest",
+        "name": "historicalUnitPriceSurvivesCatalogChangeAndDatabaseReload",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "missingCustomerId",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "deletingMissingOrderFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentRequiredFields(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentRequiredFields(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentRequiredFields(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentRequiredFields(String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "customerIsRequired",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "deletingExistingOrderRemovesIt",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "existingCustomerIsReused",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "newCustomerRules(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "newCustomerRules(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "newCustomerRules(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "addressChangeDecisionTable(OrderStatus, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "addressChangeDecisionTable(OrderStatus, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "addressChangeDecisionTable(OrderStatus, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "addressChangeDecisionTable(OrderStatus, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "addressChangeDecisionTable(OrderStatus, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[5]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusTransitionTable(OrderStatus, String, String)[6]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentAmountMustEqualOrderTotal(BigDecimal)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentAmountMustEqualOrderTotal(BigDecimal)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "paymentAmountMustEqualOrderTotal(BigDecimal)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "missingProduct",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusRegressionIsRejected(OrderStatus, String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusRegressionIsRejected(OrderStatus, String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "statusRegressionIsRejected(OrderStatus, String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceRulesTest",
+        "name": "cardAndBoletoPayments",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "unauthenticatedCallerCannotCreateOrder",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "insertKeepsItemPriceAsUnitPriceAndMultipliesQuantityOnce",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "removedUserCannotCreateOrderFromAnOldSession",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "insertCalculatesDemonstrationSaleTotal",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.OrderServiceTest",
+        "name": "catalogPriceChangeDoesNotChangeExistingItemPriceInMemory",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "typeChangeReplacesPayment",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "deletingMissingPaymentFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "deletingExistingPaymentDeletes",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "typeParsingIsLocaleIndependent",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "cardUpdateRequiresNumber",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "insertCreatesEachPaymentType(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "insertCreatesEachPaymentType(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "insertCreatesEachPaymentType(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "insertCreatesEachPaymentType(String)[4]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "sameTypeUpdateChangesFields",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "insertForMissingOrderFails",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "latePaymentDoesNotMoveOrderBackToPaid(OrderStatus)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "latePaymentDoesNotMoveOrderBackToPaid(OrderStatus)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "halfCentAboveTotalIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "unknownTypeIsRejected",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "onlyPendingPaymentsCanBeProcessed(PaymentStatus)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "onlyPendingPaymentsCanBeProcessed(PaymentStatus)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "onlyPendingPaymentsCanBeProcessed(PaymentStatus)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "amountMustMatchOrderTotal",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "approvedPaymentMarksOrderPaid",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "onlyPendingPaymentCanBeEdited",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "amountIsComparedAfterHalfUpRounding(String)[1]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "amountIsComparedAfterHalfUpRounding(String)[2]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "amountIsComparedAfterHalfUpRounding(String)[3]",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "expiredBoletoDoesNotMarkOrderPaid",
+        "status": "PASS"
+      },
+      {
+        "suite": "com.swee.ordermanagementspring.services.PaymentServiceTest",
+        "name": "boletoRequiresDueDate",
+        "status": "PASS"
+      },
+      {
+        "suite": "db.demo.DemoAccountsTest",
+        "name": "missingOrShortPasswordStopsTheMigration",
+        "status": "PASS"
+      },
+      {
+        "suite": "db.demo.DemoAccountsTest",
+        "name": "acceptedPasswordIsReturnedUnchangedAndAccountsCoverBothRoles",
+        "status": "PASS"
+      }
+    ]
+  },
+  "coverage": {
+    "total": {
+      "instructions": {
+        "missed": 990,
+        "covered": 13320,
+        "total": 14310,
+        "percent": 93.1
+      },
+      "branches": {
+        "missed": 145,
+        "covered": 598,
+        "total": 743,
+        "percent": 80.5
+      },
+      "lines": {
+        "missed": 230,
+        "covered": 2168,
+        "total": 2398,
+        "percent": 90.4
+      },
+      "methods": {
+        "missed": 92,
+        "covered": 824,
+        "total": 916,
+        "percent": 90
+      }
+    },
+    "complexity": {
+      "total": 1300,
+      "methods": 916,
+      "average": 1.42,
+      "max": 18,
+      "above10": 2,
+      "top": [
+        {
+          "class": "PaymentService",
+          "method": "update",
+          "line": 92,
+          "complexity": 18,
+          "branchCoverage": 46.9
+        },
+        {
+          "class": "ApiErrorController",
+          "method": "error",
+          "line": 24,
+          "complexity": 12,
+          "branchCoverage": 29.4
+        },
+        {
+          "class": "SalesService",
+          "method": "create",
+          "line": 128,
+          "complexity": 10,
+          "branchCoverage": 94.4
+        },
+        {
+          "class": "OrderService",
+          "method": "buildPayment",
+          "line": 130,
+          "complexity": 10,
+          "branchCoverage": 81.3
+        },
+        {
+          "class": "PaymentService",
+          "method": "buildPayment",
+          "line": 177,
+          "complexity": 10,
+          "branchCoverage": 62.5
+        },
+        {
+          "class": "GlobalExceptionHandler",
+          "method": "handleDataIntegrityViolation",
+          "line": 167,
+          "complexity": 10,
+          "branchCoverage": 94.4
+        },
+        {
+          "class": "PaymentResponseDTO",
+          "method": "from",
+          "line": 46,
+          "complexity": 9,
+          "branchCoverage": 64.3
+        },
+        {
+          "class": "DocumentFormat",
+          "method": "of",
+          "line": 12,
+          "complexity": 9,
+          "branchCoverage": 93.8
+        },
+        {
+          "class": "ManagementService",
+          "method": "revenue",
+          "line": 39,
+          "complexity": 8,
+          "branchCoverage": 100
+        },
+        {
+          "class": "StockService",
+          "method": "adjust",
+          "line": 83,
+          "complexity": 8,
+          "branchCoverage": 92.9
+        }
+      ]
+    },
+    "packages": [
+      {
+        "name": "com.swee.ordermanagementspring.config",
+        "instructions": {
+          "missed": 88,
+          "covered": 704,
+          "total": 792,
+          "percent": 88.9
+        },
+        "branches": {
+          "missed": 15,
+          "covered": 19,
+          "total": 34,
+          "percent": 55.9
+        },
+        "lines": {
+          "missed": 17,
+          "covered": 89,
+          "total": 106,
+          "percent": 84
+        },
+        "methods": {
+          "missed": 4,
+          "covered": 37,
+          "total": 41,
+          "percent": 90.2
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.sales",
+        "instructions": {
+          "missed": 40,
+          "covered": 2267,
+          "total": 2307,
+          "percent": 98.3
+        },
+        "branches": {
+          "missed": 10,
+          "covered": 93,
+          "total": 103,
+          "percent": 90.3
+        },
+        "lines": {
+          "missed": 5,
+          "covered": 281,
+          "total": 286,
+          "percent": 98.3
+        },
+        "methods": {
+          "missed": 2,
+          "covered": 97,
+          "total": 99,
+          "percent": 98
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.enums",
+        "instructions": {
+          "missed": 0,
+          "covered": 162,
+          "total": 162,
+          "percent": 100
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 6,
+          "total": 6,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 28,
+          "total": 28,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 6,
+          "total": 6,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.auth",
+        "instructions": {
+          "missed": 0,
+          "covered": 112,
+          "total": 112,
+          "percent": 100
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 4,
+          "total": 4,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 29,
+          "total": 29,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 17,
+          "total": 17,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.repositories",
+        "instructions": null,
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": null,
+        "methods": null
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.customer",
+        "instructions": {
+          "missed": 15,
+          "covered": 122,
+          "total": 137,
+          "percent": 89.1
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 6,
+          "total": 6,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 7,
+          "covered": 42,
+          "total": 49,
+          "percent": 85.7
+        },
+        "methods": {
+          "missed": 4,
+          "covered": 21,
+          "total": 25,
+          "percent": 84
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.services",
+        "instructions": {
+          "missed": 240,
+          "covered": 1192,
+          "total": 1432,
+          "percent": 83.2
+        },
+        "branches": {
+          "missed": 43,
+          "covered": 112,
+          "total": 155,
+          "percent": 72.3
+        },
+        "lines": {
+          "missed": 44,
+          "covered": 219,
+          "total": 263,
+          "percent": 83.3
+        },
+        "methods": {
+          "missed": 9,
+          "covered": 49,
+          "total": 58,
+          "percent": 84.5
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.payment",
+        "instructions": {
+          "missed": 37,
+          "covered": 264,
+          "total": 301,
+          "percent": 87.7
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 26,
+          "total": 26,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 18,
+          "covered": 81,
+          "total": 99,
+          "percent": 81.8
+        },
+        "methods": {
+          "missed": 10,
+          "covered": 29,
+          "total": 39,
+          "percent": 74.4
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities",
+        "instructions": {
+          "missed": 56,
+          "covered": 247,
+          "total": 303,
+          "percent": 81.5
+        },
+        "branches": {
+          "missed": 1,
+          "covered": 5,
+          "total": 6,
+          "percent": 83.3
+        },
+        "lines": {
+          "missed": 21,
+          "covered": 81,
+          "total": 102,
+          "percent": 79.4
+        },
+        "methods": {
+          "missed": 14,
+          "covered": 40,
+          "total": 54,
+          "percent": 74.1
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.exceptions",
+        "instructions": {
+          "missed": 74,
+          "covered": 539,
+          "total": 613,
+          "percent": 87.9
+        },
+        "branches": {
+          "missed": 7,
+          "covered": 33,
+          "total": 40,
+          "percent": 82.5
+        },
+        "lines": {
+          "missed": 12,
+          "covered": 106,
+          "total": 118,
+          "percent": 89.8
+        },
+        "methods": {
+          "missed": 9,
+          "covered": 44,
+          "total": 53,
+          "percent": 83
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.dto",
+        "instructions": {
+          "missed": 134,
+          "covered": 828,
+          "total": 962,
+          "percent": 86.1
+        },
+        "branches": {
+          "missed": 17,
+          "covered": 19,
+          "total": 36,
+          "percent": 52.8
+        },
+        "lines": {
+          "missed": 43,
+          "covered": 293,
+          "total": 336,
+          "percent": 87.2
+        },
+        "methods": {
+          "missed": 11,
+          "covered": 154,
+          "total": 165,
+          "percent": 93.3
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.management",
+        "instructions": {
+          "missed": 2,
+          "covered": 1844,
+          "total": 1846,
+          "percent": 99.9
+        },
+        "branches": {
+          "missed": 3,
+          "covered": 41,
+          "total": 44,
+          "percent": 93.2
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 234,
+          "total": 234,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 87,
+          "total": 87,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.promotions",
+        "instructions": {
+          "missed": 5,
+          "covered": 481,
+          "total": 486,
+          "percent": 99
+        },
+        "branches": {
+          "missed": 4,
+          "covered": 26,
+          "total": 30,
+          "percent": 86.7
+        },
+        "lines": {
+          "missed": 1,
+          "covered": 56,
+          "total": 57,
+          "percent": 98.2
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 21,
+          "total": 21,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.security",
+        "instructions": {
+          "missed": 31,
+          "covered": 413,
+          "total": 444,
+          "percent": 93
+        },
+        "branches": {
+          "missed": 4,
+          "covered": 23,
+          "total": 27,
+          "percent": 85.2
+        },
+        "lines": {
+          "missed": 5,
+          "covered": 88,
+          "total": 93,
+          "percent": 94.6
+        },
+        "methods": {
+          "missed": 2,
+          "covered": 23,
+          "total": 25,
+          "percent": 92
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.common",
+        "instructions": {
+          "missed": 0,
+          "covered": 319,
+          "total": 319,
+          "percent": 100
+        },
+        "branches": {
+          "missed": 1,
+          "covered": 13,
+          "total": 14,
+          "percent": 92.9
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 37,
+          "total": 37,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 20,
+          "total": 20,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.product",
+        "instructions": {
+          "missed": 14,
+          "covered": 114,
+          "total": 128,
+          "percent": 89.1
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 4,
+          "total": 4,
+          "percent": 100
+        },
+        "lines": {
+          "missed": 7,
+          "covered": 34,
+          "total": 41,
+          "percent": 82.9
+        },
+        "methods": {
+          "missed": 4,
+          "covered": 15,
+          "total": 19,
+          "percent": 78.9
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.backoffice",
+        "instructions": {
+          "missed": 35,
+          "covered": 2014,
+          "total": 2049,
+          "percent": 98.3
+        },
+        "branches": {
+          "missed": 15,
+          "covered": 86,
+          "total": 101,
+          "percent": 85.1
+        },
+        "lines": {
+          "missed": 2,
+          "covered": 246,
+          "total": 248,
+          "percent": 99.2
+        },
+        "methods": {
+          "missed": 1,
+          "covered": 85,
+          "total": 86,
+          "percent": 98.8
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.entities.audit",
+        "instructions": {
+          "missed": 18,
+          "covered": 90,
+          "total": 108,
+          "percent": 83.3
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 6,
+          "covered": 13,
+          "total": 19,
+          "percent": 68.4
+        },
+        "methods": {
+          "missed": 6,
+          "covered": 4,
+          "total": 10,
+          "percent": 40
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.api.customers",
+        "instructions": {
+          "missed": 9,
+          "covered": 1220,
+          "total": 1229,
+          "percent": 99.3
+        },
+        "branches": {
+          "missed": 10,
+          "covered": 64,
+          "total": 74,
+          "percent": 86.5
+        },
+        "lines": {
+          "missed": 0,
+          "covered": 143,
+          "total": 143,
+          "percent": 100
+        },
+        "methods": {
+          "missed": 0,
+          "covered": 49,
+          "total": 49,
+          "percent": 100
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring.controllers",
+        "instructions": {
+          "missed": 125,
+          "covered": 307,
+          "total": 432,
+          "percent": 71.1
+        },
+        "branches": {
+          "missed": 13,
+          "covered": 10,
+          "total": 23,
+          "percent": 43.5
+        },
+        "lines": {
+          "missed": 25,
+          "covered": 58,
+          "total": 83,
+          "percent": 69.9
+        },
+        "methods": {
+          "missed": 13,
+          "covered": 22,
+          "total": 35,
+          "percent": 62.9
+        }
+      },
+      {
+        "name": "db.demo",
+        "instructions": {
+          "missed": 62,
+          "covered": 78,
+          "total": 140,
+          "percent": 55.7
+        },
+        "branches": {
+          "missed": 2,
+          "covered": 8,
+          "total": 10,
+          "percent": 80
+        },
+        "lines": {
+          "missed": 15,
+          "covered": 9,
+          "total": 24,
+          "percent": 37.5
+        },
+        "methods": {
+          "missed": 2,
+          "covered": 3,
+          "total": 5,
+          "percent": 60
+        }
+      },
+      {
+        "name": "com.swee.ordermanagementspring",
+        "instructions": {
+          "missed": 5,
+          "covered": 3,
+          "total": 8,
+          "percent": 37.5
+        },
+        "branches": {
+          "missed": 0,
+          "covered": 0,
+          "total": 0,
+          "percent": 0
+        },
+        "lines": {
+          "missed": 2,
+          "covered": 1,
+          "total": 3,
+          "percent": 33.3
+        },
+        "methods": {
+          "missed": 1,
+          "covered": 1,
+          "total": 2,
+          "percent": 50
+        }
+      }
+    ]
+  },
+  "pmd": {
+    "total": 105,
+    "byRule": {
+      "UseUtilityClass": 1,
+      "UnusedFormalParameter": 5,
+      "ControlStatementBraces": 44,
+      "CyclomaticComplexity": 12,
+      "MissingStaticMethodInNonInstantiatableClass": 2,
+      "SimplifyBooleanReturns": 1,
+      "MissingOverride": 3,
+      "GuardLogStatement": 1,
+      "UnnecessaryImport": 9,
+      "UncommentedEmptyConstructor": 14,
+      "BigIntegerInstantiation": 1,
+      "LambdaCanBeMethodReference": 2,
+      "LiteralsFirstInComparisons": 2,
+      "UnnecessaryFullyQualifiedName": 1,
+      "UseLocaleWithCaseConversions": 4,
+      "PreserveStackTrace": 1,
+      "CognitiveComplexity": 1,
+      "ClassNamingConventions": 1
+    },
+    "byRuleset": {
+      "Design": 15,
+      "Best Practices": 12,
+      "Code Style": 57,
+      "Error Prone": 6,
+      "Documentation": 14,
+      "Performance": 1
+    },
+    "byPriority": {
+      "1": 1,
+      "2": 1,
+      "3": 93,
+      "4": 10
+    },
+    "violations": [
+      {
+        "file": "com/swee/ordermanagementspring/OrderManagementSpringApplication.java",
+        "line": 7,
+        "rule": "UseUtilityClass",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "All methods are static. Consider adding a private no-args constructor to prevent instantiation."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/BackofficeRepository.java",
+        "line": 47,
+        "rule": "UnusedFormalParameter",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Avoid unused method parameters such as 'n'."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/BackofficeRepository.java",
+        "line": 121,
+        "rule": "UnusedFormalParameter",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Avoid unused method parameters such as 'n'."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/BackofficeRepository.java",
+        "line": 158,
+        "rule": "UnusedFormalParameter",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Avoid unused method parameters such as 'n'."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 50,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 110,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 111,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 129,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 147,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 156,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 166,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java",
+        "line": 188,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/StockService.java",
+        "line": 65,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/StockService.java",
+        "line": 82,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'adjust(CurrentUser, long, StockAdjustmentRequest)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/StockService.java",
+        "line": 84,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/StockService.java",
+        "line": 117,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/backoffice/StockService.java",
+        "line": 123,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/common/Addresses.java",
+        "line": 48,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/customers/CustomersRepository.java",
+        "line": 44,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/customers/CustomersRepository.java",
+        "line": 45,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/customers/CustomersRepository.java",
+        "line": 126,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/customers/CustomersService.java",
+        "line": 131,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/customers/DocumentFormat.java",
+        "line": 11,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'of(String, String, boolean)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/management/GoalsService.java",
+        "line": 40,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/management/GoalsService.java",
+        "line": 78,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'save(CurrentUser, MonthlyGoalsRequest)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/management/GoalsService.java",
+        "line": 84,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/management/GoalsService.java",
+        "line": 87,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/promotions/PromotionsDtos.java",
+        "line": 20,
+        "rule": "MissingStaticMethodInNonInstantiatableClass",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "Class cannot be instantiated and does not provide any static methods or fields"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/promotions/PromotionsService.java",
+        "line": 52,
+        "rule": "UnusedFormalParameter",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Avoid unused method parameters such as 'n'."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/Pricing.java",
+        "line": 24,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/Pricing.java",
+        "line": 25,
+        "rule": "SimplifyBooleanReturns",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "This if statement can be replaced by `return !{condition} || {thenBranch};`"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/Pricing.java",
+        "line": 25,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/Pricing.java",
+        "line": 35,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesController.java",
+        "line": 56,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesController.java",
+        "line": 63,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesDtos.java",
+        "line": 30,
+        "rule": "MissingStaticMethodInNonInstantiatableClass",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "Class cannot be instantiated and does not provide any static methods or fields"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesDtos.java",
+        "line": 41,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesDtos.java",
+        "line": 63,
+        "rule": "MissingOverride",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "The method 'type()' is missing an @Override annotation."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesDtos.java",
+        "line": 70,
+        "rule": "MissingOverride",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "The method 'type()' is missing an @Override annotation."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesDtos.java",
+        "line": 74,
+        "rule": "MissingOverride",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "The method 'type()' is missing an @Override annotation."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesRepository.java",
+        "line": 64,
+        "rule": "UnusedFormalParameter",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Avoid unused method parameters such as 'n'."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 80,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 127,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'create(CurrentUser, UUID, String, SalesOrderRequest)' has a cyclomatic complexity of 12."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 193,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 219,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 220,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 250,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/api/sales/SalesService.java",
+        "line": 251,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/ContractUsersConfig.java",
+        "line": 24,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/OpenApiConfig.java",
+        "line": 25,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/OpenApiConfig.java",
+        "line": 42,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/config/SecurityConfig.java",
+        "line": 109,
+        "rule": "GuardLogStatement",
+        "ruleset": "Best Practices",
+        "priority": 2,
+        "message": "Logger calls should be surrounded by log level guards."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/controllers/ApiErrorController.java",
+        "line": 23,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'error(HttpServletRequest)' has a cyclomatic complexity of 12."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/controllers/ApiErrorController.java",
+        "line": 27,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/controllers/AuthController.java",
+        "line": 79,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/dto/AddressResponseDTO.java",
+        "line": 32,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java",
+        "line": 4,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'jakarta.validation.constraints.NotBlank'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Address.java",
+        "line": 18,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Order.java",
+        "line": 9,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'org.hibernate.engine.internal.Cascade'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/Order.java",
+        "line": 45,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/OrderItem.java",
+        "line": 24,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/audit/AuditEvent.java",
+        "line": 26,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/auth/AppUser.java",
+        "line": 28,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/customer/CorporateCustomer.java",
+        "line": 17,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/customer/Customer.java",
+        "line": 30,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/customer/IndividualCustomer.java",
+        "line": 16,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/BoletoPayment.java",
+        "line": 6,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/BoletoPayment.java",
+        "line": 14,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'java.time.LocalDateTime'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/CardPayment.java",
+        "line": 6,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/CardPayment.java",
+        "line": 16,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'java.time.LocalDateTime'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/CardPayment.java",
+        "line": 29,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/Payment.java",
+        "line": 38,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/PixPayment.java",
+        "line": 6,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.entities.enums.OrderStatus'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/PixPayment.java",
+        "line": 16,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'java.time.LocalDateTime'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/payment/PixPayment.java",
+        "line": 28,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/DigitalProduct.java",
+        "line": 13,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/PhysicalProduct.java",
+        "line": 15,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/PhysicalProduct.java",
+        "line": 39,
+        "rule": "BigIntegerInstantiation",
+        "ruleset": "Performance",
+        "priority": 3,
+        "message": "Don't create instances of already existing BigInteger and BigDecimal (ZERO, ONE, TEN)"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/entities/product/Product.java",
+        "line": 28,
+        "rule": "UncommentedEmptyConstructor",
+        "ruleset": "Documentation",
+        "priority": 3,
+        "message": "Document empty constructor"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 80,
+        "rule": "LambdaCanBeMethodReference",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "Lambda expression could be written as a method reference: `DefaultMessageSourceResolvable::getDefaultMessage`"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 87,
+        "rule": "LambdaCanBeMethodReference",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "Lambda expression could be written as a method reference: `MessageSourceResolvable::getDefaultMessage`"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 136,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 166,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'handleDataIntegrityViolation(DataIntegrityViolationException)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 173,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 176,
+        "rule": "LiteralsFirstInComparisons",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Position literals first in String comparisons"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 203,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 209,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/exceptions/GlobalExceptionHandler.java",
+        "line": 218,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/security/AppPrincipal.java",
+        "line": 15,
+        "rule": "UnnecessaryFullyQualifiedName",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unnecessary qualifier 'User': 'withUsername' is already in scope"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/security/AreaResolver.java",
+        "line": 29,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/security/AreaResolver.java",
+        "line": 30,
+        "rule": "ControlStatementBraces",
+        "ruleset": "Code Style",
+        "priority": 3,
+        "message": "This statement should have braces"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/security/LockoutAuthenticationProvider.java",
+        "line": 34,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'authenticate(Authentication)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/CustomerService.java",
+        "line": 68,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildCustomer(CustomerRequestDTO)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/CustomerService.java",
+        "line": 69,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 20,
+        "rule": "UnnecessaryImport",
+        "ruleset": "Code Style",
+        "priority": 4,
+        "message": "Unused import 'com.swee.ordermanagementspring.exceptions.ProductException'"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 92,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildNewCustomer(CustomerRequestDTO)' has a cyclomatic complexity of 10."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 93,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 129,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildPayment(OrderPaymentRequestDTO, Order)' has a cyclomatic complexity of 14."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 161,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/OrderService.java",
+        "line": 163,
+        "rule": "PreserveStackTrace",
+        "ruleset": "Best Practices",
+        "priority": 3,
+        "message": "Thrown exception does not preserve the stack trace of exception 'e' on all code paths"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 91,
+        "rule": "CognitiveComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'update(Long, PaymentRequestDTO)' has a cognitive complexity of 16, current threshold is 15"
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 91,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'update(Long, PaymentRequestDTO)' has a cyclomatic complexity of 17."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/PaymentService.java",
+        "line": 176,
+        "rule": "CyclomaticComplexity",
+        "ruleset": "Design",
+        "priority": 3,
+        "message": "The method 'buildPayment(PaymentRequestDTO, Order)' has a cyclomatic complexity of 14."
+      },
+      {
+        "file": "com/swee/ordermanagementspring/services/ProductService.java",
+        "line": 54,
+        "rule": "UseLocaleWithCaseConversions",
+        "ruleset": "Error Prone",
+        "priority": 3,
+        "message": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale"
+      },
+      {
+        "file": "db/demo/V6_1__DemoAccounts.java",
+        "line": 16,
+        "rule": "ClassNamingConventions",
+        "ruleset": "Code Style",
+        "priority": 1,
+        "message": "The class name 'V6_1__DemoAccounts' doesn't match '[A-Z][a-zA-Z0-9]*'"
+      }
+    ]
+  },
+  "cpd": {
+    "total": 18,
+    "duplicatedLines": 253,
+    "duplications": [
+      {
+        "lines": 58,
+        "tokens": 163,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:45",
+          "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java:60"
+        ]
+      },
+      {
+        "lines": 56,
+        "tokens": 162,
+        "files": [
+          "com/swee/ordermanagementspring/dto/AddressRequestDTO.java:31",
+          "com/swee/ordermanagementspring/entities/Address.java:36"
+        ]
+      },
+      {
+        "lines": 4,
+        "tokens": 79,
+        "files": [
+          "com/swee/ordermanagementspring/api/common/Addresses.java:31",
+          "com/swee/ordermanagementspring/api/common/Addresses.java:40"
+        ]
+      },
+      {
+        "lines": 27,
+        "tokens": 71,
+        "files": [
+          "com/swee/ordermanagementspring/dto/CustomerRequestDTO.java:39",
+          "com/swee/ordermanagementspring/entities/customer/Customer.java:38"
+        ]
+      },
+      {
+        "lines": 3,
+        "tokens": 69,
+        "files": [
+          "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java:85",
+          "com/swee/ordermanagementspring/api/backoffice/CatalogAdminService.java:117"
+        ]
+      },
+      {
+        "lines": 27,
+        "tokens": 68,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:21",
+          "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java:26"
+        ]
+      },
+      {
+        "lines": 5,
+        "tokens": 65,
+        "files": [
+          "com/swee/ordermanagementspring/api/sales/SalesService.java:216",
+          "com/swee/ordermanagementspring/api/sales/SalesService.java:247"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 63,
+        "files": [
+          "com/swee/ordermanagementspring/services/CustomerService.java:72",
+          "com/swee/ordermanagementspring/services/OrderService.java:96"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 62,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:133",
+          "com/swee/ordermanagementspring/services/PaymentService.java:180"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 60,
+        "files": [
+          "com/swee/ordermanagementspring/api/backoffice/BackofficeDtos.java:47",
+          "com/swee/ordermanagementspring/api/backoffice/BackofficeDtos.java:56"
+        ]
+      },
+      {
+        "lines": 7,
+        "tokens": 60,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:139",
+          "com/swee/ordermanagementspring/services/PaymentService.java:186"
+        ]
+      },
+      {
+        "lines": 6,
+        "tokens": 53,
+        "files": [
+          "com/swee/ordermanagementspring/api/backoffice/BackofficeDtos.java:47",
+          "com/swee/ordermanagementspring/api/backoffice/BackofficeDtos.java:66"
+        ]
+      },
+      {
+        "lines": 8,
+        "tokens": 53,
+        "files": [
+          "com/swee/ordermanagementspring/api/backoffice/ProductsController.java:66",
+          "com/swee/ordermanagementspring/api/customers/CustomersController.java:56"
+        ]
+      },
+      {
+        "lines": 9,
+        "tokens": 53,
+        "files": [
+          "com/swee/ordermanagementspring/dto/OrderPaymentRequestDTO.java:11",
+          "com/swee/ordermanagementspring/dto/PaymentRequestDTO.java:12"
+        ]
+      },
+      {
+        "lines": 8,
+        "tokens": 53,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:145",
+          "com/swee/ordermanagementspring/services/PaymentService.java:192"
+        ]
+      },
+      {
+        "lines": 4,
+        "tokens": 51,
+        "files": [
+          "com/swee/ordermanagementspring/api/backoffice/ProductsController.java:36",
+          "com/swee/ordermanagementspring/api/promotions/PromotionsController.java:37"
+        ]
+      },
+      {
+        "lines": 5,
+        "tokens": 50,
+        "files": [
+          "com/swee/ordermanagementspring/api/sales/SalesService.java:232",
+          "com/swee/ordermanagementspring/api/sales/SalesService.java:260"
+        ]
+      },
+      {
+        "lines": 5,
+        "tokens": 50,
+        "files": [
+          "com/swee/ordermanagementspring/services/OrderService.java:129",
+          "com/swee/ordermanagementspring/services/PaymentService.java:176"
+        ]
+      }
+    ]
+  },
+  "spotbugs": {
+    "total": 83,
+    "byCategory": {
+      "MALICIOUS_CODE": 72,
+      "BAD_PRACTICE": 4,
+      "STYLE": 3,
+      "I18N": 4
+    },
+    "byPriority": {
+      "2": 76,
+      "3": 7
+    },
+    "byType": {
+      "EI_EXPOSE_REP2": 40,
+      "EI_EXPOSE_REP": 32,
+      "NM_CONFUSING": 1,
+      "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION": 1,
+      "CT_CONSTRUCTOR_THROW": 1,
+      "SE_TRANSIENT_FIELD_NOT_RESTORED": 1,
+      "BC_UNCONFIRMED_CAST": 1,
+      "EQ_DOESNT_OVERRIDE_EQUALS": 1,
+      "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE": 1,
+      "DM_CONVERT_CASE": 4
+    },
+    "ncss": 5154,
+    "bugs": [
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ProductsController",
+        "line": 29
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomerDtos$CustomerOrderSummary",
+        "line": 77
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomerDtos$CustomerOrderSummary",
+        "line": 77
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomersController",
+        "line": 25
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomersRepository$HistoryRow",
+        "line": 103
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomersRepository$HistoryRow",
+        "line": 103
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$ManagementSummary",
+        "line": 79
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$ManagementSummary",
+        "line": 79
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$MonthlyGoals",
+        "line": 71
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$MonthlyGoals",
+        "line": 71
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$MonthlyGoalsRequest",
+        "line": 65
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$MonthlyGoalsRequest",
+        "line": 65
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$RevenueReport",
+        "line": 49
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$SalesAnalytics",
+        "line": 98
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$StockAnalytics",
+        "line": 101
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "ManagementDtos$StockAnalytics",
+        "line": 101
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "RequestHash",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$QuoteRequest",
+        "line": 46
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$QuoteRequest",
+        "line": 46
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$QuoteResponse",
+        "line": 106
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$QuoteResponse",
+        "line": 106
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$SalesOrderRequest",
+        "line": 77
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$SalesOrderRequest",
+        "line": 77
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$SalesOrderResponse",
+        "line": 113
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "SalesDtos$SalesOrderResponse",
+        "line": 113
+      },
+      {
+        "type": "NM_CONFUSING",
+        "category": "BAD_PRACTICE",
+        "priority": 3,
+        "rank": 19,
+        "class": "SalesService$PricedItem",
+        "line": 70
+      },
+      {
+        "type": "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION",
+        "category": "BAD_PRACTICE",
+        "priority": 3,
+        "rank": 19,
+        "class": "SecurityConfig",
+        "line": 38
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "AuthController$UserSession",
+        "line": 51
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "AuthController$UserSession",
+        "line": 51
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "CustomerController",
+        "line": 16
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderController",
+        "line": 25
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderRequestDTO",
+        "line": 9
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderResponseDTO",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderResponseDTO",
+        "line": 23
+      },
+      {
+        "type": "CT_CONSTRUCTOR_THROW",
+        "category": "BAD_PRACTICE",
+        "priority": 2,
+        "rank": 16,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Order",
+        "line": 23
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "OrderItem",
+        "line": 24
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Customer",
+        "line": 30
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Customer",
+        "line": 30
+      },
+      {
+        "type": "EI_EXPOSE_REP",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 38
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 38
+      },
+      {
+        "type": "EI_EXPOSE_REP2",
+        "category": "MALICIOUS_CODE",
+        "priority": 2,
+        "rank": 18,
+        "class": "Payment",
+        "line": 38
+      },
+      {
+        "type": "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        "category": "BAD_PRACTICE",
+        "priority": 3,
+        "rank": 19,
+        "class": "ApiException",
+        "line": 17
+      },
+      {
+        "type": "BC_UNCONFIRMED_CAST",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 17,
+        "class": "GlobalExceptionHandler",
+        "line": 38
+      },
+      {
+        "type": "EQ_DOESNT_OVERRIDE_EQUALS",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 17,
+        "class": "AppPrincipal",
+        "line": 14
+      },
+      {
+        "type": "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+        "category": "STYLE",
+        "priority": 2,
+        "rank": 13,
+        "class": "LockoutAuthenticationProvider",
+        "line": 26
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "CustomerService",
+        "line": 20
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "OrderService",
+        "line": 42
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "OrderService",
+        "line": 42
+      },
+      {
+        "type": "DM_CONVERT_CASE",
+        "category": "I18N",
+        "priority": 3,
+        "rank": 20,
+        "class": "ProductService",
+        "line": 18
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.01" tests="10" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[1]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.002"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[2]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.001"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[3]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.001"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[4]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[5]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[6]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.001"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[7]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+  <testcase name="databaseViolationsBecome409WithCode(String, String, ErrorCode)[8]" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+  <testcase name="legacyDuplicatePaymentKeepsMessage" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+  <testcase name="optimisticLockIsConcurrentUpdate" classname="com.swee.ordermanagementspring.exceptions.DataIntegrityMappingTest" time="0.0"/>
+</testsuite>

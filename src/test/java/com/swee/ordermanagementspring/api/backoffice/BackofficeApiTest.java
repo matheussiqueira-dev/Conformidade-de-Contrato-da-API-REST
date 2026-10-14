@@ -115,6 +115,15 @@ class BackofficeApiTest {
     }
 
     @Test
+    @DisplayName("[CT-PRODUCT-001, CT-PRODUCT-002] fisico sem peso e digital sem link respondem 400")
+    void productTypeRequiresItsField() throws Exception {
+        assertError(send(post("/products"), PHYSICAL.replace(",\"weightKg\":0.8", "")), 400, "VALIDATION_FAILED");
+        assertError(send(post("/products"), DIGITAL.replace(",\"downloadLink\":\"https://loja.test/guia.pdf\"", "")), 400, "VALIDATION_FAILED");
+        assertError(send(post("/products"), PHYSICAL.replace("\"weightKg\":0.8", "\"weightKg\":-1")), 400, "VALIDATION_FAILED");
+        assertThat(fx.count("SELECT count(*) FROM product")).isZero();
+    }
+
+    @Test
     @DisplayName("[RF-22] lista com filtros; edicao sem preco nem situacao (C-17); tipo errado 400")
     void listAndUpdateProducts() throws Exception {
         long mouse = fx.product("MOU-001", "Mouse", "50.00", 2, "20.00");

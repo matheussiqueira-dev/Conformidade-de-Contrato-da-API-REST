@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">ManagementService.java</span></div><h1>ManagementService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.*;
+import com.swee.ordermanagementspring.api.management.ManagementRepository.Day;
+import com.swee.ordermanagementspring.entities.StoreTime;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ * Faturamento do GERENTE (RF-09, D9 do modelo de dados): soma os dias de v_faturamento_diario do periodo.
+ * Lucro = liquido - custo conhecido e fica nulo se algum dia nao tiver custo (C-20); margem = lucro / liquido;
+ * cobertura de custo = receita com custo / bruto. Percentuais com 1 casa, HALF_UP.
+ */
+@Service
+@PreAuthorize(&quot;hasRole('GERENTE')&quot;)
+public class ManagementService {
+<span class="fc" id="L29">    private static final BigDecimal HUNDRED = BigDecimal.valueOf(100);</span>
+
+    private final ManagementRepository repository;
+
+<span class="fc" id="L33">    public ManagementService(ManagementRepository repository) {</span>
+<span class="fc" id="L34">        this.repository = repository;</span>
+<span class="fc" id="L35">    }</span>
+
+    @Transactional(readOnly = true)
+    public RevenueReport revenue(RevenuePeriod period) {
+<span class="fc" id="L39">        LocalDate today = StoreTime.today();</span>
+<span class="fc" id="L40">        DateRange range = period.range(today);</span>
+<span class="fc" id="L41">        List&lt;Day&gt; days = repository.days(range);</span>
+
+<span class="fc" id="L43">        BigDecimal gross = sum(days, Day::gross);</span>
+<span class="fc" id="L44">        BigDecimal refunds = sum(days, Day::refunds);</span>
+<span class="fc" id="L45">        BigDecimal net = sum(days, Day::net);</span>
+<span class="fc" id="L46">        BigDecimal withCost = sum(days, Day::revenueWithCost);</span>
+<span class="fc" id="L47">        long ordersPaid = days.stream().mapToLong(Day::ordersPaid).sum();</span>
+<span class="fc" id="L48">        long units = days.stream().mapToLong(Day::units).sum();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        boolean costKnown = days.stream().allMatch(d -&gt; d.grossProfit() != null);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        BigDecimal profit = costKnown ? sum(days, Day::grossProfit) : null;</span>
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        BigDecimal averageTicket = ordersPaid == 0 ? null</span>
+<span class="fc" id="L53">                : gross.divide(BigDecimal.valueOf(ordersPaid), 2, RoundingMode.HALF_UP);</span>
+<span class="fc bfc" id="L54" title="All 4 branches covered.">        BigDecimal margin = profit == null || net.signum() &lt;= 0 ? null</span>
+<span class="fc" id="L55">                : profit.multiply(HUNDRED).divide(net, 1, RoundingMode.HALF_UP);</span>
+        // D-EXEC-01: sem venda no periodo a cobertura e 0 (nada foi coberto), nunca um numero inventado.
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        BigDecimal coverage = gross.signum() &lt;= 0 ? BigDecimal.ZERO.setScale(1)</span>
+<span class="fc" id="L58">                : withCost.multiply(HUNDRED).divide(gross, 1, RoundingMode.HALF_UP).min(BigDecimal.valueOf(1000, 1));</span>
+
+<span class="fc" id="L60">        Map&lt;LocalDate, Day&gt; byDate = days.stream().collect(Collectors.toMap(Day::date, Function.identity()));</span>
+<span class="fc" id="L61">        List&lt;DailyRevenue&gt; daily = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (LocalDate date = range.from(); !date.isAfter(range.to()); date = date.plusDays(1)) {</span>
+<span class="fc" id="L63">            Day day = byDate.get(date);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            daily.add(day == null ? new DailyRevenue(date, MoneyDto.of(BigDecimal.ZERO), MoneyDto.of(BigDecimal.ZERO))</span>
+<span class="fc" id="L65">                    : new DailyRevenue(date, MoneyDto.of(day.net()), MoneyDto.of(day.grossProfit())));</span>
+        }
+
+<span class="fc" id="L68">        var pending = repository.pending();</span>
+<span class="fc" id="L69">        return new RevenueReport(range, MoneyDto.of(gross), MoneyDto.of(refunds), MoneyDto.of(net), ordersPaid, units,</span>
+<span class="fc" id="L70">                MoneyDto.of(averageTicket), MoneyDto.of(profit), margin, coverage, daily, repository.byPaymentMethod(range),</span>
+<span class="fc" id="L71">                repository.bySeller(range), repository.topProducts(range), repository.lowStockCount(), pending.count(),</span>
+<span class="fc" id="L72">                MoneyDto.of(pending.amount()), OffsetDateTime.now(StoreTime.clock()));</span>
+    }
+
+    private static BigDecimal sum(List&lt;Day&gt; days, Function&lt;Day, BigDecimal&gt; value) {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        return days.stream().map(value).map(v -&gt; v == null ? BigDecimal.ZERO : v).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

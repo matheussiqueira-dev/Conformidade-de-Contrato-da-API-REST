@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoletoPayment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.entities.payment</a> &gt; <span class="el_source">BoletoPayment.java</span></div><h1>BoletoPayment.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.entities.payment;
+
+import com.swee.ordermanagementspring.entities.StoreTime;
+
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@DiscriminatorValue(&quot;BOLETO&quot;)
+public class BoletoPayment extends Payment{
+
+    private String barCode;
+    private LocalDate dueDate;
+
+    public BoletoPayment(BigDecimal amount, Order order, String barCode, LocalDate dueDate) {
+<span class="fc" id="L24">        super(amount, order);</span>
+<span class="fc" id="L25">        this.barCode = barCode;</span>
+<span class="fc" id="L26">        this.dueDate = dueDate;</span>
+<span class="fc" id="L27">        this.status = PaymentStatus.PENDING;</span>
+<span class="fc" id="L28">    }</span>
+
+    public String getBarCode() {
+<span class="nc" id="L31">        return barCode;</span>
+    }
+
+    public void setBarCode(String barCode) {
+<span class="nc" id="L35">        this.barCode = barCode;</span>
+<span class="nc" id="L36">    }</span>
+
+    public LocalDate getDueDate() {
+<span class="nc" id="L39">        return dueDate;</span>
+    }
+
+     public void setDueDate(LocalDate dueDate) {
+<span class="nc" id="L43">        this.dueDate = dueDate;</span>
+<span class="nc" id="L44">    }</span>
+
+    @Override
+    public boolean processPayment() {
+<span class="fc" id="L48">        return processPayment(StoreTime.today());</span>
+    }
+
+    /** Data de referencia explicita: o teste de vencimento nao depende da virada do dia. */
+    boolean processPayment(LocalDate today) {
+<span class="fc bfc" id="L53" title="All 4 branches covered.">        if (barCode == null || barCode.isEmpty()) {</span>
+<span class="fc" id="L54">            throw new PaymentException(&quot;Invalid barcode&quot;);</span>
+        }
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (dueDate == null) {</span>
+<span class="fc" id="L58">            throw new PaymentException(&quot;dueDate is required for BOLETO payments&quot;);</span>
+        }
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (dueDate.isBefore(today)) {</span>
+<span class="fc" id="L62">            this.status = PaymentStatus.EXPIRED;</span>
+<span class="fc" id="L63">            return false;</span>
+        }
+<span class="fc" id="L65">    this.status = PaymentStatus.APPROVED;</span>
+<span class="fc" id="L66">        this.paymentDate = StoreTime.now();</span>
+<span class="fc" id="L67">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

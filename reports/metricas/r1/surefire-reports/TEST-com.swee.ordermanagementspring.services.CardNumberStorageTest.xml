@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.services.CardNumberStorageTest" time="0.128" tests="1" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="legacyCardPaymentStoresOnlyLastFourDigits" classname="com.swee.ordermanagementspring.services.CardNumberStorageTest" time="0.084">
+    <system-out><![CDATA[2026-10-14T06:42:48.568-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.services.CardNumberStorageTest]: CardNumberStorageTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:48.599-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.services.CardNumberStorageTest
+2026-10-14T06:42:48.601-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.services.CardNumberStorageTest]: CardNumberStorageTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:48.603-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.services.CardNumberStorageTest
+2026-10-14T06:42:48.610-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.610-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.611-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+</testsuite>

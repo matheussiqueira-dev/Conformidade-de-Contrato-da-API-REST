@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.services.CatalogServicesTest" time="0.465" tests="23" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="deletingExistingProductDeletes" classname="ProductService" time="0.106"/>
+  <testcase name="decisionTable(String, Double, String, String)[1]" classname="ProductService" time="0.007"/>
+  <testcase name="decisionTable(String, Double, String, String)[2]" classname="ProductService" time="0.001"/>
+  <testcase name="decisionTable(String, Double, String, String)[3]" classname="ProductService" time="0.004"/>
+  <testcase name="decisionTable(String, Double, String, String)[4]" classname="ProductService" time="0.003"/>
+  <testcase name="decisionTable(String, Double, String, String)[5]" classname="ProductService" time="0.003"/>
+  <testcase name="decisionTable(String, Double, String, String)[6]" classname="ProductService" time="0.002"/>
+  <testcase name="decisionTable(String, Double, String, String)[7]" classname="ProductService" time="0.002"/>
+  <testcase name="deletingMissingProductFails" classname="ProductService" time="0.003"/>
+  <testcase name="updateKeepsWeightWhenAbsent" classname="ProductService" time="0.004"/>
+  <testcase name="missingProduct" classname="ProductService" time="0.002"/>
+  <testcase name="deletingMissingAddressFails" classname="AddressService" time="0.169"/>
+  <testcase name="deletingExistingAddressDeletes" classname="AddressService" time="0.002"/>
+  <testcase name="missingAddress" classname="AddressService" time="0.002"/>
+  <testcase name="invalidType" classname="CustomerService" time="0.101"/>
+  <testcase name="individualUpdateKeepsCpf" classname="CustomerService" time="0.003"/>
+  <testcase name="missingDocumentIsAClientError(String)[1]" classname="CustomerService" time="0.003"/>
+  <testcase name="missingDocumentIsAClientError(String)[2]" classname="CustomerService" time="0.003"/>
+  <testcase name="corporateWithCnpj" classname="CustomerService" time="0.002"/>
+  <testcase name="deletingExistingClientDeletes" classname="CustomerService" time="0.002"/>
+  <testcase name="corporateUpdate" classname="CustomerService" time="0.002"/>
+  <testcase name="deletingMissingCustomerFails" classname="CustomerService" time="0.003"/>
+  <testcase name="individualWithCpf" classname="CustomerService" time="0.004"/>
+</testsuite>

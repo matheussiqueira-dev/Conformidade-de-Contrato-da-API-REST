@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.swee.ordermanagementspring.entities.customer.DocumentsTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.swee.ordermanagementspring.entities.customer.DocumentsTest

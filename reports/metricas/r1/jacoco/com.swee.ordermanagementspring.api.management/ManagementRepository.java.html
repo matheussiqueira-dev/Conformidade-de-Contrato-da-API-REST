@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">ManagementRepository.java</span></div><h1>ManagementRepository.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.*;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+
+/** Leituras do faturamento sobre as views do V6 (B-09): v_faturamento_diario, v_lancamento_realizado, v_alerta_estoque. */
+@Repository
+public class ManagementRepository {
+    private final JdbcClient jdbc;
+
+<span class="fc" id="L18">    public ManagementRepository(JdbcClient jdbc) {</span>
+<span class="fc" id="L19">        this.jdbc = jdbc;</span>
+<span class="fc" id="L20">    }</span>
+
+    /** Linha de v_faturamento_diario; lucroBruto nulo quando algum item vendido no dia nao tem custo (C-20). */
+<span class="fc" id="L23">    public record Day(LocalDate date, BigDecimal gross, BigDecimal refunds, BigDecimal net, long ordersPaid, long units,</span>
+                      BigDecimal revenueWithCost, BigDecimal grossProfit) { }
+
+    public List&lt;Day&gt; days(DateRange range) {
+<span class="fc" id="L27">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT dia, faturamento_bruto, estornos, faturamento_liquido, pedidos_pagos, unidades, receita_com_custo,
+                       lucro_bruto
+                  FROM v_faturamento_diario WHERE dia BETWEEN :from AND :to ORDER BY dia&quot;&quot;&quot;)
+<span class="fc" id="L31">                .param(&quot;from&quot;, range.from()).param(&quot;to&quot;, range.to())</span>
+<span class="fc" id="L32">                .query((rs, n) -&gt; new Day(rs.getObject(&quot;dia&quot;, LocalDate.class), rs.getBigDecimal(&quot;faturamento_bruto&quot;),</span>
+<span class="fc" id="L33">                        rs.getBigDecimal(&quot;estornos&quot;), rs.getBigDecimal(&quot;faturamento_liquido&quot;), rs.getLong(&quot;pedidos_pagos&quot;),</span>
+<span class="fc" id="L34">                        rs.getLong(&quot;unidades&quot;), rs.getBigDecimal(&quot;receita_com_custo&quot;), rs.getBigDecimal(&quot;lucro_bruto&quot;)))</span>
+<span class="fc" id="L35">                .list();</span>
+    }
+
+    public List&lt;PaymentMethodRevenue&gt; byPaymentMethod(DateRange range) {
+<span class="fc" id="L39">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT payment_type, count(DISTINCT order_id) FILTER (WHERE tipo = 'VENDA') AS pedidos, sum(valor) AS valor
+                  FROM v_lancamento_realizado WHERE data BETWEEN :from AND :to
+                 GROUP BY payment_type ORDER BY sum(valor) DESC, payment_type&quot;&quot;&quot;)
+<span class="fc" id="L43">                .param(&quot;from&quot;, range.from()).param(&quot;to&quot;, range.to())</span>
+<span class="fc" id="L44">                .query((rs, n) -&gt; new PaymentMethodRevenue(rs.getString(&quot;payment_type&quot;), rs.getLong(&quot;pedidos&quot;),</span>
+<span class="fc" id="L45">                        MoneyDto.of(rs.getBigDecimal(&quot;valor&quot;)))).list();</span>
+    }
+
+    public List&lt;SellerRevenue&gt; bySeller(DateRange range) {
+<span class="fc" id="L49">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT l.seller_id, u.name, count(DISTINCT l.order_id) FILTER (WHERE l.tipo = 'VENDA') AS pedidos,
+                       sum(l.valor) AS valor
+                  FROM v_lancamento_realizado l JOIN app_users u ON u.id = l.seller_id
+                 WHERE l.data BETWEEN :from AND :to
+                 GROUP BY l.seller_id, u.name ORDER BY sum(l.valor) DESC, l.seller_id&quot;&quot;&quot;)
+<span class="fc" id="L55">                .param(&quot;from&quot;, range.from()).param(&quot;to&quot;, range.to())</span>
+<span class="fc" id="L56">                .query((rs, n) -&gt; new SellerRevenue(new UserRef(rs.getLong(&quot;seller_id&quot;), rs.getString(&quot;name&quot;)),</span>
+<span class="fc" id="L57">                        rs.getLong(&quot;pedidos&quot;), MoneyDto.of(rs.getBigDecimal(&quot;valor&quot;)))).list();</span>
+    }
+
+    /** Ate 20 produtos por receita liquida dos pagamentos confirmados no periodo; lucro nulo se faltar custo. */
+    public List&lt;ProductRevenue&gt; topProducts(DateRange range) {
+<span class="fc" id="L62">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT pr.id, pr.sku, pr.name, sum(oi.quantity) AS unidades,
+                       sum(oi.price * oi.quantity - oi.discount) AS receita,
+                       CASE WHEN count(*) FILTER (WHERE oi.unit_cost IS NULL) = 0
+                            THEN sum(oi.price * oi.quantity - oi.discount) - sum(oi.unit_cost * oi.quantity) END AS lucro
+                  FROM order_item oi
+                  JOIN payment p  ON p.order_id = oi.order_id AND p.status = 'APPROVED'
+                  JOIN product pr ON pr.id = oi.product_id
+                 WHERE p.payment_date::date BETWEEN :from AND :to
+                 GROUP BY pr.id, pr.sku, pr.name
+                 ORDER BY receita DESC, pr.id LIMIT 20&quot;&quot;&quot;)
+<span class="fc" id="L73">                .param(&quot;from&quot;, range.from()).param(&quot;to&quot;, range.to())</span>
+<span class="fc" id="L74">                .query((rs, n) -&gt; new ProductRevenue(rs.getLong(&quot;id&quot;), rs.getString(&quot;sku&quot;), rs.getString(&quot;name&quot;),</span>
+<span class="fc" id="L75">                        rs.getLong(&quot;unidades&quot;), MoneyDto.of(rs.getBigDecimal(&quot;receita&quot;)), MoneyDto.of(rs.getBigDecimal(&quot;lucro&quot;))))</span>
+<span class="fc" id="L76">                .list();</span>
+    }
+
+    public long lowStockCount() {
+<span class="fc" id="L80">        return jdbc.sql(&quot;SELECT count(*) FROM v_alerta_estoque&quot;).query(Long.class).single();</span>
+    }
+
+<span class="fc" id="L83">    public record Pending(long count, BigDecimal amount) { }</span>
+
+    /** Pedidos aguardando pagamento agora (fotografia operacional, nao recortada pelo periodo: D-EXEC-02). */
+    public Pending pending() {
+<span class="fc" id="L87">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT count(*) AS pedidos, coalesce(sum(p.amount), 0) AS valor
+                  FROM orders o LEFT JOIN payment p ON p.order_id = o.id
+                 WHERE o.status = 'PENDING_PAYMENT'&quot;&quot;&quot;)
+<span class="fc" id="L91">                .query((rs, n) -&gt; new Pending(rs.getLong(&quot;pedidos&quot;), rs.getBigDecimal(&quot;valor&quot;))).single();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

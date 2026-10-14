@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CatalogAdminService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">CatalogAdminService.java</span></div><h1>CatalogAdminService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.*;
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.DbSessionContext;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.exceptions.ApiException;
+import com.swee.ordermanagementspring.exceptions.ErrorCode;
+import com.swee.ordermanagementspring.security.AuditService;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * Produtos, insumos e categorias (RF-22). SKU em maiusculas e unico (C-16); preco so pelo PATCH /price, com motivo
+ * gravado pelo gatilho da V5; produto com venda ou estoque movimentado nao e excluido, e sim inativado.
+ */
+@Service
+@PreAuthorize(&quot;hasRole('GERENTE')&quot;)
+public class CatalogAdminService {
+    private final BackofficeRepository repository;
+    private final JdbcClient jdbc;
+    private final DbSessionContext session;
+    private final AuditService audit;
+
+<span class="fc" id="L32">    public CatalogAdminService(BackofficeRepository repository, JdbcClient jdbc, DbSessionContext session, AuditService audit) {</span>
+<span class="fc" id="L33">        this.repository = repository;</span>
+<span class="fc" id="L34">        this.jdbc = jdbc;</span>
+<span class="fc" id="L35">        this.session = session;</span>
+<span class="fc" id="L36">        this.audit = audit;</span>
+<span class="fc" id="L37">    }</span>
+
+    private static ApiException productNotFound(long id) {
+<span class="fc" id="L40">        return ApiException.notFound(&quot;Product not found, id: &quot; + id);</span>
+    }
+
+    private void requireCategory(Long categoryId) {
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        if (categoryId != null &amp;&amp; !repository.exists(&quot;category&quot;, categoryId)) {</span>
+<span class="fc" id="L45">            throw ApiException.notFound(&quot;Category not found, id: &quot; + categoryId);</span>
+        }
+<span class="fc" id="L47">    }</span>
+
+    private static BigDecimal positive(BigDecimal price) {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (price.signum() &lt;= 0) throw ApiException.badRequest(&quot;price: must be greater than 0.00&quot;);</span>
+<span class="fc" id="L51">        return price;</span>
+    }
+
+    private static String sku(String raw) {
+<span class="fc" id="L55">        return raw.trim().toUpperCase(Locale.ROOT);</span>
+    }
+
+    private static String trimOrNull(String value) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        return value == null ? null : value.trim();</span>
+    }
+
+    // ---------------- produtos ----------------
+
+    @Transactional(readOnly = true)
+    public PageResponse&lt;Product&gt; list(String q, Boolean sellable, Boolean active, int page, int size) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        String term = q == null ? &quot;&quot; : q.trim();</span>
+<span class="fc" id="L67">        return new PageResponse&lt;&gt;(repository.products(term, sellable, active, page, size), page, size,</span>
+<span class="fc" id="L68">                repository.productCount(term, sellable, active));</span>
+    }
+
+    @Transactional(readOnly = true)
+    public Product get(long id) {
+<span class="fc" id="L73">        return repository.product(id).orElseThrow(() -&gt; productNotFound(id));</span>
+    }
+
+    @Transactional
+    public Product create(CurrentUser user, ProductCreateRequest request) {
+<span class="fc" id="L78">        session.apply(user.id(), null);</span>
+<span class="fc" id="L79">        requireCategory(request.categoryId());</span>
+<span class="fc" id="L80">        BigDecimal price = positive(request.price().value());</span>
+<span class="fc" id="L81">        boolean physical = request instanceof PhysicalProductCreate;</span>
+<span class="fc" id="L82">        long id = jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO product(product_type, sku, name, description, category_id, sellable, price, weight, download_link)
+                VALUES (:type, :sku, :name, :description, :category, :sellable, :price, :weight, :link) RETURNING id&quot;&quot;&quot;)
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                .param(&quot;type&quot;, physical ? &quot;PHYSICAL&quot; : &quot;DIGITAL&quot;).param(&quot;sku&quot;, sku(request.sku()))</span>
+<span class="fc" id="L86">                .param(&quot;name&quot;, request.name().trim()).param(&quot;description&quot;, trimOrNull(request.description()))</span>
+<span class="fc" id="L87">                .param(&quot;category&quot;, request.categoryId()).param(&quot;sellable&quot;, request.sellable()).param(&quot;price&quot;, price)</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                .param(&quot;weight&quot;, request instanceof PhysicalProductCreate p ? p.weightKg().doubleValue() : null)</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                .param(&quot;link&quot;, request instanceof DigitalProductCreate d ? d.downloadLink().trim() : null)</span>
+<span class="fc" id="L90">                .query(Long.class).single();</span>
+        // D-NOITE-12: o preco de cadastro abre o historico (old_price nulo); o gatilho so cobre UPDATE.
+<span class="fc" id="L92">        jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO product_price_history(product_id, old_price, new_price, changed_by, reason)
+                VALUES (:product, NULL, :price, :user, 'Cadastro')&quot;&quot;&quot;)
+<span class="fc" id="L95">                .param(&quot;product&quot;, id).param(&quot;price&quot;, price).param(&quot;user&quot;, user.id()).update();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (request.minLevel() != null) {</span>
+<span class="fc" id="L97">            jdbc.sql(&quot;UPDATE stock_balance SET min_level = :min WHERE product_id = :id&quot;)</span>
+<span class="fc" id="L98">                    .param(&quot;min&quot;, request.minLevel()).param(&quot;id&quot;, id).update();</span>
+        }
+<span class="fc" id="L100">        return get(id);</span>
+    }
+
+    @Transactional
+    public Product update(CurrentUser user, long id, ProductUpdateRequest request) {
+<span class="fc" id="L105">        session.apply(user.id(), null);</span>
+<span class="fc" id="L106">        jdbc.sql(&quot;SELECT id FROM product WHERE id = :id FOR UPDATE&quot;).param(&quot;id&quot;, id).query(Long.class).optional()</span>
+<span class="fc" id="L107">                .orElseThrow(() -&gt; productNotFound(id));</span>
+<span class="fc" id="L108">        Product current = get(id);</span>
+<span class="fc" id="L109">        boolean physical = &quot;PHYSICAL&quot;.equals(current.type());</span>
+<span class="pc bpc" id="L110" title="1 of 4 branches missed.">        if (physical &amp;&amp; request.downloadLink() != null) throw ApiException.badRequest(&quot;downloadLink: only digital products have a link&quot;);</span>
+<span class="pc bpc" id="L111" title="3 of 4 branches missed.">        if (!physical &amp;&amp; request.weightKg() != null) throw ApiException.badRequest(&quot;weightKg: only physical products have a weight&quot;);</span>
+<span class="fc" id="L112">        requireCategory(request.categoryId());</span>
+<span class="fc" id="L113">        jdbc.sql(&quot;&quot;&quot;</span>
+                UPDATE product SET sku = :sku, name = :name, description = coalesce(:description, description),
+                       category_id = coalesce(:category, category_id), sellable = :sellable,
+                       weight = coalesce(:weight, weight), download_link = coalesce(:link, download_link), updated_at = now()
+                 WHERE id = :id&quot;&quot;&quot;)
+<span class="fc" id="L118">                .param(&quot;sku&quot;, sku(request.sku())).param(&quot;name&quot;, request.name().trim())</span>
+<span class="fc" id="L119">                .param(&quot;description&quot;, trimOrNull(request.description())).param(&quot;category&quot;, request.categoryId())</span>
+<span class="fc" id="L120">                .param(&quot;sellable&quot;, request.sellable())</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                .param(&quot;weight&quot;, request.weightKg() == null ? null : request.weightKg().doubleValue())</span>
+<span class="fc" id="L122">                .param(&quot;link&quot;, trimOrNull(request.downloadLink())).param(&quot;id&quot;, id).update();</span>
+<span class="fc" id="L123">        return get(id);</span>
+    }
+
+    @Transactional
+    public void delete(CurrentUser user, long id) {
+<span class="fc" id="L128">        session.apply(user.id(), null);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (!repository.exists(&quot;product&quot;, id)) throw productNotFound(id);</span>
+<span class="fc" id="L130">        long history = jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT (SELECT count(*) FROM order_item WHERE product_id = :id) + (SELECT count(*) FROM stock_movement WHERE product_id = :id)
+                     + (SELECT count(*) FROM stock_entry WHERE product_id = :id) + (SELECT count(*) FROM promotion WHERE product_id = :id)&quot;&quot;&quot;)
+<span class="fc" id="L133">                .param(&quot;id&quot;, id).query(Long.class).single();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (history &gt; 0) {</span>
+<span class="fc" id="L135">            throw ApiException.conflict(ErrorCode.RESOURCE_IN_USE, &quot;Product has sales, stock or promotion history; deactivate it instead&quot;);</span>
+        }
+<span class="fc" id="L137">        jdbc.sql(&quot;DELETE FROM product_price_history WHERE product_id = :id&quot;).param(&quot;id&quot;, id).update();</span>
+<span class="fc" id="L138">        jdbc.sql(&quot;DELETE FROM stock_balance WHERE product_id = :id&quot;).param(&quot;id&quot;, id).update();</span>
+<span class="fc" id="L139">        jdbc.sql(&quot;DELETE FROM product WHERE id = :id&quot;).param(&quot;id&quot;, id).update();</span>
+<span class="fc" id="L140">    }</span>
+
+    @Transactional
+    public Product changePrice(CurrentUser user, long id, PriceChangeRequest request) {
+<span class="fc" id="L144">        session.apply(user.id(), request.reason().trim());</span>
+<span class="fc" id="L145">        BigDecimal price = positive(request.newPrice().value());</span>
+<span class="fc" id="L146">        int updated = jdbc.sql(&quot;UPDATE product SET price = :price WHERE id = :id&quot;).param(&quot;price&quot;, price).param(&quot;id&quot;, id).update();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (updated == 0) throw productNotFound(id);</span>
+<span class="fc" id="L148">        return get(id);</span>
+    }
+
+    @Transactional
+    public Product changeStatus(CurrentUser user, long id, ProductStatusRequest request) {
+<span class="fc" id="L153">        session.apply(user.id(), null);</span>
+<span class="fc" id="L154">        int updated = jdbc.sql(&quot;UPDATE product SET active = :active, updated_at = now() WHERE id = :id AND active &lt;&gt; :active&quot;)</span>
+<span class="fc" id="L155">                .param(&quot;active&quot;, request.active()).param(&quot;id&quot;, id).update();</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">        if (updated == 0 &amp;&amp; !repository.exists(&quot;product&quot;, id)) throw productNotFound(id);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (updated &gt; 0) {</span>
+<span class="fc" id="L158">            audit.record(AuditAction.PRODUCT_STATUS_CHANGED, user.id(), &quot;product&quot;, id,</span>
+<span class="fc" id="L159">                    &quot;{\&quot;active\&quot;:&quot; + request.active() + &quot;}&quot;);</span>
+        }
+<span class="fc" id="L161">        return get(id);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse&lt;PriceChange&gt; priceHistory(long id, int page, int size) {
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (!repository.exists(&quot;product&quot;, id)) throw productNotFound(id);</span>
+<span class="fc" id="L167">        return new PageResponse&lt;&gt;(repository.priceHistory(id, page, size), page, size, repository.priceHistoryCount(id));</span>
+    }
+
+    // ---------------- categorias ----------------
+
+    @Transactional(readOnly = true)
+    public List&lt;Category&gt; categories() {
+<span class="fc" id="L174">        return repository.categories();</span>
+    }
+
+    @Transactional
+    public Category createCategory(CategoryRequest request) {
+<span class="fc" id="L179">        String name = request.name().trim();</span>
+<span class="fc" id="L180">        long id = jdbc.sql(&quot;INSERT INTO category(name) VALUES (:name) RETURNING id&quot;).param(&quot;name&quot;, name).query(Long.class).single();</span>
+<span class="fc" id="L181">        return new Category(id, name);</span>
+    }
+
+    @Transactional
+    public Category renameCategory(long id, CategoryRequest request) {
+<span class="fc" id="L186">        String name = request.name().trim();</span>
+<span class="fc" id="L187">        int updated = jdbc.sql(&quot;UPDATE category SET name = :name WHERE id = :id&quot;).param(&quot;name&quot;, name).param(&quot;id&quot;, id).update();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (updated == 0) throw ApiException.notFound(&quot;Category not found, id: &quot; + id);</span>
+<span class="fc" id="L189">        return new Category(id, name);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

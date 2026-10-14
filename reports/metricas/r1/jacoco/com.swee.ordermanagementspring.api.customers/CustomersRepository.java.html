@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomersRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.customers</a> &gt; <span class="el_source">CustomersRepository.java</span></div><h1>CustomersRepository.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.customers;
+
+import com.swee.ordermanagementspring.api.common.Addresses;
+import com.swee.ordermanagementspring.api.common.Refs;
+import com.swee.ordermanagementspring.api.common.Refs.NamedRef;
+import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerDetail;
+import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerOrderItem;
+import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerSummary;
+import com.swee.ordermanagementspring.entities.StoreTime;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ArrayList;
+
+/** Consultas de cliente. Busca por prefixo do nome usa ix_customer_name_prefix; documento exato usa as UNIQUE. */
+@Repository
+public class CustomersRepository {
+    private final JdbcClient jdbc;
+
+<span class="fc" id="L31">    public CustomersRepository(JdbcClient jdbc) {</span>
+<span class="fc" id="L32">        this.jdbc = jdbc;</span>
+<span class="fc" id="L33">    }</span>
+
+    static OffsetDateTime local(Timestamp timestamp) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        return timestamp == null ? null : timestamp.toLocalDateTime().atZone(StoreTime.ZONE).toOffsetDateTime();</span>
+    }
+
+    /** Filtro da busca (C-11): todos, documento exato ou prefixo do nome. */
+<span class="fc" id="L40">    public record Search(String where, String document, String prefix) {</span>
+        static Search of(String q) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">            String term = q == null ? &quot;&quot; : q.trim();</span>
+<span class="fc" id="L43">            String digits = DocumentFormat.searchDigits(term);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (digits != null) return new Search(&quot;(c.cpf = :document OR c.cnpj = :document)&quot;, digits, &quot;&quot;);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            if (term.isEmpty()) return new Search(&quot;true&quot;, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L46">            return new Search(&quot;lower(c.name) LIKE :prefix ESCAPE '\\'&quot;, &quot;&quot;, Refs.prefix(term));</span>
+        }
+    }
+
+    public List&lt;CustomerSummary&gt; search(Search search, boolean fullDocument, int page, int size) {
+<span class="fc" id="L51">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT c.id, c.customer_type, c.name, c.cpf, c.cnpj, c.email, c.phone,
+                       (SELECT count(*) FROM orders o WHERE o.customer_id = c.id) AS orders_count,
+                       (SELECT max(o.moment) FROM orders o WHERE o.customer_id = c.id) AS last_order_at
+<span class="fc" id="L55">                  FROM customer c WHERE\s&quot;&quot;&quot; + search.where() + &quot;&quot;&quot;</span>
+
+                 ORDER BY lower(c.name), c.id LIMIT :size OFFSET :offset&quot;&quot;&quot;)
+<span class="fc" id="L58">                .param(&quot;document&quot;, search.document()).param(&quot;prefix&quot;, search.prefix())</span>
+<span class="fc" id="L59">                .param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L60">                .query((rs, n) -&gt; new CustomerSummary(rs.getLong(&quot;id&quot;), rs.getString(&quot;customer_type&quot;), rs.getString(&quot;name&quot;),</span>
+<span class="fc" id="L61">                        DocumentFormat.of(rs.getString(&quot;cpf&quot;), rs.getString(&quot;cnpj&quot;), fullDocument), rs.getString(&quot;email&quot;),</span>
+<span class="fc" id="L62">                        rs.getString(&quot;phone&quot;), rs.getLong(&quot;orders_count&quot;), local(rs.getTimestamp(&quot;last_order_at&quot;))))</span>
+<span class="fc" id="L63">                .list();</span>
+    }
+
+    public long count(Search search) {
+<span class="fc" id="L67">        return jdbc.sql(&quot;SELECT count(*) FROM customer c WHERE &quot; + search.where())</span>
+<span class="fc" id="L68">                .param(&quot;document&quot;, search.document()).param(&quot;prefix&quot;, search.prefix()).query(Long.class).single();</span>
+    }
+
+    public Optional&lt;CustomerDetail&gt; detail(long id, boolean fullDocument) {
+<span class="fc" id="L72">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT c.id, c.customer_type, c.name, c.company_name, c.cpf, c.cnpj, c.email, c.phone, c.birth_date,
+                       c.created_at, c.version, u.name AS created_by_name,
+                       a.id AS address_id, a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.zip_code
+                  FROM customer c
+                  LEFT JOIN address a ON a.id = c.address_id
+                  LEFT JOIN app_users u ON u.id = c.created_by
+<span class="fc" id="L79">                 WHERE c.id = :id&quot;&quot;&quot;).param(&quot;id&quot;, id)</span>
+<span class="fc" id="L80">                .query((rs, n) -&gt; detail(rs, fullDocument)).optional();</span>
+    }
+
+    private static CustomerDetail detail(ResultSet rs, boolean fullDocument) throws SQLException {
+<span class="fc" id="L84">        String creator = rs.getString(&quot;created_by_name&quot;);</span>
+<span class="fc" id="L85">        OffsetDateTime createdAt = rs.getObject(&quot;created_at&quot;, OffsetDateTime.class);</span>
+<span class="fc" id="L86">        return new CustomerDetail(rs.getLong(&quot;id&quot;), rs.getString(&quot;customer_type&quot;), rs.getString(&quot;name&quot;),</span>
+<span class="fc" id="L87">                rs.getString(&quot;company_name&quot;), DocumentFormat.of(rs.getString(&quot;cpf&quot;), rs.getString(&quot;cnpj&quot;), fullDocument),</span>
+<span class="fc" id="L88">                rs.getString(&quot;email&quot;), rs.getString(&quot;phone&quot;), rs.getObject(&quot;birth_date&quot;, LocalDate.class), Addresses.read(rs),</span>
+<span class="fc" id="L89">                createdAt.atZoneSameInstant(StoreTime.ZONE).toOffsetDateTime(),</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                creator == null ? null : new NamedRef(creator), rs.getInt(&quot;version&quot;));</span>
+    }
+
+    /** Tipo, endereco e versao atuais, com bloqueio da linha para a edicao. */
+<span class="fc" id="L94">    public record Head(String type, Long addressId, int version) { }</span>
+
+    public Optional&lt;Head&gt; head(long id) {
+<span class="fc" id="L97">        return jdbc.sql(&quot;SELECT customer_type, address_id, version FROM customer WHERE id = :id FOR UPDATE&quot;).param(&quot;id&quot;, id)</span>
+<span class="fc" id="L98">                .query((rs, n) -&gt; new Head(rs.getString(&quot;customer_type&quot;), rs.getObject(&quot;address_id&quot;, Long.class),</span>
+<span class="fc" id="L99">                        rs.getInt(&quot;version&quot;))).optional();</span>
+    }
+
+    /** Pedido do historico antes de decidir o que o usuario pode ver. */
+<span class="fc" id="L103">    public record HistoryRow(long id, Timestamp moment, String status, String fulfillment, Long sellerId, String sellerName,</span>
+                             BigDecimal total) { }
+
+    public List&lt;HistoryRow&gt; history(long customerId, int page, int size) {
+<span class="fc" id="L107">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT o.id, o.moment, o.status, o.fulfillment, o.seller_id, s.name AS seller_name,
+                       (SELECT coalesce(sum(i.price * i.quantity - i.discount), 0) FROM order_item i WHERE i.order_id = o.id) AS total
+                  FROM orders o LEFT JOIN app_users s ON s.id = o.seller_id
+                 WHERE o.customer_id = :customer
+                 ORDER BY o.moment DESC NULLS LAST, o.id DESC LIMIT :size OFFSET :offset&quot;&quot;&quot;)
+<span class="fc" id="L113">                .param(&quot;customer&quot;, customerId).param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L114">                .query((rs, n) -&gt; new HistoryRow(rs.getLong(&quot;id&quot;), rs.getTimestamp(&quot;moment&quot;), rs.getString(&quot;status&quot;),</span>
+<span class="fc" id="L115">                        rs.getString(&quot;fulfillment&quot;), rs.getObject(&quot;seller_id&quot;, Long.class), rs.getString(&quot;seller_name&quot;),</span>
+<span class="fc" id="L116">                        rs.getBigDecimal(&quot;total&quot;))).list();</span>
+    }
+
+    public long historyCount(long customerId) {
+<span class="fc" id="L120">        return jdbc.sql(&quot;SELECT count(*) FROM orders WHERE customer_id = :customer&quot;).param(&quot;customer&quot;, customerId)</span>
+<span class="fc" id="L121">                .query(Long.class).single();</span>
+    }
+
+    public Map&lt;Long, List&lt;CustomerOrderItem&gt;&gt; items(Collection&lt;Long&gt; orderIds) {
+<span class="fc" id="L125">        Map&lt;Long, List&lt;CustomerOrderItem&gt;&gt; items = new LinkedHashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (orderIds.isEmpty()) return items;</span>
+<span class="fc" id="L127">        jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT i.order_id, p.name, i.quantity FROM order_item i JOIN product p ON p.id = i.product_id
+                 WHERE i.order_id IN (:ids) ORDER BY i.order_id, i.product_id, i.id&quot;&quot;&quot;)
+<span class="fc" id="L130">                .param(&quot;ids&quot;, orderIds)</span>
+<span class="fc" id="L131">                .query(rs -&gt; {</span>
+<span class="fc" id="L132">                    items.computeIfAbsent(rs.getLong(&quot;order_id&quot;), k -&gt; new ArrayList&lt;&gt;())</span>
+<span class="fc" id="L133">                            .add(new CustomerOrderItem(rs.getString(&quot;name&quot;), rs.getInt(&quot;quantity&quot;)));</span>
+<span class="fc" id="L134">                });</span>
+<span class="fc" id="L135">        return items;</span>
+    }
+
+    public boolean exists(long id) {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        return jdbc.sql(&quot;SELECT count(*) FROM customer WHERE id = :id&quot;).param(&quot;id&quot;, id).query(Long.class).single() &gt; 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

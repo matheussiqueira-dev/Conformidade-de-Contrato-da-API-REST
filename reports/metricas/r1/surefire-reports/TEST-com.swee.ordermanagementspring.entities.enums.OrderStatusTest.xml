@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.033" tests="36" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[1]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.002"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[2]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[3]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[4]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[5]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[6]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[7]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[8]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[9]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[10]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[11]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[12]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[13]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[14]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[15]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[16]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[17]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[18]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[19]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[20]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[21]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[22]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[23]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[24]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[25]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[26]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[27]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[28]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[29]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[30]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[31]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[32]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[33]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[34]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[35]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.0"/>
+  <testcase name="transitionTable(OrderStatus, OrderStatus, boolean)[36]" classname="com.swee.ordermanagementspring.entities.enums.OrderStatusTest" time="0.001"/>
+</testsuite>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PromotionsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.promotions</a> &gt; <span class="el_source">PromotionsController.java</span></div><h1>PromotionsController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.promotions;
+
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.api.promotions.PromotionsDtos.Promotion;
+import com.swee.ordermanagementspring.api.promotions.PromotionsDtos.PromotionRequest;
+import com.swee.ordermanagementspring.api.sales.SalesDtos.ActivePromotion;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+
+/** Promocoes do contrato v4: vigentes para o balcao; listagem, liberacao e encerramento para o GERENTE. */
+@RestController
+@RequestMapping(&quot;/promotions&quot;)
+public class PromotionsController {
+    private final PromotionsService service;
+
+<span class="fc" id="L27">    public PromotionsController(PromotionsService service) {</span>
+<span class="fc" id="L28">        this.service = service;</span>
+<span class="fc" id="L29">    }</span>
+
+    @GetMapping(&quot;/active&quot;)
+    public List&lt;ActivePromotion&gt; active(@RequestParam(required = false) @Positive Long productId) {
+<span class="fc" id="L33">        return service.active(productId);</span>
+    }
+
+    @GetMapping
+    public PageResponse&lt;Promotion&gt; list(@RequestParam(required = false) Boolean active,
+                                        @RequestParam(defaultValue = &quot;0&quot;) @Min(0) int page,
+                                        @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int size) {
+<span class="fc" id="L40">        return service.list(active, page, size);</span>
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;Promotion&gt; create(@AuthenticationPrincipal AppPrincipal principal,
+                                            @Valid @RequestBody PromotionRequest request) {
+<span class="fc" id="L47">        Promotion created = service.create(CurrentUser.of(principal), request);</span>
+<span class="fc" id="L48">        return ResponseEntity.created(URI.create(&quot;/promotions/&quot; + created.id())).body(created);</span>
+    }
+
+    @PostMapping(&quot;/{id}/close&quot;)
+    public Promotion close(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id) {
+<span class="fc" id="L53">        return service.close(CurrentUser.of(principal), id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

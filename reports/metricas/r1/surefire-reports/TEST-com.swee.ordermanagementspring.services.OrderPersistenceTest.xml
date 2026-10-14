@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.services.OrderPersistenceTest" time="0.074" tests="2" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="demonstrationSalePersistsCustomerAddressPaymentAndTotal" classname="com.swee.ordermanagementspring.services.OrderPersistenceTest" time="0.039">
+    <system-out><![CDATA[2026-10-14T06:42:50.311-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.services.OrderPersistenceTest]: OrderPersistenceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:50.313-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.services.OrderPersistenceTest
+2026-10-14T06:42:50.314-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.services.OrderPersistenceTest]: OrderPersistenceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:50.314-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.services.OrderPersistenceTest
+]]></system-out>
+  </testcase>
+  <testcase name="historicalUnitPriceSurvivesCatalogChangeAndDatabaseReload" classname="com.swee.ordermanagementspring.services.OrderPersistenceTest" time="0.02"/>
+</testsuite>

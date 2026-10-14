@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContractUsersConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.config</a> &gt; <span class="el_source">ContractUsersConfig.java</span></div><h1>ContractUsersConfig.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.config;
+
+import com.swee.ordermanagementspring.entities.auth.*;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * Contas sinteticas do runner de contrato. So rodam em banco descartavel: exigem A3_CONTRACT_ISOLATED=1,
+ * a propriedade a3.contract.disposable-database=true (passada apenas por scripts/test-contract.ps1 e pela CI)
+ * e o PostgreSQL de teste da porta 15432. O banco comeca limpo: as tabelas de negocio sao esvaziadas antes.
+ */
+@Configuration @Profile(&quot;contract&quot;)
+<span class="nc" id="L17">public class ContractUsersConfig {</span>
+    static final String DISPOSABLE_URL = &quot;jdbc:postgresql://localhost:15432/order_management_test&quot;;
+
+    @Bean CommandLineRunner contractUsers(AppUserRepository users, PasswordEncoder encoder, Environment env, JdbcTemplate jdbc) {
+<span class="nc" id="L21">        return args -&gt; {</span>
+<span class="nc" id="L22">            requireDisposableDatabase(env);</span>
+<span class="nc" id="L23">            String password = env.getRequiredProperty(&quot;A3_TEST_PASSWORD&quot;);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            if (password.length() &lt; 12) throw new IllegalStateException(&quot;Test password too short&quot;);</span>
+<span class="nc" id="L25">            BusinessTables.truncate(jdbc);</span>
+<span class="nc" id="L26">            users.save(new AppUser(&quot;Gerente sintetico&quot;, &quot;manager@example.test&quot;, encoder.encode(password), UserRole.GERENTE));</span>
+<span class="nc" id="L27">            users.save(new AppUser(&quot;Vendedor sintetico&quot;, &quot;seller@example.test&quot;, encoder.encode(password), UserRole.VENDEDOR));</span>
+<span class="nc" id="L28">        };</span>
+    }
+
+    static void requireDisposableDatabase(Environment env) {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (!&quot;1&quot;.equals(env.getProperty(&quot;A3_CONTRACT_ISOLATED&quot;))</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">                || !&quot;true&quot;.equals(env.getProperty(&quot;a3.contract.disposable-database&quot;))</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">                || !DISPOSABLE_URL.equals(env.getProperty(&quot;spring.datasource.url&quot;))) {</span>
+<span class="nc" id="L35">            throw new IllegalStateException(&quot;Contract fixtures require the disposable database runner&quot;);</span>
+        }
+<span class="nc" id="L37">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
