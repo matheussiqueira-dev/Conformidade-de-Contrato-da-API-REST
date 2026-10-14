@@ -907,7 +907,7 @@
           "RF-21",
           "RF-25"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"

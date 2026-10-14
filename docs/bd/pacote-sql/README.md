@@ -8,9 +8,9 @@ Versão de 12/10/2026, trazida para o repositório na ETAPA 2A (14/10/2026). Dec
 | `04_seed_demo.sql` | Referência histórica. A versão executável está em `src/main/resources/db/demo/` (`V6_1__DemoAccounts` e `V6_2__demo_seed.sql`, perfil `demo`, CPFs com dígito verificador válido). |
 | `03_rbac.sql` | Executado por `psql` (não entra no Flyway: cria logins de banco sem senha para a demonstração de RLS, decisão A4). Concede também `v_faturamento_diario` ao gerente. |
 | `05_crud_exemplos.sql`, `06a/06b/06c_testes_*.sql` | Executados por `psql`; os testes 06 não dependem dos CPFs do seed. |
-| `06d_testes_evolucao.sql` | Testes da evolução (CT-BD-30): o gatilho `keep_one_active_manager` da V8 impede rebaixar ou desativar o último GERENTE ativo. Cada caso reverte a própria alteração. |
+| `06d_testes_evolucao.sql` | Testes da evolução: CT-BD-30 (o gatilho `keep_one_active_manager` da V8 impede rebaixar ou desativar o último GERENTE ativo; cada caso reverte a própria alteração) e BD-31 (a view `v_cliente_resumo` da V9 confere com o seed demo e com o faturamento). |
 | `run_all.sh`, `resultado_testes_2026-10-12.txt` | Execução original de 12/10 (51 PASS), sobre o pacote aplicado direto por `psql`. |
-| `run_bd.sh` | Execução atual: sobre um banco que já recebeu as migrações (V1–V8) e a massa demo pelo Flyway, roda 03, 05, 06a/b/c/d e a corrida CC-01; falha em qualquer FAIL, ERROR ou contagem de PASS diferente de 54 (51 do pacote original + 3 do CT-BD-30). É o job `bd` da CI. |
+| `run_bd.sh` | Execução atual: sobre um banco que já recebeu as migrações (V1–V9) e a massa demo pelo Flyway, roda 03, 05, 06a/b/c/d e a corrida CC-01; falha em qualquer FAIL, ERROR ou contagem de PASS diferente de 57 (51 do pacote original + 3 do CT-BD-30 + 3 do BD-31). É o job `bd` da CI. |
 
 Reprodução local (Docker ativo, Git Bash):
 

@@ -73,6 +73,25 @@ public final class CustomerDtos {
 
     public record CustomerOrderItem(String name, int quantity) { }
 
+    public record CustomerTopProduct(long productId, String name, long quantity) { }
+
+    public record CustomerPaymentMix(String method, long orders, MoneyDto amount) { }
+
+    /**
+     * G-05: contagens e datas valem para a loja toda; totalSpent, averageTicket e paymentMix seguem o escopo
+     * (STORE para o GERENTE, OWN para o VENDEDOR); refundsTotal so para o GERENTE.
+     */
+    public record CustomerPurchaseSummary(long customerId, String scope, OffsetDateTime firstPurchaseAt,
+                                          OffsetDateTime lastPurchaseAt, long ordersPaid, long pendingOrders,
+                                          long canceledOrders, MoneyDto totalSpent, MoneyDto averageTicket,
+                                          MoneyDto refundsTotal, List<CustomerTopProduct> topProducts,
+                                          List<CustomerPaymentMix> paymentMix) {
+        public CustomerPurchaseSummary {
+            topProducts = List.copyOf(topProducts);
+            paymentMix = List.copyOf(paymentMix);
+        }
+    }
+
     /** DEC-ERP-02: total e vendedor so nos pedidos do proprio VENDEDOR (o GERENTE ve todos); nunca custo. */
     public record CustomerOrderSummary(long id, OffsetDateTime moment, String status, Fulfillment fulfillment,
                                        List<CustomerOrderItem> items,

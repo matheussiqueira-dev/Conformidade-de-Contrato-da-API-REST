@@ -23,6 +23,7 @@ GET,/customers/{id},401,PERMIT,PERMIT
 PUT,/customers/{id},401,PERMIT,PERMIT
 DELETE,/customers/{id},401,403,PERMIT
 GET,/customers/{id}/orders,401,PERMIT,PERMIT
+GET,/customers/{id}/summary,401,PERMIT,PERMIT
 POST,/customers/{id}/address,401,403,PERMIT
 GET,/performance/me,401,PERMIT,PERMIT
 GET,/promotions/active,401,PERMIT,PERMIT

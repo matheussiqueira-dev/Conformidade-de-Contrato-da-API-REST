@@ -60,6 +60,11 @@ public class CustomersController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}/summary")
+    public CustomerPurchaseSummary summary(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id) {
+        return service.summary(CurrentUser.of(principal), id);
+    }
+
     @GetMapping("/{id}/orders")
     public PageResponse<CustomerOrderSummary> orders(@AuthenticationPrincipal AppPrincipal principal,
                                                      @PathVariable @Positive long id,

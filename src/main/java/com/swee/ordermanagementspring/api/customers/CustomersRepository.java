@@ -1,11 +1,14 @@
 package com.swee.ordermanagementspring.api.customers;
 
 import com.swee.ordermanagementspring.api.common.Addresses;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
 import com.swee.ordermanagementspring.api.common.Refs;
 import com.swee.ordermanagementspring.api.common.Refs.NamedRef;
 import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerDetail;
 import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerOrderItem;
+import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerPaymentMix;
 import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerSummary;
+import com.swee.ordermanagementspring.api.customers.CustomerDtos.CustomerTopProduct;
 import com.swee.ordermanagementspring.entities.StoreTime;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -133,6 +136,65 @@ public class CustomersRepository {
                             .add(new CustomerOrderItem(rs.getString("name"), rs.getInt("quantity")));
                 });
         return items;
+    }
+
+    /** Totais de v_cliente_resumo (V9) da loja toda ou de um vendedor. */
+    public record SummaryTotals(long ordersPaid, BigDecimal net, BigDecimal refunds, Timestamp first, Timestamp last) { }
+
+    public SummaryTotals summaryTotals(long customerId, Long sellerId) {
+        return jdbc.sql("""
+                SELECT coalesce(sum(pedidos_pagos), 0) AS pedidos, coalesce(sum(liquido), 0) AS liquido,
+                       coalesce(sum(estornos), 0) AS estornos, min(primeira_compra) AS primeira, max(ultima_compra) AS ultima
+                  FROM v_cliente_resumo
+                 WHERE customer_id = :customer AND (CAST(:seller AS bigint) IS NULL OR seller_id = CAST(:seller AS bigint))""")
+                .param("customer", customerId).param("seller", sellerId)
+                .query((rs, n) -> new SummaryTotals(rs.getLong("pedidos"), rs.getBigDecimal("liquido"),
+                        rs.getBigDecimal("estornos"), rs.getTimestamp("primeira"), rs.getTimestamp("ultima")))
+                .single();
+    }
+
+    /** Pedidos pendentes e cancelados do cliente (loja toda), fora dos totais. */
+    public long[] statusCounts(long customerId) {
+        return jdbc.sql("""
+                SELECT count(*) FILTER (WHERE status = 'PENDING_PAYMENT') AS pendentes,
+                       count(*) FILTER (WHERE status = 'CANCELED') AS cancelados
+                  FROM orders WHERE customer_id = :customer""")
+                .param("customer", customerId)
+                .query((rs, n) -> new long[] {rs.getLong("pendentes"), rs.getLong("cancelados")})
+                .single();
+    }
+
+    /** Cinco produtos mais comprados em pedidos pagos (loja toda, sem valores). */
+    public List<CustomerTopProduct> topProducts(long customerId) {
+        return jdbc.sql("""
+                SELECT p.id, p.name, sum(oi.quantity) AS quantidade
+                  FROM orders o
+                  JOIN payment pay ON pay.order_id = o.id AND pay.status = 'APPROVED'
+                  JOIN order_item oi ON oi.order_id = o.id
+                  JOIN product p ON p.id = oi.product_id
+                 WHERE o.customer_id = :customer
+                 GROUP BY p.id, p.name
+                 ORDER BY quantidade DESC, p.name, p.id
+                 LIMIT 5""")
+                .param("customer", customerId)
+                .query((rs, n) -> new CustomerTopProduct(rs.getLong("id"), rs.getString("name"), rs.getLong("quantidade")))
+                .list();
+    }
+
+    /** Pedidos pagos por forma de pagamento, da loja toda ou de um vendedor. */
+    public List<CustomerPaymentMix> paymentMix(long customerId, Long sellerId) {
+        return jdbc.sql("""
+                SELECT pay.payment_type, count(*) AS pedidos,
+                       sum((SELECT sum(oi.price * oi.quantity - oi.discount) FROM order_item oi WHERE oi.order_id = o.id)) AS valor
+                  FROM orders o
+                  JOIN payment pay ON pay.order_id = o.id AND pay.status = 'APPROVED'
+                 WHERE o.customer_id = :customer AND (CAST(:seller AS bigint) IS NULL OR o.seller_id = CAST(:seller AS bigint))
+                 GROUP BY pay.payment_type
+                 ORDER BY pay.payment_type""")
+                .param("customer", customerId).param("seller", sellerId)
+                .query((rs, n) -> new CustomerPaymentMix(rs.getString("payment_type"), rs.getLong("pedidos"),
+                        MoneyDto.of(rs.getBigDecimal("valor"))))
+                .list();
     }
 
     public boolean exists(long id) {

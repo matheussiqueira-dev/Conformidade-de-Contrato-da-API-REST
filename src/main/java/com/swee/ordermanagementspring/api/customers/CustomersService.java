@@ -18,6 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -123,6 +125,26 @@ public class CustomersService {
             jdbc.sql("DELETE FROM address WHERE id = :id").param("id", head.addressId()).update();
         }
         audit.record(AuditAction.CUSTOMER_DELETED, user.id(), "customer", id, null);
+    }
+
+    /**
+     * G-05: indicadores do perfil. O VENDEDOR ve valores so dos pedidos dele (scope OWN) e nao ve estornos da
+     * loja; contagens, datas e produtos mais comprados valem para a loja toda (nao sao dado sensivel).
+     */
+    @PreAuthorize("hasRole('VENDEDOR')")
+    @Transactional(readOnly = true)
+    public CustomerPurchaseSummary summary(CurrentUser user, long id) {
+        if (!customers.exists(id)) throw notFound(id);
+        var store = customers.summaryTotals(id, null);
+        var scoped = user.manager() ? store : customers.summaryTotals(id, user.id());
+        long[] counts = customers.statusCounts(id);
+        MoneyDto average = scoped.ordersPaid() == 0 ? null
+                : MoneyDto.of(scoped.net().divide(BigDecimal.valueOf(scoped.ordersPaid()), 2, RoundingMode.HALF_UP));
+        return new CustomerPurchaseSummary(id, user.manager() ? "STORE" : "OWN",
+                CustomersRepository.local(store.first()), CustomersRepository.local(store.last()), store.ordersPaid(),
+                counts[0], counts[1], MoneyDto.of(scoped.net()), average,
+                user.manager() ? MoneyDto.of(store.refunds()) : null,
+                customers.topProducts(id), customers.paymentMix(id, user.manager() ? null : user.id()));
     }
 
     @PreAuthorize("hasRole('VENDEDOR')")
