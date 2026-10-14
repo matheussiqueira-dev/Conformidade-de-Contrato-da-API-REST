@@ -1,0 +1,168 @@
+{
+  "scope": "live OpenAPI and responses versus target v4",
+  "timestamp": "2026-10-14T11:17:42.085Z",
+  "contract": "target-loja-gestao-openapi-2026-10-14-v4.json",
+  "operations": 45,
+  "exercised": {
+    "DELETE /customers/{id}": [
+      403,
+      204
+    ],
+    "DELETE /products/{id}": [
+      204
+    ],
+    "GET /analytics/sales": [
+      200
+    ],
+    "GET /analytics/stock": [
+      200
+    ],
+    "GET /auth/csrf": [
+      200
+    ],
+    "GET /auth/me": [
+      401,
+      200,
+      200
+    ],
+    "GET /categories": [
+      200
+    ],
+    "GET /customers": [
+      200
+    ],
+    "GET /customers/{id}": [
+      200
+    ],
+    "GET /customers/{id}/orders": [
+      200
+    ],
+    "GET /goals/monthly": [
+      200,
+      404
+    ],
+    "GET /management/revenue": [
+      200
+    ],
+    "GET /management/summary": [
+      200
+    ],
+    "GET /performance/me": [
+      200
+    ],
+    "GET /products": [
+      200,
+      403
+    ],
+    "GET /products/{id}": [
+      200,
+      404
+    ],
+    "GET /products/{id}/price-history": [
+      200
+    ],
+    "GET /promotions": [
+      200
+    ],
+    "GET /promotions/active": [
+      200
+    ],
+    "GET /sales/catalog": [
+      200
+    ],
+    "GET /sales/orders": [
+      200
+    ],
+    "GET /sales/orders/{id}": [
+      200,
+      404
+    ],
+    "GET /stock/movements": [
+      200
+    ],
+    "GET /stock/products": [
+      200
+    ],
+    "PATCH /products/{id}/price": [
+      200
+    ],
+    "PATCH /products/{id}/status": [
+      200
+    ],
+    "PATCH /stock/products/{id}/min-level": [
+      200
+    ],
+    "POST /auth/login": [
+      200,
+      401,
+      200
+    ],
+    "POST /auth/logout": [
+      204
+    ],
+    "POST /categories": [
+      201,
+      409
+    ],
+    "POST /customers": [
+      201,
+      409,
+      201
+    ],
+    "POST /orders/{id}/cancel": [
+      200,
+      409
+    ],
+    "POST /payment/{id}/refund": [
+      201,
+      400
+    ],
+    "POST /products": [
+      201,
+      201,
+      400
+    ],
+    "POST /promotions": [
+      201
+    ],
+    "POST /promotions/{id}/close": [
+      200
+    ],
+    "POST /sales/orders": [
+      201,
+      200,
+      409,
+      201
+    ],
+    "POST /sales/orders/{id}/payment": [
+      200
+    ],
+    "POST /sales/quote": [
+      200,
+      400
+    ],
+    "POST /stock/products/{id}/adjustments": [
+      409,
+      201
+    ],
+    "POST /stock/products/{id}/entries": [
+      201
+    ],
+    "PUT /categories/{id}": [
+      200
+    ],
+    "PUT /customers/{id}": [
+      200
+    ],
+    "PUT /goals/monthly": [
+      200
+    ],
+    "PUT /products/{id}": [
+      200
+    ]
+  },
+  "divergences": [],
+  "limits": [
+    "Structural check covers path, method, parameters, request body presence and success status codes; schema bodies are checked on real responses."
+  ]
+}

@@ -225,7 +225,8 @@ class PaymentServiceTest {
 
         CardPayment updated = (CardPayment) service.update(5L, dto);
 
-        assertThat(updated.getCardNumber()).isEqualTo("4111111111111111");
+        // D022: so os 4 ultimos digitos ficam na entidade (e no banco).
+        assertThat(updated.getCardLast4()).isEqualTo("1111");
         assertThat(updated.getInstallments()).isEqualTo(3);
     }
 

@@ -3,8 +3,8 @@ export function sessionClient(origin) {
   const cookies = new Map();
   let csrf;
   let lastSetCookies = [];
-  async function request(path, method = 'GET', body, { sendCsrf = true } = {}) {
-    const headers = { 'Content-Type': 'application/json' };
+  async function request(path, method = 'GET', body, { sendCsrf = true, headers: extra = {} } = {}) {
+    const headers = { 'Content-Type': 'application/json', ...extra };
     if (cookies.size) headers.Cookie = [...cookies].map(([key, value]) => `${key}=${value}`).join('; ');
     if (sendCsrf && csrf && !['GET', 'HEAD'].includes(method)) headers[csrf.headerName] = csrf.token;
     const response = await fetch(origin + path, { method, headers, redirect: 'error', signal: AbortSignal.timeout(10000),
@@ -15,7 +15,8 @@ export function sessionClient(origin) {
       const value = parts.join('=');
       if (value) cookies.set(name, value); else cookies.delete(name);
     }
-    return { status: response.status, body: response.status === 204 ? null : await response.json() };
+    return { status: response.status, location: response.headers.get('location'),
+      body: response.status === 204 ? null : await response.json() };
   }
   async function refreshCsrf() {
     const result = await request('/auth/csrf');

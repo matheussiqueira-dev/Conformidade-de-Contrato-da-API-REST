@@ -107,6 +107,25 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-NOITE-07 | A falha de gravação da auditoria de logout é registrada em log e não impede o logout; a sessão é invalidada de qualquer forma. |
 | D-NOITE-08 | O `/error` chamado diretamente (sem erro encaminhado pelo container) responde 404 `NOT_FOUND`, e não 500, porque não há erro a relatar. |
 | D-NOITE-04 | O job `bd` aplica V1–V6 e a massa demo subindo o jar com o perfil `demo` e `web-application-type=none`, e roda o pacote por `psql` dentro do contêiner do PostgreSQL (`docs/bd/pacote-sql/run_bd.sh`), exigindo exatamente 51 PASS. |
+| D-NOITE-09 | No `PUT /customers/{id}`, `companyName`, `birthDate` e `address` ausentes mantêm o valor atual; `companyName` em pessoa física responde 400, e a versão diferente da atual responde 409 `CONCURRENT_UPDATE`. |
+| D-NOITE-10 | A ETAPA 2C troca o `/customers` legado pelo `api/customers` do v4 (documento mascarado para o VENDEDOR) e encerra a restrição da D-NOITE-05; do controlador legado sobra só `POST /customers/{id}/address`, que continua com o GERENTE. |
+| D-NOITE-11 | Inteiros do corpo não aceitam decimal (`accept-float-as-int=false`): quantidade `1.5` responde 400 em vez de virar 1 (CT-STOCK-101). |
+| D-NOITE-12 | O cadastro de produto abre o histórico de preço com `old_price` nulo e motivo "Cadastro", porque o gatilho da V5 só cobre `UPDATE OF price`. |
+| D-NOITE-13 | `DELETE /products/{id}` só exclui produto sem venda, movimento, entrada ou promoção (409 `RESOURCE_IN_USE`; inativar pelo `PATCH /status`), para não apagar histórico de estoque. |
+| D-NOITE-14 | O `ProductController` legado sai: todas as rotas de `/products` passam ao contrato v4. O `http-contract.mjs` valida `/products` contra o v4 (o baseline continua valendo para os erros), e o `ErrorContractTest` usa `{"type":"PHYSICAL"}` para o caso de Bean Validation, já que corpo sem `type` é JSON malformado no `oneOf`. |
+| D-NOITE-15 | O `Location` da entrada aponta para `/stock/products/{id}/entries/{entryId}` e o do ajuste para `/stock/movements?productId={id}`, porque o v4 não tem leitura individual desses recursos. |
+
+## Decisões da execução
+
+| ID | Decisão |
+| --- | --- |
+| D-EXEC-01 | Em `/management/revenue`, período sem venda tem `costCoveragePercent = 0.0` (nada coberto), `averageTicket` e `grossMarginPercent` nulos e somas em zero; a série diária traz todos os dias do período, com zero nos dias sem movimento. |
+| D-EXEC-02 | `pendingPaymentCount` e `pendingPaymentAmount` são a fotografia atual dos pedidos `PENDING_PAYMENT`, sem recorte pelo período, porque servem de alerta operacional. |
+| D-EXEC-03 | `GET /analytics/sales` calcula o uso de promoções do mês com a mesma regra de `v_margem_produto` (itens de pagamentos confirmados no mês), porque `v_uso_promocoes` não tem período e somaria todos os meses. |
+| D-EXEC-04 | `GET /analytics/stock` considera só produtos ativos; `valueAtCost` fica nulo se algum produto com saldo não tiver custo (custo ausente nunca vira zero). |
+| D-EXEC-05 | `GET /performance/me` lê a meta em `v_meu_desempenho` (filtrada por `app.user_id`) e calcula o realizado em `v_lancamento_realizado`, para o vendedor sem meta também ver o realizado, com estado `SEM_META` e sem percentual. |
+| D-EXEC-06 | O v4 declarava `StockMovement.reason` com tipo `string` ou `null`, mas o `enum` sem `null`, o que rejeitava todo movimento sem motivo (entrada, reserva, saída). O `null` entra no `enum`; nenhum valor válido muda. |
+| D-EXEC-07 | A verificação ao vivo (`scripts/live-contract.mjs`, CT-CONTRACT-102) compara com o v4, em toda operação, caminho, método, parâmetros, presença de corpo e códigos de sucesso do `/v3/api-docs`, e valida com Ajv as respostas reais de sucesso e de erro de cada operação; os schemas do OpenAPI gerado não são comparados campo a campo. Com divergência zero, as operações de autenticação passam a `implemented` (D-NOITE-06). |
 
 ## Processo
 
