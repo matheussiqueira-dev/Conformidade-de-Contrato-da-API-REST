@@ -121,6 +121,9 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | --- | --- |
 | D-EXEC-01 | Em `/management/revenue`, período sem venda tem `costCoveragePercent = 0.0` (nada coberto), `averageTicket` e `grossMarginPercent` nulos e somas em zero; a série diária traz todos os dias do período, com zero nos dias sem movimento. |
 | D-EXEC-02 | `pendingPaymentCount` e `pendingPaymentAmount` são a fotografia atual dos pedidos `PENDING_PAYMENT`, sem recorte pelo período, porque servem de alerta operacional. |
+| D-EXEC-03 | `GET /analytics/sales` calcula o uso de promoções do mês com a mesma regra de `v_margem_produto` (itens de pagamentos confirmados no mês), porque `v_uso_promocoes` não tem período e somaria todos os meses. |
+| D-EXEC-04 | `GET /analytics/stock` considera só produtos ativos; `valueAtCost` fica nulo se algum produto com saldo não tiver custo (custo ausente nunca vira zero). |
+| D-EXEC-05 | `GET /performance/me` lê a meta em `v_meu_desempenho` (filtrada por `app.user_id`) e calcula o realizado em `v_lancamento_realizado`, para o vendedor sem meta também ver o realizado, com estado `SEM_META` e sem percentual. |
 
 ## Processo
 

@@ -863,7 +863,7 @@
           "RF-10",
           "RF-11"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -901,7 +901,7 @@
           "RF-09",
           "RF-10"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -941,7 +941,7 @@
         "x-rf": [
           "RF-09"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -995,7 +995,7 @@
           "RF-10",
           "RF-12"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
