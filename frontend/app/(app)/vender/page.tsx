@@ -5,7 +5,10 @@ import SalePoint from './sale-point.tsx';
 
 export const metadata: Metadata = { title: 'Vender' };
 
-export default async function VenderPage() {
+/** ?cliente=ID (vindo do perfil do cliente) deixa o cliente pre-selecionado na etapa de pagamento. */
+export default async function VenderPage({ searchParams }: { searchParams: Promise<{ cliente?: string | string[] }> }) {
   const { user, allowed } = await sessionFor('VENDER', '/vender');
-  return allowed ? <SalePoint userId={user.id} /> : <NoAccess />;
+  const raw = (await searchParams).cliente;
+  const customerId = typeof raw === 'string' && /^\d{1,18}$/.test(raw) ? Number(raw) : null;
+  return allowed ? <SalePoint userId={user.id} initialCustomerId={customerId} /> : <NoAccess />;
 }

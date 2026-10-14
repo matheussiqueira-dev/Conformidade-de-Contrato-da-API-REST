@@ -26,6 +26,15 @@ export function formatTime(iso: string): string {
   return time.format(new Date(iso));
 }
 
+const storeDay = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Fortaleza' });
+
+/** Dias de calendario da loja desde o instante: "hoje", "há 1 dia", "há N dias". */
+export function daysSince(iso: string, now: Date = new Date()): string {
+  const day = (value: Date) => Date.parse(`${storeDay.format(value)}T00:00:00Z`);
+  const days = Math.max(0, Math.round((day(now) - day(new Date(iso))) / 86_400_000));
+  return days === 0 ? 'hoje' : days === 1 ? 'há 1 dia' : `há ${days} dias`;
+}
+
 export function formatDate(isoDate: string): string {
   // Data sem hora (YYYY-MM-DD) e lida ao meio-dia para nao mudar de dia com o fuso.
   return date.format(new Date(`${isoDate}T12:00:00-03:00`));

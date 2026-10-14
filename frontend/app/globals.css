@@ -135,6 +135,13 @@ dl.facts dd { margin: 2px 0 0; overflow-wrap: anywhere; }
 .kpi { display: grid; gap: 4px; }
 .kpi .value { font-size: 28px; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
 .kpi .note { font-size: 13px; color: var(--muted); }
+
+/* ---------- abas ---------- */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { min-height: 44px; padding: 8px 14px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted);
+  font: inherit; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--primary); }
+.rank { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; }
 .grid-2 { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); }
 .chart { margin: 0; display: grid; gap: var(--space-1); min-width: 0; }
 .chart-head { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); justify-content: space-between; align-items: center; }

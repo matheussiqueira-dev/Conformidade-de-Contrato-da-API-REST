@@ -4,15 +4,19 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { z } from 'zod';
-import { GetCustomerResponse, ListCustomerOrdersResponse, UpdateCustomerBody, UpdateCustomerResponse } from '../../../../lib/api/generated/sbi.zod.ts';
+import {
+  GetCustomerResponse, GetCustomerSummaryResponse, ListCustomerOrdersResponse, UpdateCustomerBody, UpdateCustomerResponse,
+} from '../../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../../lib/api/http.ts';
-import { formatDate, formatDateTime, label, money, ORDER_STATUS } from '../../../../lib/format.ts';
+import { daysSince, formatDate, formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../../lib/format.ts';
 import { contractResolver, optional } from '../../../../lib/forms.ts';
 import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
 import Pager from '../../../../components/pager.tsx';
+import Tabs from '../../../../components/tabs.tsx';
 
 type Customer = z.infer<typeof GetCustomerResponse>;
+type Summary = z.infer<typeof GetCustomerSummaryResponse>;
 
 interface EditValues { name: string; companyName: string; email: string; phone: string; birthDate: string;
   street: string; number: string; complement: string; neighborhood: string; city: string; state: string; zipCode: string }
@@ -39,9 +43,15 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
   const client = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [page, setPage] = useState(0);
+  const [tab, setTab] = useState('pedidos');
   const query = useQuery({
     queryKey: ['customer', customerId],
     queryFn: ({ signal }) => api.request(`/customers/${customerId}`, { signal, schema: GetCustomerResponse }),
+    enabled: customerId !== null,
+  });
+  const summary = useQuery({
+    queryKey: ['customer-summary', customerId],
+    queryFn: ({ signal }) => api.request(`/customers/${customerId}/summary`, { signal, schema: GetCustomerSummaryResponse }),
     enabled: customerId !== null,
   });
   const history = useQuery({
@@ -59,61 +69,124 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
   if (query.error || !query.data) return <ErrorNotice error={query.error} />;
   const customer = query.data;
 
+  const orders = (
+    <section className="card stack-sm" aria-labelledby="historico-titulo">
+      <h2 id="historico-titulo">Histórico de pedidos</h2>
+      <ErrorNotice error={history.error} />
+      {history.isLoading ? <Loading label="Carregando histórico…" /> : history.data && history.data.content.length === 0
+        ? <p className="empty">Este cliente ainda não tem pedidos.</p>
+        : history.data && <div className="table-wrap"><table>
+            <caption className="sr-only">Pedidos do cliente, do mais recente ao mais antigo</caption>
+            <thead><tr><th scope="col">Pedido</th><th scope="col">Data</th><th scope="col">Itens</th><th scope="col">Situação</th>
+              <th scope="col">Vendedor</th><th scope="col" className="right">Total</th></tr></thead>
+            <tbody>{history.data.content.map(order => {
+              // DEC-ERP-02: total, vendedor e link so nos pedidos proprios ou para o GERENTE.
+              const visible = manager || order.own;
+              return (
+                <tr key={order.id}>
+                  <td>{visible ? <Link className="mono" href={`/vendas/${order.id}`}>#{order.id}</Link> : <span className="mono">#{order.id}</span>}</td>
+                  <td className="num">{formatDateTime(order.moment)}</td>
+                  <td>{order.items.map(item => `${item.quantity}× ${item.name}`).join(', ')}</td>
+                  <td>{label(ORDER_STATUS, order.status)}</td>
+                  <td>{visible && order.sellerFirstName ? order.sellerFirstName : '—'}</td>
+                  <td className="num right">{visible && order.total ? money(order.total) : '—'}</td>
+                </tr>
+              );
+            })}</tbody>
+          </table></div>}
+      {history.data && <Pager page={history.data.page} size={history.data.size} total={history.data.totalElements} onPage={setPage} />}
+    </section>
+  );
+
+  const details = (
+    <section className="card stack" aria-labelledby="dados-titulo">
+      <div className="page-head">
+        <h2 id="dados-titulo">Dados cadastrais</h2>
+        {!editing && <button type="button" className="btn" onClick={() => setEditing(true)}>Editar dados</button>}
+      </div>
+      {editing
+        ? <EditForm customer={customer} onCancel={() => setEditing(false)}
+                    onSaved={saved => { client.setQueryData(['customer', customerId], saved); setEditing(false); }}
+                    onReload={() => { void query.refetch(); setEditing(false); }} />
+        : <dl className="facts">
+            <div><dt>Tipo</dt><dd>{customer.type === 'CORPORATE' ? 'Pessoa jurídica' : 'Pessoa física'}</dd></div>
+            {customer.companyName && <div><dt>Razão social</dt><dd>{customer.companyName}</dd></div>}
+            <div><dt>E-mail</dt><dd>{customer.email ?? '—'}</dd></div>
+            <div><dt>Telefone</dt><dd>{customer.phone ?? '—'}</dd></div>
+            {customer.birthDate && <div><dt>Nascimento</dt><dd className="num">{formatDate(customer.birthDate)}</dd></div>}
+            <div><dt>Endereço</dt><dd>{customer.address
+              ? `${customer.address.street}, ${customer.address.number} · ${customer.address.neighborhood} · ${customer.address.city}/${customer.address.state}`
+              : '—'}</dd></div>
+            <div><dt>Cadastrado em</dt><dd className="num">{formatDateTime(customer.createdAt)}{customer.createdBy ? ` por ${customer.createdBy.name}` : ''}</dd></div>
+          </dl>}
+    </section>
+  );
+
   return (
     <div className="stack">
       <header className="page-head">
         <div className="stack-sm">
           <p><Link href="/clientes">Clientes</Link> / {customer.name}</p>
           <h1>{customer.name}</h1>
-          <p className="mono">{customer.document}</p>
+          <p><span className="pill">{customer.type === 'CORPORATE' ? 'PJ' : 'PF'}</span> <span className="mono">{customer.document}</span>
+            {customer.phone && <> · {customer.phone}</>} · <span className="muted">cliente desde {formatDate(customer.createdAt.slice(0, 10))}</span></p>
         </div>
-        {!editing && <button type="button" className="btn" onClick={() => setEditing(true)}>Editar dados</button>}
+        <Link className="btn btn-primary" href={`/vender?cliente=${customer.id}`}>Nova venda para este cliente</Link>
       </header>
 
-      <section className="card stack" aria-labelledby="dados-titulo">
-        <h2 id="dados-titulo">Dados do cliente</h2>
-        {editing
-          ? <EditForm customer={customer} onCancel={() => setEditing(false)}
-                      onSaved={saved => { client.setQueryData(['customer', customerId], saved); setEditing(false); }}
-                      onReload={() => { void query.refetch(); setEditing(false); }} />
-          : <dl className="facts">
-              <div><dt>Tipo</dt><dd>{customer.type === 'CORPORATE' ? 'Pessoa jurídica' : 'Pessoa física'}</dd></div>
-              {customer.companyName && <div><dt>Razão social</dt><dd>{customer.companyName}</dd></div>}
-              <div><dt>E-mail</dt><dd>{customer.email ?? '—'}</dd></div>
-              <div><dt>Telefone</dt><dd>{customer.phone ?? '—'}</dd></div>
-              {customer.birthDate && <div><dt>Nascimento</dt><dd className="num">{formatDate(customer.birthDate)}</dd></div>}
-              <div><dt>Endereço</dt><dd>{customer.address
-                ? `${customer.address.street}, ${customer.address.number} · ${customer.address.neighborhood} · ${customer.address.city}/${customer.address.state}`
-                : '—'}</dd></div>
-              <div><dt>Cadastrado em</dt><dd className="num">{formatDateTime(customer.createdAt)}{customer.createdBy ? ` por ${customer.createdBy.name}` : ''}</dd></div>
-            </dl>}
-      </section>
+      <SummaryStrip summary={summary.data} error={summary.error} loading={summary.isLoading} />
 
-      <section className="card stack-sm" aria-labelledby="historico-titulo">
-        <h2 id="historico-titulo">Histórico de pedidos</h2>
-        <ErrorNotice error={history.error} />
-        {history.isLoading ? <Loading label="Carregando histórico…" /> : history.data && history.data.content.length === 0
-          ? <p className="empty">Este cliente ainda não tem pedidos.</p>
-          : history.data && <div className="table-wrap"><table>
-              <caption className="sr-only">Pedidos do cliente, do mais recente ao mais antigo</caption>
-              <thead><tr><th scope="col">Pedido</th><th scope="col">Data</th><th scope="col">Itens</th><th scope="col">Situação</th>
-                <th scope="col">Vendedor</th><th scope="col" className="right">Total</th></tr></thead>
-              <tbody>{history.data.content.map(order => {
-                // DEC-ERP-02: total, vendedor e link so nos pedidos proprios ou para o GERENTE.
-                const visible = manager || order.own;
-                return (
-                  <tr key={order.id}>
-                    <td>{visible ? <Link className="mono" href={`/vendas/${order.id}`}>#{order.id}</Link> : <span className="mono">#{order.id}</span>}</td>
-                    <td className="num">{formatDateTime(order.moment)}</td>
-                    <td>{order.items.map(item => `${item.quantity}× ${item.name}`).join(', ')}</td>
-                    <td>{label(ORDER_STATUS, order.status)}</td>
-                    <td>{visible && order.sellerFirstName ? order.sellerFirstName : '—'}</td>
-                    <td className="num right">{visible && order.total ? money(order.total) : '—'}</td>
-                  </tr>
-                );
-              })}</tbody>
-            </table></div>}
-        {history.data && <Pager page={history.data.page} size={history.data.size} total={history.data.totalElements} onPage={setPage} />}
+      <Tabs label="Seções do cliente" active={tab} onChange={setTab} tabs={[
+        { id: 'pedidos', label: 'Pedidos', content: orders },
+        { id: 'produtos', label: 'Produtos mais comprados', content: <TopProducts summary={summary.data} /> },
+        { id: 'dados', label: 'Dados cadastrais', content: details },
+      ]} />
+    </div>
+  );
+}
+
+/** Faixa de indicadores (G-05): para o VENDEDOR, valores so das vendas dele (scope OWN). */
+function SummaryStrip({ summary, error, loading }: { summary: Summary | undefined; error: unknown; loading: boolean }) {
+  if (loading) return <Loading label="Carregando indicadores…" />;
+  if (!summary) return <ErrorNotice error={error} />;
+  const own = summary.scope === 'OWN';
+  return (
+    <section className="stack-sm" aria-labelledby="indicadores-titulo">
+      <h2 id="indicadores-titulo" className="sr-only">Indicadores do cliente</h2>
+      {own && <p className="muted">Suas vendas para este cliente</p>}
+      <div className="kpis">
+        <div className="card kpi"><span className="label">{own ? 'Total das suas vendas' : 'Total comprado'}</span>
+          <span className="value">{money(summary.totalSpent)}</span>
+          <span className="note">{summary.refundsTotal && summary.refundsTotal.amount > 0 ? `Já descontados ${money(summary.refundsTotal)} em estornos` : 'Pagamentos confirmados menos estornos'}</span></div>
+        <div className="card kpi"><span className="label">Ticket médio</span><span className="value">{money(summary.averageTicket)}</span>
+          <span className="note">{own ? 'Nos seus pedidos pagos' : 'Por pedido pago'}</span></div>
+        <div className="card kpi"><span className="label">Pedidos pagos</span><span className="value">{summary.ordersPaid}</span>
+          <span className="note">{summary.pendingOrders} aguardando pagamento · {summary.canceledOrders} cancelados</span></div>
+        <div className="card kpi"><span className="label">Última compra</span>
+          <span className="value">{summary.lastPurchaseAt ? daysSince(summary.lastPurchaseAt) : '—'}</span>
+          <span className="note">{summary.lastPurchaseAt ? formatDateTime(summary.lastPurchaseAt) : 'Nenhuma compra paga ainda'}</span></div>
+      </div>
+    </section>
+  );
+}
+
+function TopProducts({ summary }: { summary: Summary | undefined }) {
+  if (!summary) return <Loading label="Carregando produtos…" />;
+  return (
+    <div className="grid-2">
+      <section className="card stack-sm" aria-labelledby="produtos-titulo">
+        <h2 id="produtos-titulo">Produtos mais comprados</h2>
+        {summary.topProducts.length === 0 ? <p className="empty">Nenhuma compra paga ainda.</p>
+          : <ol className="rank">{summary.topProducts.map(product => (
+              <li key={product.productId}>{product.name} <span className="muted">· {product.quantity} {product.quantity === 1 ? 'unidade' : 'unidades'}</span></li>
+            ))}</ol>}
+      </section>
+      <section className="card stack-sm" aria-labelledby="formas-titulo">
+        <h2 id="formas-titulo">{summary.scope === 'OWN' ? 'Formas de pagamento nas suas vendas' : 'Formas de pagamento'}</h2>
+        {summary.paymentMix.length === 0 ? <p className="empty">Nenhum pagamento confirmado.</p>
+          : <dl className="facts">{summary.paymentMix.map(mix => (
+              <div key={mix.method}><dt>{label(PAYMENT_TYPE, mix.method)}</dt><dd className="num">{money(mix.amount)} · {mix.orders} {mix.orders === 1 ? 'pedido' : 'pedidos'}</dd></div>
+            ))}</dl>}
       </section>
     </div>
   );

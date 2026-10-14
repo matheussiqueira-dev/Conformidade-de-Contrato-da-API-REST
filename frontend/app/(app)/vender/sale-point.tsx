@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import type { z } from 'zod';
 import {
-  CancelOrderResponse, ConfirmSalePaymentResponse, CreateSaleOrderBody, CreateSaleOrderResponse, ListCustomersResponse,
+  CancelOrderResponse, ConfirmSalePaymentResponse, CreateSaleOrderBody, CreateSaleOrderResponse, GetCustomerResponse, ListCustomersResponse,
   ListSalesCatalogResponse, QuoteSaleResponse,
 } from '../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../lib/api/http.ts';
@@ -47,7 +47,7 @@ function inDays(days: number): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza' }).format(date);
 }
 
-export default function SalePoint({ userId }: { userId: number }) {
+export default function SalePoint({ userId, initialCustomerId = null }: { userId: number; initialCustomerId?: number | null }) {
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [loaded, setLoaded] = useState(false);
   const [step, setStep] = useState(0);
@@ -83,7 +83,7 @@ export default function SalePoint({ userId }: { userId: number }) {
       </header>
       {notice && <p className="notice notice-warn" role="status">{notice}</p>}
       {step === 0 && <ItemsStep cart={cart} setCart={setCart} onNext={() => { setNotice(''); setStep(1); }} />}
-      {step === 1 && <CheckoutStep cart={cart} setCart={setCart} userId={userId}
+      {step === 1 && <CheckoutStep cart={cart} setCart={setCart} userId={userId} initialCustomerId={initialCustomerId}
                                    onStockProblem={message => { setNotice(message); setStep(0); }}
                                    onCreated={created => { clearCart(storage(), userId); setCart(emptyCart()); setOrder(created); setStep(2); }} />}
       {step === 2 && order && <ConfirmStep order={order} onOrder={setOrder} onRestart={restart} />}
@@ -224,12 +224,13 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
 interface AddressForm { street: string; number: string; complement: string; neighborhood: string; city: string; state: string; zipCode: string }
 const EMPTY_ADDRESS: AddressForm = { street: '', number: '', complement: '', neighborhood: '', city: '', state: 'CE', zipCode: '' };
 
-function CheckoutStep({ cart, setCart, userId, onCreated, onStockProblem }: {
-  cart: Cart; setCart: (cart: Cart) => void; userId: number;
+function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onStockProblem }: {
+  cart: Cart; setCart: (cart: Cart) => void; userId: number; initialCustomerId: number | null;
   onCreated: (order: SalesOrder) => void; onStockProblem: (message: string) => void;
 }) {
   const [term, setTerm] = useState('');
   const [customer, setCustomer] = useState<CustomerSummary | { id: number; name: string; document: string } | null>(null);
+  const [presetUsed, setPresetUsed] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [payment, setPayment] = useState<PaymentType>('PIX');
   const [cardLast4, setCardLast4] = useState('');
@@ -245,6 +246,18 @@ function CheckoutStep({ cart, setCart, userId, onCreated, onStockProblem }: {
   useEffect(() => {
     if (drawer) dialog.current?.showModal(); else dialog.current?.close();
   }, [drawer]);
+
+  // Cliente vindo do perfil (/vender?cliente=ID): carregado uma vez; "Trocar cliente" continua livre.
+  const preset = useQuery({
+    queryKey: ['customer', initialCustomerId],
+    queryFn: ({ signal }) => api.request(`/customers/${initialCustomerId}`, { signal, schema: GetCustomerResponse }),
+    enabled: initialCustomerId !== null && !presetUsed,
+  });
+  useEffect(() => {
+    if (presetUsed || !preset.data) return;
+    setCustomer({ id: preset.data.id, name: preset.data.name, document: preset.data.document });
+    setPresetUsed(true);
+  }, [preset.data, presetUsed]);
 
   const customers = useQuery({
     queryKey: ['customers', q],
