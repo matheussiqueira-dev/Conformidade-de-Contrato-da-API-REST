@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BackofficeDtos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">BackofficeDtos.java</span></div><h1>BackofficeDtos.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.Refs.CategoryRef;
+import com.swee.ordermanagementspring.api.common.Refs.NamedRef;
+import com.swee.ordermanagementspring.api.common.Refs.ProductRef;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
+
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+
+/** DTOs do backoffice do GERENTE (RF-22): produtos, categorias e estoque. Preco muda so pelo PATCH /price (C-17). */
+public final class BackofficeDtos {
+    private BackofficeDtos() {
+    }
+
+    static final String SKU = &quot;^[A-Za-z0-9][A-Za-z0-9._-]{0,39}$&quot;;
+
+    // ---------------- produtos ----------------
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = &quot;type&quot;)
+    @JsonSubTypes({
+            @JsonSubTypes.Type(value = PhysicalProductCreate.class, name = &quot;PHYSICAL&quot;),
+            @JsonSubTypes.Type(value = DigitalProductCreate.class, name = &quot;DIGITAL&quot;)})
+    public sealed interface ProductCreateRequest permits PhysicalProductCreate, DigitalProductCreate {
+        String sku();
+        String name();
+        String description();
+        Long categoryId();
+        Boolean sellable();
+        MoneyDto price();
+        Integer minLevel();
+    }
+
+<span class="fc" id="L47">    public record PhysicalProductCreate(@NotNull @Pattern(regexp = SKU) String sku,</span>
+                                        @NotBlank @Size(min = 2, max = 120) String name,
+                                        @Size(max = 255) String description,
+                                        @Min(1) Long categoryId,
+                                        @NotNull Boolean sellable,
+                                        @NotNull @Valid MoneyDto price,
+                                        @NotNull @DecimalMin(&quot;0&quot;) @DecimalMax(&quot;1000&quot;) BigDecimal weightKg,
+                                        @Min(0) @Max(100_000) Integer minLevel) implements ProductCreateRequest { }
+
+<span class="fc" id="L56">    public record DigitalProductCreate(@NotNull @Pattern(regexp = SKU) String sku,</span>
+                                       @NotBlank @Size(min = 2, max = 120) String name,
+                                       @Size(max = 255) String description,
+                                       @Min(1) Long categoryId,
+                                       @NotNull Boolean sellable,
+                                       @NotNull @Valid MoneyDto price,
+                                       @NotBlank @URL @Size(max = 255) String downloadLink,
+                                       @Min(0) @Max(100_000) Integer minLevel) implements ProductCreateRequest { }
+
+    /** Campos opcionais ausentes mantem o valor atual (mesma regra do cliente, D-NOITE-09). */
+<span class="fc" id="L66">    public record ProductUpdateRequest(@NotNull @Pattern(regexp = SKU) String sku,</span>
+                                       @NotBlank @Size(min = 2, max = 120) String name,
+                                       @Size(max = 255) String description,
+                                       @Min(1) Long categoryId,
+                                       @NotNull Boolean sellable,
+                                       @DecimalMin(&quot;0&quot;) @DecimalMax(&quot;1000&quot;) BigDecimal weightKg,
+                                       @URL @Size(min = 1, max = 255) String downloadLink) { }
+
+<span class="fc" id="L74">    public record PriceChangeRequest(@NotNull @Valid MoneyDto newPrice, @NotBlank @Size(min = 5, max = 200) String reason) { }</span>
+
+<span class="fc" id="L76">    public record ProductStatusRequest(@NotNull Boolean active) { }</span>
+
+<span class="fc" id="L78">    public record Product(long id, String type, String sku, String name, String description, CategoryRef category,</span>
+                          MoneyDto price, boolean sellable, boolean active, BigDecimal weightKg, String downloadLink,
+                          OffsetDateTime updatedAt) { }
+
+<span class="fc" id="L82">    public record PriceChange(long id, MoneyDto oldPrice, MoneyDto newPrice, String reason, UserRef changedBy,</span>
+                              OffsetDateTime changedAt) { }
+
+    // ---------------- categorias ----------------
+
+<span class="fc" id="L87">    public record CategoryRequest(@NotBlank @Size(min = 2, max = 80) String name) { }</span>
+
+<span class="fc" id="L89">    public record Category(long id, String name) { }</span>
+
+    // ---------------- estoque ----------------
+
+<span class="fc" id="L93">    public record StockProduct(long productId, String sku, String name, boolean sellable, boolean active, int onHand,</span>
+                               int reserved, int available, int minLevel, boolean belowMin, MoneyDto avgCost) { }
+
+    /** REC-a: unitCost obrigatorio mas pode ser null (custo desconhecido); salePrice diferente altera o preco. */
+<span class="fc" id="L97">    public record StockEntryRequest(@NotNull @Min(1) @Max(100_000) Integer quantity,</span>
+                                    @Valid MoneyDto unitCost,
+                                    @Valid MoneyDto salePrice,
+                                    @Size(max = 200) String note) { }
+
+<span class="fc" id="L102">    public record StockEntryResponse(long id, ProductRef product, int quantity, MoneyDto unitCost, String note,</span>
+                                     UserRef createdBy, OffsetDateTime createdAt, StockProduct stock) { }
+
+<span class="fc" id="L105">    public enum Direction { IN, OUT }</span>
+
+<span class="fc" id="L107">    public enum AdjustmentReason { PERDA, AVARIA, USO_INTERNO, INVENTARIO, DEVOLUCAO_FORNECEDOR }</span>
+
+<span class="fc" id="L109">    public enum MovementKind { ENTRADA, RESERVA, LIBERACAO, SAIDA, DEVOLUCAO, AJUSTE_ENTRADA, AJUSTE_SAIDA }</span>
+
+<span class="fc" id="L111">    public record StockAdjustmentRequest(@NotNull Direction direction,</span>
+                                         @NotNull @Min(1) @Max(100_000) Integer quantity,
+                                         @NotNull AdjustmentReason reason,
+                                         @Size(max = 200) String note) { }
+
+<span class="fc" id="L116">    public record MinLevelRequest(@NotNull @Min(0) @Max(100_000) Integer minLevel) { }</span>
+
+<span class="fc" id="L118">    public record StockMovement(long id, ProductRef product, String kind, int quantity, String reason, String note,</span>
+                                Long orderId, NamedRef createdBy, OffsetDateTime createdAt) { }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

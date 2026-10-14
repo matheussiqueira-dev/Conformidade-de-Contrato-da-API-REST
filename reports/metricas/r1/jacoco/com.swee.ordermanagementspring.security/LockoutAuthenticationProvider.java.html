@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LockoutAuthenticationProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.security</a> &gt; <span class="el_source">LockoutAuthenticationProvider.java</span></div><h1>LockoutAuthenticationProvider.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.security;
+
+import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Login com bloqueio (RF-18). O BCrypt roda antes de qualquer verificacao de estado, inclusive para conta
+ * inexistente (hash ficticio), para que o tempo de resposta nao revele se a conta existe, esta bloqueada ou
+ * inativa. Os quatro casos de falha lancam a mesma excecao e geram o mesmo 401.
+ */
+public class LockoutAuthenticationProvider implements AuthenticationProvider {
+    private final AppUserRepository users;
+    private final PasswordEncoder encoder;
+    private final LoginAttemptService attempts;
+    private final String dummyHash;
+
+<span class="fc" id="L26">    public LockoutAuthenticationProvider(AppUserRepository users, PasswordEncoder encoder, LoginAttemptService attempts) {</span>
+<span class="fc" id="L27">        this.users = users;</span>
+<span class="fc" id="L28">        this.encoder = encoder;</span>
+<span class="fc" id="L29">        this.attempts = attempts;</span>
+<span class="fc" id="L30">        this.dummyHash = encoder.encode(UUID.randomUUID().toString());</span>
+<span class="fc" id="L31">    }</span>
+
+    @Override
+    public Authentication authenticate(Authentication authentication) {
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        String email = authentication.getName() == null ? &quot;&quot; : authentication.getName().trim().toLowerCase(Locale.ROOT);</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        String password = authentication.getCredentials() == null ? &quot;&quot; : authentication.getCredentials().toString();</span>
+<span class="fc" id="L37">        Optional&lt;AppUser&gt; found = users.findByEmail(email);</span>
+<span class="fc" id="L38">        boolean matches = encoder.matches(password, found.map(AppUser::getPasswordHash).orElse(dummyHash));</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (found.isEmpty()) {</span>
+<span class="fc" id="L40">            attempts.rejected(null, email);</span>
+<span class="fc" id="L41">            throw invalid();</span>
+        }
+<span class="fc" id="L43">        AppUser user = found.get();</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        if (!user.isActive() || attempts.isLocked(user)) {</span>
+<span class="fc" id="L45">            attempts.rejected(user, email);</span>
+<span class="fc" id="L46">            throw invalid();</span>
+        }
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!matches) {</span>
+<span class="fc" id="L49">            attempts.wrongPassword(user, email);</span>
+<span class="fc" id="L50">            throw invalid();</span>
+        }
+<span class="fc" id="L52">        attempts.succeeded(user);</span>
+<span class="fc" id="L53">        AppPrincipal principal = new AppPrincipal(user);</span>
+<span class="fc" id="L54">        return UsernamePasswordAuthenticationToken.authenticated(principal, null, principal.getAuthorities());</span>
+    }
+
+    private static BadCredentialsException invalid() {
+<span class="fc" id="L58">        return new BadCredentialsException(&quot;Credenciais invalidas&quot;);</span>
+    }
+
+    @Override
+    public boolean supports(Class&lt;?&gt; authentication) {
+<span class="fc" id="L63">        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

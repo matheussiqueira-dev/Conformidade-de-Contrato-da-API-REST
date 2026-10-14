@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">OrderService.java</span></div><h1>OrderService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.*;
+import com.swee.ordermanagementspring.entities.Address;
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.OrderItem;
+import com.swee.ordermanagementspring.entities.customer.Documents;
+import com.swee.ordermanagementspring.entities.customer.Customer;
+import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
+import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
+import com.swee.ordermanagementspring.entities.auth.AppUser;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
+import com.swee.ordermanagementspring.entities.payment.CardPayment;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.entities.payment.PixPayment;
+import com.swee.ordermanagementspring.entities.product.Product;
+import com.swee.ordermanagementspring.exceptions.OrderException;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+import com.swee.ordermanagementspring.exceptions.ProductException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.CustomerRepository;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import com.swee.ordermanagementspring.repositories.OrderRepository;
+import com.swee.ordermanagementspring.repositories.ProductRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.transaction.annotation.Transactional;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class OrderService {
+    private final OrderRepository repository;
+    private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
+    private final AppUserRepository appUserRepository;
+
+    public OrderService(OrderRepository repository, ProductRepository productRepository, CustomerRepository customerRepository,
+<span class="fc" id="L42">                        AppUserRepository appUserRepository) {</span>
+<span class="fc" id="L43">        this.repository = repository;</span>
+<span class="fc" id="L44">        this.productRepository = productRepository;</span>
+<span class="fc" id="L45">        this.customerRepository = customerRepository;</span>
+<span class="fc" id="L46">        this.appUserRepository = appUserRepository;</span>
+<span class="fc" id="L47">    }</span>
+
+    public List&lt;Order&gt; findAll() {
+<span class="fc" id="L50">        return repository.findAll();</span>
+    }
+
+    public Order findById(Long id) {
+<span class="fc" id="L54">        return repository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found&quot;));</span>
+    }
+
+    @Transactional
+    public Order insert(OrderRequestDTO dto, AppPrincipal principal) {
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        if (principal == null || principal.id() == null) {</span>
+<span class="fc" id="L60">            throw new AccessDeniedException(&quot;Authenticated user is required to create an order&quot;);</span>
+        }
+<span class="fc" id="L62">        AppUser seller = appUserRepository.findById(principal.id())</span>
+<span class="fc" id="L63">                .orElseThrow(() -&gt; new AccessDeniedException(&quot;Authenticated user no longer exists&quot;));</span>
+<span class="fc" id="L64">        Customer customer = resolveCustomer(dto);</span>
+
+<span class="fc" id="L66">        Order order = new Order(OrderStatus.PENDING_PAYMENT, customer, seller);</span>
+<span class="fc" id="L67">        order.setShippingAddress(buildAddress(dto.getShippingAddress()));</span>
+
+<span class="fc" id="L69">        List&lt;OrderItem&gt; items = buildItems(order, dto.getItems());</span>
+<span class="fc" id="L70">        order.setItems(items);</span>
+
+<span class="fc" id="L72">        PaymentRules.requireAmountMatchesTotal(dto.getPayment().getAmount(), order);</span>
+<span class="fc" id="L73">        Payment payment = buildPayment(dto.getPayment(), order);</span>
+<span class="fc" id="L74">        order.setPayment(payment);</span>
+
+<span class="fc" id="L76">        return repository.save(order);</span>
+    }
+
+    private Customer resolveCustomer(OrderRequestDTO dto) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (dto.getCustomerId() != null) {</span>
+<span class="fc" id="L81">            return customerRepository.findById(dto.getCustomerId())</span>
+<span class="fc" id="L82">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Customer not found, id: &quot; + dto.getCustomerId()));</span>
+        }
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (dto.getCustomer() != null) {</span>
+<span class="fc" id="L86">            return buildNewCustomer(dto.getCustomer());</span>
+        }
+
+<span class="fc" id="L89">        throw new OrderException(&quot;It is necessary to provide either customerId or customer data.&quot;);</span>
+    }
+
+    private Customer buildNewCustomer(CustomerRequestDTO dto) {
+<span class="fc bfc" id="L93" title="All 3 branches covered.">        return switch (dto.getType().toUpperCase()) {</span>
+            case &quot;INDIVIDUAL&quot; -&gt; {
+<span class="pc bpc" id="L95" title="1 of 4 branches missed.">                if (dto.getCpf() == null || dto.getCpf().isBlank()) {</span>
+<span class="fc" id="L96">                    throw new OrderException(&quot;CPF is required for INDIVIDUAL customers.&quot;);</span>
+                }
+<span class="fc" id="L98">                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cpf(dto.getCpf()));</span>
+            }
+            case &quot;CORPORATE&quot; -&gt; {
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">                if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {</span>
+<span class="fc" id="L102">                    throw new OrderException(&quot;CNPJ is required for CORPORATE customers.&quot;);</span>
+                }
+<span class="nc" id="L104">                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cnpj(dto.getCnpj()), dto.getCompanyName());</span>
+            }
+<span class="fc" id="L106">            default -&gt; throw new OrderException(&quot;Invalid customer type: &quot; + dto.getType());</span>
+        };
+    }
+
+    private Address buildAddress(AddressRequestDTO dto) {
+<span class="fc" id="L111">        return new Address(dto.getZipCode(), dto.getState(), dto.getCity(),</span>
+<span class="fc" id="L112">                dto.getNeighborhood(), dto.getComplement(), dto.getNumber(), dto.getStreet());</span>
+    }
+
+    private List&lt;OrderItem&gt; buildItems(Order order, List&lt;OrderItemRequestDTO&gt; itemsDto) {
+<span class="fc" id="L116">        List&lt;OrderItem&gt; items = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (OrderItemRequestDTO itemDto : itemsDto) {</span>
+<span class="fc" id="L119">            Product product = productRepository.findById(itemDto.getProductId())</span>
+<span class="fc" id="L120">                    .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Product not found, id: &quot; + itemDto.getProductId()));</span>
+
+<span class="fc" id="L122">            OrderItem item = new OrderItem(order, product, itemDto.getQuantity(), product.getPrice());</span>
+<span class="fc" id="L123">            items.add(item);</span>
+<span class="fc" id="L124">        }</span>
+
+<span class="fc" id="L126">        return items;</span>
+    }
+
+    private Payment buildPayment(OrderPaymentRequestDTO dto, Order order) {
+<span class="fc bfc" id="L130" title="All 4 branches covered.">        return switch (PaymentRules.normalizeType(dto.getType())) {</span>
+            case &quot;CARD&quot; -&gt; {
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="fc" id="L133">                    throw new PaymentException(&quot;cardNumber is required for CARD payments.&quot;);</span>
+                }
+<span class="fc" id="L135">                yield new CardPayment(dto.getAmount(), order, dto.getCardNumber(), dto.getCardHolder(), dto.getInstallments());</span>
+            }
+            case &quot;PIX&quot; -&gt; {
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="fc" id="L139">                    throw new PaymentException(&quot;pixKey is required for PIX payments.&quot;);</span>
+                }
+<span class="fc" id="L141">                yield new PixPayment(dto.getAmount(), order, dto.getPixKey(), dto.getPixHolderName(), null, null);</span>
+            }
+            case &quot;BOLETO&quot; -&gt; {
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="fc" id="L145">                    throw new PaymentException(&quot;barCode is required for BOLETO payments.&quot;);</span>
+                }
+<span class="fc" id="L147">                PaymentRules.requireDueDate(dto.getDueDate());</span>
+<span class="fc" id="L148">                yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());</span>
+            }
+<span class="fc" id="L150">            default -&gt; throw new PaymentException(&quot;Invalid payment type: &quot; + dto.getType());</span>
+        };
+    }
+
+    /** D019: a linha do pedido fica bloqueada da leitura ate o commit, entao duas trocas simultaneas sao serializadas. */
+    @Transactional
+    public Order updateStatus(Long id, OrderStatusUpdateDTO dto) {
+<span class="pc" id="L157">        Order order = repository.findWithLockById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found&quot;));</span>
+
+        OrderStatus newStatus;
+        try {
+<span class="fc" id="L161">            newStatus = OrderStatus.valueOf(dto.getStatus().toUpperCase());</span>
+<span class="fc" id="L162">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L163">            throw new OrderException(&quot;Invalid status: &quot; + dto.getStatus());</span>
+<span class="fc" id="L164">        }</span>
+
+        // D010: o status so avanca no fluxo; repetir o status atual e permitido
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (!order.getStatus().canMoveTo(newStatus)) {</span>
+<span class="fc" id="L168">            throw new OrderException(&quot;Order status cannot go back from &quot; + order.getStatus() + &quot; to &quot; + newStatus);</span>
+        }
+
+<span class="fc" id="L171">        order.setStatus(newStatus);</span>
+<span class="fc" id="L172">        return repository.save(order);</span>
+    }
+
+    public Order updateAddress(Long id, AddressRequestDTO dto) {
+<span class="fc" id="L176">        Order order = findById(id);</span>
+
+<span class="fc bfc" id="L178" title="All 4 branches covered.">        if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED) {</span>
+<span class="fc" id="L179">            throw new OrderException(&quot;The shipping address cannot be changed for an order that has already been shipped or delivered.&quot;);</span>
+        }
+
+<span class="fc" id="L182">        Address address = order.getShippingAddress();</span>
+<span class="fc" id="L183">        address.setStreet(dto.getStreet());</span>
+<span class="fc" id="L184">        address.setNumber(dto.getNumber());</span>
+<span class="fc" id="L185">        address.setComplement(dto.getComplement());</span>
+<span class="fc" id="L186">        address.setNeighborhood(dto.getNeighborhood());</span>
+<span class="fc" id="L187">        address.setCity(dto.getCity());</span>
+<span class="fc" id="L188">        address.setState(dto.getState());</span>
+<span class="fc" id="L189">        address.setZipCode(dto.getZipCode());</span>
+
+<span class="fc" id="L191">        return repository.save(order);</span>
+    }
+
+    public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        if (!repository.existsById(id)) {</span>
+<span class="fc" id="L197">            throw new ResourceNotFoundException(&quot;Order not found, id: &quot; + id);</span>
+        }
+<span class="fc" id="L199">        repository.deleteById(id);</span>
+<span class="fc" id="L200">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

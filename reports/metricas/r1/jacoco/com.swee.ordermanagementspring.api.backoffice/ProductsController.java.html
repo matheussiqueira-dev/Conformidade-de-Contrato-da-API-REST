@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">ProductsController.java</span></div><h1>ProductsController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.*;
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.exceptions.ErrorResponse;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+
+/** Produtos e categorias do contrato v4 (substitui o /products legado). Somente GERENTE (URL e servico). */
+@RestController
+public class ProductsController {
+    private final CatalogAdminService service;
+
+<span class="fc" id="L29">    public ProductsController(CatalogAdminService service) {</span>
+<span class="fc" id="L30">        this.service = service;</span>
+<span class="fc" id="L31">    }</span>
+
+    @GetMapping(&quot;/products&quot;)
+    public PageResponse&lt;Product&gt; list(@RequestParam(defaultValue = &quot;&quot;) @Size(max = 120) String q,
+                                      @RequestParam(required = false) Boolean sellable,
+                                      @RequestParam(required = false) Boolean active,
+                                      @RequestParam(defaultValue = &quot;0&quot;) @Min(0) int page,
+                                      @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int size) {
+<span class="fc" id="L39">        return service.list(q, sellable, active, page, size);</span>
+    }
+
+    @PostMapping(&quot;/products&quot;)
+    @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Validacao ou regra de produto invalida&quot;,
+            content = @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = ErrorResponse.class)))
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;Product&gt; create(@AuthenticationPrincipal AppPrincipal principal,
+                                          @Valid @RequestBody ProductCreateRequest request) {
+<span class="fc" id="L48">        Product created = service.create(CurrentUser.of(principal), request);</span>
+<span class="fc" id="L49">        return ResponseEntity.created(URI.create(&quot;/products/&quot; + created.id())).body(created);</span>
+    }
+
+    @GetMapping(&quot;/products/{id}&quot;)
+    @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Produto&quot;)
+    @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Produto nao encontrado&quot;,
+            content = @Content(mediaType = &quot;application/json&quot;, schema = @Schema(implementation = ErrorResponse.class)))
+    public Product get(@PathVariable @Positive long id) {
+<span class="nc" id="L57">        return service.get(id);</span>
+    }
+
+    @PutMapping(&quot;/products/{id}&quot;)
+    public Product update(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
+                          @Valid @RequestBody ProductUpdateRequest request) {
+<span class="fc" id="L63">        return service.update(CurrentUser.of(principal), id, request);</span>
+    }
+
+    @DeleteMapping(&quot;/products/{id}&quot;)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity&lt;Void&gt; delete(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id) {
+<span class="fc" id="L69">        service.delete(CurrentUser.of(principal), id);</span>
+<span class="fc" id="L70">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @PatchMapping(&quot;/products/{id}/price&quot;)
+    public Product changePrice(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
+                               @Valid @RequestBody PriceChangeRequest request) {
+<span class="fc" id="L76">        return service.changePrice(CurrentUser.of(principal), id, request);</span>
+    }
+
+    @PatchMapping(&quot;/products/{id}/status&quot;)
+    public Product changeStatus(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
+                                @Valid @RequestBody ProductStatusRequest request) {
+<span class="fc" id="L82">        return service.changeStatus(CurrentUser.of(principal), id, request);</span>
+    }
+
+    @GetMapping(&quot;/products/{id}/price-history&quot;)
+    public PageResponse&lt;PriceChange&gt; priceHistory(@PathVariable @Positive long id,
+                                                  @RequestParam(defaultValue = &quot;0&quot;) @Min(0) int page,
+                                                  @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int size) {
+<span class="fc" id="L89">        return service.priceHistory(id, page, size);</span>
+    }
+
+    @GetMapping(&quot;/categories&quot;)
+    public List&lt;Category&gt; categories() {
+<span class="fc" id="L94">        return service.categories();</span>
+    }
+
+    @PostMapping(&quot;/categories&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;Category&gt; createCategory(@Valid @RequestBody CategoryRequest request) {
+<span class="fc" id="L100">        Category created = service.createCategory(request);</span>
+<span class="fc" id="L101">        return ResponseEntity.created(URI.create(&quot;/categories/&quot; + created.id())).body(created);</span>
+    }
+
+    @PutMapping(&quot;/categories/{id}&quot;)
+    public Category renameCategory(@PathVariable @Positive long id, @Valid @RequestBody CategoryRequest request) {
+<span class="fc" id="L106">        return service.renameCategory(id, request);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

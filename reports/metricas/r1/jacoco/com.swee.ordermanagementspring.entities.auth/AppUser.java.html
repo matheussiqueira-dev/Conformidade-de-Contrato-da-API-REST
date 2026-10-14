@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.entities.auth</a> &gt; <span class="el_source">AppUser.java</span></div><h1>AppUser.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.entities.auth;
+
+import jakarta.persistence.*;
+import java.time.Instant;
+import java.util.Locale;
+
+@Entity
+@Table(name = &quot;app_users&quot;)
+public class AppUser {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, length = 120)
+    private String name;
+    @Column(nullable = false, unique = true, length = 254)
+    private String email;
+    @Column(nullable = false, length = 100)
+    private String passwordHash;
+    @Enumerated(EnumType.STRING) @Column(nullable = false, length = 20)
+    private UserRole role;
+    // D2 (V5): situacao da conta e bloqueio por tentativas
+<span class="fc" id="L21">    @Column(nullable = false)</span>
+    private boolean active = true;
+    @Column(nullable = false)
+    private short failedLoginAttempts;
+    private Instant lockedUntil;
+    private Instant lastLoginAt;
+
+<span class="fc" id="L28">    protected AppUser() {}</span>
+<span class="fc" id="L29">    public AppUser(String name, String email, String passwordHash, UserRole role) {</span>
+<span class="fc" id="L30">        this.name = name;</span>
+<span class="fc" id="L31">        this.email = email.trim().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L32">        this.passwordHash = passwordHash;</span>
+<span class="fc" id="L33">        this.role = role;</span>
+<span class="fc" id="L34">    }</span>
+<span class="fc" id="L35">    public Long getId() { return id; }</span>
+<span class="fc" id="L36">    public String getName() { return name; }</span>
+<span class="fc" id="L37">    public String getEmail() { return email; }</span>
+<span class="fc" id="L38">    public String getPasswordHash() { return passwordHash; }</span>
+<span class="fc" id="L39">    public UserRole getRole() { return role; }</span>
+<span class="fc" id="L40">    public boolean isActive() { return active; }</span>
+<span class="fc" id="L41">    public int getFailedLoginAttempts() { return failedLoginAttempts; }</span>
+<span class="fc" id="L42">    public Instant getLockedUntil() { return lockedUntil; }</span>
+<span class="fc" id="L43">    public Instant getLastLoginAt() { return lastLoginAt; }</span>
+
+<span class="fc" id="L45">    public void deactivate() { this.active = false; }</span>
+
+    /** Uma falha de senha; devolve o total de falhas seguidas. */
+    public int registerFailure() {
+<span class="fc" id="L49">        this.failedLoginAttempts = (short) (failedLoginAttempts + 1);</span>
+<span class="fc" id="L50">        return failedLoginAttempts;</span>
+    }
+
+    public void lockUntil(Instant until) {
+<span class="fc" id="L54">        this.lockedUntil = until;</span>
+<span class="fc" id="L55">        this.failedLoginAttempts = 0;</span>
+<span class="fc" id="L56">    }</span>
+
+    public void registerSuccess(Instant now) {
+<span class="fc" id="L59">        this.failedLoginAttempts = 0;</span>
+<span class="fc" id="L60">        this.lockedUntil = null;</span>
+<span class="fc" id="L61">        this.lastLoginAt = now;</span>
+<span class="fc" id="L62">    }</span>
+
+    public boolean isLockedAt(Instant now) {
+<span class="fc bfc" id="L65" title="All 4 branches covered.">        return lockedUntil != null &amp;&amp; lockedUntil.isAfter(now);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

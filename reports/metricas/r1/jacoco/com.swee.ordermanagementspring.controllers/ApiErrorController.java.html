@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiErrorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">ApiErrorController.java</span></div><h1>ApiErrorController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.exceptions.ErrorCode;
+import com.swee.ordermanagementspring.exceptions.ErrorResponse;
+import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.webmvc.error.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * /error no formato unico (A5) para falhas que acontecem fora do MVC. Liberado para qualquer metodo pelo
+ * dispatcher ERROR; nunca expoe a excecao original.
+ */
+@Hidden
+@RestController
+<span class="fc" id="L20">public class ApiErrorController implements ErrorController {</span>
+
+    @RequestMapping(&quot;/error&quot;)
+    public ResponseEntity&lt;ErrorResponse&gt; error(HttpServletRequest request) {
+<span class="fc" id="L24">        Object attribute = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);</span>
+        // Chamada direta, sem erro encaminhado pelo container: nao ha o que relatar.
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        HttpStatus status = HttpStatus.resolve(attribute instanceof Integer code ? code : 404);</span>
+<span class="pc bpc" id="L27" title="2 of 4 branches missed.">        if (status == null || !status.isError()) status = HttpStatus.INTERNAL_SERVER_ERROR;</span>
+<span class="pc bpc" id="L28" title="6 of 7 branches missed.">        ErrorCode code = switch (status.value()) {</span>
+<span class="nc" id="L29">            case 401 -&gt; ErrorCode.UNAUTHENTICATED;</span>
+<span class="nc" id="L30">            case 403 -&gt; ErrorCode.FORBIDDEN;</span>
+<span class="fc" id="L31">            case 404 -&gt; ErrorCode.NOT_FOUND;</span>
+<span class="nc" id="L32">            case 405 -&gt; ErrorCode.METHOD_NOT_ALLOWED;</span>
+<span class="nc" id="L33">            case 409 -&gt; ErrorCode.STATE_CONFLICT;</span>
+<span class="nc" id="L34">            case 415 -&gt; ErrorCode.UNSUPPORTED_MEDIA_TYPE;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            default -&gt; status.is5xxServerError() ? ErrorCode.INTERNAL_ERROR : ErrorCode.MALFORMED_REQUEST;</span>
+<span class="fc" id="L36">        };</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        String message = status.is5xxServerError() ? &quot;Occurred an unexpected error&quot; : status.getReasonPhrase();</span>
+<span class="fc" id="L38">        return ResponseEntity.status(status).body(new ErrorResponse(status.value(), status.getReasonPhrase(), code, message));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

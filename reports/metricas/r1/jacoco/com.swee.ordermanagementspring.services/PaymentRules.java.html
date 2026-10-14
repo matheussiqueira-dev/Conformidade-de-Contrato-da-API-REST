@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">PaymentRules.java</span></div><h1>PaymentRules.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.entities.Money;
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Locale;
+
+/** Regras de pagamento compartilhadas por OrderService e PaymentService (FIX-01). */
+final class PaymentRules {
+
+    private PaymentRules() {
+    }
+
+    /** D016: conversao independente do locale padrao da JVM (ex.: tr-TR transforma &quot;pix&quot; em &quot;PİX&quot;). */
+    static String normalizeType(String type) {
+<span class="pc bpc" id="L19" title="2 of 4 branches missed.">        if (type == null || type.isBlank()) {</span>
+<span class="nc" id="L20">            throw new PaymentException(&quot;Payment type is required&quot;);</span>
+        }
+<span class="fc" id="L22">        return type.trim().toUpperCase(Locale.ROOT);</span>
+    }
+
+    /** D012: o valor pago deve ser exatamente o total do pedido, comparado em centavos. */
+    static void requireAmountMatchesTotal(BigDecimal amount, Order order) {
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if (amount == null) {</span>
+<span class="nc" id="L28">            throw new PaymentException(&quot;Payment amount is required&quot;);</span>
+        }
+<span class="fc" id="L30">        BigDecimal paid = Money.of(amount);</span>
+<span class="fc" id="L31">        BigDecimal total = Money.of(order.total());</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (paid.compareTo(total) != 0) {</span>
+<span class="fc" id="L33">            throw new PaymentException(&quot;Payment amount &quot; + paid + &quot; must equal the order total &quot; + total);</span>
+        }
+<span class="fc" id="L35">    }</span>
+
+    /** D006: boleto sem vencimento e rejeitado antes de salvar. */
+    static void requireDueDate(LocalDate dueDate) {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (dueDate == null) {</span>
+<span class="fc" id="L40">            throw new PaymentException(&quot;dueDate is required for BOLETO payments&quot;);</span>
+        }
+<span class="fc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

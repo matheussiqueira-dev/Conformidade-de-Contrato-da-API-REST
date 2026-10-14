@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StockService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">StockService.java</span></div><h1>StockService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.*;
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.DbSessionContext;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.api.common.Refs.ProductRef;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.exceptions.ApiException;
+import com.swee.ordermanagementspring.exceptions.ErrorCode;
+import com.swee.ordermanagementspring.security.AuditService;
+import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+
+/**
+ * Estoque do GERENTE (RF-22): entradas recalculam o custo medio pelo gatilho da V5; ajustes nao mexem no custo;
+ * saida nunca deixa o disponivel negativo (UPDATE condicional e CHECK do banco como ultima barreira).
+ */
+@Service
+@PreAuthorize(&quot;hasRole('GERENTE')&quot;)
+public class StockService {
+    /** Motivo do historico de preco quando a entrada traz um salePrice novo (REC-a). */
+    static final String ENTRY_PRICE_REASON = &quot;Entrada de estoque&quot;;
+
+    private final BackofficeRepository repository;
+    private final JdbcClient jdbc;
+    private final DbSessionContext session;
+    private final AuditService audit;
+
+<span class="fc" id="L40">    public StockService(BackofficeRepository repository, JdbcClient jdbc, DbSessionContext session, AuditService audit) {</span>
+<span class="fc" id="L41">        this.repository = repository;</span>
+<span class="fc" id="L42">        this.jdbc = jdbc;</span>
+<span class="fc" id="L43">        this.session = session;</span>
+<span class="fc" id="L44">        this.audit = audit;</span>
+<span class="fc" id="L45">    }</span>
+
+    private static ApiException notFound(long id) {
+<span class="fc" id="L48">        return ApiException.notFound(&quot;Product not found, id: &quot; + id);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse&lt;StockProduct&gt; list(String q, Boolean belowMin, Boolean sellable, int page, int size) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        String term = q == null ? &quot;&quot; : q.trim();</span>
+<span class="fc" id="L54">        return new PageResponse&lt;&gt;(repository.stock(term, belowMin, sellable, page, size), page, size,</span>
+<span class="fc" id="L55">                repository.stockCount(term, belowMin, sellable));</span>
+    }
+
+    @Transactional
+    public StockEntryResponse entry(CurrentUser user, long productId, StockEntryRequest request) {
+<span class="fc" id="L60">        session.apply(user.id(), ENTRY_PRICE_REASON);</span>
+<span class="fc" id="L61">        var product = repository.stock(productId).orElseThrow(() -&gt; notFound(productId));</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        BigDecimal unitCost = request.unitCost() == null ? null : request.unitCost().value();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (request.salePrice() != null) {</span>
+<span class="fc" id="L64">            BigDecimal salePrice = request.salePrice().value();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (salePrice.signum() &lt;= 0) throw ApiException.badRequest(&quot;salePrice: must be greater than 0.00&quot;);</span>
+            // O gatilho so grava historico quando o preco muda de fato.
+<span class="fc" id="L67">            jdbc.sql(&quot;UPDATE product SET price = :price WHERE id = :id&quot;).param(&quot;price&quot;, salePrice).param(&quot;id&quot;, productId).update();</span>
+        }
+<span class="fc" id="L69">        record Entry(long id, OffsetDateTime createdAt) { }</span>
+<span class="fc" id="L70">        Entry entry = jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO stock_entry(product_id, quantity, unit_cost, created_by, note)
+                VALUES (:product, :quantity, :cost, :user, :note) RETURNING id, created_at&quot;&quot;&quot;)
+<span class="fc" id="L73">                .param(&quot;product&quot;, productId).param(&quot;quantity&quot;, request.quantity()).param(&quot;cost&quot;, unitCost)</span>
+<span class="fc" id="L74">                .param(&quot;user&quot;, user.id()).param(&quot;note&quot;, blankToNull(request.note()))</span>
+<span class="fc" id="L75">                .query((rs, n) -&gt; new Entry(rs.getLong(&quot;id&quot;), BackofficeRepository.instant(rs, &quot;created_at&quot;))).single();</span>
+<span class="fc" id="L76">        return new StockEntryResponse(entry.id(), new ProductRef(productId, product.sku(), product.name()), request.quantity(),</span>
+<span class="fc" id="L77">                MoneyDto.of(unitCost), blankToNull(request.note()), new UserRef(user.id(), user.name()), entry.createdAt(),</span>
+<span class="fc" id="L78">                repository.stock(productId).orElseThrow());</span>
+    }
+
+    @Transactional
+    public StockMovement adjust(CurrentUser user, long productId, StockAdjustmentRequest request) {
+<span class="fc" id="L83">        session.apply(user.id(), null);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (repository.stock(productId).isEmpty()) throw notFound(productId);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        boolean in = request.direction() == Direction.IN;</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">        if (in &amp;&amp; request.reason() != AdjustmentReason.INVENTARIO) {</span>
+<span class="fc" id="L87">            throw ApiException.badRequest(&quot;reason: an IN adjustment only accepts INVENTARIO&quot;);</span>
+        }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        int updated = in</span>
+<span class="fc" id="L90">                ? jdbc.sql(&quot;UPDATE stock_balance SET on_hand = on_hand + :q, updated_at = now() WHERE product_id = :id&quot;)</span>
+<span class="fc" id="L91">                        .param(&quot;q&quot;, request.quantity()).param(&quot;id&quot;, productId).update()</span>
+<span class="fc" id="L92">                : jdbc.sql(&quot;&quot;&quot;</span>
+                        UPDATE stock_balance SET on_hand = on_hand - :q, updated_at = now()
+                         WHERE product_id = :id AND on_hand - reserved &gt;= :q&quot;&quot;&quot;)
+<span class="fc" id="L95">                        .param(&quot;q&quot;, request.quantity()).param(&quot;id&quot;, productId).update();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (updated == 0) {</span>
+<span class="fc" id="L97">            int available = repository.stock(productId).orElseThrow().available();</span>
+<span class="fc" id="L98">            throw new ApiException(HttpStatus.CONFLICT, ErrorCode.STOCK_INSUFFICIENT,</span>
+                    &quot;Adjustment would leave product &quot; + productId + &quot; below its reserved quantity&quot;,
+<span class="fc" id="L100">                    List.of(&quot;productId=&quot; + productId + &quot;; available=&quot; + Math.max(available, 0)));</span>
+        }
+<span class="fc" id="L102">        long id = jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO stock_movement(product_id, kind, quantity, reason, note, created_by)
+                VALUES (:product, :kind, :q, :reason, :note, :user) RETURNING id&quot;&quot;&quot;)
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                .param(&quot;product&quot;, productId).param(&quot;kind&quot;, in ? &quot;AJUSTE_ENTRADA&quot; : &quot;AJUSTE_SAIDA&quot;)</span>
+<span class="fc" id="L106">                .param(&quot;q&quot;, request.quantity()).param(&quot;reason&quot;, request.reason().name())</span>
+<span class="fc" id="L107">                .param(&quot;note&quot;, blankToNull(request.note())).param(&quot;user&quot;, user.id()).query(Long.class).single();</span>
+<span class="fc" id="L108">        audit.record(AuditAction.STOCK_ADJUSTED, user.id(), &quot;stock_movement&quot;, id, null);</span>
+<span class="fc" id="L109">        return repository.movement(id).orElseThrow();</span>
+    }
+
+    @Transactional
+    public StockProduct changeMinLevel(CurrentUser user, long productId, MinLevelRequest request) {
+<span class="fc" id="L114">        session.apply(user.id(), null);</span>
+<span class="fc" id="L115">        int updated = jdbc.sql(&quot;UPDATE stock_balance SET min_level = :min, updated_at = now() WHERE product_id = :id&quot;)</span>
+<span class="fc" id="L116">                .param(&quot;min&quot;, request.minLevel()).param(&quot;id&quot;, productId).update();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (updated == 0) throw notFound(productId);</span>
+<span class="fc" id="L118">        return repository.stock(productId).orElseThrow();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public PageResponse&lt;StockMovement&gt; movements(Long productId, MovementKind kind, LocalDate from, LocalDate to, int page, int size) {
+<span class="fc bfc" id="L123" title="All 6 branches covered.">        if (from != null &amp;&amp; to != null &amp;&amp; from.isAfter(to)) throw ApiException.badRequest(&quot;from: must not be after to&quot;);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        String kindName = kind == null ? null : kind.name();</span>
+<span class="fc" id="L125">        return new PageResponse&lt;&gt;(repository.movements(productId, kindName, from, to, page, size), page, size,</span>
+<span class="fc" id="L126">                repository.movementCount(productId, kindName, from, to));</span>
+    }
+
+    private static String blankToNull(String value) {
+<span class="pc bpc" id="L130" title="1 of 4 branches missed.">        return value == null || value.isBlank() ? null : value.trim();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

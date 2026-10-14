@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.exceptions</a> &gt; <span class="el_source">ApiException.java</span></div><h1>ApiException.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.exceptions;
+
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+/** Erro de negocio com status e code do contrato v4 (ex.: 409 STOCK_INSUFFICIENT, 404 NOT_FOUND). */
+public class ApiException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
+    private final HttpStatus status;
+    private final ErrorCode code;
+    private final transient List&lt;String&gt; details;
+
+    public ApiException(HttpStatus status, ErrorCode code, String message) {
+<span class="fc" id="L17">        this(status, code, message, null);</span>
+<span class="fc" id="L18">    }</span>
+
+    public ApiException(HttpStatus status, ErrorCode code, String message, List&lt;String&gt; details) {
+<span class="fc" id="L21">        super(message);</span>
+<span class="fc" id="L22">        this.status = status;</span>
+<span class="fc" id="L23">        this.code = code;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        this.details = details == null ? null : List.copyOf(details);</span>
+<span class="fc" id="L25">    }</span>
+
+    public static ApiException notFound(String message) {
+<span class="fc" id="L28">        return new ApiException(HttpStatus.NOT_FOUND, ErrorCode.NOT_FOUND, message);</span>
+    }
+
+    public static ApiException conflict(ErrorCode code, String message) {
+<span class="fc" id="L32">        return new ApiException(HttpStatus.CONFLICT, code, message);</span>
+    }
+
+    public static ApiException badRequest(String message) {
+<span class="fc" id="L36">        return new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.VALIDATION_FAILED, message);</span>
+    }
+
+    public HttpStatus getStatus() {
+<span class="fc" id="L40">        return status;</span>
+    }
+
+    public ErrorCode getCode() {
+<span class="fc" id="L44">        return code;</span>
+    }
+
+    public List&lt;String&gt; getDetails() {
+<span class="fc" id="L48">        return details;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

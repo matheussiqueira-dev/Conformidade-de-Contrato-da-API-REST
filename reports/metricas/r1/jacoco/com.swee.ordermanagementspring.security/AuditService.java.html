@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.security</a> &gt; <span class="el_source">AuditService.java</span></div><h1>AuditService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.security;
+
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.entities.audit.AuditEvent;
+import com.swee.ordermanagementspring.repositories.AuditEventRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Clock;
+import java.util.HexFormat;
+import java.util.Locale;
+
+/** D7: grava audit_event em transacao propria, para que a falha de login tambem fique registrada. */
+@Service
+public class AuditService {
+    private final AuditEventRepository events;
+    private final Clock clock;
+
+<span class="fc" id="L23">    public AuditService(AuditEventRepository events, Clock clock) {</span>
+<span class="fc" id="L24">        this.events = events;</span>
+<span class="fc" id="L25">        this.clock = clock;</span>
+<span class="fc" id="L26">    }</span>
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void record(AuditAction action, Long actorId, String entity, Long entityId, String detailJson) {
+<span class="fc" id="L30">        events.save(new AuditEvent(clock.instant(), actorId, action, entity, entityId, detailJson));</span>
+<span class="fc" id="L31">    }</span>
+
+    /** E-mail tentado so como SHA-256 (nunca em claro), normalizado como no login. */
+    public static String emailDetail(String email) {
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        String normalized = email == null ? &quot;&quot; : email.trim().toLowerCase(Locale.ROOT);</span>
+        try {
+<span class="fc" id="L37">            byte[] hash = MessageDigest.getInstance(&quot;SHA-256&quot;).digest(normalized.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L38">            return &quot;{\&quot;emailSha256\&quot;:\&quot;&quot; + HexFormat.of().formatHex(hash) + &quot;\&quot;}&quot;;</span>
+<span class="nc" id="L39">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L40">            throw new IllegalStateException(&quot;SHA-256 indisponivel&quot;, e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
