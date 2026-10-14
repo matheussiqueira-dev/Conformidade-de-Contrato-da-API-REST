@@ -2,6 +2,8 @@
 
 Atualizado em 04/10/2026 por **Matheus Siqueira**. Fonte: entidades JPA e migrações V1/V2. Este documento descreve o modelo implementado; estoque, metas e custos históricos ainda não existem.
 
+O modelo-alvo depois das migrações V5 e V6 (ERP/PDV), ainda não implementado, está em [modelo-erp-pdv.md](modelo-erp-pdv.md).
+
 ```mermaid
 erDiagram
     ADDRESS ||--o| CLIENT : endereco
