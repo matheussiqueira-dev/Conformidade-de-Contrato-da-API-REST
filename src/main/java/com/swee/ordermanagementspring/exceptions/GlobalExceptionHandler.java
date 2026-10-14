@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.PessimisticLockingFailureException;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -185,6 +186,16 @@ public class GlobalExceptionHandler {
             return respond(HttpStatus.CONFLICT, "Conflict", ErrorCode.STOCK_INSUFFICIENT, "Insufficient stock");
         }
         return respond(HttpStatus.CONFLICT, "Conflict", ErrorCode.STATE_CONFLICT, "Operation violates a data integrity rule");
+    }
+
+    /** Gatilho keep_one_active_manager (V8): P0001 com prefixo LAST_MANAGER vira 409; o resto segue como erro interno. */
+    @ExceptionHandler(UncategorizedSQLException.class)
+    public ResponseEntity<ErrorResponse> handleUncategorizedSql(UncategorizedSQLException ex) {
+        if ("P0001".equals(sqlState(ex)) && String.valueOf(ex.getMessage()).contains("LAST_MANAGER")) {
+            return respond(HttpStatus.CONFLICT, "Conflict", ErrorCode.LAST_MANAGER,
+                    "The store must keep at least one active manager");
+        }
+        return handleGenericException(ex);
     }
 
     @ExceptionHandler(AccessDeniedException.class)

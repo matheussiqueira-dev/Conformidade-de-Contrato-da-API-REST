@@ -41,6 +41,9 @@ class SessionSecurityTest {
         }
         @Bean AuditService audit() { return mock(AuditService.class); }
         @Bean LoginCounter counter() { return mock(LoginCounter.class); }
+        @Bean com.swee.ordermanagementspring.api.users.PasswordService passwords() {
+            return mock(com.swee.ordermanagementspring.api.users.PasswordService.class);
+        }
         @Bean SessionStateReader sessionStates() {
             return id -> java.util.Optional.of(new SessionStateReader.SessionState(true, 0));
         }

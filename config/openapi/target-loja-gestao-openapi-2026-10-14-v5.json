@@ -161,7 +161,7 @@
       "put": {
         "summary": "Troca a propria senha e renova a sessao",
         "operationId": "changePassword",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -2381,7 +2381,7 @@
       "get": {
         "summary": "Lista usuarios com filtros",
         "operationId": "listUsers",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2449,7 +2449,7 @@
       "post": {
         "summary": "Cadastra usuario com senha temporaria",
         "operationId": "createUser",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2511,7 +2511,7 @@
       "get": {
         "summary": "Detalhe do usuario",
         "operationId": "getUser",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2549,7 +2549,7 @@
       "put": {
         "summary": "Edita nome e e-mail com versao",
         "operationId": "updateUser",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2608,7 +2608,7 @@
       "patch": {
         "summary": "Altera o papel com motivo e encerra as sessoes do usuario",
         "operationId": "changeUserRole",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2668,7 +2668,7 @@
       "patch": {
         "summary": "Ativa ou desativa com motivo e encerra as sessoes do usuario",
         "operationId": "changeUserStatus",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2728,7 +2728,7 @@
       "post": {
         "summary": "Desbloqueia a conta (zera tentativas) e encerra as sessoes do usuario",
         "operationId": "unlockUser",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2764,7 +2764,7 @@
       "post": {
         "summary": "Define senha temporaria, exige troca e encerra as sessoes do usuario",
         "operationId": "resetUserPassword",
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],

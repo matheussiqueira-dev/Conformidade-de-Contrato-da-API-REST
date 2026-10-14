@@ -87,6 +87,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/auth/password").hasRole(VENDEDOR)
                         // Balcao: VENDEDOR e, pela hierarquia, GERENTE. O dono do pedido e conferido no servico (404).
                         .requestMatchers(HttpMethod.GET, "/sales/catalog", "/sales/orders", "/sales/orders/{id}",
                                 "/customers", "/customers/{id}", "/customers/{id}/orders", "/performance/me",
@@ -99,7 +100,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/customers/{id}/address", "/payment/{id}/refund").hasRole(GERENTE)
                         .requestMatchers("/products", "/products/**", "/categories", "/categories/**", "/stock/**",
                                 "/promotions", "/promotions/**", "/goals/**", "/management/**", "/analytics/**",
-                                "/orders", "/orders/**", "/payment", "/payment/**", "/address", "/address/**").hasRole(GERENTE)
+                                "/orders", "/orders/**", "/payment", "/payment/**", "/address", "/address/**",
+                                "/users", "/users/**").hasRole(GERENTE)
                         .anyRequest().denyAll())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, ex) -> SecurityJson.error(response, 401))
