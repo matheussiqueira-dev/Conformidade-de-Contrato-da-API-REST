@@ -14,12 +14,18 @@ import java.util.stream.Collectors;
 @Component
 public class AreaResolver {
     static final List<String> SELLER_AREAS = List.of("VENDER", "VENDAS", "CLIENTES", "MEU_DESEMPENHO");
-    static final List<String> MANAGER_AREAS = List.of("GESTAO", "PRODUTOS", "ESTOQUE", "PROMOCOES", "ANALISES");
+    static final List<String> MANAGER_AREAS = List.of("GESTAO", "PRODUTOS", "ESTOQUE", "PROMOCOES", "ANALISES", "USUARIOS");
+    /** Senha temporaria: nenhuma area de trabalho ate a troca (4.4). */
+    static final List<String> PASSWORD_CHANGE_AREAS = List.of("TROCAR_SENHA");
 
     private final RoleHierarchy hierarchy;
 
     public AreaResolver(RoleHierarchy hierarchy) {
         this.hierarchy = hierarchy;
+    }
+
+    public List<String> areas(AppPrincipal principal) {
+        return principal.mustChangePassword() ? PASSWORD_CHANGE_AREAS : areas(principal.getAuthorities());
     }
 
     public List<String> areas(Collection<? extends GrantedAuthority> authorities) {

@@ -75,6 +75,6 @@ class MethodSecurityHierarchyTest {
                 .containsExactly("VENDER", "VENDAS", "CLIENTES", "MEU_DESEMPENHO");
         assertThat(areas.areas(AuthorityUtils.createAuthorityList("ROLE_GERENTE")))
                 .containsExactly("VENDER", "VENDAS", "CLIENTES", "MEU_DESEMPENHO", "GESTAO", "PRODUTOS", "ESTOQUE",
-                        "PROMOCOES", "ANALISES");
+                        "PROMOCOES", "ANALISES", "USUARIOS");
     }
 }

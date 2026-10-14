@@ -54,7 +54,7 @@ public class AuthController {
 
     private UserSession session(AppPrincipal principal) {
         return new UserSession(principal.id(), principal.name(), principal.getUsername(), principal.role(),
-                areas.areas(principal.getAuthorities()));
+                areas.areas(principal));
     }
 
     @GetMapping("/csrf")

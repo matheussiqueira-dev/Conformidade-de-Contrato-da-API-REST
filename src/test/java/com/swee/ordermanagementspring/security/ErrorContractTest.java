@@ -119,4 +119,15 @@ class ErrorContractTest {
         expect(post("/products").with(user(as(UserRole.GERENTE))).with(csrf().useInvalidToken())
                 .contentType(MediaType.APPLICATION_JSON).content("{}"), 403, "FORBIDDEN");
     }
+
+    @Test
+    @DisplayName("[CT-CONTRACT-104] todo ErrorCode do servidor existe no contrato v5 e vice-versa")
+    void errorCodesMatchTheContract() throws Exception {
+        JsonNode contract = json.readTree(java.nio.file.Files.readString(
+                java.nio.file.Path.of("config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json")));
+        java.util.List<String> documented = new java.util.ArrayList<>();
+        contract.at("/components/schemas/ErrorCode/enum").forEach(code -> documented.add(code.asText()));
+        assertThat(documented).containsExactlyInAnyOrderElementsOf(java.util.Arrays.stream(
+                com.swee.ordermanagementspring.exceptions.ErrorCode.values()).map(Enum::name).toList());
+    }
 }
