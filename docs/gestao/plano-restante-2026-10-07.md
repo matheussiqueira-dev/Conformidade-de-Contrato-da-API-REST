@@ -109,7 +109,7 @@ Defeitos revelados pela execução de 07/10 (registrados no card 16 em 08/10). *
 | D020 | Migração V3 arredonda antes de conferir o limite de `NUMERIC(12,2)`. | Baixa | `V3__money_numeric.sql` | FIX-03 |
 | D021 | Sem a variável de senha, a API falha com erro de autenticação confuso; senha com espaço quebra `test-contract.ps1`. | Baixa | `DatasourcePasswordGuard`; senha pelo ambiente do processo | PR #6 (card 19) |
 
-**09/10 (tarde)**: FIX-02 publicado no PR #8. D017–D021 vieram dos apontamentos do revisor automático nos PRs #6 e #9 e foram reproduzidos por testes antes da correção (ver seção 9).
+**09/10 (tarde)**: FIX-02 publicado no PR #8. D017–D021 vieram da revisão dos PRs #6 e #9 e foram reproduzidos por testes antes da correção (ver seção 9).
 
 **Como**: corrigir sempre na camada de serviço, antes de salvar; manter o teste que expôs o defeito como regressão (`@Tag("regression")`), remover `known-defect`, executar `scripts/test.ps1` e `scripts/test-contract.ps1`; se o status HTTP mudar, atualizar o contrato de erros. **Allan** registra em `docs/defeitos.md` (ou GitHub Issues): ID, RF/CA, severidade, passos, esperado × obtido, commit, correção, reteste.
 
