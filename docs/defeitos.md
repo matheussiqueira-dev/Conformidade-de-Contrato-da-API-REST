@@ -2,7 +2,7 @@
 
 Versão 0.1 (rascunho), 09/10/2026. Preparado por Matheus Siqueira para o card 16. **Responsável: Allan. Revisor: Matheus.** Formato: [templates/defeito.md](templates/defeito.md), com os 13 campos da seção 15 do enunciado.
 
-Fontes: card 16 do Trello (D003–D016, registrados em 08/10), revisão automática dos PRs #6, #8 e #9 (D017–D021), relatórios em `reports/execucoes/`. Severidade = impacto; prioridade = urgência (escalas no template).
+Fontes: card 16 do Trello (D003–D016, registrados em 08/10), revisão dos PRs #6, #8 e #9 (D017–D021), relatórios em `reports/execucoes/`. Severidade = impacto; prioridade = urgência (escalas no template).
 
 ## Resumo
 
