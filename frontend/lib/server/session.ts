@@ -17,7 +17,12 @@ export async function currentUser(): Promise<UserSession | null> {
     headers: { Accept: 'application/json', Cookie: `JSESSIONID=${session.value}` },
     cache: 'no-store',
   });
-  if (response.status === 401) return null;
+  if (response.status === 401) {
+    // Conta alterada depois do login (G-01): a API ja encerrou a sessao; a tela de login explica o motivo.
+    const body: unknown = await response.json().catch(() => null);
+    if (body && typeof body === 'object' && (body as { code?: unknown }).code === 'SESSION_REVOKED') redirect('/entrar?sessao=encerrada');
+    return null;
+  }
   if (!response.ok) throw new Error(`Falha ao consultar a sessão (${response.status})`);
   return GetCurrentUserResponse.parse(await response.json());
 }

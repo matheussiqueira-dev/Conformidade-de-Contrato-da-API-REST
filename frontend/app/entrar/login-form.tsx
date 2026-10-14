@@ -3,7 +3,7 @@ import { useState, type FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { authApi } from '../../lib/api/auth.ts';
 import { ApiError, api } from '../../lib/api/http.ts';
-import { NETWORK_MESSAGE } from '../../lib/api/messages.ts';
+import { ERROR_MESSAGES, LOCKOUT_HINT, NETWORK_MESSAGE } from '../../lib/api/messages.ts';
 import { landingPath } from '../../lib/areas.ts';
 
 const auth = authApi(api);
@@ -12,6 +12,7 @@ export default function LoginForm() {
   const params = useSearchParams();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const revoked = params.get('sessao') === 'encerrada';
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,6 +31,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={submit} aria-busy={busy} className="stack-sm">
+      {revoked && !error && <p className="notice" role="status">{ERROR_MESSAGES.SESSION_REVOKED}</p>}
       {error && <p className="notice notice-error" role="alert">{error}</p>}
       <div className="field">
         <label htmlFor="email">E-mail</label>
@@ -42,7 +44,7 @@ export default function LoginForm() {
                minLength={8} maxLength={72} disabled={busy} />
       </div>
       <button type="submit" className="btn btn-primary btn-block" disabled={busy}>{busy ? 'Entrando…' : 'Entrar na minha conta'}</button>
-      <p className="muted login-help">Precisa de acesso? Fale com o gerente da loja.</p>
+      <p className="muted login-help">{LOCKOUT_HINT} Precisa de acesso? Fale com o gerente da loja.</p>
     </form>
   );
 }

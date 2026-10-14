@@ -13,11 +13,17 @@ export const ERROR_MESSAGES: Readonly<Record<string, string>> = {
   DUPLICATE_DOCUMENT: 'Já existe um cliente com este documento.',
   RESOURCE_IN_USE: 'Este registro está em uso e não pode ser excluído.',
   CONCURRENT_UPDATE: 'Os dados mudaram desde que você abriu a tela. Recarregue e tente de novo.',
+  SESSION_REVOKED: 'Sua sessão foi encerrada porque o seu acesso mudou. Entre novamente.',
+  LAST_MANAGER: 'A loja precisa de pelo menos um gerente ativo.',
+  SELF_CHANGE_FORBIDDEN: 'Você não pode alterar o próprio papel, a própria situação nem redefinir a própria senha por aqui.',
+  PASSWORD_CHANGE_REQUIRED: 'Troque a senha provisória para continuar.',
   INTERNAL_ERROR: 'Algo deu errado do nosso lado. Tente novamente.',
 };
 
 export const NETWORK_MESSAGE = 'Sem conexão com o sistema. Verifique a rede e tente novamente.';
 export const LOGIN_FAILED_MESSAGE = 'E-mail ou senha inválidos.';
+export const LOCKOUT_HINT = 'Após 5 tentativas incorretas, o acesso fica bloqueado por 15 minutos.';
+export const WRONG_CURRENT_PASSWORD = 'Senha atual incorreta.';
 
 export function messageFor(code: string | undefined, status: number): string {
   if (code && ERROR_MESSAGES[code]) return ERROR_MESSAGES[code];

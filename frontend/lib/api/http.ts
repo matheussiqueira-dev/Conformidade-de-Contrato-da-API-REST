@@ -19,7 +19,7 @@ export class ApiError extends Error {
   }
 }
 
-/** Resposta que nao bate com o contrato v4 (so verificado em desenvolvimento e teste). */
+/** Resposta que nao bate com o contrato (so verificado em desenvolvimento e teste). */
 export class ContractError extends Error {
   constructor(path: string, issues: string) {
     super(`Resposta de ${path} fora do contrato: ${issues}`);
@@ -41,8 +41,8 @@ interface CsrfToken { headerName: string; token: string }
 
 export interface ClientConfig {
   fetcher?: Fetcher;
-  /** Chamado em 401 fora do login; no navegador leva para /entrar?next=... */
-  onUnauthorized?: () => void;
+  /** Chamado em 401 fora do login; no navegador leva para /entrar?next=... (com o motivo quando a sessao foi encerrada). */
+  onUnauthorized?: (code: string | undefined) => void;
   validate?: boolean;
 }
 
@@ -97,7 +97,9 @@ export function createClient({ fetcher = (input, init) => fetch(input, init), on
     if (!response.ok) {
       const body: unknown = await response.json().catch(() => null);
       const { code, details } = errorDetails(body);
-      if (response.status === 401 && path !== '/auth/login') onUnauthorized?.();
+      // Senha atual errada na troca de senha tambem responde 401, mas a sessao continua valida.
+      const wrongCurrentPassword = path === '/auth/password' && code === 'UNAUTHENTICATED';
+      if (response.status === 401 && path !== '/auth/login' && !wrongCurrentPassword) onUnauthorized?.(code);
       throw new ApiError(response.status, code, messageFor(code, response.status), details);
     }
     if (response.status === 204) return null as T;
@@ -120,10 +122,11 @@ export function createClient({ fetcher = (input, init) => fetch(input, init), on
 
 export type ApiClient = ReturnType<typeof createClient>;
 
-function redirectToLogin() {
+function redirectToLogin(code: string | undefined) {
   if (typeof window === 'undefined') return;
   const next = window.location.pathname + window.location.search;
-  window.location.assign(`/entrar?next=${encodeURIComponent(next)}`);
+  const reason = code === 'SESSION_REVOKED' ? '&sessao=encerrada' : '';
+  window.location.assign(`/entrar?next=${encodeURIComponent(next)}${reason}`);
 }
 
 /** Instancia do navegador. */
