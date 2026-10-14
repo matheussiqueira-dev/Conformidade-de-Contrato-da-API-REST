@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { authApi } from '../lib/api/auth.ts';
 import { api } from '../lib/api/http.ts';
+import { Icon } from './brand/icons.tsx';
 
 const auth = authApi(api);
 
@@ -15,5 +16,5 @@ export default function LogoutButton() {
       window.location.assign('/entrar');
     }
   }
-  return <button type="button" className="btn btn-ghost" onClick={logout} disabled={busy}>{busy ? 'Saindo…' : 'Sair'}</button>;
+  return <button type="button" className="btn btn-ghost" onClick={logout} disabled={busy}><Icon name="sair" />{busy ? 'Saindo…' : 'Sair'}</button>;
 }

@@ -4,6 +4,7 @@ import { menuFor, PASSWORD_PATH } from '../../../lib/areas.ts';
 import { currentUser } from '../../../lib/server/session.ts';
 import PasswordForm from './password-form.tsx';
 import LogoutButton from '../../../components/logout-button.tsx';
+import { SbiLogo } from '../../../components/brand/logo.tsx';
 
 export const metadata: Metadata = { title: 'Minha senha' };
 
@@ -14,9 +15,10 @@ export default async function PasswordPage() {
   const required = user.areas.includes('TROCAR_SENHA');
   const back = menuFor(user.areas)[0]?.href;
   return (
-    <main className="login">
+    <main className="login login-single">
+      <div className="login-form">
       <section className="card" aria-labelledby="senha-titulo">
-        <p className="wordmark" aria-label="SBI">SBI</p>
+        <div className="brand-card-head"><SbiLogo size={36} /></div>
         <h1 id="senha-titulo">{required ? 'Troque a senha provisória' : 'Alterar minha senha'}</h1>
         <p className="muted">
           {required
@@ -27,6 +29,7 @@ export default async function PasswordPage() {
         {back && <a className="btn btn-ghost btn-block" href={back}>Voltar sem alterar</a>}
         <div className="actions"><LogoutButton /></div>
       </section>
+      </div>
     </main>
   );
 }
