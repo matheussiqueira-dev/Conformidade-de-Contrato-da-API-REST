@@ -1,0 +1,533 @@
+-- ERP/PDV: catalogo, estoque, metas, promocoes, autenticacao e auditoria.
+-- Fonte: pacote SQL da disciplina (12/10, secoes V5-V9 do 01_evolucao_schema.sql) adaptado e
+-- ajustes D1-D10 de docs/bd/modelo-erp-pdv.md. Funcoes e gatilhos usam ${flyway:defaultSchema}
+-- no search_path, por isso esta migracao so e aplicada pelo Flyway.
+
+-- ---------------------------------------------------------------------
+-- Pre-checagem: dados legados que violariam as novas restricoes abortam a migracao.
+-- Nenhum dado e corrigido aqui (decisao A2A-2).
+-- ---------------------------------------------------------------------
+DO $$
+DECLARE v text;
+BEGIN
+    SELECT string_agg(d, ', ') INTO v FROM (
+        SELECT regexp_replace(cpf, '[^0-9]', '', 'g') AS d FROM customer WHERE cpf IS NOT NULL
+        GROUP BY 1 HAVING count(*) > 1
+        UNION ALL
+        SELECT regexp_replace(cnpj, '[^0-9]', '', 'g') FROM customer WHERE cnpj IS NOT NULL
+        GROUP BY 1 HAVING count(*) > 1) x;
+    IF v IS NOT NULL THEN
+        RAISE EXCEPTION 'V5: documentos colidem apos normalizacao para digitos: %', v;
+    END IF;
+    SELECT string_agg(id::text, ', ') INTO v FROM customer
+     WHERE NOT ((customer_type = 'INDIVIDUAL' AND cpf IS NOT NULL AND cnpj IS NULL)
+             OR (customer_type = 'CORPORATE' AND cnpj IS NOT NULL AND cpf IS NULL))
+        OR (cpf IS NOT NULL AND regexp_replace(cpf, '[^0-9]', '', 'g') !~ '^[0-9]{11}$')
+        OR (cnpj IS NOT NULL AND regexp_replace(cnpj, '[^0-9]', '', 'g') !~ '^[0-9]{14}$');
+    IF v IS NOT NULL THEN
+        RAISE EXCEPTION 'V5: clientes com documento incoerente com o tipo ou fora do formato (ids: %)', v;
+    END IF;
+    SELECT string_agg(id::text, ', ') INTO v FROM product WHERE price <= 0;
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: produtos com preco <= 0 (ids: %)', v; END IF;
+    SELECT string_agg(id::text, ', ') INTO v FROM order_item WHERE quantity <= 0 OR price < 0;
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: itens com quantidade ou preco invalidos (ids: %)', v; END IF;
+    SELECT string_agg(id::text, ', ') INTO v FROM payment WHERE amount < 0;
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: pagamentos com valor negativo (ids: %)', v; END IF;
+    SELECT string_agg(DISTINCT status, ', ') INTO v FROM orders
+     WHERE status NOT IN ('PENDING_PAYMENT','PROCESSING','PAID','SHIPPED','DELIVERED','CANCELED');
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: status de pedido fora do dominio: %', v; END IF;
+    SELECT string_agg(DISTINCT status, ', ') INTO v FROM payment
+     WHERE status NOT IN ('PENDING','APPROVED','DECLINED','EXPIRED');
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: status de pagamento fora do dominio: %', v; END IF;
+    SELECT string_agg(DISTINCT role, ', ') INTO v FROM app_users WHERE role NOT IN ('GERENTE','VENDEDOR');
+    IF v IS NOT NULL THEN RAISE EXCEPTION 'V5: papel de usuario desconhecido: %', v; END IF;
+END $$;
+
+-- ---------------------------------------------------------------------
+-- Integridade e dominios (pacote V5; D10: pagamento aceita EXPIRED)
+-- ---------------------------------------------------------------------
+ALTER TABLE product    ADD CONSTRAINT ck_product_price      CHECK (price > 0);
+ALTER TABLE order_item ADD CONSTRAINT ck_order_item_qty     CHECK (quantity > 0);
+ALTER TABLE order_item ADD CONSTRAINT ck_order_item_price   CHECK (price >= 0);
+ALTER TABLE payment    ADD CONSTRAINT ck_payment_amount     CHECK (amount >= 0);
+ALTER TABLE orders     ADD CONSTRAINT ck_orders_status      CHECK (status IN ('PENDING_PAYMENT','PROCESSING','PAID','SHIPPED','DELIVERED','CANCELED'));
+ALTER TABLE payment    ADD CONSTRAINT ck_payment_status     CHECK (status IN ('PENDING','APPROVED','DECLINED','EXPIRED'));
+ALTER TABLE payment    ADD CONSTRAINT ck_payment_type       CHECK (payment_type IN ('CARD','PIX','BOLETO'));
+ALTER TABLE product    ADD CONSTRAINT ck_product_type       CHECK (product_type IN ('PHYSICAL','DIGITAL'));
+ALTER TABLE customer   ADD CONSTRAINT ck_customer_type      CHECK (customer_type IN ('INDIVIDUAL','CORPORATE'));
+
+-- Vinculo opcional entre usuario da aplicacao e login de banco (demonstracao de RLS via psql).
+ALTER TABLE app_users ADD COLUMN db_role varchar(63) UNIQUE;
+
+CREATE INDEX ix_order_item_order_id   ON order_item(order_id);
+CREATE INDEX ix_order_item_product_id ON order_item(product_id);
+
+-- Usuario corrente: login de banco mapeado tem precedencia; a aplicacao informa app.user_id
+-- com set_config(..., true) no inicio de cada transacao de escrita.
+CREATE OR REPLACE FUNCTION app_current_user_id() RETURNS bigint
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+    SELECT coalesce(
+        (SELECT u.id FROM app_users u WHERE u.db_role = session_user),
+        nullif(current_setting('app.user_id', true), '')::bigint);
+$$;
+
+CREATE OR REPLACE FUNCTION app_current_role() RETURNS varchar
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+    SELECT u.role FROM app_users u WHERE u.id = app_current_user_id();
+$$;
+
+-- ---------------------------------------------------------------------
+-- D1 papeis (FK no lugar do CHECK do pacote) e D2 situacao da conta
+-- ---------------------------------------------------------------------
+CREATE TABLE role (
+    code varchar(20) PRIMARY KEY,
+    name varchar(60) NOT NULL,
+    rank smallint    NOT NULL UNIQUE
+);
+INSERT INTO role(code, name, rank) VALUES ('GERENTE', 'Gerente', 20), ('VENDEDOR', 'Vendedor', 10);
+ALTER TABLE app_users ADD CONSTRAINT fk_app_users_role FOREIGN KEY (role) REFERENCES role(code);
+
+ALTER TABLE app_users
+    ADD COLUMN active                boolean     NOT NULL DEFAULT true,
+    ADD COLUMN failed_login_attempts smallint    NOT NULL DEFAULT 0,
+    ADD COLUMN locked_until          timestamptz,
+    ADD COLUMN last_login_at         timestamptz,
+    ADD COLUMN created_at            timestamptz NOT NULL DEFAULT now(),
+    ADD CONSTRAINT ck_app_users_failed_attempts CHECK (failed_login_attempts >= 0);
+
+-- ---------------------------------------------------------------------
+-- D3 cliente: documento so com digitos, coerente com o tipo; versao e autoria
+-- ---------------------------------------------------------------------
+UPDATE customer SET cpf  = regexp_replace(cpf,  '[^0-9]', '', 'g') WHERE cpf  IS NOT NULL;
+UPDATE customer SET cnpj = regexp_replace(cnpj, '[^0-9]', '', 'g') WHERE cnpj IS NOT NULL;
+ALTER TABLE customer
+    ADD COLUMN phone      varchar(20),
+    ADD COLUMN version    integer     NOT NULL DEFAULT 0,
+    ADD COLUMN created_by bigint      DEFAULT app_current_user_id() REFERENCES app_users(id),
+    ADD COLUMN created_at timestamptz NOT NULL DEFAULT now(),
+    ADD COLUMN updated_at timestamptz NOT NULL DEFAULT now(),
+    ADD CONSTRAINT ck_customer_cpf  CHECK (cpf  ~ '^[0-9]{11}$'),
+    ADD CONSTRAINT ck_customer_cnpj CHECK (cnpj ~ '^[0-9]{14}$'),
+    ADD CONSTRAINT ck_customer_document_type CHECK (
+        (customer_type = 'INDIVIDUAL' AND cpf IS NOT NULL AND cnpj IS NULL)
+     OR (customer_type = 'CORPORATE'  AND cnpj IS NOT NULL AND cpf IS NULL));
+CREATE INDEX ix_customer_name_prefix ON customer (lower(name) text_pattern_ops);
+
+-- ---------------------------------------------------------------------
+-- Catalogo: categoria, SKU, inativacao, insumo (D4) e historico de preco (pacote V6)
+-- ---------------------------------------------------------------------
+CREATE TABLE category (
+    id   bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    name varchar(80) NOT NULL UNIQUE
+);
+
+ALTER TABLE product
+    ADD COLUMN sku         varchar(40) UNIQUE,
+    ADD COLUMN category_id bigint REFERENCES category(id),
+    ADD COLUMN active      boolean NOT NULL DEFAULT true,
+    ADD COLUMN sellable    boolean NOT NULL DEFAULT true,
+    ADD COLUMN updated_at  timestamptz NOT NULL DEFAULT now(),
+    ADD CONSTRAINT ck_product_sku_upper CHECK (sku = upper(sku));
+CREATE INDEX ix_product_category_id ON product(category_id);
+CREATE INDEX ix_product_name_prefix ON product (lower(name) text_pattern_ops);
+
+CREATE TABLE product_price_history (
+    id         bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    product_id bigint NOT NULL REFERENCES product(id),
+    old_price  numeric(12,2),
+    new_price  numeric(12,2) NOT NULL,
+    changed_by bigint REFERENCES app_users(id),
+    changed_at timestamptz NOT NULL DEFAULT now(),
+    reason     varchar(200)
+);
+CREATE INDEX ix_price_history_product ON product_price_history(product_id, changed_at DESC);
+
+CREATE OR REPLACE FUNCTION trg_product_price_history() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+BEGIN
+    INSERT INTO product_price_history(product_id, old_price, new_price, changed_by, reason)
+    VALUES (NEW.id, OLD.price, NEW.price, app_current_user_id(),
+            nullif(current_setting('app.reason', true), ''));
+    NEW.updated_at := now();
+    RETURN NEW;
+END $$;
+
+CREATE TRIGGER product_price_history
+    BEFORE UPDATE OF price ON product
+    FOR EACH ROW WHEN (OLD.price IS DISTINCT FROM NEW.price)
+    EXECUTE FUNCTION trg_product_price_history();
+
+-- ---------------------------------------------------------------------
+-- Promocoes liberadas pelo gerente e desconto por item (pacote V7)
+-- ---------------------------------------------------------------------
+CREATE TABLE promotion (
+    id          bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    name        varchar(120) NOT NULL,
+    kind        varchar(10)  NOT NULL CHECK (kind IN ('PERCENT','AMOUNT')),
+    value       numeric(12,2) NOT NULL CHECK (value > 0),
+    product_id  bigint REFERENCES product(id),
+    category_id bigint REFERENCES category(id),
+    starts_at   timestamptz NOT NULL,
+    ends_at     timestamptz NOT NULL,
+    active      boolean NOT NULL DEFAULT true,
+    created_by  bigint NOT NULL DEFAULT app_current_user_id() REFERENCES app_users(id),
+    created_at  timestamptz NOT NULL DEFAULT now(),
+    CONSTRAINT ck_promotion_window  CHECK (ends_at > starts_at),
+    CONSTRAINT ck_promotion_percent CHECK (kind <> 'PERCENT' OR value <= 100),
+    CONSTRAINT ck_promotion_scope   CHECK (num_nonnulls(product_id, category_id) <= 1)
+);
+
+CREATE OR REPLACE FUNCTION trg_promotion_only_manager() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM app_users WHERE id = NEW.created_by AND role = 'GERENTE') THEN
+        RAISE EXCEPTION 'somente gerente libera promocao' USING ERRCODE = '42501';
+    END IF;
+    RETURN NEW;
+END $$;
+CREATE TRIGGER promotion_only_manager BEFORE INSERT OR UPDATE ON promotion
+    FOR EACH ROW EXECUTE FUNCTION trg_promotion_only_manager();
+
+ALTER TABLE order_item
+    ADD COLUMN promotion_id bigint REFERENCES promotion(id),
+    ADD COLUMN discount     numeric(12,2) NOT NULL DEFAULT 0 CHECK (discount >= 0),
+    ADD COLUMN unit_cost    numeric(12,2);  -- custo atribuido na confirmacao (NULL = desconhecido)
+ALTER TABLE order_item ADD CONSTRAINT ck_order_item_discount CHECK (discount <= price * quantity);
+
+-- ---------------------------------------------------------------------
+-- Estoque: saldo, entradas com custo medio ponderado, movimentos (pacote V8 + D6)
+-- ---------------------------------------------------------------------
+CREATE TABLE stock_balance (
+    product_id bigint PRIMARY KEY REFERENCES product(id),
+    on_hand    integer NOT NULL DEFAULT 0 CHECK (on_hand >= 0),
+    reserved   integer NOT NULL DEFAULT 0 CHECK (reserved >= 0),
+    min_level  integer NOT NULL DEFAULT 0 CHECK (min_level >= 0),
+    avg_cost   numeric(12,2),
+    updated_at timestamptz NOT NULL DEFAULT now(),
+    CONSTRAINT ck_stock_reserved_le_on_hand CHECK (reserved <= on_hand)
+);
+
+CREATE TABLE stock_entry (
+    id         bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    product_id bigint NOT NULL REFERENCES product(id),
+    quantity   integer NOT NULL CHECK (quantity > 0),
+    unit_cost  numeric(12,2) CHECK (unit_cost >= 0),   -- NULL = custo nao informado
+    created_by bigint NOT NULL DEFAULT app_current_user_id() REFERENCES app_users(id),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    note       varchar(200)
+);
+CREATE INDEX ix_stock_entry_product ON stock_entry(product_id);
+
+CREATE TABLE stock_movement (
+    id         bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    product_id bigint NOT NULL REFERENCES product(id),
+    order_id   bigint REFERENCES orders(id),
+    kind       varchar(16) NOT NULL,
+    quantity   integer NOT NULL CHECK (quantity > 0),
+    reason     varchar(20),
+    note       varchar(200),
+    created_by bigint REFERENCES app_users(id),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    CONSTRAINT ck_stock_movement_kind CHECK (kind IN ('ENTRADA','RESERVA','LIBERACAO','SAIDA','DEVOLUCAO',
+                                                      'AJUSTE_ENTRADA','AJUSTE_SAIDA')),
+    CONSTRAINT ck_stock_movement_reason CHECK (reason IN ('PERDA','AVARIA','USO_INTERNO','INVENTARIO',
+                                                          'DEVOLUCAO_FORNECEDOR')),
+    CONSTRAINT ck_stock_movement_reason_required CHECK ((kind IN ('AJUSTE_ENTRADA','AJUSTE_SAIDA')) = (reason IS NOT NULL)),
+    CONSTRAINT ck_stock_movement_in_reason CHECK (kind <> 'AJUSTE_ENTRADA' OR reason = 'INVENTARIO')
+);
+CREATE INDEX ix_stock_movement_product    ON stock_movement(product_id, created_at);
+CREATE INDEX ix_stock_movement_order      ON stock_movement(order_id);
+CREATE INDEX ix_stock_movement_created_at ON stock_movement(created_at DESC);
+
+-- Todo produto possui linha de saldo.
+CREATE OR REPLACE FUNCTION trg_product_stock_row() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+BEGIN
+    INSERT INTO stock_balance(product_id) VALUES (NEW.id) ON CONFLICT DO NOTHING;
+    RETURN NEW;
+END $$;
+CREATE TRIGGER product_stock_row AFTER INSERT ON product
+    FOR EACH ROW EXECUTE FUNCTION trg_product_stock_row();
+INSERT INTO stock_balance(product_id) SELECT id FROM product ON CONFLICT DO NOTHING;
+
+-- Entrada: soma ao saldo e recalcula o custo medio ponderado. Custo desconhecido propaga NULL.
+CREATE OR REPLACE FUNCTION trg_stock_entry_apply() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE b stock_balance%ROWTYPE;
+BEGIN
+    SELECT * INTO b FROM stock_balance WHERE product_id = NEW.product_id FOR UPDATE;
+    UPDATE stock_balance
+       SET avg_cost = CASE
+                        WHEN NEW.unit_cost IS NULL THEN NULL
+                        WHEN b.on_hand = 0 THEN NEW.unit_cost
+                        WHEN b.avg_cost IS NULL THEN NULL
+                        ELSE round((b.on_hand * b.avg_cost + NEW.quantity * NEW.unit_cost)
+                                   / (b.on_hand + NEW.quantity), 2)
+                      END,
+           on_hand = on_hand + NEW.quantity,
+           updated_at = now()
+     WHERE product_id = NEW.product_id;
+    INSERT INTO stock_movement(product_id, kind, quantity, created_by, created_at)
+    VALUES (NEW.product_id, 'ENTRADA', NEW.quantity, NEW.created_by, NEW.created_at);
+    RETURN NEW;
+END $$;
+CREATE TRIGGER stock_entry_apply AFTER INSERT ON stock_entry
+    FOR EACH ROW EXECUTE FUNCTION trg_stock_entry_apply();
+
+-- Estornos financeiros (parciais ou totais).
+CREATE TABLE refund (
+    id         bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    payment_id bigint NOT NULL REFERENCES payment(id),
+    amount     numeric(12,2) NOT NULL CHECK (amount > 0),
+    reason     varchar(200),
+    created_by bigint NOT NULL DEFAULT app_current_user_id() REFERENCES app_users(id),
+    created_at timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_refund_payment ON refund(payment_id);
+
+-- ---------------------------------------------------------------------
+-- Metas mensais: soma da distribuicao = meta da loja, checada no COMMIT (pacote V9)
+-- ---------------------------------------------------------------------
+CREATE TABLE monthly_goal (
+    id         bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    period     date NOT NULL UNIQUE CHECK (extract(day FROM period) = 1),
+    amount     numeric(12,2) NOT NULL CHECK (amount >= 0),
+    created_by bigint NOT NULL DEFAULT app_current_user_id() REFERENCES app_users(id),
+    created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE seller_goal (
+    id              bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    monthly_goal_id bigint NOT NULL REFERENCES monthly_goal(id) ON DELETE CASCADE,
+    seller_id       bigint NOT NULL REFERENCES app_users(id),
+    amount          numeric(12,2) NOT NULL CHECK (amount >= 0),
+    CONSTRAINT uq_seller_goal UNIQUE (monthly_goal_id, seller_id)
+);
+
+CREATE OR REPLACE FUNCTION trg_seller_goal_is_seller() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM app_users WHERE id = NEW.seller_id AND role = 'VENDEDOR') THEN
+        RAISE EXCEPTION 'meta individual exige usuario VENDEDOR' USING ERRCODE = '23514';
+    END IF;
+    RETURN NEW;
+END $$;
+CREATE TRIGGER seller_goal_is_seller BEFORE INSERT OR UPDATE ON seller_goal
+    FOR EACH ROW EXECUTE FUNCTION trg_seller_goal_is_seller();
+
+CREATE OR REPLACE FUNCTION trg_goal_sum_check() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE v_goal bigint; v_store numeric; v_sum numeric; v_n int;
+BEGIN
+    IF TG_TABLE_NAME = 'monthly_goal' THEN
+        v_goal := NEW.id;
+    ELSIF TG_OP = 'DELETE' THEN
+        v_goal := OLD.monthly_goal_id;
+    ELSE
+        v_goal := NEW.monthly_goal_id;
+    END IF;
+    SELECT amount INTO v_store FROM monthly_goal WHERE id = v_goal;
+    IF NOT FOUND THEN RETURN NULL; END IF;
+    SELECT coalesce(sum(amount), 0), count(*) INTO v_sum, v_n FROM seller_goal WHERE monthly_goal_id = v_goal;
+    IF v_n > 0 AND v_sum <> v_store THEN
+        RAISE EXCEPTION 'distribuicao (%) difere da meta da loja (%)', v_sum, v_store USING ERRCODE = '23514';
+    END IF;
+    RETURN NULL;
+END $$;
+
+CREATE CONSTRAINT TRIGGER seller_goal_sum AFTER INSERT OR UPDATE OR DELETE ON seller_goal
+    DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION trg_goal_sum_check();
+CREATE CONSTRAINT TRIGGER monthly_goal_sum AFTER INSERT OR UPDATE ON monthly_goal
+    DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION trg_goal_sum_check();
+
+-- ---------------------------------------------------------------------
+-- D5 pedido: idempotencia e retirada/entrega
+-- ---------------------------------------------------------------------
+ALTER TABLE orders
+    ADD COLUMN client_request_id uuid,
+    ADD COLUMN request_hash      char(64);
+ALTER TABLE orders ADD COLUMN fulfillment varchar(10);
+UPDATE orders SET fulfillment = CASE WHEN address_id IS NOT NULL THEN 'DELIVERY' ELSE 'PICKUP' END;
+ALTER TABLE orders ALTER COLUMN fulfillment SET DEFAULT 'PICKUP';
+ALTER TABLE orders ALTER COLUMN fulfillment SET NOT NULL;
+ALTER TABLE orders
+    ADD CONSTRAINT ck_orders_fulfillment CHECK (fulfillment IN ('PICKUP', 'DELIVERY')),
+    ADD CONSTRAINT ck_orders_delivery_address CHECK (fulfillment <> 'DELIVERY' OR address_id IS NOT NULL),
+    ADD CONSTRAINT ck_orders_request_pair CHECK ((client_request_id IS NULL) = (request_hash IS NULL)),
+    ADD CONSTRAINT ck_orders_request_hash CHECK (request_hash ~ '^[0-9a-f]{64}$'),
+    ADD CONSTRAINT uq_orders_seller_request UNIQUE (seller_id, client_request_id);
+CREATE INDEX ix_orders_customer_moment ON orders (customer_id, moment DESC);
+
+-- ---------------------------------------------------------------------
+-- D7 auditoria (nunca senha nem documento completo)
+-- ---------------------------------------------------------------------
+CREATE TABLE audit_event (
+    id          bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    occurred_at timestamptz NOT NULL DEFAULT now(),
+    actor_id    bigint REFERENCES app_users(id),
+    action      varchar(40) NOT NULL,
+    entity      varchar(40),
+    entity_id   bigint,
+    detail      jsonb,
+    CONSTRAINT ck_audit_event_action CHECK (action IN (
+        'LOGIN_SUCCEEDED','LOGIN_FAILED','ACCOUNT_LOCKED','LOGOUT','CUSTOMER_CREATED','CUSTOMER_UPDATED',
+        'CUSTOMER_DELETED','STOCK_ADJUSTED','PRODUCT_STATUS_CHANGED','ORDER_CANCELED'))
+);
+CREATE INDEX ix_audit_event_entity   ON audit_event (entity, entity_id);
+CREATE INDEX ix_audit_event_occurred ON audit_event (occurred_at);
+
+-- ---------------------------------------------------------------------
+-- D8 pagamento no balcao: so o final do cartao (card_number legado fica sem CHECK: D022 na ETAPA 2C)
+-- ---------------------------------------------------------------------
+ALTER TABLE payment
+    ADD COLUMN card_last4         char(4),
+    ADD COLUMN authorization_code varchar(20),
+    ADD CONSTRAINT ck_payment_card_last4 CHECK (card_last4 ~ '^[0-9]{4}$'),
+    ADD CONSTRAINT ck_payment_card_last4_type CHECK (card_last4 IS NULL OR payment_type = 'CARD');
+
+-- ---------------------------------------------------------------------
+-- Operacoes transacionais de venda (demonstracao via psql e job bd; a API nao as chama).
+-- Codigos: 28000 sem usuario | 42501 sem permissao | P0002 inexistente |
+--          22023 parametro invalido | LJ409 conflito de estado/estoque (HTTP 409)
+-- Itens sempre em ordem crescente de product_id (ordem de bloqueio unica).
+-- ---------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION fn_criar_pedido(p_customer_id bigint, p_itens jsonb, p_payment_type varchar)
+RETURNS bigint LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE
+    v_user  app_users%ROWTYPE;
+    v_order bigint;
+    v_item  jsonb;
+    v_prod  product%ROWTYPE;
+    v_promo promotion%ROWTYPE;
+    v_promo_id bigint;
+    v_qty   integer;
+    v_disc  numeric(12,2);
+    v_total numeric(12,2) := 0;
+BEGIN
+    SELECT * INTO v_user FROM app_users WHERE id = app_current_user_id();
+    IF NOT FOUND THEN RAISE EXCEPTION 'usuario nao autenticado' USING ERRCODE = '28000'; END IF;
+    IF p_payment_type IS NULL OR p_payment_type NOT IN ('CARD','PIX','BOLETO') THEN
+        RAISE EXCEPTION 'forma de pagamento invalida' USING ERRCODE = '22023';
+    END IF;
+    IF p_itens IS NULL OR jsonb_typeof(p_itens) <> 'array' OR jsonb_array_length(p_itens) = 0 THEN
+        RAISE EXCEPTION 'pedido sem itens' USING ERRCODE = '22023';
+    END IF;
+    PERFORM 1 FROM customer WHERE id = p_customer_id;
+    IF NOT FOUND THEN RAISE EXCEPTION 'cliente % inexistente', p_customer_id USING ERRCODE = 'P0002'; END IF;
+
+    INSERT INTO orders(moment, status, customer_id, seller_id, fulfillment)
+    VALUES (now() AT TIME ZONE 'America/Fortaleza', 'PENDING_PAYMENT', p_customer_id, v_user.id, 'PICKUP')
+    RETURNING id INTO v_order;
+
+    FOR v_item IN SELECT value FROM jsonb_array_elements(p_itens) ORDER BY (value->>'product_id')::bigint LOOP
+        v_qty := (v_item->>'quantity')::integer;
+        IF v_qty IS NULL OR v_qty < 1 THEN
+            RAISE EXCEPTION 'quantidade invalida' USING ERRCODE = '22023';
+        END IF;
+        SELECT * INTO v_prod FROM product WHERE id = (v_item->>'product_id')::bigint AND active AND sellable;
+        IF NOT FOUND THEN RAISE EXCEPTION 'produto inexistente, inativo ou insumo' USING ERRCODE = 'P0002'; END IF;
+
+        v_disc := 0; v_promo_id := NULL;
+        IF v_item->>'promotion_id' IS NOT NULL THEN
+            SELECT * INTO v_promo FROM promotion
+             WHERE id = (v_item->>'promotion_id')::bigint AND active
+               AND now() >= starts_at AND now() < ends_at
+               AND (product_id  IS NULL OR product_id  = v_prod.id)
+               AND (category_id IS NULL OR category_id = v_prod.category_id);
+            IF NOT FOUND THEN RAISE EXCEPTION 'promocao invalida para o item' USING ERRCODE = '22023'; END IF;
+            v_promo_id := v_promo.id;
+            v_disc := CASE v_promo.kind
+                        WHEN 'PERCENT' THEN round(v_prod.price * v_qty * v_promo.value / 100, 2)
+                        ELSE least(v_promo.value * v_qty, v_prod.price * v_qty) END;
+        END IF;
+
+        INSERT INTO order_item(quantity, price, order_id, product_id, promotion_id, discount)
+        VALUES (v_qty, v_prod.price, v_order, v_prod.id, v_promo_id, v_disc);
+
+        -- Reserva atomica: a condicao e reavaliada apos o bloqueio da linha.
+        UPDATE stock_balance SET reserved = reserved + v_qty, updated_at = now()
+         WHERE product_id = v_prod.id AND on_hand - reserved >= v_qty;
+        IF NOT FOUND THEN
+            RAISE EXCEPTION 'estoque insuficiente para o produto %', v_prod.id USING ERRCODE = 'LJ409';
+        END IF;
+        INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+        VALUES (v_prod.id, v_order, 'RESERVA', v_qty, v_user.id);
+
+        v_total := v_total + v_prod.price * v_qty - v_disc;
+    END LOOP;
+
+    INSERT INTO payment(payment_type, amount, status, order_id)
+    VALUES (p_payment_type, v_total, 'PENDING', v_order);
+    RETURN v_order;
+END $$;
+
+-- Confirmacao idempotente: retorna false se o pedido ja estava pago.
+CREATE OR REPLACE FUNCTION fn_confirmar_pagamento(p_order_id bigint)
+RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE v_order orders%ROWTYPE; r record; v_cost numeric(12,2);
+BEGIN
+    IF app_current_user_id() IS NULL THEN RAISE EXCEPTION 'usuario nao autenticado' USING ERRCODE = '28000'; END IF;
+    SELECT * INTO v_order FROM orders WHERE id = p_order_id FOR UPDATE;
+    IF NOT FOUND THEN RAISE EXCEPTION 'pedido % inexistente', p_order_id USING ERRCODE = 'P0002'; END IF;
+    IF app_current_role() = 'VENDEDOR' AND v_order.seller_id IS DISTINCT FROM app_current_user_id() THEN
+        RAISE EXCEPTION 'pedido de outro vendedor' USING ERRCODE = '42501';
+    END IF;
+    IF v_order.status = 'PAID' THEN RETURN false; END IF;
+    IF v_order.status <> 'PENDING_PAYMENT' THEN
+        RAISE EXCEPTION 'transicao % -> PAID invalida', v_order.status USING ERRCODE = 'LJ409';
+    END IF;
+    FOR r IN SELECT id, product_id, quantity FROM order_item WHERE order_id = p_order_id ORDER BY product_id LOOP
+        UPDATE stock_balance
+           SET reserved = reserved - r.quantity, on_hand = on_hand - r.quantity, updated_at = now()
+         WHERE product_id = r.product_id
+        RETURNING avg_cost INTO v_cost;
+        UPDATE order_item SET unit_cost = v_cost WHERE id = r.id;
+        INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+        VALUES (r.product_id, p_order_id, 'SAIDA', r.quantity, app_current_user_id());
+    END LOOP;
+    UPDATE payment SET status = 'APPROVED', payment_date = now() AT TIME ZONE 'America/Fortaleza'
+     WHERE order_id = p_order_id;
+    UPDATE orders SET status = 'PAID' WHERE id = p_order_id;
+    RETURN true;
+END $$;
+
+CREATE OR REPLACE FUNCTION fn_cancelar_pedido(p_order_id bigint)
+RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE v_order orders%ROWTYPE; r record;
+BEGIN
+    IF app_current_user_id() IS NULL THEN RAISE EXCEPTION 'usuario nao autenticado' USING ERRCODE = '28000'; END IF;
+    SELECT * INTO v_order FROM orders WHERE id = p_order_id FOR UPDATE;
+    IF NOT FOUND THEN RAISE EXCEPTION 'pedido % inexistente', p_order_id USING ERRCODE = 'P0002'; END IF;
+    IF app_current_role() = 'VENDEDOR' AND v_order.seller_id IS DISTINCT FROM app_current_user_id() THEN
+        RAISE EXCEPTION 'pedido de outro vendedor' USING ERRCODE = '42501';
+    END IF;
+    IF v_order.status <> 'PENDING_PAYMENT' THEN
+        RAISE EXCEPTION 'somente pedido pendente pode ser cancelado (atual: %)', v_order.status USING ERRCODE = 'LJ409';
+    END IF;
+    FOR r IN SELECT product_id, quantity FROM order_item WHERE order_id = p_order_id ORDER BY product_id LOOP
+        UPDATE stock_balance SET reserved = reserved - r.quantity, updated_at = now()
+         WHERE product_id = r.product_id;
+        INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+        VALUES (r.product_id, p_order_id, 'LIBERACAO', r.quantity, app_current_user_id());
+    END LOOP;
+    UPDATE payment SET status = 'DECLINED' WHERE order_id = p_order_id;
+    UPDATE orders SET status = 'CANCELED' WHERE id = p_order_id;
+END $$;
+
+CREATE OR REPLACE FUNCTION fn_estornar(p_payment_id bigint, p_amount numeric, p_reason varchar)
+RETURNS bigint LANGUAGE plpgsql SECURITY DEFINER SET search_path = ${flyway:defaultSchema}, pg_temp AS $$
+DECLARE v_pay payment%ROWTYPE; v_refunded numeric; v_id bigint;
+BEGIN
+    IF coalesce(app_current_role(), '') <> 'GERENTE' THEN
+        RAISE EXCEPTION 'somente gerente registra estorno' USING ERRCODE = '42501';
+    END IF;
+    SELECT * INTO v_pay FROM payment WHERE id = p_payment_id FOR UPDATE;
+    IF NOT FOUND THEN RAISE EXCEPTION 'pagamento inexistente' USING ERRCODE = 'P0002'; END IF;
+    IF v_pay.status <> 'APPROVED' THEN RAISE EXCEPTION 'pagamento nao confirmado' USING ERRCODE = 'LJ409'; END IF;
+    SELECT coalesce(sum(amount), 0) INTO v_refunded FROM refund WHERE payment_id = p_payment_id;
+    IF p_amount IS NULL OR p_amount <= 0 OR p_amount > v_pay.amount - v_refunded THEN
+        RAISE EXCEPTION 'valor de estorno invalido' USING ERRCODE = '22023';
+    END IF;
+    INSERT INTO refund(payment_id, amount, reason) VALUES (p_payment_id, p_amount, p_reason) RETURNING id INTO v_id;
+    RETURN v_id;
+END $$;

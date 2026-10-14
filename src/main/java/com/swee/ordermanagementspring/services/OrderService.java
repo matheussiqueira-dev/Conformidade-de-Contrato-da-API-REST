@@ -4,6 +4,7 @@ import com.swee.ordermanagementspring.dto.*;
 import com.swee.ordermanagementspring.entities.Address;
 import com.swee.ordermanagementspring.entities.Order;
 import com.swee.ordermanagementspring.entities.OrderItem;
+import com.swee.ordermanagementspring.entities.customer.Documents;
 import com.swee.ordermanagementspring.entities.customer.Customer;
 import com.swee.ordermanagementspring.entities.customer.CorporateCustomer;
 import com.swee.ordermanagementspring.entities.customer.IndividualCustomer;
@@ -94,13 +95,13 @@ public class OrderService {
                 if (dto.getCpf() == null || dto.getCpf().isBlank()) {
                     throw new OrderException("CPF is required for INDIVIDUAL customers.");
                 }
-                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCpf());
+                yield new IndividualCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cpf(dto.getCpf()));
             }
             case "CORPORATE" -> {
                 if (dto.getCnpj() == null || dto.getCnpj().isBlank()) {
                     throw new OrderException("CNPJ is required for CORPORATE customers.");
                 }
-                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), dto.getCnpj(), dto.getCompanyName());
+                yield new CorporateCustomer(dto.getName(), dto.getEmail(), dto.getBirthDate(), Documents.cnpj(dto.getCnpj()), dto.getCompanyName());
             }
             default -> throw new OrderException("Invalid customer type: " + dto.getType());
         };

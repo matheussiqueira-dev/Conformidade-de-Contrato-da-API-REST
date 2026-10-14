@@ -10,7 +10,9 @@ public enum OrderStatus {
     PROCESSING,
     PAID,
     SHIPPED,
-    DELIVERED;
+    DELIVERED,
+    /** D10: pedido pendente cancelado; a reserva de estoque e liberada. Estado final. */
+    CANCELED;
 
     /**
      * D010: tabela de transicoes. O pedido so avanca no fluxo (ou repete o status atual); DELIVERED e final.
@@ -18,11 +20,12 @@ public enum OrderStatus {
      */
     public Set<OrderStatus> allowedNext() {
         return switch (this) {
-            case PENDING_PAYMENT -> EnumSet.of(PENDING_PAYMENT, PROCESSING, PAID, SHIPPED, DELIVERED);
+            case PENDING_PAYMENT -> EnumSet.of(PENDING_PAYMENT, PROCESSING, PAID, SHIPPED, DELIVERED, CANCELED);
             case PROCESSING -> EnumSet.of(PROCESSING, PAID, SHIPPED, DELIVERED);
             case PAID -> EnumSet.of(PAID, SHIPPED, DELIVERED);
             case SHIPPED -> EnumSet.of(SHIPPED, DELIVERED);
             case DELIVERED -> EnumSet.of(DELIVERED);
+            case CANCELED -> EnumSet.of(CANCELED);
         };
     }
 
