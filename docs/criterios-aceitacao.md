@@ -87,7 +87,7 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | --- | --- |
 | CA-17-01 | Dado gerente autenticado, quando acessar qualquer operacao liberada ao vendedor, entao a API nao retorna 401 nem 403, tanto na regra de URL quanto na regra de metodo. |
 | CA-17-02 | Dado vendedor autenticado, quando acessar operacao exclusiva do gerente, entao a API retorna 403 `FORBIDDEN`. |
-| CA-17-03 | Dado usuario autenticado, quando consultar `GET /auth/me`, entao `areas` lista VENDER, VENDAS, CLIENTES e MEU_DESEMPENHO para o vendedor e acrescenta GESTAO, PRODUTOS, ESTOQUE, PROMOCOES e ANALISES para o gerente. |
+| CA-17-03 | Dado usuario autenticado, quando consultar `GET /auth/me`, entao `areas` lista VENDER, VENDAS, CLIENTES e MEU_DESEMPENHO para o vendedor e acrescenta GESTAO, PRODUTOS, ESTOQUE, PROMOCOES, ANALISES e USUARIOS para o gerente; com senha temporaria, `areas` traz apenas TROCAR_SENHA. |
 | CA-18-01 | Dada conta ativa, quando ocorrerem 4 falhas seguidas, entao a conta nao e bloqueada; na 5a falha, fica bloqueada por 15 minutos. |
 | CA-18-02 | Dada conta bloqueada, quando a senha correta for enviada, entao a API retorna 401 com corpo igual (salvo timestamp) ao de usuario inexistente. |
 | CA-18-03 | Dada conta bloqueada ha 15 minutos, quando a senha correta for enviada, entao a API retorna 200 e zera o contador de falhas. |

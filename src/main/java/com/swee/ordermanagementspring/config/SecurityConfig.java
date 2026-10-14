@@ -7,6 +7,8 @@ import com.swee.ordermanagementspring.security.AuditService;
 import com.swee.ordermanagementspring.security.LockoutAuthenticationProvider;
 import com.swee.ordermanagementspring.security.LoginAttemptService;
 import com.swee.ordermanagementspring.security.SecurityJson;
+import com.swee.ordermanagementspring.security.SessionStateReader;
+import com.swee.ordermanagementspring.security.SessionVersionFilter;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
@@ -71,8 +73,11 @@ public class SecurityConfig {
     }
 
     @Bean public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityContextRepository contexts,
-                                                        CsrfTokenRepository csrf, AuditService audit) throws Exception {
+                                                        CsrfTokenRepository csrf, AuditService audit,
+                                                        SessionStateReader sessionStates) throws Exception {
         http.securityContext(c -> c.securityContextRepository(contexts))
+                // G-01: conta alterada depois do login perde a sessao antes de qualquer outra regra.
+                .addFilterAfter(new SessionVersionFilter(sessionStates), SecurityContextHolderFilter.class)
                 .csrf(c -> c.csrfTokenRepository(csrf))
                 .requestCache(c -> c.requestCache(new NullRequestCache()))
                 .authorizeHttpRequests(a -> a

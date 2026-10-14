@@ -21,6 +21,16 @@ public final class SecurityJson {
         }
     }
 
+    /** G-01: conta desativada, apagada ou alterada depois do login. */
+    public static void sessionRevoked(HttpServletResponse response) throws IOException {
+        write(response, 401, "Unauthorized", ErrorCode.SESSION_REVOKED, "Sessao encerrada; entre novamente");
+    }
+
+    /** Senha temporaria: so as rotas da propria conta respondem ate a troca. */
+    public static void passwordChangeRequired(HttpServletResponse response) throws IOException {
+        write(response, 403, "Forbidden", ErrorCode.PASSWORD_CHANGE_REQUIRED, "Troque a senha temporaria para continuar");
+    }
+
     private static void write(HttpServletResponse response, int status, String error, ErrorCode code, String message)
             throws IOException {
         response.setStatus(status);
