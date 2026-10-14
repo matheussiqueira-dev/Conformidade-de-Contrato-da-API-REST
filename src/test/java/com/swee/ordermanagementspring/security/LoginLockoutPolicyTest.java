@@ -15,6 +15,8 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +45,7 @@ class LoginLockoutPolicyTest {
         when(encoder.encode(anyString())).thenReturn("hash-ficticio");
         when(encoder.matches(anyString(), anyString())).thenReturn(false);
         when(encoder.matches(PASSWORD, "hash-ana")).thenReturn(true);
-        provider = new LockoutAuthenticationProvider(users, encoder, new LoginAttemptService(users, audit, clock));
+        provider = new LockoutAuthenticationProvider(users, encoder, new LoginAttemptService(new EntityCounter(ana), audit, clock));
     }
 
     private UsernamePasswordAuthenticationToken login(String email, String password) {
@@ -114,6 +116,33 @@ class LoginLockoutPolicyTest {
         String expected = AuditService.emailDetail("ninguem@example.test");
         verify(audit).record(eq(com.swee.ordermanagementspring.entities.audit.AuditAction.LOGIN_FAILED), eq(null), eq(null), eq(null), eq(expected));
         assertThat(expected).doesNotContain("ninguem").matches("\\{\"emailSha256\":\"[0-9a-f]{64}\"}");
+    }
+
+    /**
+     * Emula o UPDATE atomico do {@link JdbcLoginCounter} sobre a propria entidade, que faz o papel da linha do
+     * banco. A atomicidade real e coberta pelo CT-SEC-120 ({@code LoginAttemptConcurrencyTest}).
+     */
+    static final class EntityCounter implements LoginCounter {
+        private final Map<Long, AppUser> rows = new HashMap<>();
+
+        EntityCounter(AppUser... users) {
+            for (AppUser user : users) rows.put(user.getId(), user);
+        }
+
+        @Override
+        public Optional<FailureState> registerFailure(long userId, int maxFailures, Instant lockUntil, Instant now) {
+            AppUser row = rows.get(userId);
+            if (row == null || row.isLockedAt(now)) return Optional.empty();
+            int failures = row.registerFailure();
+            if (failures < maxFailures) return Optional.of(new FailureState(failures, row.getLockedUntil(), false));
+            row.lockUntil(lockUntil);
+            return Optional.of(new FailureState(0, lockUntil, true));
+        }
+
+        @Override
+        public void registerSuccess(long userId, Instant now) {
+            rows.get(userId).registerSuccess(now);
+        }
     }
 
     /** Clock ajustavel para simular a passagem dos 15 minutos. */
