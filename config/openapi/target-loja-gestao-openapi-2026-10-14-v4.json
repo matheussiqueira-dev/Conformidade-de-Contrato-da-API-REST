@@ -1080,7 +1080,7 @@
           "RF-08",
           "RF-10"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2259,7 +2259,7 @@
           "RF-12",
           "RF-14"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -2308,7 +2308,7 @@
           "RF-13",
           "RF-14"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
