@@ -48,3 +48,9 @@ export function label(map: Readonly<Record<string, string>>, key: string): strin
 export function digits(value: string): string {
   return value.replace(/\D/g, '');
 }
+
+/** "1.234,56", "1234,56" e "1234.56" -> 1234.56. Com virgula, os pontos sao separadores de milhar. */
+export function parseDecimal(value: string): number {
+  const text = value.trim().replace(/\s/g, '');
+  return Number(text.includes(',') ? text.replace(/\./g, '').replace(',', '.') : text);
+}
