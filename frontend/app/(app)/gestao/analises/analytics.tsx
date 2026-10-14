@@ -66,6 +66,16 @@ export default function Analytics() {
             ))}</tbody>
           </table></div>}
         </section>
+        <section className="card stack-sm" aria-labelledby="desconto-manual-titulo">
+          <h2 id="desconto-manual-titulo" className="label">Descontos manuais</h2>
+          {data.manualDiscounts.length === 0 ? <p className="empty">Nenhum desconto manual em pedidos pagos no mês.</p> : <div className="table-wrap"><table>
+            <caption className="sr-only">Descontos manuais por vendedor</caption>
+            <thead><tr><th scope="col">Vendedor</th><th scope="col" className="right">Pedidos</th><th scope="col" className="right">Concedido</th><th scope="col" className="right">Aprovados pelo gerente</th></tr></thead>
+            <tbody>{data.manualDiscounts.map(d => (
+              <tr key={d.seller.id}><td>{d.seller.name}</td><td className="num right">{d.orders}</td><td className="num right">{money(d.amount)}</td><td className="num right">{d.approvedByManager}</td></tr>
+            ))}</tbody>
+          </table></div>}
+        </section>
       </>}
       <section className="card stack-sm" aria-labelledby="estoque-analise">
         <h2 id="estoque-analise" className="label">Estoque</h2>

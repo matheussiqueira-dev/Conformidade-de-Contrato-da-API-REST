@@ -9,9 +9,13 @@ export interface CartLine {
   promotionId?: number;
 }
 
+/** Desconto manual digitado no carrinho (G-04): so percentual e motivo; o valor vem da API. */
+export interface ManualDiscount { percent: string; reason: string }
+
 export interface Cart {
   lines: CartLine[];
   idempotencyKey: string | null;
+  manualDiscount?: ManualDiscount;
   /** Corpo (JSON) enviado com a chave; corpo diferente exige chave nova, senao a API responde 409. */
   pendingBody?: string;
 }
@@ -72,6 +76,23 @@ export function refreshAvailability(cart: Cart, available: ReadonlyMap<number, n
 /** Mesma chave enquanto o corpo da venda nao muda; repetir o envio devolve o mesmo pedido (CT-WEB-104). */
 export function withIdempotencyKey(cart: Cart, body: string, newKey: () => string): Cart {
   return cart.idempotencyKey && cart.pendingBody === body ? cart : { ...cart, idempotencyKey: newKey(), pendingBody: body };
+}
+
+export function setManualDiscount(cart: Cart, discount: ManualDiscount | null): Cart {
+  const { manualDiscount: _previous, ...rest } = cart;
+  return discount && (discount.percent.trim() || discount.reason.trim()) ? { ...rest, manualDiscount: discount } : rest;
+}
+
+/** Desconto pronto para enviar: 0,01 a 100 com ate 2 casas e motivo de 5 a 200 caracteres; senao, nada vai no corpo. */
+export function manualDiscountBody(cart: Cart): { percent: number; reason: string } | undefined {
+  const discount = cart.manualDiscount;
+  if (!discount) return undefined;
+  const text = discount.percent.trim().replace(',', '.');
+  if (!/^\d{1,3}(\.\d{1,2})?$/.test(text)) return undefined;
+  const percent = Number(text);
+  const reason = discount.reason.trim();
+  if (percent < 0.01 || percent > 100 || reason.length < 5 || reason.length > 200) return undefined;
+  return { percent, reason };
 }
 
 export function saleItems(cart: Cart): { productId: number; quantity: number; promotionId?: number }[] {
