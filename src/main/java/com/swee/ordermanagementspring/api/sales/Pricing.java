@@ -42,6 +42,35 @@ public final class Pricing {
         return Money.of(discount.min(gross));
     }
 
+    /**
+     * G-04: desconto manual sobre o subtotal ja promocionado (soma dos subtotais dos itens), duas casas, HALF_UP.
+     * Ordem de calculo: bruto -> promocoes por item -> desconto manual -> total.
+     */
+    public static BigDecimal manualDiscount(BigDecimal promotedSubtotal, BigDecimal percent) {
+        return Money.of(promotedSubtotal.multiply(percent).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
+    }
+
+    /**
+     * Rateia o desconto manual pelos itens na proporcao do subtotal de cada um (HALF_UP), sem passar do subtotal do
+     * item. A sobra de arredondamento (alguns centavos) vai para o item de maior subtotal, o primeiro em empate, para
+     * que a soma das partes seja exatamente o desconto do pedido.
+     */
+    public static List<BigDecimal> allocate(List<BigDecimal> subtotals, BigDecimal discount) {
+        BigDecimal base = subtotals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        if (base.signum() == 0 || discount.signum() == 0) return subtotals.stream().map(s -> Money.of(BigDecimal.ZERO)).toList();
+        java.util.ArrayList<BigDecimal> shares = new java.util.ArrayList<>();
+        for (BigDecimal subtotal : subtotals) {
+            shares.add(subtotal.multiply(discount).divide(base, 2, RoundingMode.HALF_UP).min(subtotal));
+        }
+        BigDecimal rest = discount.subtract(shares.stream().reduce(BigDecimal.ZERO, BigDecimal::add));
+        int largest = 0;
+        for (int i = 1; i < subtotals.size(); i++) {
+            if (subtotals.get(i).compareTo(subtotals.get(largest)) > 0) largest = i;
+        }
+        shares.set(largest, shares.get(largest).add(rest));
+        return shares.stream().map(Money::of).toList();
+    }
+
     /** C-09: promocao vigente de maior desconto para uma unidade; empate fica com o menor id. */
     public static Optional<Promotion> best(List<Promotion> active, long productId, Long categoryId, BigDecimal unitPrice) {
         return active.stream().filter(p -> p.appliesTo(productId, categoryId))

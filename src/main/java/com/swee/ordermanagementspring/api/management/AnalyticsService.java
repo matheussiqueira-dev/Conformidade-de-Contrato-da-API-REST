@@ -47,7 +47,7 @@ public class AnalyticsService {
                 .list();
         // D-EXEC-03: v_uso_promocoes nao tem periodo; o uso do mes segue a mesma regra (itens de pagamentos confirmados).
         var promotions = jdbc.sql("""
-                SELECT pr.id, pr.name, count(oi.id) AS itens, coalesce(sum(oi.discount), 0) AS desconto,
+                SELECT pr.id, pr.name, count(oi.id) AS itens, coalesce(sum(oi.discount - oi.manual_discount), 0) AS desconto,
                        coalesce(sum(oi.price * oi.quantity - oi.discount), 0) AS receita
                   FROM promotion pr
                   JOIN order_item oi ON oi.promotion_id = pr.id
@@ -57,7 +57,15 @@ public class AnalyticsService {
                 .param("month", month)
                 .query((rs, n) -> new PromotionUsage(rs.getLong("id"), rs.getString("name"), rs.getLong("itens"),
                         MoneyDto.of(rs.getBigDecimal("desconto")), MoneyDto.of(rs.getBigDecimal("receita")))).list();
-        return new SalesAnalytics(period, weekly, methods, margins, promotions);
+        // G-04: contrapartida das promocoes; o desconto manual fica fora de promotionUsage (V11).
+        var manual = jdbc.sql("""
+                SELECT seller_id, vendedor, pedidos, valor_concedido, aprovados_por_gerente
+                  FROM v_descontos_manuais WHERE periodo = :month ORDER BY valor_concedido DESC, seller_id""")
+                .param("month", month)
+                .query((rs, n) -> new SellerManualDiscount(new com.swee.ordermanagementspring.api.common.Refs.UserRef(
+                        rs.getLong("seller_id"), rs.getString("vendedor")), rs.getLong("pedidos"),
+                        MoneyDto.of(rs.getBigDecimal("valor_concedido")), rs.getLong("aprovados_por_gerente"))).list();
+        return new SalesAnalytics(period, weekly, methods, margins, promotions, manual);
     }
 
     /** D-EXEC-04: so produtos ativos; valor a custo fica nulo se algum produto com saldo nao tiver custo. */

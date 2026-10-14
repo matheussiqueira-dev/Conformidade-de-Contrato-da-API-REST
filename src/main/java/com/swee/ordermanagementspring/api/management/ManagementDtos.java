@@ -95,8 +95,12 @@ public final class ManagementDtos {
 
     public record PromotionUsage(long promotionId, String name, long items, MoneyDto discountTotal, MoneyDto netRevenue) { }
 
+    public record SellerManualDiscount(com.swee.ordermanagementspring.api.common.Refs.UserRef seller, long orders,
+                                       MoneyDto amount, long approvedByManager) { }
+
     public record SalesAnalytics(String month, List<WeeklyRevenue> weekly, List<PaymentMethodRevenue> byPaymentMethod,
-                                 List<ProductMargin> productMargins, List<PromotionUsage> promotionUsage) { }
+                                 List<ProductMargin> productMargins, List<PromotionUsage> promotionUsage,
+                                 List<SellerManualDiscount> manualDiscounts) { }
 
     public record StockAnalytics(OffsetDateTime generatedAt, long products, long units, MoneyDto valueAtCost,
                                  MoneyDto valueAtPrice, long productsWithoutCost, List<StockProduct> belowMin) { }
