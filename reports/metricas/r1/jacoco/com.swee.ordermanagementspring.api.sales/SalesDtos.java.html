@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalesDtos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.sales</a> &gt; <span class="el_source">SalesDtos.java</span></div><h1>SalesDtos.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.sales;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.swee.ordermanagementspring.api.common.Addresses.Address;
+import com.swee.ordermanagementspring.api.common.Addresses.AddressRequest;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.Refs.CategoryRef;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import com.swee.ordermanagementspring.entities.enums.Fulfillment;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+
+/** DTOs do PDV (contrato v4). Nenhum campo de vendedor, preco, desconto ou total entra pelo corpo. */
+public final class SalesDtos {
+    private SalesDtos() {
+    }
+
+    // ---------------- requisicoes ----------------
+
+<span class="fc" id="L36">    public record SaleItemRequest(@NotNull @Positive Long productId,</span>
+                                  @NotNull @Min(1) @Max(999) Integer quantity,
+                                  @Positive Long promotionId) { }
+
+    private static boolean distinctProducts(List&lt;SaleItemRequest&gt; items) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (items == null) return true;</span>
+<span class="fc" id="L42">        var seen = new HashSet&lt;Long&gt;();</span>
+<span class="fc" id="L43">        return items.stream().filter(Objects::nonNull).map(SaleItemRequest::productId).filter(Objects::nonNull).allMatch(seen::add);</span>
+    }
+
+<span class="fc" id="L46">    public record QuoteRequest(@NotNull @Size(min = 1, max = 50) List&lt;@NotNull @Valid SaleItemRequest&gt; items) {</span>
+        @AssertTrue(message = &quot;items: productId must not repeat&quot;)
+        public boolean isEachProductOnce() {
+<span class="fc" id="L49">            return distinctProducts(items);</span>
+        }
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = &quot;type&quot;)
+    @JsonSubTypes({
+            @JsonSubTypes.Type(value = PixPaymentRequest.class, name = &quot;PIX&quot;),
+            @JsonSubTypes.Type(value = CardPaymentRequest.class, name = &quot;CARD&quot;),
+            @JsonSubTypes.Type(value = BoletoPaymentRequest.class, name = &quot;BOLETO&quot;)})
+    public sealed interface SalePaymentRequest permits PixPaymentRequest, CardPaymentRequest, BoletoPaymentRequest {
+        String type();
+    }
+
+<span class="fc" id="L62">    public record PixPaymentRequest() implements SalePaymentRequest {</span>
+<span class="fc" id="L63">        public String type() { return &quot;PIX&quot;; }</span>
+    }
+
+    /** DEC-ERP-04: so os 4 ultimos digitos; o numero completo nem tem campo (propriedade extra -&gt; 400). */
+<span class="fc" id="L67">    public record CardPaymentRequest(@NotNull @Pattern(regexp = &quot;^[0-9]{4}$&quot;) String cardLast4,</span>
+                                     @NotNull @Min(1) @Max(12) Integer installments,
+                                     @Pattern(regexp = &quot;^[A-Za-z0-9]{1,20}$&quot;) String authorizationCode) implements SalePaymentRequest {
+<span class="fc" id="L70">        public String type() { return &quot;CARD&quot;; }</span>
+    }
+
+<span class="fc" id="L73">    public record BoletoPaymentRequest(@NotNull @FutureOrPresent LocalDate dueDate) implements SalePaymentRequest {</span>
+<span class="nc" id="L74">        public String type() { return &quot;BOLETO&quot;; }</span>
+    }
+
+<span class="fc" id="L77">    public record SalesOrderRequest(@NotNull @Positive Long customerId,</span>
+                                    @NotNull @Size(min = 1, max = 50) List&lt;@NotNull @Valid SaleItemRequest&gt; items,
+                                    @NotNull @Valid SalePaymentRequest payment,
+                                    @NotNull Fulfillment fulfillment,
+                                    @Valid AddressRequest shippingAddress) {
+        @AssertTrue(message = &quot;shippingAddress is required for DELIVERY&quot;)
+        public boolean isAddressPresentForDelivery() {
+<span class="fc bfc" id="L84" title="All 4 branches covered.">            return fulfillment != Fulfillment.DELIVERY || shippingAddress != null;</span>
+        }
+
+        @AssertTrue(message = &quot;items: productId must not repeat&quot;)
+        public boolean isEachProductOnce() {
+<span class="fc" id="L89">            return distinctProducts(items);</span>
+        }
+    }
+
+<span class="fc" id="L93">    public record PaymentConfirmationRequest(@Pattern(regexp = &quot;^[A-Za-z0-9]{1,20}$&quot;) String authorizationCode) { }</span>
+
+    // ---------------- respostas ----------------
+
+<span class="fc" id="L97">    public record ActivePromotion(long id, String name, String kind, BigDecimal value, Long productId, Long categoryId,</span>
+                                  OffsetDateTime endsAt) { }
+
+<span class="fc" id="L100">    public record CatalogItem(long id, String sku, String name, CategoryRef category, MoneyDto price, int available,</span>
+                              ActivePromotion activePromotion) { }
+
+<span class="fc" id="L103">    public record QuoteItem(long productId, int quantity, MoneyDto unitPrice, MoneyDto discount, MoneyDto subtotal,</span>
+                            int available) { }
+
+<span class="fc" id="L106">    public record QuoteResponse(List&lt;QuoteItem&gt; items, MoneyDto subtotal, MoneyDto discountTotal, MoneyDto total) { }</span>
+
+<span class="fc" id="L108">    public record SalesOrderItem(long productId, String sku, String name, int quantity, MoneyDto unitPrice,</span>
+                                 MoneyDto discount, MoneyDto subtotal) { }
+
+<span class="fc" id="L111">    public record SalesOrderPayment(long id, String type, String status) { }</span>
+
+<span class="fc" id="L113">    public record SalesOrderResponse(long id, String status, UserRef seller, UserRef customer, List&lt;SalesOrderItem&gt; items,</span>
+                                     MoneyDto subtotal, MoneyDto discountTotal, MoneyDto total, SalesOrderPayment payment,
+                                     Fulfillment fulfillment, Address shippingAddress, OffsetDateTime createdAt) { }
+
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+<span class="fc" id="L118">    public record SalesOrderSummary(long id, OffsetDateTime createdAt, String status, UserRef customer, UserRef seller,</span>
+                                    MoneyDto total, String paymentType, String paymentStatus, Fulfillment fulfillment,
+                                    int itemsCount) { }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.694" tests="10" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="deleteRules" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.108">
+    <system-out><![CDATA[2026-10-14T06:42:28.899-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.customers.CustomersApiTest]: CustomersApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:28.928-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.customers.CustomersApiTest
+2026-10-14T06:42:28.929-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.customers.CustomersApiTest]: CustomersApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:28.931-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.customers.CustomersApiTest
+2026-10-14T06:42:28.938-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:28.938-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:28.939-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="searchByDocumentOrNamePrefix" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.088">
+    <system-out><![CDATA[2026-10-14T06:42:29.046-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="updateUsesVersionAndKeepsDocument" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.081">
+    <system-out><![CDATA[2026-10-14T06:42:29.135-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.135-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="createAndMaskDocument" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.052">
+    <system-out><![CDATA[2026-10-14T06:42:29.217-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.217-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.218-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidCpfIsRejected(String)[1]" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.031">
+    <system-out><![CDATA[2026-10-14T06:42:29.307-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.307-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.308-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidCpfIsRejected(String)[2]" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.022">
+    <system-out><![CDATA[2026-10-14T06:42:29.338-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.338-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.339-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidCpfIsRejected(String)[3]" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.022">
+    <system-out><![CDATA[2026-10-14T06:42:29.362-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.362-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.363-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidCpfIsRejected(String)[4]" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.024">
+    <system-out><![CDATA[2026-10-14T06:42:29.385-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.385-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.386-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="historyHidesOtherSellersTotals" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.126">
+    <system-out><![CDATA[2026-10-14T06:42:29.410-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.410-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.410-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="duplicateDocumentIsRejected" classname="com.swee.ordermanagementspring.api.customers.CustomersApiTest" time="0.055">
+    <system-out><![CDATA[2026-10-14T06:42:29.537-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:29.537-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:29.538-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+</testsuite>

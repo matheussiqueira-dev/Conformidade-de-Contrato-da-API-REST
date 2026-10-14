@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">PaymentResponseDTO.java</span></div><h1>PaymentResponseDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
+import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
+import com.swee.ordermanagementspring.entities.payment.CardPayment;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.entities.payment.PixPayment;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PaymentResponseDTO {
+
+    private Long id;
+    private String type;
+    private BigDecimal amount;
+    private PaymentStatus status;
+    private LocalDateTime paymentDate;
+    private Long orderId;
+    private String cardNumberMasked;
+    private String cardHolder;
+    private Integer installments;
+
+    private String pixKey;
+    private String pixHolderName;
+    private String pixKeyType;
+    private String transactionId;
+
+    private String barCode;
+    private LocalDate dueDate;
+
+    public PaymentResponseDTO(Long id, String type, BigDecimal amount, PaymentStatus status,
+<span class="fc" id="L36">                              LocalDateTime paymentDate, Long orderId) {</span>
+<span class="fc" id="L37">        this.id = id;</span>
+<span class="fc" id="L38">        this.type = type;</span>
+<span class="fc" id="L39">        this.amount = amount;</span>
+<span class="fc" id="L40">        this.status = status;</span>
+<span class="fc" id="L41">        this.paymentDate = paymentDate;</span>
+<span class="fc" id="L42">        this.orderId = orderId;</span>
+<span class="fc" id="L43">    }</span>
+
+    public static PaymentResponseDTO from(Payment payment) {
+<span class="fc" id="L46">        PaymentResponseDTO dto = new PaymentResponseDTO(</span>
+<span class="fc" id="L47">                payment.getId(),</span>
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">                switch (payment) {</span>
+<span class="fc" id="L49">                    case CardPayment c -&gt; &quot;CARD&quot;;</span>
+<span class="fc" id="L50">                    case PixPayment p -&gt; &quot;PIX&quot;;</span>
+<span class="nc" id="L51">                    case BoletoPayment b -&gt; &quot;BOLETO&quot;;</span>
+<span class="nc" id="L52">                    default -&gt; &quot;UNKNOWN&quot;;</span>
+<span class="fc" id="L53">                },</span>
+<span class="fc" id="L54">                payment.getAmount(),</span>
+<span class="fc" id="L55">                payment.getStatus(),</span>
+<span class="fc" id="L56">                payment.getPaymentDate(),</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                payment.getOrder() != null ? payment.getOrder().getId() : null</span>
+        );
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (payment instanceof CardPayment card) {</span>
+<span class="fc" id="L61">            dto.cardNumberMasked = maskCardNumber(card.getCardLast4());</span>
+<span class="fc" id="L62">            dto.cardHolder = card.getCardHolder();</span>
+<span class="fc" id="L63">            dto.installments = card.getInstallments();</span>
+        }
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (payment instanceof PixPayment pix) {</span>
+<span class="fc" id="L67">            dto.pixKey = pix.getPixKey();</span>
+<span class="fc" id="L68">            dto.pixHolderName = pix.getPixHolderName();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            dto.pixKeyType = pix.getPixKeyType() != null ? pix.getPixKeyType().name() : null;</span>
+<span class="fc" id="L70">            dto.transactionId = pix.getTransactionId();</span>
+        }
+
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (payment instanceof BoletoPayment boleto) {</span>
+<span class="nc" id="L74">            dto.barCode = boleto.getBarCode();</span>
+<span class="nc" id="L75">            dto.dueDate = boleto.getDueDate();</span>
+        }
+
+<span class="fc" id="L78">        return dto;</span>
+    }
+
+    private static String maskCardNumber(String cardNumber) {
+<span class="pc bpc" id="L82" title="2 of 4 branches missed.">        if (cardNumber == null || cardNumber.length() &lt; 4) {</span>
+<span class="nc" id="L83">            return null;</span>
+        }
+<span class="fc" id="L85">        String lastFour = cardNumber.substring(cardNumber.length() - 4);</span>
+<span class="fc" id="L86">        return &quot;**** **** **** &quot; + lastFour;</span>
+    }
+
+    public Long getId() {
+<span class="fc" id="L90">        return id;</span>
+    }
+
+    public String getType() {
+<span class="fc" id="L94">        return type;</span>
+    }
+
+    public BigDecimal getAmount() {
+<span class="fc" id="L98">        return amount;</span>
+    }
+
+    public PaymentStatus getStatus() {
+<span class="fc" id="L102">        return status;</span>
+    }
+
+    public LocalDateTime getPaymentDate() {
+<span class="fc" id="L106">        return paymentDate;</span>
+    }
+
+    public Long getOrderId() {
+<span class="fc" id="L110">        return orderId;</span>
+    }
+
+    public String getCardNumberMasked() {
+<span class="fc" id="L114">        return cardNumberMasked;</span>
+    }
+
+    public String getCardHolder() {
+<span class="fc" id="L118">        return cardHolder;</span>
+    }
+
+    public Integer getInstallments() {
+<span class="fc" id="L122">        return installments;</span>
+    }
+
+    public String getPixKey() {
+<span class="fc" id="L126">        return pixKey;</span>
+    }
+
+    public String getPixHolderName() {
+<span class="fc" id="L130">        return pixHolderName;</span>
+    }
+
+    public String getPixKeyType() {
+<span class="fc" id="L134">        return pixKeyType;</span>
+    }
+
+    public String getTransactionId() {
+<span class="fc" id="L138">        return transactionId;</span>
+    }
+
+    public String getBarCode() {
+<span class="fc" id="L142">        return barCode;</span>
+    }
+
+    public LocalDate getDueDate() {
+<span class="fc" id="L146">        return dueDate;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

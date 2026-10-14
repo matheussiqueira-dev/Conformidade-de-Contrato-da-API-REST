@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StockController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">StockController.java</span></div><h1>StockController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.*;
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.time.LocalDate;
+
+/** Estoque do contrato v4: posicao, entradas, ajustes, minimo e extrato. Somente GERENTE (URL e servico). */
+@RestController
+@RequestMapping(&quot;/stock&quot;)
+public class StockController {
+    private final StockService service;
+
+<span class="fc" id="L27">    public StockController(StockService service) {</span>
+<span class="fc" id="L28">        this.service = service;</span>
+<span class="fc" id="L29">    }</span>
+
+    @GetMapping(&quot;/products&quot;)
+    public PageResponse&lt;StockProduct&gt; list(@RequestParam(defaultValue = &quot;&quot;) @Size(max = 120) String q,
+                                           @RequestParam(required = false) Boolean belowMin,
+                                           @RequestParam(required = false) Boolean sellable,
+                                           @RequestParam(defaultValue = &quot;0&quot;) @Min(0) int page,
+                                           @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int size) {
+<span class="fc" id="L37">        return service.list(q, belowMin, sellable, page, size);</span>
+    }
+
+    @PostMapping(&quot;/products/{id}/entries&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;StockEntryResponse&gt; entry(@AuthenticationPrincipal AppPrincipal principal,
+                                                    @PathVariable @Positive long id,
+                                                    @Valid @RequestBody StockEntryRequest request) {
+<span class="fc" id="L45">        StockEntryResponse created = service.entry(CurrentUser.of(principal), id, request);</span>
+<span class="fc" id="L46">        return ResponseEntity.created(URI.create(&quot;/stock/products/&quot; + id + &quot;/entries/&quot; + created.id())).body(created);</span>
+    }
+
+    @PostMapping(&quot;/products/{id}/adjustments&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;StockMovement&gt; adjust(@AuthenticationPrincipal AppPrincipal principal,
+                                                @PathVariable @Positive long id,
+                                                @Valid @RequestBody StockAdjustmentRequest request) {
+<span class="fc" id="L54">        StockMovement created = service.adjust(CurrentUser.of(principal), id, request);</span>
+<span class="fc" id="L55">        return ResponseEntity.created(URI.create(&quot;/stock/movements?productId=&quot; + id)).body(created);</span>
+    }
+
+    @PatchMapping(&quot;/products/{id}/min-level&quot;)
+    public StockProduct changeMinLevel(@AuthenticationPrincipal AppPrincipal principal, @PathVariable @Positive long id,
+                                       @Valid @RequestBody MinLevelRequest request) {
+<span class="fc" id="L61">        return service.changeMinLevel(CurrentUser.of(principal), id, request);</span>
+    }
+
+    @GetMapping(&quot;/movements&quot;)
+    public PageResponse&lt;StockMovement&gt; movements(@RequestParam(required = false) @Positive Long productId,
+                                                 @RequestParam(required = false) MovementKind kind,
+                                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to,
+                                                 @RequestParam(defaultValue = &quot;0&quot;) @Min(0) int page,
+                                                 @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int size) {
+<span class="fc" id="L71">        return service.movements(productId, kind, from, to, page, size);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

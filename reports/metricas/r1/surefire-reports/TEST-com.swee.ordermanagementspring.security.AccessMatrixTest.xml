@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.security.AccessMatrixTest" time="3.536" tests="221" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="managerInheritsEverySellerRow" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:37.630-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.security.AccessMatrixTest]: AccessMatrixTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:37.643-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.security.AccessMatrixTest
+2026-10-14T06:42:37.644-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.security.AccessMatrixTest]: AccessMatrixTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:37.645-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.security.AccessMatrixTest
+2026-10-14T06:42:37.647-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.647-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.648-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="everyMappedEndpointHasAMatrixRow" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:37.654-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.655-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.655-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[1]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.011">
+    <system-out><![CDATA[2026-10-14T06:42:37.663-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.663-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.664-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[2]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:37.676-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.676-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.677-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[3]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:37.682-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.682-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.684-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[4]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:37.689-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.689-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.690-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[5]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:37.701-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.701-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.701-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[6]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:37.706-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.706-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.707-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[7]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.015">
+    <system-out><![CDATA[2026-10-14T06:42:37.712-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.712-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.712-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[8]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.012">
+    <system-out><![CDATA[2026-10-14T06:42:37.728-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.728-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.729-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[9]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:37.741-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.741-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.742-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[10]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="1.426">
+    <system-out><![CDATA[2026-10-14T06:42:37.750-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:37.750-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:37.751-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-14T06:42:39.125-03:00  INFO 22864 --- [order-management-spring] [           main] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 1370 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[11]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.026">
+    <system-out><![CDATA[2026-10-14T06:42:39.178-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.178-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.178-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[12]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.026">
+    <system-out><![CDATA[2026-10-14T06:42:39.206-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.207-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.208-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[13]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.149">
+    <system-out><![CDATA[2026-10-14T06:42:39.233-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.233-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.234-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[14]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.054">
+    <system-out><![CDATA[2026-10-14T06:42:39.385-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.385-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.386-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[15]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.047">
+    <system-out><![CDATA[2026-10-14T06:42:39.441-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.441-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.443-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[16]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.012">
+    <system-out><![CDATA[2026-10-14T06:42:39.491-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.491-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.492-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[17]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:39.505-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.505-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.507-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[18]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:39.515-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.515-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.517-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[19]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.526-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.526-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.527-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[20]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.538-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[21]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:39.545-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.545-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.546-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[22]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.027">
+    <system-out><![CDATA[2026-10-14T06:42:39.555-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.555-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.555-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[23]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:39.584-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.584-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.585-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[24]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:39.595-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.595-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.596-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[25]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.606-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.606-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.607-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[26]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.616-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.616-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.617-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[27]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.626-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.626-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.627-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[28]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.634-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.634-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.635-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[29]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.641-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.641-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.642-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[30]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.646-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.646-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.648-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[31]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.653-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.653-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.655-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[32]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.661-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.661-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.662-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[33]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.668-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.668-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.668-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[34]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.677-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.677-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.678-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[35]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.685-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.685-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.686-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[36]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.693-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.693-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.694-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[37]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.700-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.700-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.701-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[38]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:39.706-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.706-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.706-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[39]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.711-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.711-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.712-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[40]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.719-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.719-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.719-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[41]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:39.725-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.725-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.726-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[42]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.735-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.736-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.737-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[43]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.744-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.744-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.745-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[44]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.017">
+    <system-out><![CDATA[2026-10-14T06:42:39.753-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.753-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.753-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[45]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.014">
+    <system-out><![CDATA[2026-10-14T06:42:39.771-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.772-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.773-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[46]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.788-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.788-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.789-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[47]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.794-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.794-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.796-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[48]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.803-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.803-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.804-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[49]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:39.811-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.811-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.813-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[50]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[51]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:39.827-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.827-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.829-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[52]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.019">
+    <system-out><![CDATA[2026-10-14T06:42:39.835-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.835-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.835-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[53]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.016">
+    <system-out><![CDATA[2026-10-14T06:42:39.855-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.855-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.855-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[54]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.014">
+    <system-out><![CDATA[2026-10-14T06:42:39.870-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.871-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.871-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[55]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:39.886-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.886-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.887-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[56]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:39.891-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.892-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.892-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[57]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.011">
+    <system-out><![CDATA[2026-10-14T06:42:39.902-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.903-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.904-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[58]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.915-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.916-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.917-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[59]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.014">
+    <system-out><![CDATA[2026-10-14T06:42:39.922-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.922-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.923-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[60]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.012">
+    <system-out><![CDATA[2026-10-14T06:42:39.936-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.937-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.938-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[61]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:39.950-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.950-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.951-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[62]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:39.956-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.956-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.958-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[63]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:39.969-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.969-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.969-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[64]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:39.978-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.978-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.978-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[65]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:39.981-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.981-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.982-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[66]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.011">
+    <system-out><![CDATA[2026-10-14T06:42:39.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:39.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:39.994-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[67]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.004-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.004-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.004-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[68]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.009-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.009-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.010-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[69]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.016-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.016-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.016-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[70]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.022-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.022-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.022-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[71]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.027-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.027-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.027-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[72]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.036-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.036-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.037-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[73]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.044-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.045-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.045-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[74]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.049-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.049-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.050-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[75]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.055-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.055-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.057-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[76]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.063-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.063-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.064-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[77]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.069-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.069-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.071-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[78]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.074-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.075-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.075-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[79]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.086-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.086-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.086-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[80]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.090-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.090-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.091-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[81]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.100-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.100-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.100-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[82]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.108-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.108-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.109-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[83]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.112-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.112-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.114-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[84]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.013">
+    <system-out><![CDATA[2026-10-14T06:42:40.118-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.118-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.119-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[85]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.133-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.133-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.134-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[86]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.139-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.139-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.140-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[87]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.146-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.146-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.147-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[88]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.153-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.153-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.154-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[89]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:40.158-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.158-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.159-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[90]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.168-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.169-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.170-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[91]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.179-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.179-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.180-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[92]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.184-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.184-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.184-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[93]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:40.188-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.188-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.188-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[94]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.198-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.198-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.199-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[95]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.203-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.203-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.203-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[96]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.208-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.208-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.208-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[97]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.214-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.214-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.215-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[98]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.218-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.218-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.219-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[99]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.222-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.223-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.223-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[100]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.233-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.233-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.233-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[101]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.239-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.239-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.239-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[102]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.011">
+    <system-out><![CDATA[2026-10-14T06:42:40.244-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.244-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.245-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[103]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.257-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.257-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.258-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[104]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.262-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.262-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.263-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[105]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.268-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.268-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.268-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[106]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.275-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.277-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.277-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[107]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.284-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.284-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.285-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[108]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.290-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.290-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.291-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[109]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.299-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.299-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.300-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[110]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.304-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.304-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.305-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[111]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.308-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.308-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.310-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[112]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.316-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.316-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.317-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[113]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.320-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.321-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.321-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[114]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.327-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.327-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.328-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[115]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.337-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.337-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.338-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[116]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.342-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.342-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.342-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[117]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.346-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.346-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.347-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[118]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.354-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.354-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.354-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[119]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.358-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.358-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.359-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[120]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.363-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.363-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.364-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[121]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.368-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.368-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.370-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[122]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.375-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.375-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.377-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[123]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.382-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.382-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.383-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[124]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.391-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.391-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.392-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[125]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.395-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.395-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.396-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[126]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.402-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.402-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.403-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[127]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.410-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.410-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.411-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[128]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.414-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.414-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.414-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[129]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.418-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.418-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.419-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[130]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.425-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.425-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.426-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[131]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.429-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.429-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.429-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[132]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.433-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.433-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.433-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[133]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.438-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.438-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.438-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[134]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.442-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.442-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.443-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[135]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.446-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.446-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.446-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[136]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.455-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.455-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.456-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[137]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.461-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.461-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.462-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[138]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.466-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.466-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.467-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[139]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.472-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.472-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.473-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[140]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.479-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.479-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.480-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[141]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.484-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.484-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.485-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[142]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.491-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.491-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.492-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[143]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.496-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.496-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.497-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[144]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.501-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.501-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.503-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[145]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.510-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.510-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.510-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[146]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.513-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.513-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.513-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[147]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.012">
+    <system-out><![CDATA[2026-10-14T06:42:40.517-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.517-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.518-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[148]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.531-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.531-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.531-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[149]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[150]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.538-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.538-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.546-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 8 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[151]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.552-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.552-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.553-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[152]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.558-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.558-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.559-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[153]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.563-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.563-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.563-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[154]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.569-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.569-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.570-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[155]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.574-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.574-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.575-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[156]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.578-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.578-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.580-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[157]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.586-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.586-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.587-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[158]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.590-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.590-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.591-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[159]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.596-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.596-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.596-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[160]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.602-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.602-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.603-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[161]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.606-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.606-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.607-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[162]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.610-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.610-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.612-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[163]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.616-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.616-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.617-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[164]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.620-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.620-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.621-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[165]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.625-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.625-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.625-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[166]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.634-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.634-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.634-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[167]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.638-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.638-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.639-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[168]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.642-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.642-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.642-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[169]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.648-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.648-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.648-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[170]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:40.650-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.652-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.652-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[171]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.106">
+    <system-out><![CDATA[2026-10-14T06:42:40.657-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.657-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.659-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[172]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.764-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.764-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.765-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[173]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.769-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.769-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.770-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[174]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.773-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.773-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.774-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-14T06:42:40.781-03:00  WARN 22864 --- [order-management-spring] [           main] o.h.v.i.m.a.CascadingMetaDataBuilder     : HV000271: Using `@Valid` on a container (java.util.List) is deprecated. You should apply the annotation on the type argument(s). Affected element: items
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[175]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.785-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.785-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.786-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[176]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.788-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.788-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.788-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[177]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.792-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.792-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.792-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[178]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.800-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.800-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.801-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[179]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.804-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.804-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.804-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[180]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.808-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.808-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.809-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[181]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.815-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.815-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.815-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[182]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.819-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[183]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.008">
+    <system-out><![CDATA[2026-10-14T06:42:40.823-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.823-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.824-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[184]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:40.832-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.833-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.833-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[185]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.838-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.838-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.838-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[186]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.031">
+    <system-out><![CDATA[2026-10-14T06:42:40.842-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.842-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.843-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[187]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.874-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.874-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.875-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[188]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.878-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.879-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.880-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[189]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.042">
+    <system-out><![CDATA[2026-10-14T06:42:40.884-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.884-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.884-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[190]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:40.927-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.927-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.928-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[191]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.929-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.929-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.931-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[192]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:40.936-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.936-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.936-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[193]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.944-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.944-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.944-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[194]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.947-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.947-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.948-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[195]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:40.951-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.951-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.951-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[196]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.961-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.961-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.961-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[197]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.965-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.965-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.966-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[198]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.968-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.968-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.969-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[199]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.973-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.974-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.974-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[200]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.977-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.977-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.977-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[201]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:40.980-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.980-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.981-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[202]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.004">
+    <system-out><![CDATA[2026-10-14T06:42:40.991-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.991-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[203]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:40.995-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.995-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.995-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[204]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.026">
+    <system-out><![CDATA[2026-10-14T06:42:40.999-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:40.999-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:40.999-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[205]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:41.026-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.026-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.027-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[206]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.003">
+    <system-out><![CDATA[2026-10-14T06:42:41.030-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.030-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.031-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[207]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:41.033-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.033-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.034-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[208]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:41.044-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.044-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[209]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:41.054-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.054-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.054-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[210]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.02">
+    <system-out><![CDATA[2026-10-14T06:42:41.061-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.062-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.071-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[211]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:41.081-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.081-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.083-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[212]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.012">
+    <system-out><![CDATA[2026-10-14T06:42:41.089-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.089-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.089-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[213]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.014">
+    <system-out><![CDATA[2026-10-14T06:42:41.101-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.102-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.104-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[214]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:41.116-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.116-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.117-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[215]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:41.122-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.122-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.124-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[216]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.007">
+    <system-out><![CDATA[2026-10-14T06:42:41.128-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.128-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.129-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[217]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.005">
+    <system-out><![CDATA[2026-10-14T06:42:41.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.137-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[218]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.006">
+    <system-out><![CDATA[2026-10-14T06:42:41.142-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.142-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.144-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="matrixRowIsEnforced(String, String, String, String, String)[219]" classname="com.swee.ordermanagementspring.security.AccessMatrixTest" time="0.016">
+    <system-out><![CDATA[2026-10-14T06:42:41.150-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:41.150-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:41.152-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+</testsuite>

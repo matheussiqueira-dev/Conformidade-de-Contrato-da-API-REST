@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>V6_1__DemoAccounts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">db.demo</a> &gt; <span class="el_source">V6_1__DemoAccounts.java</span></div><h1>V6_1__DemoAccounts.java</h1><pre class="source lang-java linenums">package db.demo;
+
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.nio.charset.StandardCharsets;
+import java.sql.PreparedStatement;
+import java.util.List;
+
+/**
+ * Contas de demonstracao do perfil demo (decisoes A8 e B-11). A senha vem de SBI_DEMO_PASSWORD e e
+ * gravada so como BCrypt(12); sem a variavel, a migracao falha e o banco demo nao sobe.
+ * Esta classe so e encontrada quando spring.flyway.locations inclui classpath:db/demo.
+ */
+<span class="nc" id="L16">public class V6_1__DemoAccounts extends BaseJavaMigration {</span>
+
+    static final String PASSWORD_VARIABLE = &quot;SBI_DEMO_PASSWORD&quot;;
+    static final int MIN_LENGTH = 12;
+    static final int MAX_BCRYPT_BYTES = 72;
+
+<span class="fc" id="L22">    record Account(String name, String email, String role, String dbRole) { }</span>
+
+<span class="fc" id="L24">    static final List&lt;Account&gt; ACCOUNTS = List.of(</span>
+            new Account(&quot;Matheus Siqueira&quot;, &quot;matheussiqueira@sbi.tech&quot;, &quot;GERENTE&quot;, &quot;gerente_matheus&quot;),
+            new Account(&quot;Allan Barros&quot;, &quot;allanbarros@sbi.tech&quot;, &quot;VENDEDOR&quot;, &quot;vendedor_allan&quot;),
+            new Account(&quot;Francisco Ferreira&quot;, &quot;franciscoferreira@sbi.tech&quot;, &quot;VENDEDOR&quot;, &quot;vendedor_francisco&quot;),
+            new Account(&quot;Gabriel Sousa&quot;, &quot;gabrielsousa@sbi.tech&quot;, &quot;VENDEDOR&quot;, &quot;gerente_gabriel&quot;));
+
+    @Override
+    public void migrate(Context context) throws Exception {
+<span class="nc" id="L32">        String password = requirePassword(System.getenv(PASSWORD_VARIABLE));</span>
+<span class="nc" id="L33">        var encoder = new BCryptPasswordEncoder(12);</span>
+<span class="nc" id="L34">        String sql = &quot;INSERT INTO app_users(name, email, password_hash, role, db_role) VALUES (?, ?, ?, ?, ?)&quot;;</span>
+<span class="nc" id="L35">        try (PreparedStatement insert = context.getConnection().prepareStatement(sql)) {</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            for (Account account : ACCOUNTS) {</span>
+<span class="nc" id="L37">                insert.setString(1, account.name());</span>
+<span class="nc" id="L38">                insert.setString(2, account.email());</span>
+<span class="nc" id="L39">                insert.setString(3, encoder.encode(password));</span>
+<span class="nc" id="L40">                insert.setString(4, account.role());</span>
+<span class="nc" id="L41">                insert.setString(5, account.dbRole());</span>
+<span class="nc" id="L42">                insert.addBatch();</span>
+<span class="nc" id="L43">            }</span>
+<span class="nc" id="L44">            insert.executeBatch();</span>
+        }
+<span class="nc" id="L46">    }</span>
+
+    static String requirePassword(String password) {
+<span class="fc bfc" id="L49" title="All 4 branches covered.">        if (password == null || password.isBlank()) {</span>
+<span class="fc" id="L50">            throw new IllegalStateException(&quot;Perfil demo exige &quot; + PASSWORD_VARIABLE + &quot; definida no ambiente.&quot;);</span>
+        }
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (password.length() &lt; MIN_LENGTH) {</span>
+<span class="fc" id="L53">            throw new IllegalStateException(PASSWORD_VARIABLE + &quot; precisa ter pelo menos &quot; + MIN_LENGTH + &quot; caracteres.&quot;);</span>
+        }
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (password.getBytes(StandardCharsets.UTF_8).length &gt; MAX_BCRYPT_BYTES) {</span>
+<span class="fc" id="L56">            throw new IllegalStateException(PASSWORD_VARIABLE + &quot; passa de &quot; + MAX_BCRYPT_BYTES + &quot; bytes (limite do BCrypt).&quot;);</span>
+        }
+<span class="fc" id="L58">        return password;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

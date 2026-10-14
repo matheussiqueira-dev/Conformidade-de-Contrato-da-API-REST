@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocumentFormat.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.customers</a> &gt; <span class="el_source">DocumentFormat.java</span></div><h1>DocumentFormat.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.customers;
+
+/**
+ * C-12: o GERENTE recebe o documento formatado completo; o VENDEDOR, mascarado (***.456.789-**, **.345.678/0001-**).
+ * O banco guarda so digitos (D3); valor fora do tamanho esperado nunca e exibido.
+ */
+public final class DocumentFormat {
+    private DocumentFormat() {
+    }
+
+    public static String of(String cpf, String cnpj, boolean full) {
+<span class="fc bfc" id="L12" title="All 4 branches covered.">        if (cpf != null &amp;&amp; cpf.length() == 11) {</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">            return (full ? cpf.substring(0, 3) : &quot;***&quot;) + &quot;.&quot; + cpf.substring(3, 6) + &quot;.&quot; + cpf.substring(6, 9)</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">                    + &quot;-&quot; + (full ? cpf.substring(9) : &quot;**&quot;);</span>
+        }
+<span class="pc bpc" id="L16" title="1 of 4 branches missed.">        if (cnpj != null &amp;&amp; cnpj.length() == 14) {</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">            return (full ? cnpj.substring(0, 2) : &quot;**&quot;) + &quot;.&quot; + cnpj.substring(2, 5) + &quot;.&quot; + cnpj.substring(5, 8)</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">                    + &quot;/&quot; + cnpj.substring(8, 12) + &quot;-&quot; + (full ? cnpj.substring(12) : &quot;**&quot;);</span>
+        }
+<span class="fc" id="L20">        throw new IllegalStateException(&quot;Customer document is not normalized&quot;);</span>
+    }
+
+    /** C-11: busca remove pontuacao e espacos; sobrando so digitos, a busca e por documento exato. */
+    public static String searchDigits(String q) {
+<span class="fc" id="L25">        String stripped = q.replaceAll(&quot;[\\s.\\-/()]&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L26" title="All 4 branches covered.">        return !stripped.isEmpty() &amp;&amp; stripped.chars().allMatch(Character::isDigit) ? stripped : null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

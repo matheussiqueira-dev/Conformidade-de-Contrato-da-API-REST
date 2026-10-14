@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.OrderManagementSpringApplicationTests" time="0.015" tests="1" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="contextLoads" classname="com.swee.ordermanagementspring.OrderManagementSpringApplicationTests" time="0.002">
+    <system-out><![CDATA[2026-10-14T06:42:37.614-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.OrderManagementSpringApplicationTests]: OrderManagementSpringApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:37.623-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.OrderManagementSpringApplicationTests
+2026-10-14T06:42:37.624-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.OrderManagementSpringApplicationTests]: OrderManagementSpringApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:37.624-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.OrderManagementSpringApplicationTests
+]]></system-out>
+  </testcase>
+</testsuite>

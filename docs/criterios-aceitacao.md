@@ -146,6 +146,8 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | RF-22 | CA-22-01 a CA-22-07 | CT-STOCK-108, CT-STOCK-109, CT-SALE-104, CT-WEB-105, CT-WEB-106 | Pendente | - |
 | RF-23 | CA-23-01 a CA-23-03 | CT-CONTRACT-102, CT-WEB-102 | Pendente | - |
 
+Situacao atual de cada linha, com a evidencia executavel: [rastreabilidade.md](rastreabilidade.md) (14/10/2026).
+
 ## Regras para atualizar a matriz
 
 - Registrar o commit, ambiente, massa de dados e comando de cada execucao.

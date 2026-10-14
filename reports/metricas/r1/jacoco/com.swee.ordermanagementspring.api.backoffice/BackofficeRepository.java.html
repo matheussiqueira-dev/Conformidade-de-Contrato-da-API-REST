@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BackofficeRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.backoffice</a> &gt; <span class="el_source">BackofficeRepository.java</span></div><h1>BackofficeRepository.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.backoffice;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.*;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.Refs;
+import com.swee.ordermanagementspring.api.common.Refs.CategoryRef;
+import com.swee.ordermanagementspring.api.common.Refs.NamedRef;
+import com.swee.ordermanagementspring.api.common.Refs.ProductRef;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import com.swee.ordermanagementspring.entities.StoreTime;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
+
+/** Leituras do backoffice. Filtros opcionais usam CAST(:p AS tipo) IS NULL; nada de texto do usuario no SQL. */
+@Repository
+public class BackofficeRepository {
+    private final JdbcClient jdbc;
+
+<span class="fc" id="L27">    public BackofficeRepository(JdbcClient jdbc) {</span>
+<span class="fc" id="L28">        this.jdbc = jdbc;</span>
+<span class="fc" id="L29">    }</span>
+
+    static OffsetDateTime instant(ResultSet rs, String column) throws SQLException {
+<span class="fc" id="L32">        OffsetDateTime value = rs.getObject(column, OffsetDateTime.class);</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        return value == null ? null : value.atZoneSameInstant(StoreTime.ZONE).toOffsetDateTime();</span>
+    }
+
+    /** Busca do backoffice: SKU exato ou prefixo do nome, como no catalogo do PDV. */
+    private static final String PRODUCT_SEARCH = &quot;&quot;&quot;
+            (:q = '' OR p.sku = upper(:q) OR lower(p.name) LIKE :prefix ESCAPE '\\')&quot;&quot;&quot;;
+
+    // ---------------- produtos ----------------
+
+    private static final String PRODUCT_COLUMNS = &quot;&quot;&quot;
+            SELECT p.id, p.product_type, p.sku, p.name, p.description, p.category_id, c.name AS category_name, p.price,
+                   p.sellable, p.active, p.weight, p.download_link, p.updated_at
+              FROM product p LEFT JOIN category c ON c.id = p.category_id&quot;&quot;&quot;;
+
+    private static Product product(ResultSet rs, int n) throws SQLException {
+<span class="fc" id="L48">        Long category = rs.getObject(&quot;category_id&quot;, Long.class);</span>
+<span class="fc" id="L49">        boolean physical = &quot;PHYSICAL&quot;.equals(rs.getString(&quot;product_type&quot;));</span>
+<span class="fc" id="L50">        Double weight = rs.getObject(&quot;weight&quot;, Double.class);</span>
+<span class="fc" id="L51">        return new Product(rs.getLong(&quot;id&quot;), rs.getString(&quot;product_type&quot;), rs.getString(&quot;sku&quot;), rs.getString(&quot;name&quot;),</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                rs.getString(&quot;description&quot;), category == null ? null : new CategoryRef(category, rs.getString(&quot;category_name&quot;)),</span>
+<span class="fc" id="L53">                MoneyDto.of(rs.getBigDecimal(&quot;price&quot;)), rs.getBoolean(&quot;sellable&quot;), rs.getBoolean(&quot;active&quot;),</span>
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">                physical &amp;&amp; weight != null ? BigDecimal.valueOf(weight) : null,</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                physical ? null : rs.getString(&quot;download_link&quot;), instant(rs, &quot;updated_at&quot;));</span>
+    }
+
+    public Optional&lt;Product&gt; product(long id) {
+<span class="fc" id="L59">        return jdbc.sql(PRODUCT_COLUMNS + &quot; WHERE p.id = :id&quot;).param(&quot;id&quot;, id).query(BackofficeRepository::product).optional();</span>
+    }
+
+    private static final String PRODUCT_FILTER = &quot; WHERE &quot; + PRODUCT_SEARCH + &quot;&quot;&quot;
+
+               AND (CAST(:sellable AS boolean) IS NULL OR p.sellable = :sellable)
+               AND (CAST(:active AS boolean) IS NULL OR p.active = :active)&quot;&quot;&quot;;
+
+    public List&lt;Product&gt; products(String q, Boolean sellable, Boolean active, int page, int size) {
+<span class="fc" id="L68">        return jdbc.sql(PRODUCT_COLUMNS + PRODUCT_FILTER + &quot; ORDER BY lower(p.name), p.id LIMIT :size OFFSET :offset&quot;)</span>
+<span class="fc" id="L69">                .param(&quot;q&quot;, q).param(&quot;prefix&quot;, Refs.prefix(q)).param(&quot;sellable&quot;, sellable).param(&quot;active&quot;, active)</span>
+<span class="fc" id="L70">                .param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L71">                .query(BackofficeRepository::product).list();</span>
+    }
+
+    public long productCount(String q, Boolean sellable, Boolean active) {
+<span class="fc" id="L75">        return jdbc.sql(&quot;SELECT count(*) FROM product p&quot; + PRODUCT_FILTER)</span>
+<span class="fc" id="L76">                .param(&quot;q&quot;, q).param(&quot;prefix&quot;, Refs.prefix(q)).param(&quot;sellable&quot;, sellable).param(&quot;active&quot;, active)</span>
+<span class="fc" id="L77">                .query(Long.class).single();</span>
+    }
+
+    public List&lt;PriceChange&gt; priceHistory(long productId, int page, int size) {
+<span class="fc" id="L81">        return jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT h.id, h.old_price, h.new_price, h.reason, h.changed_by, u.name AS changed_by_name, h.changed_at
+                  FROM product_price_history h LEFT JOIN app_users u ON u.id = h.changed_by
+                 WHERE h.product_id = :product ORDER BY h.changed_at DESC, h.id DESC LIMIT :size OFFSET :offset&quot;&quot;&quot;)
+<span class="fc" id="L85">                .param(&quot;product&quot;, productId).param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L86">                .query((rs, n) -&gt; {</span>
+<span class="fc" id="L87">                    Long user = rs.getObject(&quot;changed_by&quot;, Long.class);</span>
+<span class="fc" id="L88">                    return new PriceChange(rs.getLong(&quot;id&quot;), MoneyDto.of(rs.getBigDecimal(&quot;old_price&quot;)),</span>
+<span class="fc" id="L89">                            MoneyDto.of(rs.getBigDecimal(&quot;new_price&quot;)), rs.getString(&quot;reason&quot;),</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                            user == null ? null : new UserRef(user, rs.getString(&quot;changed_by_name&quot;)), instant(rs, &quot;changed_at&quot;));</span>
+<span class="fc" id="L91">                }).list();</span>
+    }
+
+    public long priceHistoryCount(long productId) {
+<span class="fc" id="L95">        return jdbc.sql(&quot;SELECT count(*) FROM product_price_history WHERE product_id = :product&quot;).param(&quot;product&quot;, productId)</span>
+<span class="fc" id="L96">                .query(Long.class).single();</span>
+    }
+
+    public boolean exists(String table, long id) {
+<span class="pc bpc" id="L100" title="1 of 3 branches missed.">        String sql = switch (table) {</span>
+<span class="fc" id="L101">            case &quot;product&quot; -&gt; &quot;SELECT count(*) FROM product WHERE id = :id&quot;;</span>
+<span class="fc" id="L102">            case &quot;category&quot; -&gt; &quot;SELECT count(*) FROM category WHERE id = :id&quot;;</span>
+<span class="nc" id="L103">            default -&gt; throw new IllegalArgumentException(table);</span>
+        };
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        return jdbc.sql(sql).param(&quot;id&quot;, id).query(Long.class).single() &gt; 0;</span>
+    }
+
+    // ---------------- categorias ----------------
+
+    public List&lt;Category&gt; categories() {
+<span class="fc" id="L111">        return jdbc.sql(&quot;SELECT id, name FROM category ORDER BY lower(name), id&quot;)</span>
+<span class="fc" id="L112">                .query((rs, n) -&gt; new Category(rs.getLong(&quot;id&quot;), rs.getString(&quot;name&quot;))).list();</span>
+    }
+
+    // ---------------- estoque ----------------
+
+    private static final String STOCK_COLUMNS = &quot;&quot;&quot;
+            SELECT p.id, p.sku, p.name, p.sellable, p.active, b.on_hand, b.reserved, b.min_level, b.avg_cost
+              FROM product p JOIN stock_balance b ON b.product_id = p.id&quot;&quot;&quot;;
+
+    private static StockProduct stock(ResultSet rs, int n) throws SQLException {
+<span class="fc" id="L122">        int onHand = rs.getInt(&quot;on_hand&quot;);</span>
+<span class="fc" id="L123">        int reserved = rs.getInt(&quot;reserved&quot;);</span>
+<span class="fc" id="L124">        int minLevel = rs.getInt(&quot;min_level&quot;);</span>
+<span class="fc" id="L125">        int available = onHand - reserved;</span>
+<span class="fc" id="L126">        return new StockProduct(rs.getLong(&quot;id&quot;), rs.getString(&quot;sku&quot;), rs.getString(&quot;name&quot;), rs.getBoolean(&quot;sellable&quot;),</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                rs.getBoolean(&quot;active&quot;), onHand, reserved, available, minLevel, available &lt;= minLevel,</span>
+<span class="fc" id="L128">                MoneyDto.of(rs.getBigDecimal(&quot;avg_cost&quot;)));</span>
+    }
+
+    public Optional&lt;StockProduct&gt; stock(long productId) {
+<span class="fc" id="L132">        return jdbc.sql(STOCK_COLUMNS + &quot; WHERE p.id = :id&quot;).param(&quot;id&quot;, productId).query(BackofficeRepository::stock).optional();</span>
+    }
+
+    private static final String STOCK_FILTER = &quot; WHERE &quot; + PRODUCT_SEARCH + &quot;&quot;&quot;
+
+               AND (CAST(:belowMin AS boolean) IS NULL OR ((b.on_hand - b.reserved) &lt;= b.min_level) = :belowMin)
+               AND (CAST(:sellable AS boolean) IS NULL OR p.sellable = :sellable)&quot;&quot;&quot;;
+
+    public List&lt;StockProduct&gt; stock(String q, Boolean belowMin, Boolean sellable, int page, int size) {
+<span class="fc" id="L141">        return jdbc.sql(STOCK_COLUMNS + STOCK_FILTER + &quot; ORDER BY lower(p.name), p.id LIMIT :size OFFSET :offset&quot;)</span>
+<span class="fc" id="L142">                .param(&quot;q&quot;, q).param(&quot;prefix&quot;, Refs.prefix(q)).param(&quot;belowMin&quot;, belowMin).param(&quot;sellable&quot;, sellable)</span>
+<span class="fc" id="L143">                .param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L144">                .query(BackofficeRepository::stock).list();</span>
+    }
+
+    public long stockCount(String q, Boolean belowMin, Boolean sellable) {
+<span class="fc" id="L148">        return jdbc.sql(&quot;SELECT count(*) FROM product p JOIN stock_balance b ON b.product_id = p.id&quot; + STOCK_FILTER)</span>
+<span class="fc" id="L149">                .param(&quot;q&quot;, q).param(&quot;prefix&quot;, Refs.prefix(q)).param(&quot;belowMin&quot;, belowMin).param(&quot;sellable&quot;, sellable)</span>
+<span class="fc" id="L150">                .query(Long.class).single();</span>
+    }
+
+    private static final String MOVEMENT_COLUMNS = &quot;&quot;&quot;
+            SELECT m.id, m.product_id, p.sku, p.name, m.kind, m.quantity, m.reason, m.note, m.order_id,
+                   u.name AS created_by_name, m.created_at
+              FROM stock_movement m JOIN product p ON p.id = m.product_id LEFT JOIN app_users u ON u.id = m.created_by&quot;&quot;&quot;;
+
+    private static StockMovement movement(ResultSet rs, int n) throws SQLException {
+<span class="fc" id="L159">        String creator = rs.getString(&quot;created_by_name&quot;);</span>
+<span class="fc" id="L160">        return new StockMovement(rs.getLong(&quot;id&quot;), new ProductRef(rs.getLong(&quot;product_id&quot;), rs.getString(&quot;sku&quot;), rs.getString(&quot;name&quot;)),</span>
+<span class="fc" id="L161">                rs.getString(&quot;kind&quot;), rs.getInt(&quot;quantity&quot;), rs.getString(&quot;reason&quot;), rs.getString(&quot;note&quot;),</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                rs.getObject(&quot;order_id&quot;, Long.class), creator == null ? null : new NamedRef(creator), instant(rs, &quot;created_at&quot;));</span>
+    }
+
+    public Optional&lt;StockMovement&gt; movement(long id) {
+<span class="fc" id="L166">        return jdbc.sql(MOVEMENT_COLUMNS + &quot; WHERE m.id = :id&quot;).param(&quot;id&quot;, id).query(BackofficeRepository::movement).optional();</span>
+    }
+
+    /** C-21: datas fechadas no fuso da loja; &quot;to&quot; inclui o dia inteiro. */
+    private static final String MOVEMENT_FILTER = &quot; &quot; + &quot;&quot;&quot;
+             WHERE (CAST(:product AS bigint) IS NULL OR m.product_id = :product)
+               AND (CAST(:kind AS varchar) IS NULL OR m.kind = :kind)
+               AND (CAST(:from AS date) IS NULL OR m.created_at &gt;= (CAST(:from AS date)::timestamp AT TIME ZONE 'America/Fortaleza'))
+               AND (CAST(:to AS date) IS NULL OR m.created_at &lt; ((CAST(:to AS date) + 1)::timestamp AT TIME ZONE 'America/Fortaleza'))&quot;&quot;&quot;;
+
+    public List&lt;StockMovement&gt; movements(Long productId, String kind, LocalDate from, LocalDate to, int page, int size) {
+<span class="fc" id="L177">        return jdbc.sql(MOVEMENT_COLUMNS + MOVEMENT_FILTER + &quot; ORDER BY m.created_at DESC, m.id DESC LIMIT :size OFFSET :offset&quot;)</span>
+<span class="fc" id="L178">                .param(&quot;product&quot;, productId).param(&quot;kind&quot;, kind).param(&quot;from&quot;, from).param(&quot;to&quot;, to)</span>
+<span class="fc" id="L179">                .param(&quot;size&quot;, size).param(&quot;offset&quot;, Refs.offset(page, size))</span>
+<span class="fc" id="L180">                .query(BackofficeRepository::movement).list();</span>
+    }
+
+    public long movementCount(Long productId, String kind, LocalDate from, LocalDate to) {
+<span class="fc" id="L184">        return jdbc.sql(&quot;SELECT count(*) FROM stock_movement m&quot; + MOVEMENT_FILTER)</span>
+<span class="fc" id="L185">                .param(&quot;product&quot;, productId).param(&quot;kind&quot;, kind).param(&quot;from&quot;, from).param(&quot;to&quot;, to)</span>
+<span class="fc" id="L186">                .query(Long.class).single();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

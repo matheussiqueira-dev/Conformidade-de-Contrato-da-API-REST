@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.155" tests="26" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="typeChangeReplacesPayment" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.097"/>
+  <testcase name="deletingMissingPaymentFails" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="deletingExistingPaymentDeletes" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="typeParsingIsLocaleIndependent" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.005"/>
+  <testcase name="cardUpdateRequiresNumber" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.003"/>
+  <testcase name="insertCreatesEachPaymentType(String)[1]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.003"/>
+  <testcase name="insertCreatesEachPaymentType(String)[2]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="insertCreatesEachPaymentType(String)[3]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="insertCreatesEachPaymentType(String)[4]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.0"/>
+  <testcase name="sameTypeUpdateChangesFields" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="insertForMissingOrderFails" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="latePaymentDoesNotMoveOrderBackToPaid(OrderStatus)[1]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="latePaymentDoesNotMoveOrderBackToPaid(OrderStatus)[2]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="halfCentAboveTotalIsRejected" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.003"/>
+  <testcase name="unknownTypeIsRejected" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="onlyPendingPaymentsCanBeProcessed(PaymentStatus)[1]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="onlyPendingPaymentsCanBeProcessed(PaymentStatus)[2]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="onlyPendingPaymentsCanBeProcessed(PaymentStatus)[3]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="amountMustMatchOrderTotal" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+  <testcase name="approvedPaymentMarksOrderPaid" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="onlyPendingPaymentCanBeEdited" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="amountIsComparedAfterHalfUpRounding(String)[1]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="amountIsComparedAfterHalfUpRounding(String)[2]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="amountIsComparedAfterHalfUpRounding(String)[3]" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="expiredBoletoDoesNotMarkOrderPaid" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.001"/>
+  <testcase name="boletoRequiresDueDate" classname="com.swee.ordermanagementspring.services.PaymentServiceTest" time="0.002"/>
+</testsuite>

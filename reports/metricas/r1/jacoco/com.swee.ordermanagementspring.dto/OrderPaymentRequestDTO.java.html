@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderPaymentRequestDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">OrderPaymentRequestDTO.java</span></div><h1>OrderPaymentRequestDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import com.swee.ordermanagementspring.entities.Money;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMin;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+<span class="fc" id="L11">public class OrderPaymentRequestDTO {</span>
+
+    @NotNull(message = &quot;Payment type required.&quot;)
+    private String type;
+
+    @NotNull(message = &quot;Value required.&quot;)
+    @DecimalMin(value = Money.MIN, message = &quot;Value must be at least 0.01 after rounding to cents.&quot;)
+    @DecimalMax(value = Money.MAX, message = &quot;Value exceeds the maximum of &quot; + Money.MAX + &quot;.&quot;)
+    private BigDecimal amount;
+
+    private String cardNumber;
+    private String cardHolder;
+    private Integer installments;
+
+    private String pixKey;
+    private String pixHolderName;
+
+    private String barCode;
+    private LocalDate dueDate;
+
+    public String getType() {
+<span class="fc" id="L32">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="fc" id="L36">        this.type = type;</span>
+<span class="fc" id="L37">    }</span>
+
+    public BigDecimal getAmount() {
+<span class="fc" id="L40">        return amount;</span>
+    }
+
+    public void setAmount(BigDecimal amount) {
+<span class="fc" id="L44">        this.amount = amount;</span>
+<span class="fc" id="L45">    }</span>
+
+    public String getCardNumber() {
+<span class="fc" id="L48">        return cardNumber;</span>
+    }
+
+    public void setCardNumber(String cardNumber) {
+<span class="fc" id="L52">        this.cardNumber = cardNumber;</span>
+<span class="fc" id="L53">    }</span>
+
+    public String getCardHolder() {
+<span class="fc" id="L56">        return cardHolder;</span>
+    }
+
+    public void setCardHolder(String cardHolder) {
+<span class="nc" id="L60">        this.cardHolder = cardHolder;</span>
+<span class="nc" id="L61">    }</span>
+
+    public Integer getInstallments() {
+<span class="fc" id="L64">        return installments;</span>
+    }
+
+    public void setInstallments(Integer installments) {
+<span class="fc" id="L68">        this.installments = installments;</span>
+<span class="fc" id="L69">    }</span>
+
+    public String getPixKey() {
+<span class="fc" id="L72">        return pixKey;</span>
+    }
+
+    public void setPixKey(String pixKey) {
+<span class="fc" id="L76">        this.pixKey = pixKey;</span>
+<span class="fc" id="L77">    }</span>
+
+    public String getPixHolderName() {
+<span class="fc" id="L80">        return pixHolderName;</span>
+    }
+
+    public void setPixHolderName(String pixHolderName) {
+<span class="fc" id="L84">        this.pixHolderName = pixHolderName;</span>
+<span class="fc" id="L85">    }</span>
+
+    public String getBarCode() {
+<span class="fc" id="L88">        return barCode;</span>
+    }
+
+    public void setBarCode(String barCode) {
+<span class="fc" id="L92">        this.barCode = barCode;</span>
+<span class="fc" id="L93">    }</span>
+
+    public LocalDate getDueDate() {
+<span class="fc" id="L96">        return dueDate;</span>
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+<span class="fc" id="L100">        this.dueDate = dueDate;</span>
+<span class="fc" id="L101">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

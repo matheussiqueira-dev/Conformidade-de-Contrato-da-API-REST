@@ -196,6 +196,10 @@ Planejados em 14/10/2026 (ETAPA 1); a situacao dos casos da 2C esta na tabela se
 
 Os cenarios BD-19, BD-21, BD-25, BD-26, BD-28 e CC-01 do pacote SQL continuam no job `bd` (psql) e ganham os equivalentes Java CT-STOCK-106, CT-STOCK-107, CT-SALE-104, CT-SALE-101, CT-STOCK-102 e CT-STOCK-104, para que as duas implementacoes nao divirjam.
 
+### Situacao de todos os casos (ETAPA 4, 14/10/2026)
+
+Cada caso do mapa acima e da evolucao ERP/PDV foi conferido um a um contra a suite atual; a evidencia por requisito esta em [rastreabilidade.md](rastreabilidade.md). Resultado: todos os casos CT-AUTH, CT-CLIENT, CT-PRODUCT, CT-ORDER, CT-SEC-001/002, CT-MONEY, CT-PAY, CT-GOAL, CT-PERF, CT-MGMT, CT-STOCK, CT-COST, CT-E2E e CT-UI estao verdes, assim como CT-WEB-101 a CT-WEB-109 (Playwright, 14 testes) e CT-CONTRACT-103 (`npm run api:check` na CI). Novos testes desta etapa: `BackofficeApiTest.productTypeRequiresItsField` (CT-PRODUCT-001/002), `SalesApiTest.historicalCostIsKept` (CT-COST-003), `SalesApiTest.sellerComesOnlyFromSession` (CT-SEC-111, antes parcial), E2E `flows.spec.ts` (CT-WEB-105 a 108) e os casos CT-E2E-002, CT-UI-001 e CT-UI-002.
+
 ### Situacao dos casos da ETAPA 2C (14/10/2026)
 
 Executados na branch `feat/business-endpoints` com `scripts/test.ps1 -Mode Integration` (541 testes, 0 falhas) e `scripts/test-contract.ps1 -HttpOnly` (contrato ao vivo sem divergencia). Pacote de teste: `src/test/java/com/swee/ordermanagementspring/`.
@@ -214,7 +218,7 @@ Executados na branch `feat/business-endpoints` com `scripts/test.ps1 -Mode Integ
 | CT-CONTRACT-101 | Verde (nivel API) | `CustomersApiTest` (CPF/CNPJ), `SalesApiTest.deliveryRequiresAddress`, `cardStoresOnlyLastFourDigits` |
 | CT-CONTRACT-102 | Verde | `scripts/live-contract.mjs` (45 operacoes, escopo em D-EXEC-07), relatorio `reports/contrato/live-v4/live-contract.json` |
 | CT-SEC-110 | Verde | `SalesApiTest.unknownPropertiesAreRejected` |
-| CT-SEC-111 | Parcial | Corpo com `sellerId` responde 400 (`SalesApiTest`); autoria forjada por header nao tem teste dedicado |
+| CT-SEC-111 | Verde | Corpo com `sellerId` responde 400; header e parametro forjados sao ignorados (`SalesApiTest.sellerComesOnlyFromSession`) |
 | CT-SEC-112 | Verde | `SalesApiTest.ownershipOnPaymentAndCancel`, `sellersSeeOnlyTheirOwnOrders` |
 | CT-SEC-113 | Verde | `SalesApiTest.catalogListsOnlySellableAvailableProducts`, `CustomersApiTest`, `GoalsApiTest.myPerformance` |
 | CT-SEC-114 | Verde | `AccessMatrixTest` (221 casos), `BackofficeApiTest`, `CustomersApiTest.deleteRules` |

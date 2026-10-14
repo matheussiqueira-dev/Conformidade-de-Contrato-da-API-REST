@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GoalsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">GoalsController.java</span></div><h1>GoalsController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.MonthlyGoals;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.MonthlyGoalsRequest;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.SellerPerformance;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+/** Metas do mes (GERENTE) e Meu desempenho (VENDEDOR e, pela hierarquia, GERENTE: DEC-ERP-01). */
+@RestController
+public class GoalsController {
+    private final GoalsService service;
+
+<span class="fc" id="L18">    public GoalsController(GoalsService service) {</span>
+<span class="fc" id="L19">        this.service = service;</span>
+<span class="fc" id="L20">    }</span>
+
+    @GetMapping(&quot;/goals/monthly&quot;)
+    public MonthlyGoals get(@RequestParam @Pattern(regexp = ManagementDtos.MONTH) String period) {
+<span class="fc" id="L24">        return service.get(period);</span>
+    }
+
+    @PutMapping(&quot;/goals/monthly&quot;)
+    public MonthlyGoals save(@AuthenticationPrincipal AppPrincipal principal, @Valid @RequestBody MonthlyGoalsRequest request) {
+<span class="fc" id="L29">        return service.save(CurrentUser.of(principal), request);</span>
+    }
+
+    @GetMapping(&quot;/performance/me&quot;)
+    public SellerPerformance mine(@AuthenticationPrincipal AppPrincipal principal,
+                                  @RequestParam @Pattern(regexp = ManagementDtos.MONTH) String period) {
+<span class="fc" id="L35">        return service.mine(CurrentUser.of(principal), period);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

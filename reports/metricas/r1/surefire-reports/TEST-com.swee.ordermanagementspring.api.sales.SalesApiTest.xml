@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="1.553" tests="29" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="catalogListsOnlySellableAvailableProducts" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.044">
+    <system-out><![CDATA[2026-10-14T06:42:30.864-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.sales.SalesApiTest]: SalesApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:30.883-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.sales.SalesApiTest
+2026-10-14T06:42:30.884-03:00  INFO 22864 --- [order-management-spring] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.swee.ordermanagementspring.api.sales.SalesApiTest]: SalesApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T06:42:30.884-03:00  INFO 22864 --- [order-management-spring] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.swee.ordermanagementspring.OrderManagementSpringApplication for test class com.swee.ordermanagementspring.api.sales.SalesApiTest
+2026-10-14T06:42:30.887-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:30.887-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:30.888-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="saleAboveAvailableIsRejected" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.033">
+    <system-out><![CDATA[2026-10-14T06:42:30.932-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:30.932-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:30.932-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="saleReservesStockAndUsesSessionSeller" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.038">
+    <system-out><![CDATA[2026-10-14T06:42:30.966-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:30.966-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:30.967-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidQuantityIsRejected(String)[1]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.033">
+    <system-out><![CDATA[2026-10-14T06:42:31.006-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.007-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.007-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidQuantityIsRejected(String)[2]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.033">
+    <system-out><![CDATA[2026-10-14T06:42:31.040-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.040-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.041-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidQuantityIsRejected(String)[3]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.029">
+    <system-out><![CDATA[2026-10-14T06:42:31.074-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.074-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.075-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidQuantityIsRejected(String)[4]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.03">
+    <system-out><![CDATA[2026-10-14T06:42:31.103-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.103-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.104-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="invalidQuantityIsRejected(String)[5]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.027">
+    <system-out><![CDATA[2026-10-14T06:42:31.135-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="itemListLimits" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.036">
+    <system-out><![CDATA[2026-10-14T06:42:31.164-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.164-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.165-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="explicitPromotionIsApplied" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.047">
+    <system-out><![CDATA[2026-10-14T06:42:31.201-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.202-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.202-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="cancelReleasesReservation" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.089">
+    <system-out><![CDATA[2026-10-14T06:42:31.249-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.249-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.250-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="ownershipOnPaymentAndCancel" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.06">
+    <system-out><![CDATA[2026-10-14T06:42:31.339-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.339-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.340-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="legacyOrderListAcceptsPickupSales" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.193">
+    <system-out><![CDATA[2026-10-14T06:42:31.400-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.400-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.400-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="repeatedKeyReturnsSameOrder" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.08">
+    <system-out><![CDATA[2026-10-14T06:42:31.595-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.595-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.595-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="sellerComesOnlyFromSession" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.042">
+    <system-out><![CDATA[2026-10-14T06:42:31.675-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.675-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.676-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="failedSecondItemRollsBackFirstReservation" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.041">
+    <system-out><![CDATA[2026-10-14T06:42:31.717-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.718-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.718-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="paymentConfirmationIsIdempotent" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.069">
+    <system-out><![CDATA[2026-10-14T06:42:31.758-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.760-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.760-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="quoteComputesTotalsWithoutSideEffects" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.035">
+    <system-out><![CDATA[2026-10-14T06:42:31.829-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.829-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.829-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="sellersSeeOnlyTheirOwnOrders" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.125">
+    <system-out><![CDATA[2026-10-14T06:42:31.865-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.865-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.866-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="deliveryRequiresAddress" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.055">
+    <system-out><![CDATA[2026-10-14T06:42:31.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:31.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:31.992-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="historicalCostIsKept" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.06">
+    <system-out><![CDATA[2026-10-14T06:42:32.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.047-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="unknownPropertiesAreRejected(String)[1]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.026">
+    <system-out><![CDATA[2026-10-14T06:42:32.109-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.109-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.109-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="unknownPropertiesAreRejected(String)[2]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.028">
+    <system-out><![CDATA[2026-10-14T06:42:32.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.136-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="unknownPropertiesAreRejected(String)[3]" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.026">
+    <system-out><![CDATA[2026-10-14T06:42:32.165-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.165-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.166-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="cardStoresOnlyLastFourDigits" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.048">
+    <system-out><![CDATA[2026-10-14T06:42:32.192-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.193-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.194-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="catalogShowsBestActivePromotion" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.029">
+    <system-out><![CDATA[2026-10-14T06:42:32.240-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.240-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.241-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="saleNeedsKeyAndCustomer" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.037">
+    <system-out><![CDATA[2026-10-14T06:42:32.270-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.270-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.270-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="inactiveOrSupplyIsNotSoldAndPriceIsFrozen" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.066">
+    <system-out><![CDATA[2026-10-14T06:42:32.308-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.309-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.309-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="quoteRejectsUnknownOrInactiveProducts" classname="com.swee.ordermanagementspring.api.sales.SalesApiTest" time="0.043">
+    <system-out><![CDATA[2026-10-14T06:42:32.375-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:32.375-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:32.376-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+</testsuite>

@@ -401,6 +401,29 @@ class SalesApiTest {
     }
 
     @Test
+    @DisplayName("[CT-COST-003] custo gravado na confirmacao nao muda com entrada nova de custo diferente")
+    void historicalCostIsKept() throws Exception {
+        long id = created(sell(fx.allan, UUID.randomUUID(), order(item(mouse, 1))));
+        call(post("/sales/orders/" + id + "/payment"), fx.allan);
+        jdbc.sql("INSERT INTO stock_entry(product_id, quantity, unit_cost, created_by) VALUES (:p, 10, 90.00, :u)")
+                .param("p", mouse).param("u", fx.manager).update();
+        assertThat(fx.count("SELECT avg_cost * 100 FROM stock_balance WHERE product_id = ?", mouse)).isNotEqualTo(6000);
+        assertThat(fx.count("SELECT unit_cost * 100 FROM order_item WHERE order_id = ?", id)).isEqualTo(6000);
+    }
+
+    @Test
+    @DisplayName("[CT-SEC-111] autoria forjada por header ou parametro e ignorada: vendedor = sessao")
+    void sellerComesOnlyFromSession() throws Exception {
+        MvcResult result = call(post("/sales/orders").header("Idempotency-Key", UUID.randomUUID().toString())
+                .header("X-Seller-Id", Long.toString(fx.francisco)).param("sellerId", Long.toString(fx.francisco))
+                .contentType(MediaType.APPLICATION_JSON).content(order(item(mouse, 1))), fx.allan);
+        long id = created(result);
+        assertThat(body(result).get("seller").get("id").asLong()).isEqualTo(fx.allan);
+        assertThat(fx.count("SELECT seller_id FROM orders WHERE id = ?", id)).isEqualTo(fx.allan);
+        assertThat(fx.count("SELECT created_by FROM stock_movement WHERE order_id = ?", id)).isEqualTo(fx.allan);
+    }
+
+    @Test
     @DisplayName("[DEC-ERP-06] pedido de outro vendedor: 404 para o VENDEDOR, liberado para o GERENTE")
     void ownershipOnPaymentAndCancel() throws Exception {
         long id = created(sell(fx.allan, UUID.randomUUID(), order(item(mouse, 1))));

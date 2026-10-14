@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.dto</a> &gt; <span class="el_source">ProductResponseDTO.java</span></div><h1>ProductResponseDTO.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.dto;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.swee.ordermanagementspring.entities.product.DigitalProduct;
+import com.swee.ordermanagementspring.entities.product.PhysicalProduct;
+import com.swee.ordermanagementspring.entities.product.Product;
+
+import java.math.BigDecimal;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProductResponseDTO {
+
+    private Long id;
+    private String type;
+    private String name;
+    private BigDecimal price;
+    private String description;
+    private Double weight;
+    private String downloadLink;
+
+    public ProductResponseDTO(Long id, String type, String name, BigDecimal price, String description,
+<span class="fc" id="L22">                              Double weight, String downloadLink) {</span>
+<span class="fc" id="L23">        this.id = id;</span>
+<span class="fc" id="L24">        this.type = type;</span>
+<span class="fc" id="L25">        this.name = name;</span>
+<span class="fc" id="L26">        this.price = price;</span>
+<span class="fc" id="L27">        this.description = description;</span>
+<span class="fc" id="L28">        this.weight = weight;</span>
+<span class="fc" id="L29">        this.downloadLink = downloadLink;</span>
+<span class="fc" id="L30">    }</span>
+
+    public static ProductResponseDTO from(Product product) {
+<span class="fc" id="L33">        ProductResponseDTO dto = new ProductResponseDTO(</span>
+<span class="fc" id="L34">                product.getId(),</span>
+<span class="pc bpc" id="L35" title="2 of 3 branches missed.">                switch (product) {</span>
+<span class="fc" id="L36">                    case PhysicalProduct p -&gt; &quot;PHYSICAL&quot;;</span>
+<span class="nc" id="L37">                    case DigitalProduct d -&gt; &quot;DIGITAL&quot;;</span>
+<span class="nc" id="L38">                    default -&gt; &quot;UNKNOWN&quot;;</span>
+<span class="fc" id="L39">                },</span>
+<span class="fc" id="L40">                product.getName(),</span>
+<span class="fc" id="L41">                product.getPrice(),</span>
+<span class="fc" id="L42">                product.getDescription(),</span>
+                null,
+                null
+        );
+
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (product instanceof PhysicalProduct physical) {</span>
+<span class="fc" id="L48">            dto.weight = physical.getWeight();</span>
+        }
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (product instanceof DigitalProduct digital) {</span>
+<span class="nc" id="L52">            dto.downloadLink = digital.getDownloadLink();</span>
+        }
+
+<span class="fc" id="L55">        return dto;</span>
+    }
+
+    public Long getId() {
+<span class="fc" id="L59">        return id;</span>
+    }
+
+    public String getType() {
+<span class="fc" id="L63">        return type;</span>
+    }
+
+    public String getName() {
+<span class="fc" id="L67">        return name;</span>
+    }
+
+    public BigDecimal getPrice() {
+<span class="fc" id="L71">        return price;</span>
+    }
+
+    public String getDescription() {
+<span class="fc" id="L75">        return description;</span>
+    }
+
+    public Double getWeight() {
+<span class="fc" id="L79">        return weight;</span>
+    }
+
+    public String getDownloadLink() {
+<span class="fc" id="L83">        return downloadLink;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

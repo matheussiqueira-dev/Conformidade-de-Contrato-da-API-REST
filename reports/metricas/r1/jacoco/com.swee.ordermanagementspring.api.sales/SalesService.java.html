@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SalesService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.sales</a> &gt; <span class="el_source">SalesService.java</span></div><h1>SalesService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.sales;
+
+import com.swee.ordermanagementspring.api.common.Addresses;
+import com.swee.ordermanagementspring.api.common.CurrentUser;
+import com.swee.ordermanagementspring.api.common.DbSessionContext;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.PageResponse;
+import com.swee.ordermanagementspring.api.sales.SalesDtos.*;
+import com.swee.ordermanagementspring.api.sales.SalesRepository.SaleProduct;
+import com.swee.ordermanagementspring.entities.StoreTime;
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.entities.enums.Fulfillment;
+import com.swee.ordermanagementspring.exceptions.ApiException;
+import com.swee.ordermanagementspring.exceptions.ErrorCode;
+import com.swee.ordermanagementspring.security.AuditService;
+import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ * Casos de uso do PDV (RF-19). Preco, desconto e total so no servidor; reserva por UPDATE condicional em ordem
+ * crescente de product_id; saida so na confirmacao; o vendedor do pedido e o usuario da sessao.
+ */
+@Service
+public class SalesService {
+    private final SalesRepository sales;
+    private final JdbcClient jdbc;
+    private final DbSessionContext session;
+    private final AuditService audit;
+
+<span class="fc" id="L43">    public SalesService(SalesRepository sales, JdbcClient jdbc, DbSessionContext session, AuditService audit) {</span>
+<span class="fc" id="L44">        this.sales = sales;</span>
+<span class="fc" id="L45">        this.jdbc = jdbc;</span>
+<span class="fc" id="L46">        this.session = session;</span>
+<span class="fc" id="L47">        this.audit = audit;</span>
+<span class="fc" id="L48">    }</span>
+
+    // ---------------- catalogo e cotacao ----------------
+
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional(readOnly = true)
+    public PageResponse&lt;CatalogItem&gt; catalog(String q, boolean onlyAvailable, int page, int size) {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        String term = q == null ? &quot;&quot; : q.trim();</span>
+<span class="fc" id="L56">        List&lt;Pricing.Promotion&gt; promotions = sales.activePromotions();</span>
+<span class="fc" id="L57">        List&lt;CatalogItem&gt; items = sales.catalog(term, onlyAvailable, page, size).stream()</span>
+<span class="fc" id="L58">                .map(p -&gt; new CatalogItem(p.id(), p.sku(), p.name(), SalesRepository.category(p.categoryId(), p.categoryName()),</span>
+<span class="fc" id="L59">                        MoneyDto.of(p.price()), Math.max(p.available(), 0),</span>
+<span class="fc" id="L60">                        Pricing.best(promotions, p.id(), p.categoryId(), p.price()).map(SalesService::active).orElse(null)))</span>
+<span class="fc" id="L61">                .toList();</span>
+<span class="fc" id="L62">        return new PageResponse&lt;&gt;(items, page, size, sales.catalogCount(term, onlyAvailable));</span>
+    }
+
+    private static ActivePromotion active(Pricing.Promotion p) {
+<span class="fc" id="L66">        return new ActivePromotion(p.id(), p.name(), p.kind(), p.value(), p.productId(), p.categoryId(), p.endsAt());</span>
+    }
+
+    /** Item ja precificado: base da cotacao e da venda. */
+<span class="fc" id="L70">    record PricedItem(SaleProduct product, int quantity, Pricing.Promotion promotion, BigDecimal unitPrice,</span>
+                      BigDecimal discount, BigDecimal subtotal) { }
+
+    private List&lt;PricedItem&gt; price(List&lt;SaleItemRequest&gt; items) {
+<span class="fc" id="L74">        Map&lt;Long, SaleProduct&gt; products = sales.products(items.stream().map(SaleItemRequest::productId).toList())</span>
+<span class="fc" id="L75">                .stream().collect(Collectors.toMap(SaleProduct::id, Function.identity()));</span>
+<span class="fc" id="L76">        List&lt;Pricing.Promotion&gt; promotions = sales.activePromotions();</span>
+<span class="fc" id="L77">        List&lt;PricedItem&gt; priced = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (SaleItemRequest item : items) {</span>
+<span class="fc" id="L79">            SaleProduct product = products.get(item.productId());</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            if (product == null) throw ApiException.notFound(&quot;Product not found, id: &quot; + item.productId());</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">            if (!product.active() || !product.sellable()) {</span>
+<span class="fc" id="L82">                throw ApiException.conflict(ErrorCode.STATE_CONFLICT, &quot;Product &quot; + product.id() + &quot; is inactive or not for sale&quot;);</span>
+            }
+<span class="fc" id="L84">            Pricing.Promotion promotion = null;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (item.promotionId() != null) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">                promotion = promotions.stream().filter(p -&gt; p.id() == item.promotionId()</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                                &amp;&amp; p.appliesTo(product.id(), product.categoryId())).findFirst()</span>
+<span class="fc" id="L88">                        .orElseThrow(() -&gt; ApiException.conflict(ErrorCode.STATE_CONFLICT,</span>
+<span class="fc" id="L89">                                &quot;Promotion &quot; + item.promotionId() + &quot; is not active for product &quot; + product.id()));</span>
+            }
+<span class="fc" id="L91">            BigDecimal discount = Pricing.discount(product.price(), item.quantity(), promotion);</span>
+<span class="fc" id="L92">            BigDecimal gross = Pricing.gross(product.price(), item.quantity());</span>
+<span class="fc" id="L93">            priced.add(new PricedItem(product, item.quantity(), promotion, product.price(), discount, gross.subtract(discount)));</span>
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        return priced;</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional(readOnly = true)
+    public QuoteResponse quote(QuoteRequest request) {
+<span class="fc" id="L101">        List&lt;PricedItem&gt; priced = price(request.items());</span>
+<span class="fc" id="L102">        List&lt;QuoteItem&gt; items = priced.stream().map(i -&gt; new QuoteItem(i.product().id(), i.quantity(), MoneyDto.of(i.unitPrice()),</span>
+<span class="fc" id="L103">                MoneyDto.of(i.discount()), MoneyDto.of(i.subtotal()), Math.max(i.product().available(), 0))).toList();</span>
+<span class="fc" id="L104">        BigDecimal gross = priced.stream().map(i -&gt; Pricing.gross(i.unitPrice(), i.quantity())).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="fc" id="L105">        BigDecimal discount = priced.stream().map(PricedItem::discount).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="fc" id="L106">        return new QuoteResponse(items, MoneyDto.of(gross), MoneyDto.of(discount), MoneyDto.of(gross.subtract(discount)));</span>
+    }
+
+    // ---------------- venda ----------------
+
+    /** Resultado da criacao: created = false quando a mesma chave e o mesmo corpo ja tinham criado o pedido. */
+<span class="fc" id="L112">    public record Created(long orderId, boolean created) { }</span>
+
+    /** Repeticao com a mesma chave: mesmo corpo devolve o pedido; corpo diferente e conflito (regra 8). */
+    @Transactional(readOnly = true)
+    public java.util.Optional&lt;Created&gt; existing(CurrentUser user, UUID key, String hash) {
+<span class="fc" id="L117">        return sales.byRequestKey(user.id(), key).map(found -&gt; {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (!found.requestHash().equals(hash)) {</span>
+<span class="fc" id="L119">                throw ApiException.conflict(ErrorCode.IDEMPOTENCY_CONFLICT, &quot;Idempotency-Key already used with a different body&quot;);</span>
+            }
+<span class="fc" id="L121">            return new Created(found.id(), false);</span>
+        });
+    }
+
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional
+    public Created create(CurrentUser user, UUID key, String hash, SalesOrderRequest request) {
+<span class="fc" id="L128">        session.apply(user.id(), null);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (jdbc.sql(&quot;SELECT count(*) FROM customer WHERE id = :id&quot;).param(&quot;id&quot;, request.customerId()).query(Long.class).single() == 0) {</span>
+<span class="fc" id="L130">            throw ApiException.notFound(&quot;Customer not found, id: &quot; + request.customerId());</span>
+        }
+<span class="fc" id="L132">        List&lt;PricedItem&gt; priced = price(request.items());</span>
+<span class="fc" id="L133">        priced.sort(Comparator.comparingLong(i -&gt; i.product().id()));</span>
+
+<span class="fc" id="L135">        Long addressId = null;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (request.fulfillment() == Fulfillment.DELIVERY) {</span>
+<span class="fc" id="L137">            addressId = Addresses.insert(jdbc, request.shippingAddress());</span>
+        }
+        // O pedido entra primeiro: a UNIQUE (seller_id, client_request_id) reivindica a chave.
+<span class="fc" id="L140">        long orderId = jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO orders(moment, status, customer_id, seller_id, fulfillment, address_id, client_request_id, request_hash)
+                VALUES (:moment, 'PENDING_PAYMENT', :customer, :seller, :fulfillment, :address, :key, :hash) RETURNING id&quot;&quot;&quot;)
+<span class="fc" id="L143">                .param(&quot;moment&quot;, StoreTime.now()).param(&quot;customer&quot;, request.customerId()).param(&quot;seller&quot;, user.id())</span>
+<span class="fc" id="L144">                .param(&quot;fulfillment&quot;, request.fulfillment().name()).param(&quot;address&quot;, addressId)</span>
+<span class="fc" id="L145">                .param(&quot;key&quot;, key).param(&quot;hash&quot;, hash).query(Long.class).single();</span>
+
+<span class="fc" id="L147">        BigDecimal total = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        for (PricedItem item : priced) {</span>
+<span class="fc" id="L149">            int reserved = jdbc.sql(&quot;&quot;&quot;</span>
+                    UPDATE stock_balance SET reserved = reserved + :q, updated_at = now()
+                     WHERE product_id = :id AND on_hand - reserved &gt;= :q&quot;&quot;&quot;)
+<span class="fc" id="L152">                    .param(&quot;q&quot;, item.quantity()).param(&quot;id&quot;, item.product().id()).update();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            if (reserved == 0) {</span>
+<span class="fc" id="L154">                int available = jdbc.sql(&quot;SELECT on_hand - reserved FROM stock_balance WHERE product_id = :id&quot;)</span>
+<span class="fc" id="L155">                        .param(&quot;id&quot;, item.product().id()).query(Integer.class).single();</span>
+<span class="fc" id="L156">                throw new ApiException(HttpStatus.CONFLICT, ErrorCode.STOCK_INSUFFICIENT,</span>
+<span class="fc" id="L157">                        &quot;Insufficient stock for product &quot; + item.product().id(),</span>
+<span class="fc" id="L158">                        List.of(&quot;productId=&quot; + item.product().id() + &quot;; available=&quot; + Math.max(available, 0)));</span>
+            }
+<span class="fc" id="L160">            jdbc.sql(&quot;&quot;&quot;</span>
+                    INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+                    VALUES (:product, :order, 'RESERVA', :q, :user)&quot;&quot;&quot;)
+<span class="fc" id="L163">                    .param(&quot;product&quot;, item.product().id()).param(&quot;order&quot;, orderId).param(&quot;q&quot;, item.quantity())</span>
+<span class="fc" id="L164">                    .param(&quot;user&quot;, user.id()).update();</span>
+<span class="fc" id="L165">            jdbc.sql(&quot;&quot;&quot;</span>
+                    INSERT INTO order_item(quantity, price, order_id, product_id, promotion_id, discount)
+                    VALUES (:q, :price, :order, :product, :promotion, :discount)&quot;&quot;&quot;)
+<span class="fc" id="L168">                    .param(&quot;q&quot;, item.quantity()).param(&quot;price&quot;, item.unitPrice()).param(&quot;order&quot;, orderId)</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">                    .param(&quot;product&quot;, item.product().id()).param(&quot;promotion&quot;, item.promotion() == null ? null : item.promotion().id())</span>
+<span class="fc" id="L170">                    .param(&quot;discount&quot;, item.discount()).update();</span>
+<span class="fc" id="L171">            total = total.add(item.subtotal());</span>
+<span class="fc" id="L172">        }</span>
+
+<span class="fc" id="L174">        var payment = request.payment();</span>
+<span class="fc" id="L175">        jdbc.sql(&quot;&quot;&quot;</span>
+                INSERT INTO payment(payment_type, amount, status, order_id, due_date, installments, card_last4, authorization_code)
+                VALUES (:type, :amount, 'PENDING', :order, :due, :installments, :last4, :auth)&quot;&quot;&quot;)
+<span class="fc" id="L178">                .param(&quot;type&quot;, payment.type()).param(&quot;amount&quot;, total).param(&quot;order&quot;, orderId)</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                .param(&quot;due&quot;, payment instanceof BoletoPaymentRequest b ? b.dueDate() : null)</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                .param(&quot;installments&quot;, payment instanceof CardPaymentRequest c ? c.installments() : null)</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                .param(&quot;last4&quot;, payment instanceof CardPaymentRequest c ? c.cardLast4() : null)</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">                .param(&quot;auth&quot;, payment instanceof CardPaymentRequest c ? c.authorizationCode() : null)</span>
+<span class="fc" id="L183">                .update();</span>
+<span class="fc" id="L184">        return new Created(orderId, true);</span>
+    }
+
+    // ---------------- consulta ----------------
+
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional(readOnly = true)
+    public SalesOrderResponse get(CurrentUser user, long orderId) {
+<span class="fc" id="L192">        var head = sales.head(orderId, false).orElseThrow(() -&gt; ApiException.notFound(&quot;Order not found, id: &quot; + orderId));</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (!user.owns(head.sellerId())) throw ApiException.notFound(&quot;Order not found, id: &quot; + orderId);</span>
+<span class="fc" id="L194">        return sales.order(orderId).orElseThrow();</span>
+    }
+
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional(readOnly = true)
+    public PageResponse&lt;SalesOrderSummary&gt; list(CurrentUser user, String status, Long sellerId, int page, int size) {
+<span class="fc" id="L200">        Long seller = sellerId;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        if (!user.manager()) {</span>
+            // C-10: VENDEDOR so lista as proprias vendas; pedir as de outro vendedor e proibido.
+<span class="fc bfc" id="L203" title="All 4 branches covered.">            if (sellerId != null &amp;&amp; sellerId != user.id()) {</span>
+<span class="fc" id="L204">                throw new ApiException(HttpStatus.FORBIDDEN, ErrorCode.FORBIDDEN, &quot;Acesso negado&quot;);</span>
+            }
+<span class="fc" id="L206">            seller = user.id();</span>
+        }
+<span class="fc" id="L208">        return new PageResponse&lt;&gt;(sales.list(seller, status, page, size), page, size, sales.count(seller, status));</span>
+    }
+
+    // ---------------- pagamento e cancelamento ----------------
+
+    /** Regra 4: bloqueia o pedido; PAID repete sem efeito; PENDING_PAYMENT baixa estoque e grava o custo do momento. */
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional
+    public SalesOrderResponse confirmPayment(CurrentUser user, long orderId, String authorizationCode) {
+<span class="fc" id="L217">        session.apply(user.id(), null);</span>
+<span class="fc" id="L218">        var head = sales.head(orderId, true).orElseThrow(() -&gt; ApiException.notFound(&quot;Order not found, id: &quot; + orderId));</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (!user.owns(head.sellerId())) throw ApiException.notFound(&quot;Order not found, id: &quot; + orderId);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (&quot;PAID&quot;.equals(head.status())) return sales.order(orderId).orElseThrow();</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        if (!&quot;PENDING_PAYMENT&quot;.equals(head.status())) {</span>
+<span class="fc" id="L222">            throw ApiException.conflict(ErrorCode.STATE_CONFLICT, &quot;Order &quot; + orderId + &quot; is &quot; + head.status());</span>
+        }
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (var item : orderItems(orderId)) {</span>
+<span class="fc" id="L225">            BigDecimal cost = jdbc.sql(&quot;&quot;&quot;</span>
+                    UPDATE stock_balance SET reserved = reserved - :q, on_hand = on_hand - :q, updated_at = now()
+                     WHERE product_id = :product RETURNING avg_cost&quot;&quot;&quot;)
+<span class="fc" id="L228">                    .param(&quot;q&quot;, item.quantity()).param(&quot;product&quot;, item.productId()).query(BigDecimal.class).optional().orElse(null);</span>
+<span class="fc" id="L229">            jdbc.sql(&quot;UPDATE order_item SET unit_cost = :cost WHERE id = :id&quot;).param(&quot;cost&quot;, cost).param(&quot;id&quot;, item.id()).update();</span>
+<span class="fc" id="L230">            jdbc.sql(&quot;&quot;&quot;</span>
+                    INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+                    VALUES (:product, :order, 'SAIDA', :q, :user)&quot;&quot;&quot;)
+<span class="fc" id="L233">                    .param(&quot;product&quot;, item.productId()).param(&quot;order&quot;, orderId).param(&quot;q&quot;, item.quantity())</span>
+<span class="fc" id="L234">                    .param(&quot;user&quot;, user.id()).update();</span>
+<span class="fc" id="L235">        }</span>
+<span class="fc" id="L236">        jdbc.sql(&quot;&quot;&quot;</span>
+                UPDATE payment SET status = 'APPROVED', payment_date = :now,
+                       authorization_code = coalesce(:auth, authorization_code) WHERE order_id = :order&quot;&quot;&quot;)
+<span class="fc" id="L239">                .param(&quot;now&quot;, StoreTime.now()).param(&quot;auth&quot;, authorizationCode).param(&quot;order&quot;, orderId).update();</span>
+<span class="fc" id="L240">        jdbc.sql(&quot;UPDATE orders SET status = 'PAID' WHERE id = :id&quot;).param(&quot;id&quot;, orderId).update();</span>
+<span class="fc" id="L241">        return sales.order(orderId).orElseThrow();</span>
+    }
+
+    /** Regra 5: so PENDING_PAYMENT; libera a reserva; repetir num pedido cancelado nao tem efeito (C-06). */
+    @PreAuthorize(&quot;hasRole('VENDEDOR')&quot;)
+    @Transactional
+    public SalesOrderResponse cancel(CurrentUser user, long orderId) {
+<span class="fc" id="L248">        session.apply(user.id(), null);</span>
+<span class="fc" id="L249">        var head = sales.head(orderId, true).orElseThrow(() -&gt; ApiException.notFound(&quot;Order not found, id: &quot; + orderId));</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        if (!user.owns(head.sellerId())) throw ApiException.notFound(&quot;Order not found, id: &quot; + orderId);</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (&quot;CANCELED&quot;.equals(head.status())) return sales.order(orderId).orElseThrow();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (!&quot;PENDING_PAYMENT&quot;.equals(head.status())) {</span>
+<span class="fc" id="L253">            throw ApiException.conflict(ErrorCode.STATE_CONFLICT, &quot;Only pending orders can be canceled; order is &quot; + head.status());</span>
+        }
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        for (var item : orderItems(orderId)) {</span>
+<span class="fc" id="L256">            jdbc.sql(&quot;UPDATE stock_balance SET reserved = reserved - :q, updated_at = now() WHERE product_id = :product&quot;)</span>
+<span class="fc" id="L257">                    .param(&quot;q&quot;, item.quantity()).param(&quot;product&quot;, item.productId()).update();</span>
+<span class="fc" id="L258">            jdbc.sql(&quot;&quot;&quot;</span>
+                    INSERT INTO stock_movement(product_id, order_id, kind, quantity, created_by)
+                    VALUES (:product, :order, 'LIBERACAO', :q, :user)&quot;&quot;&quot;)
+<span class="fc" id="L261">                    .param(&quot;product&quot;, item.productId()).param(&quot;order&quot;, orderId).param(&quot;q&quot;, item.quantity())</span>
+<span class="fc" id="L262">                    .param(&quot;user&quot;, user.id()).update();</span>
+<span class="fc" id="L263">        }</span>
+<span class="fc" id="L264">        jdbc.sql(&quot;UPDATE payment SET status = 'DECLINED' WHERE order_id = :order&quot;).param(&quot;order&quot;, orderId).update();</span>
+<span class="fc" id="L265">        jdbc.sql(&quot;UPDATE orders SET status = 'CANCELED' WHERE id = :id&quot;).param(&quot;id&quot;, orderId).update();</span>
+<span class="fc" id="L266">        audit.record(AuditAction.ORDER_CANCELED, user.id(), &quot;orders&quot;, orderId, null);</span>
+<span class="fc" id="L267">        return sales.order(orderId).orElseThrow();</span>
+    }
+
+<span class="fc" id="L270">    private record ItemRow(long id, long productId, int quantity) { }</span>
+
+    /** Itens em ordem crescente de product_id: ordem de bloqueio unica entre transacoes (regra 3). */
+    private List&lt;ItemRow&gt; orderItems(long orderId) {
+<span class="fc" id="L274">        return jdbc.sql(&quot;SELECT id, product_id, quantity FROM order_item WHERE order_id = :id ORDER BY product_id, id&quot;)</span>
+<span class="fc" id="L275">                .param(&quot;id&quot;, orderId)</span>
+<span class="fc" id="L276">                .query((rs, n) -&gt; new ItemRow(rs.getLong(&quot;id&quot;), rs.getLong(&quot;product_id&quot;), rs.getInt(&quot;quantity&quot;))).list();</span>
+    }
+
+    static LocalDateTime now() {
+<span class="nc" id="L280">        return StoreTime.now();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalyticsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">AnalyticsService.java</span></div><h1>AnalyticsService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeRepository;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.*;
+import com.swee.ordermanagementspring.entities.StoreTime;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+
+/** Analises do GERENTE sobre as views do V6 (B-09): evolucao semanal, formas de pagamento, margem, promocoes e estoque. */
+@Service
+@PreAuthorize(&quot;hasRole('GERENTE')&quot;)
+public class AnalyticsService {
+    private final JdbcClient jdbc;
+    private final BackofficeRepository backoffice;
+
+<span class="fc" id="L23">    public AnalyticsService(JdbcClient jdbc, BackofficeRepository backoffice) {</span>
+<span class="fc" id="L24">        this.jdbc = jdbc;</span>
+<span class="fc" id="L25">        this.backoffice = backoffice;</span>
+<span class="fc" id="L26">    }</span>
+
+    @Transactional(readOnly = true)
+    public SalesAnalytics sales(String period) {
+<span class="fc" id="L30">        LocalDate month = GoalsService.month(period);</span>
+<span class="fc" id="L31">        var weekly = jdbc.sql(&quot;SELECT inicio, fim, realizado FROM v_evolucao_semanal_loja WHERE periodo = :month ORDER BY inicio&quot;)</span>
+<span class="fc" id="L32">                .param(&quot;month&quot;, month)</span>
+<span class="fc" id="L33">                .query((rs, n) -&gt; new WeeklyRevenue(rs.getObject(&quot;inicio&quot;, LocalDate.class), rs.getObject(&quot;fim&quot;, LocalDate.class),</span>
+<span class="fc" id="L34">                        MoneyDto.of(rs.getBigDecimal(&quot;realizado&quot;)))).list();</span>
+<span class="fc" id="L35">        var methods = jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT forma, pedidos, valor FROM v_vendas_forma_pagamento WHERE periodo = :month ORDER BY valor DESC, forma&quot;&quot;&quot;)
+<span class="fc" id="L37">                .param(&quot;month&quot;, month)</span>
+<span class="fc" id="L38">                .query((rs, n) -&gt; new PaymentMethodRevenue(rs.getString(&quot;forma&quot;), rs.getLong(&quot;pedidos&quot;),</span>
+<span class="fc" id="L39">                        MoneyDto.of(rs.getBigDecimal(&quot;valor&quot;)))).list();</span>
+<span class="fc" id="L40">        var margins = jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT product_id, produto, unidades, receita_liquida, custo, margem_bruta, margem_pct, itens_sem_custo
+                  FROM v_margem_produto WHERE periodo = :month ORDER BY receita_liquida DESC, product_id&quot;&quot;&quot;)
+<span class="fc" id="L43">                .param(&quot;month&quot;, month)</span>
+<span class="fc" id="L44">                .query((rs, n) -&gt; new ProductMargin(rs.getLong(&quot;product_id&quot;), rs.getString(&quot;produto&quot;), rs.getLong(&quot;unidades&quot;),</span>
+<span class="fc" id="L45">                        MoneyDto.of(rs.getBigDecimal(&quot;receita_liquida&quot;)), MoneyDto.of(rs.getBigDecimal(&quot;custo&quot;)),</span>
+<span class="fc" id="L46">                        MoneyDto.of(rs.getBigDecimal(&quot;margem_bruta&quot;)), rs.getBigDecimal(&quot;margem_pct&quot;), rs.getLong(&quot;itens_sem_custo&quot;)))</span>
+<span class="fc" id="L47">                .list();</span>
+        // D-EXEC-03: v_uso_promocoes nao tem periodo; o uso do mes segue a mesma regra (itens de pagamentos confirmados).
+<span class="fc" id="L49">        var promotions = jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT pr.id, pr.name, count(oi.id) AS itens, coalesce(sum(oi.discount), 0) AS desconto,
+                       coalesce(sum(oi.price * oi.quantity - oi.discount), 0) AS receita
+                  FROM promotion pr
+                  JOIN order_item oi ON oi.promotion_id = pr.id
+                  JOIN payment p ON p.order_id = oi.order_id AND p.status = 'APPROVED'
+                 WHERE p.payment_date &gt;= :month AND p.payment_date &lt; CAST(:month AS date) + interval '1 month'
+                 GROUP BY pr.id, pr.name ORDER BY receita DESC, pr.id&quot;&quot;&quot;)
+<span class="fc" id="L57">                .param(&quot;month&quot;, month)</span>
+<span class="fc" id="L58">                .query((rs, n) -&gt; new PromotionUsage(rs.getLong(&quot;id&quot;), rs.getString(&quot;name&quot;), rs.getLong(&quot;itens&quot;),</span>
+<span class="fc" id="L59">                        MoneyDto.of(rs.getBigDecimal(&quot;desconto&quot;)), MoneyDto.of(rs.getBigDecimal(&quot;receita&quot;)))).list();</span>
+<span class="fc" id="L60">        return new SalesAnalytics(period, weekly, methods, margins, promotions);</span>
+    }
+
+    /** D-EXEC-04: so produtos ativos; valor a custo fica nulo se algum produto com saldo nao tiver custo. */
+    @Transactional(readOnly = true)
+    public StockAnalytics stock() {
+<span class="fc" id="L66">        record Totals(long products, long units, BigDecimal atCost, BigDecimal atPrice, long withoutCost, long stockedWithoutCost) { }</span>
+<span class="fc" id="L67">        Totals totals = jdbc.sql(&quot;&quot;&quot;</span>
+                SELECT count(*) AS produtos, coalesce(sum(saldo), 0) AS unidades,
+                       coalesce(sum(valor_em_estoque_custo), 0) AS custo, coalesce(sum(valor_em_estoque_venda), 0) AS venda,
+                       count(*) FILTER (WHERE custo_medio IS NULL) AS sem_custo,
+                       count(*) FILTER (WHERE custo_medio IS NULL AND saldo &gt; 0) AS com_saldo_sem_custo
+                  FROM v_posicao_estoque WHERE ativo&quot;&quot;&quot;)
+<span class="fc" id="L73">                .query((rs, n) -&gt; new Totals(rs.getLong(&quot;produtos&quot;), rs.getLong(&quot;unidades&quot;), rs.getBigDecimal(&quot;custo&quot;),</span>
+<span class="fc" id="L74">                        rs.getBigDecimal(&quot;venda&quot;), rs.getLong(&quot;sem_custo&quot;), rs.getLong(&quot;com_saldo_sem_custo&quot;))).single();</span>
+<span class="fc" id="L75">        var below = jdbc.sql(&quot;SELECT product_id FROM v_alerta_estoque ORDER BY lower(produto), product_id&quot;).query(Long.class).list()</span>
+<span class="fc" id="L76">                .stream().map(id -&gt; backoffice.stock(id).orElseThrow()).toList();</span>
+<span class="fc" id="L77">        return new StockAnalytics(OffsetDateTime.now(StoreTime.clock()), totals.products(), totals.units(),</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                totals.stockedWithoutCost() &gt; 0 ? null : MoneyDto.of(totals.atCost()), MoneyDto.of(totals.atPrice()),</span>
+<span class="fc" id="L79">                totals.withoutCost(), below);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
