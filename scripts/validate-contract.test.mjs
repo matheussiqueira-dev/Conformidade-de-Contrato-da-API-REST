@@ -110,6 +110,11 @@ test('400 and 404 error payloads validate with nullable details and local timest
 const v4 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url), 'utf8'));
 const brl = amount => ({ amount, currency: 'BRL' });
 const sale = () => ({ customerId: 1, items: [{ productId: 7, quantity: 2 }], payment: { type: 'PIX' }, fulfillment: 'PICKUP' });
+test('checkResponse resolves v4 shared responses such as NotFound', () => {
+  const error = { timestamp: '2026-10-14T05:00:00-03:00', status: 404, error: 'Not Found', code: 'NOT_FOUND', message: 'Product not found', details: null };
+  assert.equal(checkResponse(v4, '/products/{id}', 'get', { status: 404, body: error }).valid, true);
+  assert.equal(checkResponse(v4, '/products/{id}', 'get', { status: 404, body: { ...error, code: undefined } }).valid, false);
+});
 test('v4 document validates against the official OpenAPI 3.1 schema', () => {
   assert.deepEqual(validateDocument(v4, officialSchema).findings, []);
 });

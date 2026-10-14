@@ -110,6 +110,10 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-NOITE-09 | No `PUT /customers/{id}`, `companyName`, `birthDate` e `address` ausentes mantêm o valor atual; `companyName` em pessoa física responde 400, e a versão diferente da atual responde 409 `CONCURRENT_UPDATE`. |
 | D-NOITE-10 | A ETAPA 2C troca o `/customers` legado pelo `api/customers` do v4 (documento mascarado para o VENDEDOR) e encerra a restrição da D-NOITE-05; do controlador legado sobra só `POST /customers/{id}/address`, que continua com o GERENTE. |
 | D-NOITE-11 | Inteiros do corpo não aceitam decimal (`accept-float-as-int=false`): quantidade `1.5` responde 400 em vez de virar 1 (CT-STOCK-101). |
+| D-NOITE-12 | O cadastro de produto abre o histórico de preço com `old_price` nulo e motivo "Cadastro", porque o gatilho da V5 só cobre `UPDATE OF price`. |
+| D-NOITE-13 | `DELETE /products/{id}` só exclui produto sem venda, movimento, entrada ou promoção (409 `RESOURCE_IN_USE`; inativar pelo `PATCH /status`), para não apagar histórico de estoque. |
+| D-NOITE-14 | O `ProductController` legado sai: todas as rotas de `/products` passam ao contrato v4. O `http-contract.mjs` valida `/products` contra o v4 (o baseline continua valendo para os erros), e o `ErrorContractTest` usa `{"type":"PHYSICAL"}` para o caso de Bean Validation, já que corpo sem `type` é JSON malformado no `oneOf`. |
+| D-NOITE-15 | O `Location` da entrada aponta para `/stock/products/{id}/entries/{entryId}` e o do ajuste para `/stock/movements?productId={id}`, porque o v4 não tem leitura individual desses recursos. |
 
 ## Processo
 
