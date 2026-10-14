@@ -8,7 +8,7 @@ const BASE = 'http://127.0.0.1:3000';
 async function fillLogin(page: Page, email: string, password: string) {
   await page.getByLabel('E-mail', { exact: true }).fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(password);
-  await page.getByRole('button', { name: 'Entrar na minha conta' }).click();
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
 }
 
 async function axe(page: Page, label: string) {
@@ -81,7 +81,7 @@ test('[CT-WEB-112] gerente cadastra usuario; senha provisoria obriga troca; desa
   await user.getByLabel('Senha atual').fill(temporary);
   await user.getByRole('button', { name: 'Salvar nova senha' }).click();
   await expect(user).toHaveURL(`${BASE}/vender`);
-  await expect(user.getByRole('heading', { name: 'Vender', level: 1 })).toBeVisible();
+  await expect(user.getByRole('heading', { name: 'Nova venda', level: 1 })).toBeVisible();
 
   await row.getByRole('button', { name: /^Desativar/ }).click();
   await drawer.getByLabel('Motivo').fill('Fim do periodo de testes');

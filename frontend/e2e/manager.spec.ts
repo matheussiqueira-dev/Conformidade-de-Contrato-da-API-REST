@@ -6,7 +6,7 @@ async function login(page: Page) {
   await page.goto('/entrar');
   await page.getByLabel('E-mail', { exact: true }).fill('manager@example.test');
   await page.getByLabel('Senha', { exact: true }).fill(PASSWORD);
-  await page.getByRole('button', { name: 'Entrar na minha conta' }).click();
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page).not.toHaveURL(/\/entrar/);
 }
 
@@ -52,7 +52,7 @@ test('[CT-WEB-109] telas do gerente sem violacao WCAG 2.2 AA e sem rolagem horiz
 test('[CT-UI-001] menu do gerente traz as areas de venda e de gestao', async ({ page }) => {
   await login(page);
   const nav = page.getByRole('navigation', { name: 'Áreas' });
-  for (const name of ['Vender', 'Vendas', 'Clientes', 'Meu desempenho', 'Gestão', 'Estoque', 'Produtos', 'Promoções', 'Análises']) {
+  for (const name of ['Vender', 'Vendas', 'Clientes', 'Meu desempenho', 'Visão geral', 'Estoque', 'Produtos e preços', 'Promoções', 'Análises', 'Trocar senha']) {
     await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
   }
 });

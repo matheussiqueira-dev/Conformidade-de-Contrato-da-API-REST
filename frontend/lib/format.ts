@@ -2,9 +2,14 @@
 export interface Money { amount: number; currency: string }
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-const dateTime = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Fortaleza' });
 const date = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'America/Fortaleza' });
-const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Fortaleza' });
+const time = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'America/Fortaleza' });
+const dayMonth = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Fortaleza' });
+
+/** Manual de marca v1.0: dado ausente e escrito por extenso, nunca zero inventado. */
+export const MISSING = 'Não informado';
+const brlCompact = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1 });
+const monthName = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric', timeZone: 'America/Fortaleza' });
 const percent = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 /** Espaco nao separavel do Intl vira espaco comum para leitores de tela e testes. */
@@ -13,17 +18,28 @@ function plain(text: string): string {
 }
 
 export function money(value: Money | number | null | undefined): string {
-  if (value === null || value === undefined) return '—';
+  if (value === null || value === undefined) return MISSING;
   return plain(brl.format(typeof value === 'number' ? value : value.amount));
 }
 
-export function formatDateTime(iso: string): string {
-  return dateTime.format(new Date(iso));
+/** Valor curto para rotulo de grafico: "R$ 47 mil", "R$ 1,2 mi". */
+export function compactMoney(value: Money | number): string {
+  return plain(brlCompact.format(typeof value === 'number' ? value : value.amount));
 }
 
-/** Hora local da loja (HH:MM), usada em "Bloqueado até 10:15". */
+/** Mes de referencia (YYYY-MM) por extenso: "outubro de 2026". */
+export function formatMonth(period: string): string {
+  return monthName.format(new Date(`${period}-15T12:00:00-03:00`));
+}
+
+/** Data e hora da loja: "14/10/2026 14h30". */
+export function formatDateTime(iso: string): string {
+  return `${date.format(new Date(iso))} ${formatTime(iso)}`;
+}
+
+/** Hora local da loja no formato do manual: "14h30" (usada em "Bloqueado até 10h15"). */
 export function formatTime(iso: string): string {
-  return time.format(new Date(iso));
+  return time.format(new Date(iso)).replace(':', 'h');
 }
 
 const storeDay = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Fortaleza' });
@@ -41,7 +57,23 @@ export function formatDate(isoDate: string): string {
 }
 
 export function formatPercent(value: number | null | undefined): string {
-  return value === null || value === undefined ? '—' : `${percent.format(value)}%`;
+  return value === null || value === undefined ? MISSING : `${percent.format(value)}%`;
+}
+
+/** Periodo de datas (YYYY-MM-DD): "01/09 a 30/09/2026"; com anos diferentes, as duas datas completas. */
+export function formatPeriod(from: string, to: string): string {
+  const start = new Date(`${from}T12:00:00-03:00`);
+  if (from.slice(0, 4) !== to.slice(0, 4)) return `${formatDate(from)} a ${formatDate(to)}`;
+  return `${dayMonth.format(start)} a ${formatDate(to)}`;
+}
+
+/** Iniciais do avatar: primeira letra do primeiro e do ultimo nome ("Allan Lima" -> "AL"). */
+export function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  const first = parts[0]!.charAt(0);
+  const last = parts.length > 1 ? parts[parts.length - 1]!.charAt(0) : '';
+  return `${first}${last}`.toLocaleUpperCase('pt-BR');
 }
 
 export const ORDER_STATUS: Readonly<Record<string, string>> = {
@@ -52,6 +84,14 @@ export const ORDER_STATUS: Readonly<Record<string, string>> = {
   DELIVERED: 'Entregue',
   CANCELED: 'Cancelado',
 };
+
+/** Selo de estado do pedido (sempre com texto): pago e entregue ok, aguardando em aviso, cancelado em erro, demais informativos. */
+export function statusPill(status: string): string {
+  if (status === 'PAID' || status === 'SHIPPED' || status === 'DELIVERED') return 'pill pill-ok';
+  if (status === 'PENDING_PAYMENT') return 'pill pill-warn';
+  if (status === 'CANCELED') return 'pill pill-err';
+  return 'pill pill-info';
+}
 
 export const PAYMENT_TYPE: Readonly<Record<string, string>> = { PIX: 'Pix', CARD: 'Cartão', BOLETO: 'Boleto' };
 

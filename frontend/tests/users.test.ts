@@ -21,7 +21,7 @@ test('Usuarios aparece no menu so com a area USUARIOS', () => {
 
 test('situacao: inativo, bloqueado ate HH:MM no horario da loja, ativo', () => {
   assert.deepEqual(situation({ id: 1, active: false, lockedUntil: null }, NOW), { label: 'Inativo', tone: 'off' });
-  assert.deepEqual(situation({ id: 1, active: true, lockedUntil: '2026-10-14T13:15:00Z' }, NOW), { label: 'Bloqueado até 10:15', tone: 'warn' });
+  assert.deepEqual(situation({ id: 1, active: true, lockedUntil: '2026-10-14T13:15:00Z' }, NOW), { label: 'Bloqueado até 10h15', tone: 'warn' });
   assert.deepEqual(situation({ id: 1, active: true, lockedUntil: '2026-10-14T12:00:00Z' }, NOW), { label: 'Ativo', tone: 'ok' });
 });
 

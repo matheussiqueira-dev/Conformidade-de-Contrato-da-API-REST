@@ -14,9 +14,10 @@ import {
   addProduct, availableFromDetails, clearCart, emptyCart, loadCart, manualDiscountBody, refreshAvailability, removeProduct, saleItems, saveCart,
   setManualDiscount, setQuantity, withIdempotencyKey, type Cart,
 } from '../../../lib/cart.ts';
-import { label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../lib/format.ts';
+import { label, money, ORDER_STATUS, statusPill, PAYMENT_TYPE } from '../../../lib/format.ts';
 import { ErrorNotice, errorMessage } from '../../../components/feedback.tsx';
 import CustomerForm, { Field } from '../../../components/customer-form.tsx';
+import { Icon } from '../../../components/brand/icons.tsx';
 
 type CatalogItem = z.infer<typeof ListSalesCatalogResponse>['content'][number];
 type CustomerSummary = z.infer<typeof ListCustomersResponse>['content'][number];
@@ -47,7 +48,7 @@ function inDays(days: number): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza' }).format(date);
 }
 
-export default function SalePoint({ userId, initialCustomerId = null }: { userId: number; initialCustomerId?: number | null }) {
+export default function SalePoint({ userId, userName, initialCustomerId = null }: { userId: number; userName: string; initialCustomerId?: number | null }) {
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [loaded, setLoaded] = useState(false);
   const [step, setStep] = useState(0);
@@ -74,9 +75,14 @@ export default function SalePoint({ userId, initialCustomerId = null }: { userId
     <div className="stack">
       <header className="page-head">
         <div className="stack-sm">
-          <h1>Vender</h1>
+          <h1>Nova venda</h1>
+          <p className="muted">Responsável: {userName} · definido pela sua conta</p>
           <ol className="stepper" aria-label="Etapas da venda">
-            {STEPS.map((name, index) => <li key={name} aria-current={index === step ? 'step' : undefined}>{index + 1}. {name}</li>)}
+            {STEPS.map((name, index) => (
+              <li key={name} className={index < step ? 'done' : undefined} aria-current={index === step ? 'step' : undefined}>
+                {index < step ? <Icon name="check" size={16} label="Concluída" /> : `${index + 1}.`} {name}
+              </li>
+            ))}
           </ol>
         </div>
         {step > 0 && step < 2 && <button type="button" className="btn" onClick={() => setStep(step - 1)}>Voltar aos itens</button>}
@@ -419,7 +425,7 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
         {submit.error && !(submit.error instanceof ApiError && submit.error.code === 'STOCK_INSUFFICIENT') &&
           <p className="notice notice-error" role="alert">{errorMessage(submit.error)}</p>}
         <button type="button" className="btn btn-primary btn-block" onClick={finish} disabled={submit.isPending}>
-          {submit.isPending ? 'Enviando venda…' : 'Finalizar venda'}</button>
+          {submit.isPending ? 'Criando pedido…' : 'Criar pedido'}</button>
       </section>
     </div>
   );
@@ -442,7 +448,7 @@ function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder
     <section className="card stack" aria-labelledby="confirmacao-titulo">
       <div className="page-head">
         <h2 id="confirmacao-titulo">Venda <span className="mono">#{order.id}</span></h2>
-        <span className={`pill ${order.status === 'PAID' ? 'pill-ok' : order.status === 'CANCELED' ? 'pill-err' : 'pill-warn'}`}>{label(ORDER_STATUS, order.status)}</span>
+        <span className={statusPill(order.status)}>{label(ORDER_STATUS, order.status)}</span>
       </div>
       <dl className="facts">
         <div><dt>Cliente</dt><dd>{order.customer.name}</dd></div>
@@ -451,7 +457,7 @@ function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder
         <div><dt>Entrega</dt><dd>{order.fulfillment === 'DELIVERY' ? 'Entrega' : 'Retirada na loja'}</dd></div>
       </dl>
       {order.status === 'PAID' && <p className="notice notice-ok" role="status">Pagamento confirmado. Estoque baixado.</p>}
-      {order.status === 'CANCELED' && <p className="notice notice-warn" role="status">Venda cancelada. A reserva foi liberada.</p>}
+      {order.status === 'CANCELED' && <p className="notice notice-warn" role="status">Pedido cancelado. A reserva foi liberada.</p>}
       {pending && order.payment.type === 'BOLETO' && <p className="muted">O boleto fica aguardando pagamento. Confirme em <Link href={`/vendas/${order.id}`}>Vendas</Link> quando ele for pago.</p>}
       <ErrorNotice error={confirm.error ?? cancel.error} />
       <div className="actions">
@@ -459,7 +465,7 @@ function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder
           <button type="button" className="btn btn-primary" disabled={busy} onClick={() => confirm.mutate()}>
             {confirm.isPending ? 'Confirmando…' : 'Confirmar pagamento recebido'}</button>}
         {pending && <button type="button" className="btn btn-danger" disabled={busy} onClick={() => cancel.mutate()}>
-          {cancel.isPending ? 'Cancelando…' : 'Cancelar venda'}</button>}
+          {cancel.isPending ? 'Cancelando…' : 'Cancelar pedido'}</button>}
         <button type="button" className="btn" onClick={onRestart} disabled={busy}>Nova venda</button>
       </div>
     </section>
