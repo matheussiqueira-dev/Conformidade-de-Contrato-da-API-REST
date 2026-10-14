@@ -1,6 +1,6 @@
 # Autenticação, sessão e RBAC (ERP/PDV)
 
-Data: 14/10/2026. Etapa: ETAPA 1 (desenho). Implementação e testes: ETAPA 2B (`feat/security-error-contract`). Complementa [arquitetura-frontend-sessao.md](arquitetura-frontend-sessao.md) (ARQ-01) e a [matriz de acesso](matriz-acesso.md).
+Data: 14/10/2026. Etapa: ETAPA 1 (desenho); implementado na ETAPA 2B (`feat/security-error-contract`): `SecurityConfig`, `LockoutAuthenticationProvider`, `LoginAttemptService`, `AuditService`, `AreaResolver`, `GlobalExceptionHandler` e `ApiErrorController`. Testes: `AccessMatrixTest` (CT-SEC-101..103), `ErrorContractTest` (CT-SEC-104, CT-SEC-115), `SessionSecurityTest` (CT-SEC-105), `LoginLockoutPolicyTest` (CT-AUTH-101), `LoginLockoutIntegrationTest` (CT-AUTH-102), `MethodSecurityHierarchyTest` (CT-SEC-103). Complementa [arquitetura-frontend-sessao.md](arquitetura-frontend-sessao.md) (ARQ-01) e a [matriz de acesso](matriz-acesso.md).
 
 ## 1. Sessão no servidor, não JWT
 
