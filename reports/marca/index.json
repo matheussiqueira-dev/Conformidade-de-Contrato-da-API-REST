@@ -1,0 +1,161 @@
+{
+  "base": "stack sbi-demo (dados ficticios)",
+  "viewport": "1280x800 e 390x844",
+  "captures": [
+    {
+      "role": "anonimo",
+      "path": "/entrar",
+      "files": [
+        "entrar-desktop.png",
+        "entrar-mobile.png"
+      ],
+      "axe": 0
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao",
+      "files": [
+        "gerente-gestao.png",
+        "gerente-gestao-mobile.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao/produtos",
+      "files": [
+        "gerente-gestao-produtos.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao/promocoes",
+      "files": [
+        "gerente-gestao-promocoes.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao/estoque",
+      "files": [
+        "gerente-gestao-estoque.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao/analises",
+      "files": [
+        "gerente-gestao-analises.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/gestao/usuarios",
+      "files": [
+        "gerente-gestao-usuarios.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/vender",
+      "files": [
+        "gerente-vender.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/vendas",
+      "files": [
+        "gerente-vendas.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/clientes",
+      "files": [
+        "gerente-clientes.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/meu-desempenho",
+      "files": [
+        "gerente-meu-desempenho.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "gerente",
+      "path": "/conta/senha",
+      "files": [
+        "gerente-conta-senha.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "vendedor",
+      "path": "/vender",
+      "files": [
+        "vendedor-vender.png",
+        "vendedor-vender-mobile.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "vendedor",
+      "path": "/vendas",
+      "files": [
+        "vendedor-vendas.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "vendedor",
+      "path": "/clientes",
+      "files": [
+        "vendedor-clientes.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "vendedor",
+      "path": "/meu-desempenho",
+      "files": [
+        "vendedor-meu-desempenho.png"
+      ],
+      "axe": 0,
+      "violations": []
+    },
+    {
+      "role": "vendedor",
+      "path": "/conta/senha",
+      "files": [
+        "vendedor-conta-senha.png"
+      ],
+      "axe": 0,
+      "violations": []
+    }
+  ]
+}
