@@ -2,27 +2,29 @@ package com.swee.ordermanagementspring.security;
 
 import com.swee.ordermanagementspring.entities.audit.AuditAction;
 import com.swee.ordermanagementspring.entities.auth.AppUser;
-import com.swee.ordermanagementspring.repositories.AppUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
 import java.time.Duration;
+import java.time.Instant;
 
 /**
  * RF-18: 5 falhas seguidas bloqueiam a conta por 15 minutos; sucesso zera o contador. Tentativas durante o
- * bloqueio nao o prolongam. Toda falha grava LOGIN_FAILED, existindo a conta ou nao.
+ * bloqueio nao o prolongam. Toda falha grava LOGIN_FAILED, existindo a conta ou nao. Contador e bloqueio sao
+ * gravados por UPDATE atomico ({@link LoginCounter}), sem salvar a entidade inteira: tentativas paralelas nao
+ * perdem incremento e o login nao sobrescreve papel ou situacao alterados por outra requisicao.
  */
 @Service
 public class LoginAttemptService {
     public static final int MAX_FAILURES = 5;
     public static final Duration LOCK_DURATION = Duration.ofMinutes(15);
 
-    private final AppUserRepository users;
+    private final LoginCounter counter;
     private final AuditService audit;
     private final Clock clock;
 
-    public LoginAttemptService(AppUserRepository users, AuditService audit, Clock clock) {
-        this.users = users;
+    public LoginAttemptService(LoginCounter counter, AuditService audit, Clock clock) {
+        this.counter = counter;
         this.audit = audit;
         this.clock = clock;
     }
@@ -33,11 +35,10 @@ public class LoginAttemptService {
 
     public void wrongPassword(AppUser user, String attemptedEmail) {
         audit.record(AuditAction.LOGIN_FAILED, user.getId(), "app_users", user.getId(), AuditService.emailDetail(attemptedEmail));
-        if (user.registerFailure() >= MAX_FAILURES) {
-            user.lockUntil(clock.instant().plus(LOCK_DURATION));
-            audit.record(AuditAction.ACCOUNT_LOCKED, user.getId(), "app_users", user.getId(), null);
-        }
-        users.save(user);
+        Instant now = clock.instant();
+        counter.registerFailure(user.getId(), MAX_FAILURES, now.plus(LOCK_DURATION), now)
+                .filter(LoginCounter.FailureState::lockedNow)
+                .ifPresent(state -> audit.record(AuditAction.ACCOUNT_LOCKED, user.getId(), "app_users", user.getId(), null));
     }
 
     /** Conta bloqueada, inativa ou inexistente: so registra a tentativa. */
@@ -47,8 +48,7 @@ public class LoginAttemptService {
     }
 
     public void succeeded(AppUser user) {
-        user.registerSuccess(clock.instant());
-        users.save(user);
+        counter.registerSuccess(user.getId(), clock.instant());
         audit.record(AuditAction.LOGIN_SUCCEEDED, user.getId(), "app_users", user.getId(), null);
     }
 }

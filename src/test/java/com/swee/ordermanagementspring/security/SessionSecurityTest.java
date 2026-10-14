@@ -40,6 +40,7 @@ class SessionSecurityTest {
             return repo;
         }
         @Bean AuditService audit() { return mock(AuditService.class); }
+        @Bean LoginCounter counter() { return mock(LoginCounter.class); }
         @Bean java.time.Clock clock() { return java.time.Clock.systemUTC(); }
     }
     @Autowired WebApplicationContext context;
