@@ -23,7 +23,7 @@ Fontes: card 16 do Trello (D003–D016, registrados em 08/10), revisão dos PRs 
 | D019 | Requisições simultâneas passam pela validação de status | Média | Alta | Corrigido em branch local | `fix/FIX-03` |
 | D020 | Migração V3 arredonda antes de conferir o limite da coluna | Baixa | Média | Corrigido em branch local | `fix/FIX-03` |
 | D021 | Senha do banco ausente gera erro de autenticação confuso | Baixa | Média | Corrigido em branch local | PR #6 (commit novo) |
-| D022 | Rota legada de pagamento grava o número completo do cartão | Alta | Média | Aberto | ETAPA 2C |
+| D022 | Rota legada de pagamento grava o número completo do cartão | Alta | Média | Corrigido | ETAPA 2C |
 
 IDs D001, D002, D005, D007, D009 e D013–D015 não aparecem no repositório nem na descrição do card 16. **Allan deve conferir no quadro** se foram descartados (duplicata, erro de teste) e registrar o motivo aqui. H-01 e H-02 são defeitos de 03–04/10 que nunca receberam ID; se D001/D002 estiverem livres, podem ser atribuídos a eles.
 
@@ -329,6 +329,6 @@ Interpretação: a densidade alta é esperada num sistema legado que nunca teve 
 | Prioridade | Média (rota legada só do GERENTE, base só com dados sintéticos) |
 | Evidência | Leitura de `entities/payment/CardPayment.java` e `dto/PaymentRequestDTO.java`; teste de reprodução a escrever na ETAPA 2C. |
 | Responsável | Correção: ETAPA 2C (`feat/business-endpoints`). Reteste: Allan. |
-| Status | Aberto |
-| Correção | Planejada: o serviço grava só os 4 últimos dígitos; migração mascara os dados existentes; teste de regressão. Sem CHECK em `card_number` na ETAPA 2A. |
-| Reteste | Pendente. |
+| Status | Corrigido |
+| Correção | ETAPA 2C: `CardPayment` guarda só os 4 últimos dígitos em `card_last4` (B-05) e nunca preenche `card_number`; a resposta continua mascarada. `V7__mask_card_numbers.sql` leva o final dos dados existentes para `card_last4`, anula `card_number` e cria `ck_payment_card_number_absent` (`card_number IS NULL`) como última barreira. |
+| Reteste | `CardNumberStorageTest` (reprodução pelo `POST /payment`: banco `card_number` nulo e `card_last4 = 1111`, resposta sem o número completo), `FlywayMigrationTest.v7MasksLegacyCardNumbers` e `PaymentServiceTest` CT-PAY-008, verdes em 14/10/2026. Reteste humano: Allan. |

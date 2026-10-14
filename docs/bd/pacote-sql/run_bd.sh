@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Job bd: roda 03 (RBAC/RLS), 05 (CRUD), 06a/b/c (testes) e a corrida CC-01 sobre um banco que ja
-# recebeu V1-V6 e a massa demo pelo Flyway (perfil demo). Falha em qualquer FAIL ou ERROR.
+# recebeu V1-V7 e a massa demo pelo Flyway (perfil demo). Falha em qualquer FAIL ou ERROR.
 # Uso: CONTAINER=<id do conteiner PostgreSQL> DB=<banco> SUPERUSER=<dono do esquema> ./run_bd.sh
 # O psql roda dentro do conteiner (socket local), onde os logins de demonstracao sem senha funcionam.
 set -euo pipefail
