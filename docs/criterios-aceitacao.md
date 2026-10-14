@@ -102,6 +102,7 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | CA-25-01 | Dado gerente, quando consultar `GET /customers/{id}/summary`, entao total comprado (pagos menos estornos), ticket medio, estornos e formas de pagamento cobrem a loja toda (`scope` STORE), com pendentes e cancelados so como contagem. |
 | CA-25-02 | Dado vendedor, quando consultar o resumo, entao total, ticket medio e formas de pagamento cobrem so os pedidos dele (`scope` OWN) e `refundsTotal` e nulo; contagens, datas e produtos mais comprados cobrem a loja toda. |
 | CA-25-03 | Dado cliente sem compras, quando consultar o resumo, entao contagens e total sao zero, ticket medio e datas sao nulos e as listas vem vazias. |
+| CA-20-06 | Dado CNPJ alfanumerico valido (ex.: 12.ABC.345/01DE-35), quando cadastrar pessoa juridica, entao a API grava sem mascara em maiusculas, mascara as pontas para o vendedor e acha o cliente pela busca exata; digito verificador errado ou letra minuscula no corpo retorna 400 `VALIDATION_FAILED`; repetido retorna 409 `DUPLICATE_DOCUMENT`. |
 | CA-19-01 | Dado vendedor no PDV, quando buscar por SKU ou prefixo do nome, entao o SKU exato vem primeiro e a resposta nao contem custo, saldo fisico nem margem. |
 | CA-19-02 | Dado carrinho, quando cotar, entao preco, desconto e total vem do servidor sem efeito colateral; corpo de venda com vendedor, preco, desconto ou total retorna 400 sem criar pedido. |
 | CA-19-03 | Dada a mesma `Idempotency-Key` e o mesmo corpo, quando a venda for reenviada, entao a API retorna 200 com o mesmo pedido; com corpo diferente, 409 `IDEMPOTENCY_CONFLICT`. |
@@ -150,7 +151,7 @@ Codigos de erro citados abaixo sao o campo `code` do `ErrorResponse` do contrato
 | RF-17 | CA-17-01 a CA-17-03 | CT-SEC-101, CT-SEC-103, CT-SEC-114, CT-WEB-103 | Pendente | - |
 | RF-18 | CA-18-01 a CA-18-05 | CT-AUTH-101, CT-AUTH-102 | Pendente | - |
 | RF-19 | CA-19-01 a CA-19-07 | CT-SALE-101 a CT-SALE-104, CT-STOCK-101 a CT-STOCK-107, CT-SEC-110 a CT-SEC-113, CT-SEC-116, CT-WEB-101, CT-WEB-104 | Pendente | - |
-| RF-20 | CA-20-01 a CA-20-05 | CT-CRM-101, CT-CRM-102, CT-CRM-104, CT-CRM-105, CT-CONTRACT-101 | Pendente | - |
+| RF-20 | CA-20-01 a CA-20-06 | CT-CRM-101, CT-CRM-102, CT-CRM-104, CT-CRM-105, CT-CRM-106, CT-CONTRACT-101, CT-WEB-113 | Pendente | CA-20-06 verde em 14/10/2026 (`AlphanumericCnpjTest`, `CustomersApiTest.alphanumericCnpjIsSupported`, `FlywayMigrationTest.v10AcceptsAlphanumericCnpj`) |
 | RF-21 | CA-21-01, CA-21-02 | CT-CRM-103, CT-SEC-113 | Pendente | - |
 | RF-22 | CA-22-01 a CA-22-07 | CT-STOCK-108, CT-STOCK-109, CT-SALE-104, CT-WEB-105, CT-WEB-106 | Pendente | - |
 | RF-23 | CA-23-01 a CA-23-03 | CT-CONTRACT-102, CT-WEB-102 | Pendente | - |

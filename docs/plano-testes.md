@@ -259,6 +259,8 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-CUS-122 | G-05 | Integracao | Particionamento | Verde | `CustomersApiTest.sellerSummaryIsScopedToOwnOrders` (scope OWN, `refundsTotal` nulo, formas de pagamento so dos pedidos do vendedor) |
 | CT-CUS-123 | G-05 | Integracao | Valor limite | Verde | `CustomersApiTest.customerWithoutPurchasesHasZeros` (zeros, datas e ticket nulos, listas vazias, 404 para inexistente) |
 | CT-WEB-111 | G-05 | E2E/Acessibilidade | Particionamento | Verde | `e2e/customers.spec.ts`: indicadores e abas com teclado, axe WCAG 2.2 AA e 320 px nos dois papeis, rotulo "Suas vendas para este cliente", nova venda com o cliente pre-selecionado |
+| CT-CRM-106 | WP-EVO-4 | Unitario/Integracao/BD | Particionamento, valor limite | Verde | `api/customers/AlphanumericCnpjTest` (exemplo oficial 12.ABC.345/01DE-35, numerico continua valido, DV errado, minuscula, mascara do VENDEDOR, busca), `CustomersApiTest.alphanumericCnpjIsSupported` (cadastro, 409 duplicado, 400) e `FlywayMigrationTest.v10AcceptsAlphanumericCnpj` |
+| CT-WEB-113 | WP-EVO-4 | E2E | Particionamento | Verde | `e2e/customers.spec.ts`: vendedor cadastra PJ com CNPJ alfanumerico digitado em minusculas e ve `**.XXX.XXX/XXXX-**` no perfil e na busca |
 
 ## Selecao inicial da suite
 
