@@ -52,3 +52,49 @@ Proposta: não reaplicar nada (já reaplicado). A branch `a3-contract-validation
 - `docs/decisoes/regras-loja.md` e a DOM-02 usam arredondamento `HALF_UP` (confirmado em 04/10); a arquitetura alvo pede `HALF_EVEN`. A troca, se aprovada, entra na Fase 1 ou 3 com testes próprios.
 - Apagar a branch `feat/DOM-02-bigdecimal` depende de confirmação.
 - Respostas usadas na ETAPA 2A: [erp-pdv.md](erp-pdv.md#respostas-para-a-etapa-2a-14102026).
+
+## Integração das etapas 2A a 5 (14/10/2026)
+
+O responsável, Matheus Siqueira, revisou os PRs e autorizou a integração em 14/10/2026. A integração foi feita por squash merge, na ordem da pilha e um PR por vez. A mensagem de cada commit é o título do PR, sem corpo.
+
+| Ordem | PR | Branch | Commit na `main` |
+| --- | --- | --- | --- |
+| 1 | #13 `feat(db): add V5/V6 migrations, demo seed and Flyway-only schema` | `feat/db-v5-v6` | `d33132b` |
+| 2 | #14 `feat(security): enforce role hierarchy, login lockout and coded errors` | `feat/security-error-contract` | `d658f03` |
+| 3 | #15 `feat(api): implement every v4 operation with live contract verification` | `feat/business-endpoints` | `710294b` |
+| 4 | #16 `feat(web): build the typed SBI frontend for point of sale, customers and management` | `feat/web-sbi` | `df07ae3` |
+| 5 | #17 `ci: run backend, database, contract and frontend jobs and trace requirements to evidence` | `ci/full-pipeline` | `9018249` |
+| 6 | #18 `docs: deliver the SBI with one-command demo, architecture, demo script and final report` | `docs/final-delivery` | `d34570b` |
+
+Depois de cada squash, o PR seguinte passou a ter a `main` como base (`gh pr edit --base main`) e recebeu `git merge origin/main`, sem rebase:
+
+| PR | Merge da `main` |
+| --- | --- |
+| #14 | `c7229a6` |
+| #15 | `7c12b05` |
+| #16 | `ee076db` |
+| #17 | `8f5c2bb` |
+| #18 | `40df8ba` |
+
+O merge do #14 deu conflito, porque o squash e os commits originais do #13 alteravam o mesmo trecho. A resolução usou a estratégia `ours`, depois de conferir duas condições:
+- a árvore da `main` era idêntica (`git diff` vazio) à de um commit que já estava na branch;
+- esse commit era ancestral da branch (`git merge-base --is-ancestor`).
+
+Os merges do #15 ao #18 usaram a mesma estratégia e a mesma conferência. Nenhum desses merges alterou a árvore da branch. Cada PR só foi integrado com a CI verde (push e pull_request) e o estado `MERGEABLE`/`CLEAN`.
+
+Antes da integração entraram três correções, cada uma propagada por merge para as branches de cima:
+- `ab7e79d` tirou dos XML do Surefire versionados as propriedades da JVM (caminhos locais);
+- `6c0cf43` trouxe o `SignedMoney` no contrato v4, para líquido, lucro e realizado negativos;
+- `82fb022` regenerou os schemas Zod.
+
+O commit `c5694db` da `ci/full-pipeline`, que publicava esse ambiente, foi conferido: só tinha propriedades da JVM (caminhos, versões, nome do usuário), sem senha, token ou segredo. O squash não o levou para a `main`.
+
+Verificação da `main` em `d34570b`:
+- CI run `38558059579` (push): `test (backend)`, `bd`, `contract` e `frontend` com success;
+- `git ls-tree`: migrações V1 a V7 em `db/migration`, sem versão repetida, e o seed demo `V6_1`/`V6_2` em `db/demo`;
+- `.\mvnw.cmd -q clean verify`: exit 0, 233 testes, 0 falhas;
+- `npm test` na raiz: 36/36;
+- `npm test` em `frontend/`: 20/20.
+
+Nenhuma branch foi apagada.
+
