@@ -4342,10 +4342,10 @@
           "shippingAddress": {
             "$ref": "#/components/schemas/AddressRequest"
           },
-          "addressPresentForDelivery": {
+          "eachProductOnce": {
             "type": "boolean"
           },
-          "eachProductOnce": {
+          "addressPresentForDelivery": {
             "type": "boolean"
           }
         },
@@ -4496,13 +4496,13 @@
             "type": "string",
             "format": "date-time"
           },
-          "windowValid": {
+          "percentInRange": {
             "type": "boolean"
           },
           "singleScope": {
             "type": "boolean"
           },
-          "percentInRange": {
+          "windowValid": {
             "type": "boolean"
           }
         },

@@ -168,6 +168,27 @@ class ManagementApiTest {
     }
 
     @Test
+    @DisplayName("[SignedMoney] estorno maior que as vendas do periodo deixa liquido e lucro negativos, sem margem")
+    void refundAboveSalesGivesNegativeNet() throws Exception {
+        long order = sale(fx.ana, mouse, 1, "{\"type\":\"PIX\"}");
+        pay(order, fx.ana);
+        // A venda foi paga ontem (fora de TODAY); o estorno de hoje entra no periodo de hoje.
+        fx.set("UPDATE payment SET payment_date = payment_date - interval '1 day' WHERE order_id = ?", order);
+        jdbc.sql("INSERT INTO refund(payment_id, amount, reason, created_by) SELECT id, 50.00, 'Devolucao', :m FROM payment WHERE order_id = :o")
+                .param("m", fx.manager).param("o", order).update();
+
+        JsonNode report = revenue("TODAY");
+        assertThat(money(report.get("grossRevenue"))).isEqualByComparingTo("0.00");
+        assertThat(money(report.get("refunds"))).isEqualByComparingTo("50.00");
+        assertThat(money(report.get("netRevenue"))).isEqualByComparingTo("-50.00");
+        assertThat(money(report.get("grossProfit"))).isEqualByComparingTo("-50.00");
+        assertThat(report.get("grossMarginPercent").isNull()).isTrue();
+        assertThat(money(report.get("daily").get(0).get("netRevenue"))).isEqualByComparingTo("-50.00");
+        assertThat(money(report.get("byPaymentMethod").get(0).get("netRevenue"))).isEqualByComparingTo("-50.00");
+        assertThat(money(report.get("bySeller").get(0).get("netRevenue"))).isEqualByComparingTo("-50.00");
+    }
+
+    @Test
     @DisplayName("[C-21] periodo obrigatorio e do dominio; VENDEDOR 403")
     void periodValidationAndAccess() throws Exception {
         assertThat(call(get("/management/revenue"), fx.manager).getResponse().getStatus()).isEqualTo(400);
