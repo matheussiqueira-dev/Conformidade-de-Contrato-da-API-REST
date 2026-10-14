@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,11 +26,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PaymentProcessingTest {
 
     private static PixPayment pix(String key, PixKeyType type) {
-        return new PixPayment(100.0, TestData.order(OrderStatus.PENDING_PAYMENT, 1), key, "Marina", null, type);
+        return new PixPayment(new BigDecimal("100.0"), TestData.order(OrderStatus.PENDING_PAYMENT, 1), key, "Marina", null, type);
     }
 
     private static BoletoPayment boleto(String barCode, LocalDate dueDate) {
-        return new BoletoPayment(100.0, TestData.order(OrderStatus.PENDING_PAYMENT, 1), barCode, dueDate);
+        return new BoletoPayment(new BigDecimal("100.0"), TestData.order(OrderStatus.PENDING_PAYMENT, 1), barCode, dueDate);
     }
 
     @Nested
@@ -82,14 +83,15 @@ class PaymentProcessingTest {
         @ParameterizedTest(name = "[CT-BB-BOL-02] vencimento hoje{0} dia(s) -> {1}")
         @CsvSource({"-1, EXPIRED, false", "0, APPROVED, true", "1, APPROVED, true"})
         void dueDateBoundary(int offsetDays, PaymentStatus expected, boolean approved) {
-            BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", LocalDate.now().plusDays(offsetDays));
-            assertThat(payment.processPayment()).isEqualTo(approved);
+            LocalDate today = LocalDate.of(2026, 10, 9);
+            BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", today.plusDays(offsetDays));
+            assertThat(payment.processPayment(today)).isEqualTo(approved);
             assertThat(payment.getStatus()).isEqualTo(expected);
             assertThat(payment.getPaymentDate() != null).isEqualTo(approved);
         }
 
         @Test
-        @Tag("known-defect")
+        @Tag("regression")
         @DisplayName("[D006] boleto sem vencimento gera erro de negocio, nao NullPointerException")
         void missingDueDateIsABusinessError() {
             BoletoPayment payment = boleto("34191790010104351004791020150008291070026000", null);
@@ -103,14 +105,14 @@ class PaymentProcessingTest {
         @ParameterizedTest(name = "[CT-WB-CARD-01] numero ''{0}'' e rejeitado")
         @NullAndEmptySource
         void invalidNumberIsRejected(String number) {
-            CardPayment payment = new CardPayment(100.0, TestData.order(OrderStatus.PENDING_PAYMENT, 1), number, "MARINA", 1);
+            CardPayment payment = new CardPayment(new BigDecimal("100.0"), TestData.order(OrderStatus.PENDING_PAYMENT, 1), number, "MARINA", 1);
             assertThatThrownBy(payment::processPayment).isInstanceOf(PaymentException.class);
         }
 
         @Test
         @DisplayName("[CT-WB-CARD-02] cartao valido e aprovado com data de pagamento")
         void validCardIsApproved() {
-            CardPayment payment = new CardPayment(100.0, TestData.order(OrderStatus.PENDING_PAYMENT, 1), "4111111111111111", "MARINA", 1);
+            CardPayment payment = new CardPayment(new BigDecimal("100.0"), TestData.order(OrderStatus.PENDING_PAYMENT, 1), "4111111111111111", "MARINA", 1);
             assertThat(payment.processPayment()).isTrue();
             assertThat(payment.getStatus()).isEqualTo(PaymentStatus.APPROVED);
             assertThat(payment.getPaymentDate()).isNotNull();
