@@ -6,7 +6,7 @@ import type { z } from 'zod';
 import { CreateCustomerBody, CreateCustomerResponse } from '../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../lib/api/http.ts';
 import { contractResolver, optional } from '../lib/forms.ts';
-import { isValidCnpj, isValidCpf } from '../lib/documents.ts';
+import { cnpjKey, isValidCnpj, isValidCpf } from '../lib/documents.ts';
 import { errorMessage } from './feedback.tsx';
 
 export type CustomerDetail = z.infer<typeof CreateCustomerResponse>;
@@ -25,7 +25,7 @@ interface CustomerFormValues {
 function toBody(values: CustomerFormValues): unknown {
   const common = { name: values.name.trim(), email: values.email.trim(), phone: values.phone.trim() };
   if (values.type === 'CORPORATE') {
-    return { type: 'CORPORATE', ...common, companyName: values.companyName.trim(), cnpj: values.cnpj.trim() };
+    return { type: 'CORPORATE', ...common, companyName: values.companyName.trim(), cnpj: cnpjKey(values.cnpj) };
   }
   const birthDate = optional(values.birthDate);
   return { type: 'INDIVIDUAL', ...common, cpf: values.cpf.trim(), ...(birthDate ? { birthDate } : {}) };
@@ -70,8 +70,8 @@ export default function CustomerForm({ onCreated, onCancel, idPrefix = 'customer
           <Field id={id('companyName')} label="Razão social" error={fieldError('companyName')}>
             <input className="input" id={id('companyName')} {...described('companyName')} {...register('companyName')} />
           </Field>
-          <Field id={id('cnpj')} label="CNPJ" error={fieldError('cnpj')}>
-            <input className="input" id={id('cnpj')} inputMode="numeric" placeholder="00.000.000/0000-00" {...described('cnpj')} {...register('cnpj')} />
+          <Field id={id('cnpj')} label="CNPJ" error={fieldError('cnpj')} hint="Numérico ou alfanumérico (ex.: 12.ABC.345/01DE-35).">
+            <input className="input" id={id('cnpj')} autoCapitalize="characters" placeholder="00.000.000/0000-00" {...described('cnpj')} {...register('cnpj')} />
           </Field>
         </> : <>
           <Field id={id('cpf')} label="CPF" error={fieldError('cpf')}>
