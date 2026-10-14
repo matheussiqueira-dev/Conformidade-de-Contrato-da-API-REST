@@ -172,3 +172,15 @@ test('v4 customer projections mask documents and keep the document immutable', (
   assert.equal(history(order), true);
   assert.equal(history({ ...order, unitCost: brl(10) }), false);
 });
+const v5 = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json', import.meta.url), 'utf8'));
+test('v5 accepts numeric and alphanumeric CNPJ, masked the same way, and keeps letters uppercase', () => {
+  const create = compileProjection(v5, 'CorporateCustomerCreate');
+  const company = { type: 'CORPORATE', name: 'Empresa Nova', companyName: 'Empresa Nova LTDA', email: 'empresa@cliente.test', phone: '8533334444' };
+  for (const cnpj of ['12.ABC.345/01DE-35', '12ABC34501DE35', '11.222.333/0001-81']) assert.equal(create({ ...company, cnpj }), true, cnpj);
+  for (const cnpj of ['12.abc.345/01de-35', '12ABC34501DE3X', '12.ABC.345/01DE']) assert.equal(create({ ...company, cnpj }), false, cnpj);
+  const summary = compileProjection(v5, 'CustomerSummary');
+  const customer = { id: 1, type: 'CORPORATE', name: 'Empresa Nova', document: '**.ABC.345/01DE-**', email: null, phone: null, ordersCount: 0, lastOrderAt: null };
+  assert.equal(summary(customer), true);
+  assert.equal(summary({ ...customer, document: '12.ABC.345/01DE-35' }), true);
+  assert.equal(summary({ ...customer, document: '12ABC34501DE35' }), false);
+});

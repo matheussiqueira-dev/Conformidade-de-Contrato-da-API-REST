@@ -778,7 +778,7 @@ export const ListCustomersQueryParams = zod.strictObject({
   "size": zod.int().min(1).max(listCustomersQuerySizeMax).default(listCustomersQuerySizeDefault)
 })
 
-export const listCustomersResponseContentItemDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$');
+export const listCustomersResponseContentItemDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$');
 export const listCustomersResponseContentItemOrdersCountMin = 0;
 
 export const listCustomersResponsePageMin = 0;
@@ -794,7 +794,7 @@ export const ListCustomersResponse = zod.strictObject({
   "id": zod.int(),
   "type": zod.enum(['INDIVIDUAL', 'CORPORATE']),
   "name": zod.string(),
-  "document": zod.string().regex(listCustomersResponseContentItemDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**.'),
+  "document": zod.string().regex(listCustomersResponseContentItemDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**).'),
   "email": zod.string().nullable(),
   "phone": zod.string().nullable(),
   "ordersCount": zod.int().min(listCustomersResponseContentItemOrdersCountMin),
@@ -846,7 +846,7 @@ export const createCustomerBodyTwoNameMax = 120;
 export const createCustomerBodyTwoCompanyNameMin = 2;
 export const createCustomerBodyTwoCompanyNameMax = 120;
 
-export const createCustomerBodyTwoCnpjRegExp = new RegExp('^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$');
+export const createCustomerBodyTwoCnpjRegExp = new RegExp('^[0-9A-Z]{2}\\.?[0-9A-Z]{3}\\.?[0-9A-Z]{3}/?[0-9A-Z]{4}-?\\d{2}$');
 export const createCustomerBodyTwoEmailMax = 254;
 
 export const createCustomerBodyTwoPhoneMin = 10;
@@ -889,7 +889,7 @@ export const CreateCustomerBody = zod.union([zod.strictObject({
   "type": zod.enum(['CORPORATE']),
   "name": zod.string().min(createCustomerBodyTwoNameMin).max(createCustomerBodyTwoNameMax),
   "companyName": zod.string().min(createCustomerBodyTwoCompanyNameMin).max(createCustomerBodyTwoCompanyNameMax),
-  "cnpj": zod.string().regex(createCustomerBodyTwoCnpjRegExp).describe('@CNPJ; com ou sem mascara.'),
+  "cnpj": zod.string().regex(createCustomerBodyTwoCnpjRegExp).describe('@CNPJ(format = ALPHANUMERIC): numerico ou alfanumerico (inscricoes da Receita a partir de 07/2026), letras maiusculas, com ou sem mascara; digitos verificadores pelo modulo 11 com valor ASCII - 48. Gravado sem mascara.'),
   "email": zod.email().max(createCustomerBodyTwoEmailMax),
   "phone": zod.string().min(createCustomerBodyTwoPhoneMin).max(createCustomerBodyTwoPhoneMax).regex(createCustomerBodyTwoPhoneRegExp),
   "address": zod.strictObject({
@@ -903,7 +903,7 @@ export const CreateCustomerBody = zod.union([zod.strictObject({
 }).optional()
 })])
 
-export const createCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$');
+export const createCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$');
 export const createCustomerResponseVersionMin = 0;
 
 
@@ -913,7 +913,7 @@ export const CreateCustomerResponse = zod.strictObject({
   "type": zod.enum(['INDIVIDUAL', 'CORPORATE']),
   "name": zod.string(),
   "companyName": zod.string().nullable(),
-  "document": zod.string().regex(createCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**.'),
+  "document": zod.string().regex(createCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**).'),
   "email": zod.string().nullable(),
   "phone": zod.string().nullable(),
   "birthDate": zod.iso.date().nullable(),
@@ -944,7 +944,7 @@ export const GetCustomerParams = zod.strictObject({
   "id": zod.int().min(1)
 })
 
-export const getCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$');
+export const getCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$');
 export const getCustomerResponseVersionMin = 0;
 
 
@@ -954,7 +954,7 @@ export const GetCustomerResponse = zod.strictObject({
   "type": zod.enum(['INDIVIDUAL', 'CORPORATE']),
   "name": zod.string(),
   "companyName": zod.string().nullable(),
-  "document": zod.string().regex(getCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**.'),
+  "document": zod.string().regex(getCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**).'),
   "email": zod.string().nullable(),
   "phone": zod.string().nullable(),
   "birthDate": zod.iso.date().nullable(),
@@ -1040,7 +1040,7 @@ export const UpdateCustomerBody = zod.strictObject({
   "version": zod.int().min(updateCustomerBodyVersionMin)
 }).describe('Sem type, cpf e cnpj: documento imutavel. Divergencia de version -> 409 CONCURRENT_UPDATE.')
 
-export const updateCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|(\\d{2}|\\*{2})\\.\\d{3}\\.\\d{3}/\\d{4}-(\\d{2}|\\*{2}))$');
+export const updateCustomerResponseDocumentRegExp = new RegExp('^((\\d{3}|\\*{3})\\.\\d{3}\\.\\d{3}-(\\d{2}|\\*{2})|([0-9A-Z]{2}|\\*{2})\\.[0-9A-Z]{3}\\.[0-9A-Z]{3}/[0-9A-Z]{4}-(\\d{2}|\\*{2}))$');
 export const updateCustomerResponseVersionMin = 0;
 
 
@@ -1050,7 +1050,7 @@ export const UpdateCustomerResponse = zod.strictObject({
   "type": zod.enum(['INDIVIDUAL', 'CORPORATE']),
   "name": zod.string(),
   "companyName": zod.string().nullable(),
-  "document": zod.string().regex(updateCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-**.'),
+  "document": zod.string().regex(updateCustomerResponseDocumentRegExp).describe('Formatado. VENDEDOR recebe ***.456.789-** ou **.345.678/0001-** (CNPJ alfanumerico: **.ABC.345/01DE-**).'),
   "email": zod.string().nullable(),
   "phone": zod.string().nullable(),
   "birthDate": zod.iso.date().nullable(),
