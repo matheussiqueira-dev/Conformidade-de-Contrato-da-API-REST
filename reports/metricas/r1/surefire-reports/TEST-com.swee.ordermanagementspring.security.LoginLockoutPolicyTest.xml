@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.security.LoginLockoutPolicyTest" time="0.581" tests="4" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="everyFailureIsAuditedWithoutPlainEmail" classname="com.swee.ordermanagementspring.security.LoginLockoutPolicyTest" time="0.133"/>
+  <testcase name="passwordEncoderRunsInEveryFailureCase" classname="com.swee.ordermanagementspring.security.LoginLockoutPolicyTest" time="0.016"/>
+  <testcase name="fifthFailureLocksForFifteenMinutes" classname="com.swee.ordermanagementspring.security.LoginLockoutPolicyTest" time="0.011"/>
+  <testcase name="attemptsDuringLockDoNotExtendIt" classname="com.swee.ordermanagementspring.security.LoginLockoutPolicyTest" time="0.005"/>
+</testsuite>

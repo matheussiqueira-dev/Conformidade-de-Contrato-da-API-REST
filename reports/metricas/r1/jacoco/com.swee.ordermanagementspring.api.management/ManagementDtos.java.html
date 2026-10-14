@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementDtos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">ManagementDtos.java</span></div><h1>ManagementDtos.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.backoffice.BackofficeDtos.StockProduct;
+import com.swee.ordermanagementspring.api.common.MoneyDto;
+import com.swee.ordermanagementspring.api.common.Refs.UserRef;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
+
+/** Faturamento, metas, desempenho, estorno e analises do contrato v4 (REC-e: faturamento em /management/revenue). */
+public final class ManagementDtos {
+    private ManagementDtos() {
+    }
+
+    /** Periodos fechados em America/Fortaleza contados a partir de hoje (C-21). */
+<span class="fc" id="L24">    public enum RevenuePeriod {</span>
+<span class="fc" id="L25">        TODAY(1), D7(7), D30(30), D90(90);</span>
+
+        private final int days;
+
+<span class="fc" id="L29">        RevenuePeriod(int days) {</span>
+<span class="fc" id="L30">            this.days = days;</span>
+<span class="fc" id="L31">        }</span>
+
+        public DateRange range(LocalDate today) {
+<span class="fc" id="L34">            return new DateRange(today.minusDays(days - 1L), today);</span>
+        }
+    }
+
+<span class="fc" id="L38">    public record DateRange(LocalDate from, LocalDate to) { }</span>
+
+<span class="fc" id="L40">    public record DailyRevenue(LocalDate date, MoneyDto netRevenue, MoneyDto grossProfit) { }</span>
+
+<span class="fc" id="L42">    public record PaymentMethodRevenue(String method, long ordersPaid, MoneyDto netRevenue) { }</span>
+
+<span class="fc" id="L44">    public record SellerRevenue(UserRef seller, long ordersPaid, MoneyDto netRevenue) { }</span>
+
+<span class="fc" id="L46">    public record ProductRevenue(long productId, String sku, String name, long unitsSold, MoneyDto netRevenue,</span>
+                                 MoneyDto grossProfit) { }
+
+<span class="fc" id="L49">    public record RevenueReport(DateRange period, MoneyDto grossRevenue, MoneyDto refunds, MoneyDto netRevenue,</span>
+                                long ordersPaid, long unitsSold, MoneyDto averageTicket, MoneyDto grossProfit,
+                                BigDecimal grossMarginPercent, BigDecimal costCoveragePercent, List&lt;DailyRevenue&gt; daily,
+                                List&lt;PaymentMethodRevenue&gt; byPaymentMethod, List&lt;SellerRevenue&gt; bySeller,
+                                List&lt;ProductRevenue&gt; topProducts, long lowStockCount, long pendingPaymentCount,
+                                MoneyDto pendingPaymentAmount, OffsetDateTime generatedAt) { }
+
+    // ---------------- metas e desempenho ----------------
+
+    /** Mes no formato YYYY-MM (contrato v4). */
+    public static final String MONTH = &quot;^\\d{4}-(0[1-9]|1[0-2])$&quot;;
+
+<span class="fc" id="L61">    public enum GoalState { SEM_META, EM_ANDAMENTO, META_ATINGIDA }</span>
+
+<span class="fc" id="L63">    public record SellerGoalRequest(@NotNull @Min(1) Long sellerId, @NotNull @Valid MoneyDto goal) { }</span>
+
+<span class="fc" id="L65">    public record MonthlyGoalsRequest(@NotNull @Pattern(regexp = MONTH) String period,</span>
+                                      @NotNull @Valid MoneyDto storeGoal,
+                                      @NotNull @Size(max = 200) List&lt;@NotNull @Valid SellerGoalRequest&gt; sellers) { }
+
+<span class="fc" id="L69">    public record SellerGoal(UserRef seller, MoneyDto goal) { }</span>
+
+<span class="fc" id="L71">    public record MonthlyGoals(String period, MoneyDto storeGoal, List&lt;SellerGoal&gt; sellers) { }</span>
+
+<span class="fc" id="L73">    public record SellerPerformance(String period, UserRef seller, MoneyDto goal, MoneyDto realized, MoneyDto remaining,</span>
+                                    BigDecimal achievementPercent, GoalState state) { }
+
+<span class="fc" id="L76">    public record SellerMetric(UserRef seller, MoneyDto goal, MoneyDto realized, BigDecimal achievementPercent,</span>
+                               GoalState state) { }
+
+<span class="fc" id="L79">    public record ManagementSummary(String period, MoneyDto storeGoal, MoneyDto storeRealized, MoneyDto remaining,</span>
+                                    BigDecimal achievementPercent, GoalState state, List&lt;SellerMetric&gt; team) { }
+
+    // ---------------- estorno ----------------
+
+<span class="fc" id="L84">    public record RefundRequest(@NotNull @Valid MoneyDto amount, @NotBlank @Size(min = 5, max = 200) String reason) { }</span>
+
+<span class="fc" id="L86">    public record RefundResponse(long id, long paymentId, MoneyDto amount, String reason, MoneyDto refundedTotal,</span>
+                                 MoneyDto remaining, UserRef createdBy, OffsetDateTime createdAt) { }
+
+    // ---------------- analises ----------------
+
+<span class="fc" id="L91">    public record WeeklyRevenue(LocalDate start, LocalDate end, MoneyDto realized) { }</span>
+
+<span class="fc" id="L93">    public record ProductMargin(long productId, String name, long units, MoneyDto netRevenue, MoneyDto cost,</span>
+                                MoneyDto grossMargin, BigDecimal marginPercent, long itemsWithoutCost) { }
+
+<span class="fc" id="L96">    public record PromotionUsage(long promotionId, String name, long items, MoneyDto discountTotal, MoneyDto netRevenue) { }</span>
+
+<span class="fc" id="L98">    public record SalesAnalytics(String month, List&lt;WeeklyRevenue&gt; weekly, List&lt;PaymentMethodRevenue&gt; byPaymentMethod,</span>
+                                 List&lt;ProductMargin&gt; productMargins, List&lt;PromotionUsage&gt; promotionUsage) { }
+
+<span class="fc" id="L101">    public record StockAnalytics(OffsetDateTime generatedAt, long products, long units, MoneyDto valueAtCost,</span>
+                                 MoneyDto valueAtPrice, long productsWithoutCost, List&lt;StockProduct&gt; belowMin) { }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

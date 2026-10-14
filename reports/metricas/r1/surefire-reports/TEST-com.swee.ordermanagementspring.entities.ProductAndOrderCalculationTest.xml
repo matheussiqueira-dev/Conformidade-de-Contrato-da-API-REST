@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.024" tests="19" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="moneyUsesTwoDecimalsHalfUp(String, String)[1]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="moneyUsesTwoDecimalsHalfUp(String, String)[2]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="moneyUsesTwoDecimalsHalfUp(String, String)[3]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="moneyUsesTwoDecimalsHalfUp(String, String)[4]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="negativeWeightIsRejected" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="totalSumsAllItems" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="digitalProductHasNoShipping" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[1]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[2]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="itemSubtotalMultipliesQuantityOnce(int, BigDecimal)[3]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="emptyOrderTotalsZero" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="itemsWithCentsAddExactly" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[1]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.003"/>
+  <testcase name="shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[2]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[3]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[4]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.001"/>
+  <testcase name="shippingValueBoundaryAtTwoKilograms(double, BigDecimal)[5]" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="subtotalKeepsHistoricalUnitPrice" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+  <testcase name="newOrderRequiresSeller" classname="com.swee.ordermanagementspring.entities.ProductAndOrderCalculationTest" time="0.0"/>
+</testsuite>

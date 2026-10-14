@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.services</a> &gt; <span class="el_source">PaymentService.java</span></div><h1>PaymentService.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.services;
+
+import com.swee.ordermanagementspring.dto.PaymentRequestDTO;
+import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.enums.OrderStatus;
+import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
+import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
+import com.swee.ordermanagementspring.entities.payment.CardPayment;
+import com.swee.ordermanagementspring.entities.payment.Payment;
+import com.swee.ordermanagementspring.entities.payment.PixPayment;
+import com.swee.ordermanagementspring.exceptions.PaymentException;
+import com.swee.ordermanagementspring.exceptions.ResourceNotFoundException;
+import com.swee.ordermanagementspring.repositories.OrderRepository;
+import com.swee.ordermanagementspring.repositories.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+<span class="fc" id="L22">public class PaymentService {</span>
+
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+
+    /**
+     * D019: processa com as linhas do pedido e do pagamento bloqueadas ate o commit. Uma segunda requisicao
+     * simultanea espera, le o pagamento ja processado e e recusada pela regra D004. Ordem fixa dos bloqueios
+     * (pedido, depois pagamento), a mesma de OrderService.updateStatus, para nao haver deadlock.
+     */
+    @Transactional
+    public Payment process(Long id) {
+<span class="fc" id="L38">        Long orderId = paymentRepository.findOrderIdById(id)</span>
+<span class="fc" id="L39">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Payment not found, id: &quot; + id));</span>
+<span class="fc" id="L40">        orderRepository.findWithLockById(orderId)</span>
+<span class="pc" id="L41">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found, id: &quot; + orderId));</span>
+<span class="fc" id="L42">        Payment payment = paymentRepository.findWithLockById(id)</span>
+<span class="pc" id="L43">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Payment not found, id: &quot; + id));</span>
+<span class="fc" id="L44">        return processAndSave(payment);</span>
+    }
+
+    @Transactional
+    public Payment processAndSave(Payment payment) {
+        // D004: pagamento ja aprovado, recusado ou expirado nao e processado de novo
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (payment.getStatus() != PaymentStatus.PENDING) {</span>
+<span class="fc" id="L51">            throw new PaymentException(&quot;Only payments with PENDING status can be processed&quot;);</span>
+        }
+
+        // D018: pagamento tardio nao pode fazer um pedido enviado ou entregue voltar para PAID (regra D010)
+<span class="fc" id="L55">        OrderStatus current = payment.getOrder().getStatus();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!current.canMoveTo(OrderStatus.PAID)) {</span>
+<span class="fc" id="L57">            throw new PaymentException(&quot;Payment cannot be processed: order is already &quot; + current);</span>
+        }
+
+<span class="fc" id="L60">        boolean approved = payment.processPayment();</span>
+
+<span class="fc" id="L62">        Payment saved = paymentRepository.save(payment);</span>
+
+        // D003: so pagamento aprovado confirma o pedido; boleto vencido mantem PENDING_PAYMENT
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (approved) {</span>
+<span class="fc" id="L66">            saved.getOrder().setStatus(OrderStatus.PAID);</span>
+        }
+
+<span class="fc" id="L69">        return saved;</span>
+    }
+
+    public List&lt;Payment&gt; findAll() {
+<span class="fc" id="L73">        return paymentRepository.findAll();</span>
+    }
+
+    public Payment findById(Long id) {
+<span class="fc" id="L77">        return paymentRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Payment not found, id: &quot; + id));</span>
+    }
+
+    @Transactional
+    public Payment insert(PaymentRequestDTO dto) {
+<span class="fc" id="L82">        Order order = orderRepository.findById(dto.getOrderId())</span>
+<span class="fc" id="L83">                .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Order not found, id: &quot; + dto.getOrderId()));</span>
+
+<span class="fc" id="L85">        PaymentRules.requireAmountMatchesTotal(dto.getAmount(), order);</span>
+<span class="fc" id="L86">        Payment payment = buildPayment(dto, order);</span>
+
+<span class="fc" id="L88">        return paymentRepository.save(payment);</span>
+    }
+    @Transactional
+    public Payment update(Long id, PaymentRequestDTO dto) {
+<span class="fc" id="L92">        Payment existing = findById(id);</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (existing.getStatus() != PaymentStatus.PENDING) {</span>
+<span class="fc" id="L95">            throw new PaymentException(&quot;Only payments with PENDING status can be edited&quot;);</span>
+        }
+
+<span class="fc" id="L98">        PaymentRules.requireAmountMatchesTotal(dto.getAmount(), existing.getOrder());</span>
+<span class="fc" id="L99">        String type = PaymentRules.normalizeType(dto.getType());</span>
+
+<span class="fc" id="L101">        boolean typeChanged =</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">                (&quot;CARD&quot;.equals(type) &amp;&amp; !(existing instanceof CardPayment))</span>
+<span class="pc bpc" id="L103" title="3 of 4 branches missed.">                        || (&quot;PIX&quot;.equals(type) &amp;&amp; !(existing instanceof PixPayment))</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">                        || (&quot;BOLETO&quot;.equals(type) &amp;&amp; !(existing instanceof BoletoPayment));</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (typeChanged) {</span>
+<span class="fc" id="L107">            Order order = existing.getOrder();</span>
+
+            //remove a referencia do payment antigo do banco
+<span class="fc" id="L110">            order.setPayment(null);</span>
+
+            //remove o payment antigo
+<span class="fc" id="L113">            paymentRepository.delete(existing);</span>
+<span class="fc" id="L114">            paymentRepository.flush();</span>
+
+            //cria um novo tipo de payment
+<span class="fc" id="L117">            Payment updated = buildPayment(dto, order);</span>
+
+            //mantem os dois lados do relacionamento sincronizados
+<span class="fc" id="L120">            order.setPayment(updated);</span>
+<span class="fc" id="L121">            updated.setOrder(order);</span>
+
+<span class="fc" id="L123">            return paymentRepository.save(updated);</span>
+        }
+
+<span class="pc bpc" id="L126" title="3 of 4 branches missed.">        switch (type) {</span>
+
+            case &quot;CARD&quot; -&gt; {
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="fc" id="L130">                    throw new PaymentException(&quot;cardNumber is required for CARD payments&quot;);</span>
+                }
+
+<span class="fc" id="L133">                CardPayment payment = (CardPayment) existing;</span>
+
+<span class="fc" id="L135">                payment.setAmount(dto.getAmount());</span>
+<span class="fc" id="L136">                payment.setCardNumber(dto.getCardNumber());</span>
+<span class="fc" id="L137">                payment.setCardHolder(dto.getCardHolder());</span>
+<span class="fc" id="L138">                payment.setInstallments(dto.getInstallments());</span>
+<span class="fc" id="L139">            }</span>
+
+            case &quot;PIX&quot; -&gt; {
+<span class="nc bnc" id="L142" title="All 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="nc" id="L143">                    throw new PaymentException(&quot;pixKey is required for PIX payments&quot;);</span>
+                }
+
+<span class="nc" id="L146">                PixPayment payment = (PixPayment) existing;</span>
+
+<span class="nc" id="L148">                payment.setAmount(dto.getAmount());</span>
+<span class="nc" id="L149">                payment.setPixKey(dto.getPixKey());</span>
+<span class="nc" id="L150">                payment.setPixHolderName(dto.getPixHolderName());</span>
+<span class="nc" id="L151">                payment.setPixKeyType(null);</span>
+<span class="nc" id="L152">            }</span>
+
+            case &quot;BOLETO&quot; -&gt; {
+<span class="nc bnc" id="L155" title="All 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="nc" id="L156">                    throw new PaymentException(&quot;barCode is required for BOLETO payments&quot;);</span>
+                }
+
+<span class="nc" id="L159">                PaymentRules.requireDueDate(dto.getDueDate());</span>
+
+<span class="nc" id="L161">                BoletoPayment payment = (BoletoPayment) existing;</span>
+
+<span class="nc" id="L163">                payment.setAmount(dto.getAmount());</span>
+<span class="nc" id="L164">                payment.setBarCode(dto.getBarCode());</span>
+<span class="nc" id="L165">                payment.setDueDate(dto.getDueDate());</span>
+<span class="nc" id="L166">            }</span>
+
+<span class="nc" id="L168">            default -&gt; throw new PaymentException(</span>
+<span class="nc" id="L169">                    &quot;Invalid payment type: &quot; + dto.getType()</span>
+            );
+        }
+
+<span class="fc" id="L173">        return paymentRepository.save(existing);</span>
+    }
+
+    private Payment buildPayment(PaymentRequestDTO dto, Order order) {
+<span class="fc bfc" id="L177" title="All 4 branches covered.">        return switch (PaymentRules.normalizeType(dto.getType())) {</span>
+            case &quot;CARD&quot; -&gt; {
+<span class="pc bpc" id="L179" title="2 of 4 branches missed.">                if (dto.getCardNumber() == null || dto.getCardNumber().isBlank()) {</span>
+<span class="nc" id="L180">                    throw new PaymentException(&quot;cardNumber is required for CARD payments&quot;);</span>
+                }
+<span class="fc" id="L182">                yield new CardPayment(dto.getAmount(), order, dto.getCardNumber(), dto.getCardHolder(), dto.getInstallments());</span>
+            }
+            case &quot;PIX&quot; -&gt; {
+<span class="pc bpc" id="L185" title="2 of 4 branches missed.">                if (dto.getPixKey() == null || dto.getPixKey().isBlank()) {</span>
+<span class="nc" id="L186">                    throw new PaymentException(&quot;pixKey is required for PIX payments&quot;);</span>
+                }
+<span class="fc" id="L188">                yield new PixPayment(dto.getAmount(), order, dto.getPixKey(), dto.getPixHolderName(), null, null);</span>
+            }
+            case &quot;BOLETO&quot; -&gt; {
+<span class="pc bpc" id="L191" title="2 of 4 branches missed.">                if (dto.getBarCode() == null || dto.getBarCode().isBlank()) {</span>
+<span class="nc" id="L192">                    throw new PaymentException(&quot;barCode is required for BOLETO payments&quot;);</span>
+                }
+<span class="fc" id="L194">                PaymentRules.requireDueDate(dto.getDueDate());</span>
+<span class="fc" id="L195">                yield new BoletoPayment(dto.getAmount(), order, dto.getBarCode(), dto.getDueDate());</span>
+            }
+<span class="fc" id="L197">            default -&gt; throw new PaymentException(&quot;Invalid payment type: &quot; + dto.getType());</span>
+        };
+    }
+
+    public void delete(Long id) {
+        // D011: excluir id inexistente responde 404, como a consulta
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (!paymentRepository.existsById(id)) {</span>
+<span class="fc" id="L204">            throw new ResourceNotFoundException(&quot;Payment not found, id: &quot; + id);</span>
+        }
+<span class="fc" id="L206">        paymentRepository.deleteById(id);</span>
+<span class="fc" id="L207">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

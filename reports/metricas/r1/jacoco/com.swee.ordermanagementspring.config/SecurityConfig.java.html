@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.config</a> &gt; <span class="el_source">SecurityConfig.java</span></div><h1>SecurityConfig.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.config;
+
+import com.swee.ordermanagementspring.entities.audit.AuditAction;
+import com.swee.ordermanagementspring.repositories.AppUserRepository;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import com.swee.ordermanagementspring.security.AuditService;
+import com.swee.ordermanagementspring.security.LockoutAuthenticationProvider;
+import com.swee.ordermanagementspring.security.LoginAttemptService;
+import com.swee.ordermanagementspring.security.SecurityJson;
+import jakarta.servlet.DispatcherType;
+import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.*;
+import org.springframework.security.web.csrf.*;
+import org.springframework.security.web.authentication.session.*;
+import org.springframework.security.web.firewall.RequestRejectedHandler;
+import org.springframework.security.web.savedrequest.NullRequestCache;
+import java.util.List;
+
+/**
+ * Sessao + CSRF (ARQ-01), hierarquia GERENTE &gt; VENDEDOR nas regras de URL e de metodo, negacao por padrao.
+ * As regras espelham src/test/resources/security/access-matrix.csv (docs/decisoes/matriz-acesso.md).
+ */
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+<span class="fc" id="L38">public class SecurityConfig {</span>
+<span class="fc" id="L39">    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(SecurityConfig.class);</span>
+    private static final String VENDEDOR = &quot;VENDEDOR&quot;;
+    private static final String GERENTE = &quot;GERENTE&quot;;
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+<span class="fc" id="L45">        return RoleHierarchyImpl.fromHierarchy(&quot;ROLE_GERENTE &gt; ROLE_VENDEDOR&quot;);</span>
+    }
+
+    @Bean
+    static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+<span class="fc" id="L50">        var handler = new DefaultMethodSecurityExpressionHandler();</span>
+<span class="fc" id="L51">        handler.setRoleHierarchy(roleHierarchy);</span>
+<span class="fc" id="L52">        return handler;</span>
+    }
+
+<span class="fc" id="L55">    @Bean public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(12); }</span>
+
+    @Bean public AuthenticationManager authenticationManager(AppUserRepository users, PasswordEncoder encoder,
+                                                             LoginAttemptService attempts) {
+<span class="fc" id="L59">        return new ProviderManager(new LockoutAuthenticationProvider(users, encoder, attempts));</span>
+    }
+<span class="fc" id="L61">    @Bean public SecurityContextRepository securityContextRepository() { return new HttpSessionSecurityContextRepository(); }</span>
+<span class="fc" id="L62">    @Bean public CsrfTokenRepository csrfTokenRepository() { return new HttpSessionCsrfTokenRepository(); }</span>
+    @Bean public SessionAuthenticationStrategy sessionAuthenticationStrategy(CsrfTokenRepository csrf) {
+<span class="fc" id="L64">        return new CompositeSessionAuthenticationStrategy(List.of(</span>
+                new ChangeSessionIdAuthenticationStrategy(), new CsrfAuthenticationStrategy(csrf)));
+    }
+
+    /** Requisicao barrada pelo StrictHttpFirewall (&quot;;&quot;, &quot;%2e%2e&quot;, &quot;//&quot;) responde 400 no formato ErrorResponse. */
+    @Bean public RequestRejectedHandler requestRejectedHandler() {
+<span class="fc" id="L70">        return (request, response, ex) -&gt; SecurityJson.error(response, 400);</span>
+    }
+
+    @Bean public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityContextRepository contexts,
+                                                        CsrfTokenRepository csrf, AuditService audit) throws Exception {
+<span class="fc" id="L75">        http.securityContext(c -&gt; c.securityContextRepository(contexts))</span>
+<span class="fc" id="L76">                .csrf(c -&gt; c.csrfTokenRepository(csrf))</span>
+<span class="fc" id="L77">                .requestCache(c -&gt; c.requestCache(new NullRequestCache()))</span>
+<span class="fc" id="L78">                .authorizeHttpRequests(a -&gt; a</span>
+<span class="fc" id="L79">                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()</span>
+<span class="fc" id="L80">                        .requestMatchers(&quot;/error&quot;).permitAll()</span>
+<span class="fc" id="L81">                        .requestMatchers(HttpMethod.GET, &quot;/auth/csrf&quot;, &quot;/v3/api-docs&quot;, &quot;/v3/api-docs/**&quot;, &quot;/v3/api-docs.yaml&quot;,</span>
+<span class="fc" id="L82">                                &quot;/swagger-ui/**&quot;, &quot;/swagger-ui.html&quot;).permitAll()</span>
+<span class="fc" id="L83">                        .requestMatchers(HttpMethod.POST, &quot;/auth/login&quot;, &quot;/auth/logout&quot;).permitAll()</span>
+<span class="fc" id="L84">                        .requestMatchers(HttpMethod.GET, &quot;/auth/me&quot;).authenticated()</span>
+                        // Balcao: VENDEDOR e, pela hierarquia, GERENTE. O dono do pedido e conferido no servico (404).
+<span class="fc" id="L86">                        .requestMatchers(HttpMethod.GET, &quot;/sales/catalog&quot;, &quot;/sales/orders&quot;, &quot;/sales/orders/{id}&quot;,</span>
+                                &quot;/customers&quot;, &quot;/customers/{id}&quot;, &quot;/customers/{id}/orders&quot;, &quot;/performance/me&quot;,
+<span class="fc" id="L88">                                &quot;/promotions/active&quot;).hasRole(VENDEDOR)</span>
+<span class="fc" id="L89">                        .requestMatchers(HttpMethod.POST, &quot;/sales/quote&quot;, &quot;/sales/orders&quot;, &quot;/sales/orders/{id}/payment&quot;,</span>
+<span class="fc" id="L90">                                &quot;/orders/{id}/cancel&quot;, &quot;/customers&quot;).hasRole(VENDEDOR)</span>
+<span class="fc" id="L91">                        .requestMatchers(HttpMethod.PUT, &quot;/customers/{id}&quot;).hasRole(VENDEDOR)</span>
+                        // Backoffice e rotas legadas: somente GERENTE.
+<span class="fc" id="L93">                        .requestMatchers(HttpMethod.DELETE, &quot;/customers/{id}&quot;).hasRole(GERENTE)</span>
+<span class="fc" id="L94">                        .requestMatchers(HttpMethod.POST, &quot;/customers/{id}/address&quot;, &quot;/payment/{id}/refund&quot;).hasRole(GERENTE)</span>
+<span class="fc" id="L95">                        .requestMatchers(&quot;/products&quot;, &quot;/products/**&quot;, &quot;/categories&quot;, &quot;/categories/**&quot;, &quot;/stock/**&quot;,</span>
+                                &quot;/promotions&quot;, &quot;/promotions/**&quot;, &quot;/goals/**&quot;, &quot;/management/**&quot;, &quot;/analytics/**&quot;,
+<span class="fc" id="L97">                                &quot;/orders&quot;, &quot;/orders/**&quot;, &quot;/payment&quot;, &quot;/payment/**&quot;, &quot;/address&quot;, &quot;/address/**&quot;).hasRole(GERENTE)</span>
+<span class="fc" id="L98">                        .anyRequest().denyAll())</span>
+<span class="fc" id="L99">                .exceptionHandling(e -&gt; e</span>
+<span class="fc" id="L100">                        .authenticationEntryPoint((request, response, ex) -&gt; SecurityJson.error(response, 401))</span>
+<span class="fc" id="L101">                        .accessDeniedHandler((request, response, ex) -&gt; SecurityJson.error(response, 403)))</span>
+<span class="fc" id="L102">                .logout(l -&gt; l.logoutUrl(&quot;/auth/logout&quot;).deleteCookies(&quot;JSESSIONID&quot;)</span>
+<span class="fc" id="L103">                        .addLogoutHandler((request, response, auth) -&gt; {</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">                            if (auth != null &amp;&amp; auth.getPrincipal() instanceof AppPrincipal principal) {</span>
+                                try {
+<span class="fc" id="L106">                                    audit.record(AuditAction.LOGOUT, principal.id(), &quot;app_users&quot;, principal.id(), null);</span>
+<span class="nc" id="L107">                                } catch (RuntimeException ex) {</span>
+                                    // A trilha nunca impede o logout; a sessao e invalidada de qualquer forma.
+<span class="nc" id="L109">                                    LOG.warn(&quot;Logout audit not recorded: {}&quot;, ex.getClass().getSimpleName());</span>
+<span class="fc" id="L110">                                }</span>
+                            }
+<span class="fc" id="L112">                        })</span>
+<span class="fc" id="L113">                        .logoutSuccessHandler((request, response, auth) -&gt; response.setStatus(204)));</span>
+<span class="fc" id="L114">        return http.build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

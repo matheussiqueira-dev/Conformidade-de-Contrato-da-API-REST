@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.controllers</a> &gt; <span class="el_source">AuthController.java</span></div><h1>AuthController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.controllers;
+
+import com.swee.ordermanagementspring.entities.auth.UserRole;
+import com.swee.ordermanagementspring.exceptions.ErrorCode;
+import com.swee.ordermanagementspring.exceptions.ErrorResponse;
+import com.swee.ordermanagementspring.security.AppPrincipal;
+import com.swee.ordermanagementspring.security.AreaResolver;
+import jakarta.servlet.http.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+@RestController
+@RequestMapping(&quot;/auth&quot;)
+public class AuthController {
+    private final AuthenticationManager manager;
+    private final SecurityContextRepository contexts;
+    private final SessionAuthenticationStrategy sessions;
+    private final AreaResolver areas;
+
+    public AuthController(AuthenticationManager manager, SecurityContextRepository contexts,
+<span class="fc" id="L37">                          SessionAuthenticationStrategy sessions, AreaResolver areas) {</span>
+<span class="fc" id="L38">        this.manager = manager;</span>
+<span class="fc" id="L39">        this.contexts = contexts;</span>
+<span class="fc" id="L40">        this.sessions = sessions;</span>
+<span class="fc" id="L41">        this.areas = areas;</span>
+<span class="fc" id="L42">    }</span>
+<span class="fc" id="L43">    public record LoginRequest(@NotBlank @Email @Size(max = 254) String email,</span>
+                               @NotBlank @Size(min = 8, max = 72) String password) {
+        @AssertTrue(message = &quot;Password must contain at most 72 UTF-8 bytes&quot;)
+        public boolean isPasswordWithinBcryptLimit() {
+<span class="fc bfc" id="L47" title="All 4 branches covered.">            return password == null || password.getBytes(StandardCharsets.UTF_8).length &lt;= 72;</span>
+        }
+    }
+    /** Usuario da sessao com as areas liberadas pela hierarquia (contrato v4, REC-f). */
+<span class="fc" id="L51">    public record UserSession(Long id, String name, String email, UserRole role, List&lt;String&gt; areas) {}</span>
+<span class="fc" id="L52">    public record LoginResponse(UserSession user) {}</span>
+<span class="fc" id="L53">    public record CsrfResponse(String headerName, String token) {}</span>
+
+    private UserSession session(AppPrincipal principal) {
+<span class="fc" id="L56">        return new UserSession(principal.id(), principal.name(), principal.getUsername(), principal.role(),</span>
+<span class="fc" id="L57">                areas.areas(principal.getAuthorities()));</span>
+    }
+
+    @GetMapping(&quot;/csrf&quot;)
+    @Operation(summary = &quot;Obtem token CSRF; renovar apos login/logout&quot;)
+    public ResponseEntity&lt;CsrfResponse&gt; csrf(@io.swagger.v3.oas.annotations.Parameter(hidden = true) CsrfToken csrf) {
+<span class="fc" id="L63">        return ResponseEntity.ok().header(&quot;Cache-Control&quot;, &quot;no-store&quot;)</span>
+<span class="fc" id="L64">                .body(new CsrfResponse(csrf.getHeaderName(), csrf.getToken()));</span>
+    }
+    @PostMapping(&quot;/login&quot;)
+    @ApiResponses({@ApiResponse(responseCode = &quot;200&quot;, description = &quot;Sessao estabelecida&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Credenciais malformadas&quot;,
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = &quot;401&quot;, description = &quot;Credenciais invalidas, conta bloqueada ou inativa&quot;,
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = &quot;403&quot;, description = &quot;Token CSRF ausente ou invalido&quot;,
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
+    public ResponseEntity&lt;?&gt; login(@Valid @RequestBody LoginRequest dto,
+                                   HttpServletRequest request, HttpServletResponse response) {
+        try {
+<span class="fc" id="L77">            Authentication auth = manager.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(dto.email(), dto.password()));</span>
+            // C7: principal inesperado e tratado como credencial invalida, sem corpo nulo
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">            if (!(auth.getPrincipal() instanceof AppPrincipal principal)) return unauthorized();</span>
+<span class="fc" id="L80">            sessions.onAuthentication(auth, request, response);</span>
+<span class="fc" id="L81">            var context = SecurityContextHolder.createEmptyContext();</span>
+<span class="fc" id="L82">            context.setAuthentication(auth);</span>
+<span class="fc" id="L83">            SecurityContextHolder.setContext(context);</span>
+<span class="fc" id="L84">            contexts.saveContext(context, request, response);</span>
+<span class="fc" id="L85">            return ResponseEntity.ok().header(&quot;Cache-Control&quot;, &quot;no-store&quot;).body(new LoginResponse(session(principal)));</span>
+<span class="fc" id="L86">        } catch (AuthenticationException ex) {</span>
+<span class="fc" id="L87">            return unauthorized();</span>
+        }
+    }
+
+    /** Mesmo corpo (salvo timestamp) para senha errada, conta inexistente, bloqueada ou inativa. */
+    private static ResponseEntity&lt;ErrorResponse&gt; unauthorized() {
+<span class="fc" id="L93">        return ResponseEntity.status(401).header(&quot;Cache-Control&quot;, &quot;no-store&quot;).body(new ErrorResponse(401, &quot;Unauthorized&quot;,</span>
+                ErrorCode.UNAUTHENTICATED, &quot;Autenticacao necessaria ou credenciais invalidas&quot;));
+    }
+
+    @GetMapping(&quot;/me&quot;)
+    @ApiResponses({@ApiResponse(responseCode = &quot;200&quot;, description = &quot;Usuario autenticado&quot;),
+            @ApiResponse(responseCode = &quot;401&quot;, description = &quot;Sessao ausente ou expirada&quot;,
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
+    public ResponseEntity&lt;UserSession&gt; me(@AuthenticationPrincipal AppPrincipal principal) {
+<span class="fc" id="L102">        return ResponseEntity.ok().header(&quot;Cache-Control&quot;, &quot;no-store&quot;).body(session(principal));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

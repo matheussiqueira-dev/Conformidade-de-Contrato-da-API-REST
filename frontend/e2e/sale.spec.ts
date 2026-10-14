@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { customerOrderCount, overflowing, PASSWORD, seed } from './support.ts';
+import { customerOrderCount, overflowing, PASSWORD, seed, session } from './support.ts';
 
 async function login(page: Page, email: string) {
   await page.goto('/entrar');
@@ -57,11 +57,13 @@ test('[CT-WEB-104] duplo clique e recarga nao criam dois pedidos', async ({ page
   expect(await customerOrderCount(data.customerId)).toBe(1);
 });
 
-test('[CT-WEB-103] vendedor nao ve Gestao no menu nem abre telas do gerente', async ({ page }) => {
+test('[CT-WEB-103, CT-UI-002] vendedor nao ve Gestao nem Estoque no menu e nao abre telas do gerente', async ({ page }) => {
   await login(page, 'seller@example.test');
   const nav = page.getByRole('navigation', { name: 'Áreas' });
   await expect(nav.getByRole('link', { name: 'Vender' })).toBeVisible();
   await expect(nav.getByRole('link', { name: 'Gestão' })).toHaveCount(0);
+  // CT-UI-002: estoque administrativo fora do menu do vendedor.
+  await expect(nav.getByRole('link', { name: 'Estoque' })).toHaveCount(0);
   await page.goto('/gestao');
   await expect(page.getByRole('heading', { name: 'Sem acesso a esta área' })).toBeVisible();
   await expect(page.getByText('Faturamento líquido')).toHaveCount(0);
@@ -82,4 +84,18 @@ test('[CT-WEB-109] telas do vendedor sem violacao WCAG 2.2 AA e sem rolagem hori
   await page.goto('/entrar');
   const loginPage = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
   expect(loginPage.violations.map(v => v.id)).toEqual([]);
+});
+
+test('[CT-E2E-002] falta de estoque na finalizacao preserva a tela, avisa o disponivel e nao cria pedido', async ({ page }) => {
+  const data = await seed(1);
+  await login(page, 'seller@example.test');
+  await cartWithCustomer(page, data.sku, data.cpf);
+  const { api, csrf } = await session('manager@example.test');
+  const adjust = await api.post(`/stock/products/${data.productId}/adjustments`, { headers: csrf, data: { direction: 'OUT', quantity: 1, reason: 'AVARIA' } });
+  expect(adjust.status()).toBe(201);
+  await api.dispose();
+  await page.getByRole('button', { name: 'Finalizar venda' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Estoque insuficiente' })).toContainText(`restam 0 unidades de ${data.productName}`);
+  await expect(page.getByRole('heading', { name: 'Buscar produto' })).toBeVisible();
+  expect(await customerOrderCount(data.customerId)).toBe(0);
 });

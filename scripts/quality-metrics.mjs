@@ -19,6 +19,11 @@ const countBy = (items, key) => items.reduce((acc, item) => {
   return acc;
 }, {});
 
+/** Remove o bloco <properties> (ambiente da JVM) de um XML do Surefire. */
+export function stripEnvironment(xml) {
+  return xml.replace(/\s*<properties>[\s\S]*?<\/properties>/, '');
+}
+
 function surefire() {
   const dir = join(target, 'surefire-reports');
   if (!existsSync(dir)) throw new Error('target/surefire-reports ausente: rode o build antes.');
@@ -194,6 +199,11 @@ cpSync(join(target, 'surefire-reports'), join(outDir, 'surefire-reports'), {
   recursive: true,
   filter: (src) => !src.endsWith('.txt') || src.includes('surefire-reports'),
 });
+// O Surefire grava as propriedades da JVM (PATH, usuario, pastas locais) em cada XML: nao publicar o ambiente.
+for (const file of readdirSync(join(outDir, 'surefire-reports')).filter((f) => f.endsWith('.xml'))) {
+  const path = join(outDir, 'surefire-reports', file);
+  writeFileSync(path, stripEnvironment(readFileSync(path, 'utf8')));
+}
 
 const t = metrics.tests;
 const c = metrics.coverage.total;

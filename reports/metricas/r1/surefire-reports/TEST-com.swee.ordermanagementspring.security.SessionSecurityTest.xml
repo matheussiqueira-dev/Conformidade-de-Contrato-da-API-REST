@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.792" tests="5" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="loginWithoutCsrfIsRejected" classname="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.011">
+    <system-out><![CDATA[2026-10-14T06:42:48.377-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.377-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.378-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="sessionRotatesPersistsAndLogoutInvalidatesIt" classname="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.133">
+    <system-out><![CDATA[2026-10-14T06:42:48.390-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.390-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.391-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="unauthenticatedReadReturnsJson401" classname="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.009">
+    <system-out><![CDATA[2026-10-14T06:42:48.525-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.525-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.527-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+]]></system-out>
+  </testcase>
+  <testcase name="bcryptByteLimitIsValidatedBeforeAuthentication" classname="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.017">
+    <system-out><![CDATA[2026-10-14T06:42:48.534-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.535-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.536-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="wrongPasswordDoesNotEstablishSession" classname="com.swee.ordermanagementspring.security.SessionSecurityTest" time="0.01">
+    <system-out><![CDATA[2026-10-14T06:42:48.554-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T06:42:48.554-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T06:42:48.555-03:00  INFO 22864 --- [order-management-spring] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+</testsuite>

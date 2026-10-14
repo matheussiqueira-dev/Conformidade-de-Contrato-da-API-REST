@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalyticsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.api.management</a> &gt; <span class="el_source">AnalyticsController.java</span></div><h1>AnalyticsController.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.api.management;
+
+import com.swee.ordermanagementspring.api.management.ManagementDtos.SalesAnalytics;
+import com.swee.ordermanagementspring.api.management.ManagementDtos.StockAnalytics;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+/** Analises do contrato v4. Somente GERENTE (URL e servico). */
+@RestController
+@RequestMapping(&quot;/analytics&quot;)
+public class AnalyticsController {
+    private final AnalyticsService service;
+
+<span class="fc" id="L17">    public AnalyticsController(AnalyticsService service) {</span>
+<span class="fc" id="L18">        this.service = service;</span>
+<span class="fc" id="L19">    }</span>
+
+    @GetMapping(&quot;/sales&quot;)
+    public SalesAnalytics sales(@RequestParam @Pattern(regexp = ManagementDtos.MONTH) String month) {
+<span class="fc" id="L23">        return service.sales(month);</span>
+    }
+
+    @GetMapping(&quot;/stock&quot;)
+    public StockAnalytics stock() {
+<span class="fc" id="L28">        return service.stock();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

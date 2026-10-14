@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Documents.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-management-spring</a> &gt; <a href="index.source.html" class="el_package">com.swee.ordermanagementspring.entities.customer</a> &gt; <span class="el_source">Documents.java</span></div><h1>Documents.java</h1><pre class="source lang-java linenums">package com.swee.ordermanagementspring.entities.customer;
+
+import com.swee.ordermanagementspring.exceptions.CustomerException;
+
+/**
+ * N-06: CPF e CNPJ sao gravados so com digitos (ck_customer_cpf, ck_customer_cnpj da V5).
+ * Aceita a entrada com ou sem mascara; o digito verificador e conferido nos DTOs novos (@CPF/@CNPJ).
+ */
+public final class Documents {
+
+    private Documents() {
+    }
+
+    /** Remove a mascara; usado pelas entidades. */
+    public static String digitsOnly(String raw) {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        return raw == null ? null : raw.replaceAll(&quot;[^0-9]&quot;, &quot;&quot;);</span>
+    }
+
+    /** Valida o tamanho do CPF recebido pela API e devolve so os digitos. */
+    public static String cpf(String raw) {
+<span class="fc" id="L21">        return digits(raw, 11, &quot;CPF&quot;);</span>
+    }
+
+    /** Valida o tamanho do CNPJ recebido pela API e devolve so os digitos. */
+    public static String cnpj(String raw) {
+<span class="fc" id="L26">        return digits(raw, 14, &quot;CNPJ&quot;);</span>
+    }
+
+    private static String digits(String raw, int length, String label) {
+<span class="fc" id="L30">        String digits = digitsOnly(raw);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (digits == null) {</span>
+<span class="fc" id="L32">            return null;</span>
+        }
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (digits.length() != length) {</span>
+<span class="fc" id="L35">            throw new CustomerException(label + &quot; must have &quot; + length + &quot; digits&quot;);</span>
+        }
+<span class="fc" id="L37">        return digits;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

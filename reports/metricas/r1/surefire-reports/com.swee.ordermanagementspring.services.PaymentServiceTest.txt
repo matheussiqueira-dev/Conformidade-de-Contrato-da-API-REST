@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.swee.ordermanagementspring.services.PaymentServiceTest
+-------------------------------------------------------------------------------
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 s -- in com.swee.ordermanagementspring.services.PaymentServiceTest
