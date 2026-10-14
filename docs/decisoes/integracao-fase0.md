@@ -47,6 +47,19 @@ Os cinco commits com prefixo fora do Conventional Commits não serão integrados
 
 Proposta: não reaplicar nada (já reaplicado). A branch `a3-contract-validation` só é apagada com aprovação da equipe. O commit `7fe1779`, com o mesmo prefixo, já está publicado na `main` e permanece, porque corrigir a mensagem exigiria reescrever histórico.
 
+### Exceções da varredura de termos (14/10/2026)
+
+A varredura de nomes de ferramenta nos arquivos versionados deixa de fora, de propósito, quatro trechos. Nenhum deles é alterado:
+
+| Arquivo | Trecho | Motivo |
+| --- | --- | --- |
+| `docs/referencias/Manual-Projeto-A3.md` (e o `.pdf`) | Orientação sobre código auxiliado | Cópia fiel do manual da disciplina |
+| `docs/gestao/plano-restante-2026-10-07.md` | Tema da aula 19 (segurança e ética) | Título do conteúdo da disciplina |
+| `reports/execucoes/run-2026-10-04-bd-02.md` | Mensagem original do `dd3e511` | Cita o prefixo antigo do commit da tabela acima |
+| `reports/gestao/sincronizacao-2026-10-04.md` | Prefixo dos commits daquela sincronização | Mesmo prefixo antigo, registrado como fato histórico |
+
+Nas exportações do quadro em `reports/gestao/` (`trello-2026-10-04-*.json` e `historico/revisao-2026-10-01/*.json`), os nomes de produto foram trocados por "ferramenta externa" e o JSON continua válido.
+
 ## Pendente
 
 - `docs/decisoes/regras-loja.md` e a DOM-02 usam arredondamento `HALF_UP` (confirmado em 04/10); a arquitetura alvo pede `HALF_EVEN`. A troca, se aprovada, entra na Fase 1 ou 3 com testes próprios.
