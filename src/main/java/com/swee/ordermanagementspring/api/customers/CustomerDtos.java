@@ -50,7 +50,8 @@ public final class CustomerDtos {
 
     public record CorporateCustomerCreate(@NotBlank @Size(min = 2, max = 120) String name,
                                           @NotBlank @Size(min = 2, max = 120) String companyName,
-                                          @NotNull @Pattern(regexp = "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$") @CNPJ String cnpj,
+                                          @NotNull @Pattern(regexp = "^[0-9A-Z]{2}\\.?[0-9A-Z]{3}\\.?[0-9A-Z]{3}/?[0-9A-Z]{4}-?\\d{2}$")
+                                          @CNPJ(format = CNPJ.Format.ALPHANUMERIC) String cnpj,
                                           @NotNull @Email @Size(max = 254) String email,
                                           @NotNull @Pattern(regexp = PHONE) String phone,
                                           @Valid AddressRequest address) implements CustomerCreateRequest { }
