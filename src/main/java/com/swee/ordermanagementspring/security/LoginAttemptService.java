@@ -34,11 +34,21 @@ public class LoginAttemptService {
     }
 
     public void wrongPassword(AppUser user, String attemptedEmail) {
-        audit.record(AuditAction.LOGIN_FAILED, user.getId(), "app_users", user.getId(), AuditService.emailDetail(attemptedEmail));
+        wrongPassword(user.getId(), attemptedEmail);
+    }
+
+    /** Senha errada de uma conta existente; devolve true quando esta falha acionou o bloqueio. */
+    public boolean wrongPassword(long userId, String attemptedEmail) {
+        audit.record(AuditAction.LOGIN_FAILED, userId, "app_users", userId, AuditService.emailDetail(attemptedEmail));
         Instant now = clock.instant();
-        counter.registerFailure(user.getId(), MAX_FAILURES, now.plus(LOCK_DURATION), now)
-                .filter(LoginCounter.FailureState::lockedNow)
-                .ifPresent(state -> audit.record(AuditAction.ACCOUNT_LOCKED, user.getId(), "app_users", user.getId(), null));
+        boolean lockedNow = counter.registerFailure(userId, MAX_FAILURES, now.plus(LOCK_DURATION), now)
+                .map(LoginCounter.FailureState::lockedNow).orElse(false);
+        if (lockedNow) audit.record(AuditAction.ACCOUNT_LOCKED, userId, "app_users", userId, null);
+        return lockedNow;
+    }
+
+    public boolean isLocked(java.time.OffsetDateTime lockedUntil) {
+        return lockedUntil != null && lockedUntil.toInstant().isAfter(clock.instant());
     }
 
     /** Conta bloqueada, inativa ou inexistente: so registra a tentativa. */

@@ -9,6 +9,7 @@ GET,/swagger-ui.html,PERMIT,PERMIT,PERMIT
 GET,/swagger-ui/**,PERMIT,PERMIT,PERMIT
 *,/error,PERMIT,PERMIT,PERMIT
 GET,/auth/me,401,PERMIT,PERMIT
+PUT,/auth/password,401,PERMIT,PERMIT
 GET,/sales/catalog,401,PERMIT,PERMIT
 POST,/sales/quote,401,PERMIT,PERMIT
 POST,/sales/orders,401,PERMIT,PERMIT
@@ -68,3 +69,11 @@ POST,/address,401,403,PERMIT
 GET,/address/{id},401,403,PERMIT
 PUT,/address/{id},401,403,PERMIT
 DELETE,/address/{id},401,403,PERMIT
+GET,/users,401,403,PERMIT
+POST,/users,401,403,PERMIT
+GET,/users/{id},401,403,PERMIT
+PUT,/users/{id},401,403,PERMIT
+PATCH,/users/{id}/role,401,403,PERMIT
+PATCH,/users/{id}/status,401,403,PERMIT
+POST,/users/{id}/unlock,401,403,PERMIT
+POST,/users/{id}/password-reset,401,403,PERMIT

@@ -1,5 +1,7 @@
 package com.swee.ordermanagementspring.controllers;
 
+import com.swee.ordermanagementspring.api.users.PasswordService;
+import com.swee.ordermanagementspring.api.users.UsersDtos.PasswordChangeRequest;
 import com.swee.ordermanagementspring.entities.auth.UserRole;
 import com.swee.ordermanagementspring.exceptions.ErrorCode;
 import com.swee.ordermanagementspring.exceptions.ErrorResponse;
@@ -32,13 +34,15 @@ public class AuthController {
     private final SecurityContextRepository contexts;
     private final SessionAuthenticationStrategy sessions;
     private final AreaResolver areas;
+    private final PasswordService passwords;
 
     public AuthController(AuthenticationManager manager, SecurityContextRepository contexts,
-                          SessionAuthenticationStrategy sessions, AreaResolver areas) {
+                          SessionAuthenticationStrategy sessions, AreaResolver areas, PasswordService passwords) {
         this.manager = manager;
         this.contexts = contexts;
         this.sessions = sessions;
         this.areas = areas;
+        this.passwords = passwords;
     }
     public record LoginRequest(@NotBlank @Email @Size(max = 254) String email,
                                @NotBlank @Size(min = 8, max = 72) String password) {
@@ -77,15 +81,40 @@ public class AuthController {
             Authentication auth = manager.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(dto.email(), dto.password()));
             // C7: principal inesperado e tratado como credencial invalida, sem corpo nulo
             if (!(auth.getPrincipal() instanceof AppPrincipal principal)) return unauthorized();
-            sessions.onAuthentication(auth, request, response);
-            var context = SecurityContextHolder.createEmptyContext();
-            context.setAuthentication(auth);
-            SecurityContextHolder.setContext(context);
-            contexts.saveContext(context, request, response);
+            establish(auth, request, response);
             return ResponseEntity.ok().header("Cache-Control", "no-store").body(new LoginResponse(session(principal)));
         } catch (AuthenticationException ex) {
             return unauthorized();
         }
+    }
+
+    /** Troca o ID da sessao (fixacao), gera novo token CSRF e grava o contexto na sessao. */
+    private void establish(Authentication auth, HttpServletRequest request, HttpServletResponse response) {
+        sessions.onAuthentication(auth, request, response);
+        var context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(auth);
+        SecurityContextHolder.setContext(context);
+        contexts.saveContext(context, request, response);
+    }
+
+    @PutMapping("/password")
+    @ApiResponses({@ApiResponse(responseCode = "204", description = "Senha alterada; sessao renovada"),
+            @ApiResponse(responseCode = "400", description = "Senha nova fora da politica",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "Senha atual errada, conta bloqueada ou sessao encerrada",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Token CSRF ausente ou invalido",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))})
+    public ResponseEntity<?> changePassword(@AuthenticationPrincipal AppPrincipal principal,
+                                            @Valid @RequestBody PasswordChangeRequest dto,
+                                            HttpServletRequest request, HttpServletResponse response) {
+        return passwords.change(principal, dto)
+                .<ResponseEntity<?>>map(renewed -> {
+                    establish(UsernamePasswordAuthenticationToken.authenticated(renewed, null, renewed.getAuthorities()),
+                            request, response);
+                    return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
+                })
+                .orElseGet(AuthController::unauthorized);
     }
 
     /** Mesmo corpo (salvo timestamp) para senha errada, conta inexistente, bloqueada ou inativa. */
