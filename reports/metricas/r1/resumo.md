@@ -1,6 +1,6 @@
 # Metricas - R1 - ETAPA 4 (ERP/PDV)
 
-Gerado em 2026-10-14T09:43:10.101Z por `node scripts/quality-metrics.mjs` a partir de `target/`.
+Gerado em 2026-10-14T09:44:14.002Z por `node scripts/quality-metrics.mjs` a partir de `target/`.
 
 | Indicador | Valor |
 | --- | --- |
