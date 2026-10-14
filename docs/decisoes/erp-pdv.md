@@ -102,6 +102,10 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-NOITE-01 | A hora da loja (B-10) vem de `entities/StoreTime`, um `Clock` fixo em America/Fortaleza usado por `Order.moment` e pelas datas de pagamento, em vez de um `Clock` no construtor dos serviços, que quebraria os testes montados com `@InjectMocks`. |
 | D-NOITE-02 | As entidades de cliente só removem a máscara do documento (`Documents.digitsOnly`); os serviços que recebem DTO validam o tamanho (`Documents.cpf/cnpj`, 400) e o CHECK da V5 continua como última barreira. |
 | D-NOITE-03 | A lista das 17 tabelas de negócio esvaziadas por `TRUNCATE ... RESTART IDENTITY CASCADE` fica em `config/BusinessTables.java`, compartilhada pelos testes com transação confirmada e pelo runner de contrato. |
+| D-NOITE-05 | Até a ETAPA 2C trocar o `/customers` legado (que devolve o documento completo) pelas projeções mascaradas, `GET /customers`, `POST /customers`, `GET /customers/{id}` e `PUT /customers/{id}` ficam só com o GERENTE na regra de URL e no `@PreAuthorize` do controlador; o `AccessMatrixTest` lista essas quatro linhas como pendentes da 2C e espera 403 para o VENDEDOR. |
+| D-NOITE-06 | As operações de autenticação do v4 continuam `planned` na ETAPA 2B, apesar de testadas, porque a comparação do OpenAPI ao vivo com o v4 (CT-CONTRACT-102) só chega na ETAPA 2C; a troca para `implemented` acontece junto com essa comparação. |
+| D-NOITE-07 | A falha de gravação da auditoria de logout é registrada em log e não impede o logout; a sessão é invalidada de qualquer forma. |
+| D-NOITE-08 | O `/error` chamado diretamente (sem erro encaminhado pelo container) responde 404 `NOT_FOUND`, e não 500, porque não há erro a relatar. |
 | D-NOITE-04 | O job `bd` aplica V1–V6 e a massa demo subindo o jar com o perfil `demo` e `web-application-type=none`, e roda o pacote por `psql` dentro do contêiner do PostgreSQL (`docs/bd/pacote-sql/run_bd.sh`), exigindo exatamente 51 PASS. |
 
 ## Processo

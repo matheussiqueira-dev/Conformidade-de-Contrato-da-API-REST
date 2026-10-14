@@ -4,7 +4,8 @@ import { sessionClient } from './session-client.mjs';
 import { checkResponse } from './response-contract.mjs';
 if (process.env.A3_CONTRACT_ISOLATED !== '1' || !process.env.A3_TEST_PASSWORD) throw new Error('Use the disposable database runner.');
 const origin = 'http://127.0.0.1:18080';
-const target = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-04-v3.json', import.meta.url)));
+// Contrato v4: UserSession com areas (REC-f).
+const target = JSON.parse(readFileSync(new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url)));
 const results = [];
 async function run(name, work) {
   try { await work(); results.push({ name, passed: true }); }
@@ -33,6 +34,7 @@ await run('Login rotates session cookie and exposes only user projection', async
   assert.ok(seller.cookie()); assert.notEqual(seller.cookie(), original);
   assert.ok(seller.setCookies().some(cookie => /JSESSIONID=/.test(cookie) && /HttpOnly/i.test(cookie) && /SameSite=Lax/i.test(cookie)));
   assert.equal(response.body.user.role, 'VENDEDOR');
+  assert.deepEqual(response.body.user.areas, ['VENDER', 'VENDAS', 'CLIENTES', 'MEU_DESEMPENHO']);
   await seller.refreshCsrf();
   const me = await seller.request('/auth/me');
   assert.equal(me.status, 200); schema('/auth/me', 'get', me);

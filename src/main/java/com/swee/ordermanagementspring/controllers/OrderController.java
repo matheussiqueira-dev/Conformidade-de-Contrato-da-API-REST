@@ -1,5 +1,6 @@
 package com.swee.ordermanagementspring.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.swee.ordermanagementspring.dto.AddressRequestDTO;
 import com.swee.ordermanagementspring.dto.OrderRequestDTO;
 import com.swee.ordermanagementspring.dto.OrderResponseDTO;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+// Segunda barreira (alem da regra de URL): rotas legadas so para GERENTE.
+@PreAuthorize("hasRole('GERENTE')")
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
