@@ -1,4 +1,4 @@
-package com.swee.ordermanagementspring.entities.client;
+package com.swee.ordermanagementspring.entities.customer;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -9,13 +9,13 @@ import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "client_type")
+@DiscriminatorColumn(name = "customer_type")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = IndividualClient.class, name = "INDIVIDUAL"),
-        @JsonSubTypes.Type(value = CorporateClient.class, name = "CORPORATE")
+        @JsonSubTypes.Type(value = IndividualCustomer.class, name = "INDIVIDUAL"),
+        @JsonSubTypes.Type(value = CorporateCustomer.class, name = "CORPORATE")
 })
-public abstract class Client {
+public abstract class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,11 @@ public abstract class Client {
     @JoinColumn(name = "Address_id")
     protected Address address;
 
-    public Client () {
+    public Customer () {
 
     }
 
-    public Client(String name, String email, LocalDate birthDate) {
+    public Customer(String name, String email, LocalDate birthDate) {
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
