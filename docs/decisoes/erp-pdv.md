@@ -68,7 +68,7 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | B-08 | `customer.created_by` tem `DEFAULT app_current_user_id()`, a entidade o preenche com o usuário da sessão, e os clientes legados ficam com autor nulo. |
 | B-09 | Os painéis leem as views por `JdbcClient` com `record`, sem mapear views como entidades JPA. |
 | B-10 | `orders.moment` e as datas de pagamento vêm de um `Clock` com zona America/Fortaleza, porque as colunas são `timestamp` sem fuso e a CI roda em UTC. |
-| B-11 | O seed demo fica em `classpath:db/demo` como `V6_1` (contas, migração Java com BCrypt de `SBI_DEMO_PASSWORD`) e `V6_2` (massa SQL), entre a V6 e qualquer V7. |
+| B-11 | O seed demo fica em `classpath:db/demo` como `V6_1` (contas, migração Java com BCrypt de `SBI_DEMO_PASSWORD`) e `V6_2` (massa SQL), entre a V6 e qualquer V7; o perfil `demo` precisa estar ativo desde a primeira migração do banco (A2A-4). |
 | B-12 | A massa demo usa CPFs fictícios com dígito verificador válido (`10000000108` a `10000000604`). |
 | B-13 | Sem índice em `promotion(product_id)`, `promotion(category_id)` e `customer(created_by)` até um `EXPLAIN` sobre o seed mostrar necessidade. |
 
@@ -80,11 +80,20 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | N-02 | O `ck_payment_status` do pacote não aceita `EXPIRED`, que o Java usa. | D10. |
 | N-03 | `v_catalogo_vendedor` e `fn_criar_pedido` do pacote não conhecem `sellable`. | B-03 e B-04. |
 | N-04 | As funções do pacote reservam na ordem do pedido, não em ordem crescente de `product_id`. | B-03. |
-| N-05 | O `/payment` legado grava o número completo do cartão em `card_number`, contra a DEC-ERP-04. | Rota legada fica intocada e só do GERENTE; mascarar o legado é pergunta aberta da ETAPA 1. |
+| N-05 | O `/payment` legado grava o número completo do cartão em `card_number`, contra a DEC-ERP-04. | Registrado como defeito D022 em [defeitos.md](../defeitos.md); correção na ETAPA 2C (A2A-3). |
 | N-06 | O `POST /customers` legado salva o documento como recebido; com os CHECKs da D3, CPF com máscara cairia no handler genérico de integridade com a mensagem "This order already has a payment.". | Normalizar na ETAPA 2A. |
 | N-07 | O `POST /orders` legado não informa `fulfillment`; pedidos com endereço receberiam o padrão `PICKUP`. | Mapear `fulfillment` na entidade na ETAPA 2A. |
 | N-08 | `Order.moment` usa o fuso da JVM, e as views assumem America/Fortaleza. | B-10. |
 | N-09 | O SBI-EXECUCAO cita o rewrite `/api/:path*` e `API_ORIGIN`; o código usa `/api/backend/:path*` e `BACKEND_ORIGIN`. | Vale o código (DELTA já citado no prompt da etapa). |
+
+## Respostas para a ETAPA 2A (14/10/2026)
+
+| ID | Decisão |
+| --- | --- |
+| A2A-1 | Somente o PR #10 é integrado (contém a DOM-02 e a pré-checagem D020); o #9 é fechado sem merge, como registrado em [integracao-fase0.md](integracao-fase0.md). |
+| A2A-2 | Não existe banco não descartável: o `postgres-order` de desenvolvimento é recriado do zero com Flyway e seed demo, com `pg_dump` antes por precaução, sem baseline manual; se a pré-checagem da V5 encontrar dado inválido, a migração falha com mensagem clara e nenhum dado é corrigido. |
+| A2A-3 | O número completo do cartão no `/payment` legado é o defeito D022 (N-05), corrigido na ETAPA 2C (serviço grava só os 4 últimos dígitos, migração mascara os dados existentes, teste); a ETAPA 2A não cria CHECK em `card_number`. |
+| A2A-4 | O seed demo fica em `db/demo` como `V6_1`/`V6_2` e exige o perfil `demo` ativo desde a primeira migração do banco, com `outOfOrder` desligado: ativar o perfil num banco já migrado além da V6 faz o Flyway recusar as versões pendentes, e o banco deve ser recriado. |
 
 ## Processo
 

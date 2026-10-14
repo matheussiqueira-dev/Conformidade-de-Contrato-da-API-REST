@@ -23,6 +23,7 @@ Fontes: card 16 do Trello (D003–D016, registrados em 08/10), revisão dos PRs 
 | D019 | Requisições simultâneas passam pela validação de status | Média | Alta | Corrigido em branch local | `fix/FIX-03` |
 | D020 | Migração V3 arredonda antes de conferir o limite da coluna | Baixa | Média | Corrigido em branch local | `fix/FIX-03` |
 | D021 | Senha do banco ausente gera erro de autenticação confuso | Baixa | Média | Corrigido em branch local | PR #6 (commit novo) |
+| D022 | Rota legada de pagamento grava o número completo do cartão | Alta | Média | Aberto | ETAPA 2C |
 
 IDs D001, D002, D005, D007, D009 e D013–D015 não aparecem no repositório nem na descrição do card 16. **Allan deve conferir no quadro** se foram descartados (duplicata, erro de teste) e registrar o motivo aqui. H-01 e H-02 são defeitos de 03–04/10 que nunca receberam ID; se D001/D002 estiverem livres, podem ser atribuídos a eles.
 
@@ -313,3 +314,21 @@ Interpretação: a densidade alta é esperada num sistema legado que nunca teve 
 | Status | Corrigido em commit novo na branch do PR #6, não publicado |
 | Correção | `21f06a3`: `DatasourcePasswordGuard`; senha passada ao processo filho por variável de ambiente |
 | Reteste | 09/10: unitário 96 testes e integração (contexto, Flyway, persistência) sem falhas |
+
+### D022 — Número completo do cartão gravado pelo pagamento legado
+
+| Campo | Valor |
+| --- | --- |
+| ID | D022 (origem: conflito N-05 de [decisoes/erp-pdv.md](decisoes/erp-pdv.md)) |
+| Título | `POST /payment` e `POST /orders` com cartão gravam o número completo em `payment.card_number` |
+| Descrição | A decisão DEC-ERP-04 proíbe guardar o número completo do cartão; só os 4 últimos dígitos e o código de autorização opcional. A resposta já mostra o número mascarado (`PaymentResponseDTO.cardNumberMasked`), mas `CardPayment.cardNumber` persiste o valor recebido sem corte. Achado na modelagem ERP/PDV (ETAPA 1, 14/10/2026). |
+| Passos para reprodução | 1. Como GERENTE, `POST /payment` com `type: CARD` e `cardNumber: 4111111111111111` (cartão de teste público). 2. `SELECT card_number FROM payment ORDER BY id DESC LIMIT 1`. |
+| Resultado esperado | Banco sem o número completo; no máximo os 4 últimos dígitos. |
+| Resultado obtido | `card_number = 4111111111111111`, conforme o código atual de `CardPayment` e `PaymentService` (não executado como teste). |
+| Severidade | Alta (dado sensível de pagamento armazenado sem necessidade) |
+| Prioridade | Média (rota legada só do GERENTE, base só com dados sintéticos) |
+| Evidência | Leitura de `entities/payment/CardPayment.java` e `dto/PaymentRequestDTO.java`; teste de reprodução a escrever na ETAPA 2C. |
+| Responsável | Correção: ETAPA 2C (`feat/business-endpoints`). Reteste: Allan. |
+| Status | Aberto |
+| Correção | Planejada: o serviço grava só os 4 últimos dígitos; migração mascara os dados existentes; teste de regressão. Sem CHECK em `card_number` na ETAPA 2A. |
+| Reteste | Pendente. |

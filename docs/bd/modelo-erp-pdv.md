@@ -202,7 +202,7 @@ BEGIN
 END $$;
 ```
 
-A pré-checagem cobre a D3 (documentos) e os CHECKs que o pacote acrescenta sobre dados legados (preço, quantidade, estados, papel). Se ela falhar num banco real, a migração para e a correção dos dados é decidida com o responsável (pergunta registrada no relatório da etapa).
+A pré-checagem cobre a D3 (documentos) e os CHECKs que o pacote acrescenta sobre dados legados (preço, quantidade, estados, papel). Não existe banco não descartável (A2A-2): se ela encontrar dado inválido, a migração falha com mensagem clara, e nenhum dado é corrigido pela migração.
 
 ### 4.2 D1 — papéis
 
@@ -461,12 +461,14 @@ O ensaio não exercitou as adaptações P1, P7 e P9 nem o seed com CPFs válidos
 
 - CPFs válidos e fictícios que substituem `00000000101`–`00000000106`: `10000000108`, `10000000280`, `10000000361`, `10000000442`, `10000000523`, `10000000604`. CNPJ fictício para um cliente PJ de demonstração: `12345678000195`.
 - Contas (gerente Rafael; vendedores Ana, Bruno, Carla) criadas por migração Java no perfil `demo`, com BCrypt(12) de `SBI_DEMO_PASSWORD`; sem a variável, a aplicação não sobe nesse perfil (A8).
-- Versões `V6_1` (contas, Java) e `V6_2` (massa SQL) em `classpath:db/demo`: ficam depois da V6 e antes de qualquer V7, sem exigir `outOfOrder`.
+- Versões `V6_1` (contas, Java) e `V6_2` (massa SQL) em `classpath:db/demo`: ficam depois da V6 e antes de qualquer V7, com `outOfOrder` desligado. Por isso o perfil `demo` precisa estar ativo desde a primeira migração do banco (A2A-4); um banco migrado sem ele além da V6 é recriado, não completado.
 - Os testes 06 que citam os CPFs antigos são ajustados junto com o seed.
 
 ## 9. Pendências para a ETAPA 2A
 
-- Pré-condição: `V4__money_numeric.sql` listado em `git ls-tree -r --name-only origin/main src/main/resources/db/migration`. Em 14/10 ele só existe nas branches dos PRs #9 e #10.
+- `card_number` do legado fica sem CHECK na ETAPA 2A; a correção do defeito D022 (N-05) é da ETAPA 2C.
+
+- Pré-condição: `V4__money_numeric.sql` listado em `git ls-tree -r --name-only origin/main src/main/resources/db/migration`. Atendida em 14/10 pelo squash do PR #10 (`ac064e4`); o #9 foi fechado ([integracao-fase0.md](../decisoes/integracao-fase0.md)).
 - `application.properties` da `main` ainda usa `ddl-auto=update` com Flyway desligado; a decisão A2 (Flyway + `validate` em todos os perfis) é aplicada na 2A.
 - `POST /orders` legado: a entidade `Order` precisa gravar `fulfillment = DELIVERY` quando houver endereço; sem isso, o default `PICKUP` vale também para pedidos com entrega.
 - `POST /customers` legado: normalizar o documento para dígitos antes de salvar; sem isso, CPF com máscara viola `ck_customer_cpf` e cai no handler genérico de `DataIntegrityViolationException`, que hoje responde "This order already has a payment.".
