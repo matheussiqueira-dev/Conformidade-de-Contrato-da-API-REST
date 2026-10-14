@@ -115,6 +115,13 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | D-NOITE-14 | O `ProductController` legado sai: todas as rotas de `/products` passam ao contrato v4. O `http-contract.mjs` valida `/products` contra o v4 (o baseline continua valendo para os erros), e o `ErrorContractTest` usa `{"type":"PHYSICAL"}` para o caso de Bean Validation, já que corpo sem `type` é JSON malformado no `oneOf`. |
 | D-NOITE-15 | O `Location` da entrada aponta para `/stock/products/{id}/entries/{entryId}` e o do ajuste para `/stock/movements?productId={id}`, porque o v4 não tem leitura individual desses recursos. |
 
+## Decisões da execução
+
+| ID | Decisão |
+| --- | --- |
+| D-EXEC-01 | Em `/management/revenue`, período sem venda tem `costCoveragePercent = 0.0` (nada coberto), `averageTicket` e `grossMarginPercent` nulos e somas em zero; a série diária traz todos os dias do período, com zero nos dias sem movimento. |
+| D-EXEC-02 | `pendingPaymentCount` e `pendingPaymentAmount` são a fotografia atual dos pedidos `PENDING_PAYMENT`, sem recorte pelo período, porque servem de alerta operacional. |
+
 ## Processo
 
 | ID | Decisão |
