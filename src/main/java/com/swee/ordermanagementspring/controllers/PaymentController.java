@@ -1,5 +1,6 @@
 package com.swee.ordermanagementspring.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.swee.ordermanagementspring.dto.PaymentRequestDTO;
 import com.swee.ordermanagementspring.dto.PaymentResponseDTO;
 import com.swee.ordermanagementspring.entities.payment.Payment;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// Segunda barreira (alem da regra de URL): rotas legadas so para GERENTE.
+@PreAuthorize("hasRole('GERENTE')")
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
