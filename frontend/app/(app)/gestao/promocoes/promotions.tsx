@@ -12,6 +12,7 @@ import { issueMessage } from '../../../../lib/forms.ts';
 import { ErrorNotice, Loading } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
 import Drawer from '../../../../components/drawer.tsx';
+import DiscountPolicies from './discount-policies.tsx';
 import Pager from '../../../../components/pager.tsx';
 
 /** datetime-local (hora da loja) -> ISO com offset de Fortaleza (-03:00). */
@@ -69,6 +70,7 @@ export default function Promotions() {
             </table></div>}
         {data && <Pager page={data.page} size={data.size} total={data.totalElements} onPage={setPage} />}
       </section>
+      <DiscountPolicies />
       <Drawer open={open} title="Liberar promoção" onClose={() => setOpen(false)}>
         <PromotionForm onDone={() => { setOpen(false); void client.invalidateQueries({ queryKey: ['promotions'] }); }} />
       </Drawer>

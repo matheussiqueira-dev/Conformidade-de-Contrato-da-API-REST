@@ -1,10 +1,15 @@
 'use client';
 import Link from 'next/link';
+import { useState, type FormEvent } from 'react';
+import type { z } from 'zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CancelOrderResponse, ConfirmSalePaymentResponse, GetSalesOrderResponse } from '../../../../lib/api/generated/sbi.zod.ts';
+import {
+  ApproveOrderDiscountBody, ApproveOrderDiscountResponse, CancelOrderResponse, ConfirmSalePaymentResponse, GetSalesOrderResponse,
+} from '../../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../../lib/api/http.ts';
 import { formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../../components/feedback.tsx';
+import { Field } from '../../../../components/customer-form.tsx';
 
 function NotFound() {
   return (
@@ -17,7 +22,7 @@ function NotFound() {
 }
 
 /** Pedido de outro vendedor responde 404 na API e aparece como "Pedido nao encontrado" (WP-3.6). */
-export default function SaleDetail({ orderId }: { orderId: number | null }) {
+export default function SaleDetail({ orderId, manager = false }: { orderId: number | null; manager?: boolean }) {
   const client = useQueryClient();
   const key = ['sale', orderId];
   const query = useQuery({
@@ -78,6 +83,9 @@ export default function SaleDetail({ orderId }: { orderId: number | null }) {
           <div><dt>Descontos</dt><dd className="num">{money(order.discountTotal)}</dd></div>
           <div className="total"><dt>Total</dt><dd className="num">{money(order.total)}</dd></div>
         </dl>
+        {order.manualDiscount && <p className="muted">
+          Desconto manual de {order.manualDiscount.percent.toString().replace('.', ',')}% ({money(order.manualDiscount.amount)}), já incluído nos itens.
+          Motivo: {order.manualDiscount.reason}.{order.manualDiscount.approvedBy ? ` Aprovado por ${order.manualDiscount.approvedBy.name}.` : ''}</p>}
         <ErrorNotice error={confirm.error ?? cancel.error} />
         {pending && <div className="actions">
           <button type="button" className="btn btn-primary" disabled={busy} onClick={() => confirm.mutate()}>
@@ -86,6 +94,39 @@ export default function SaleDetail({ orderId }: { orderId: number | null }) {
             {cancel.isPending ? 'Cancelando…' : 'Cancelar venda'}</button>
         </div>}
       </section>
+      {manager && pending && <DiscountApproval orderId={order.id} onDone={updated => client.setQueryData(key, updated)} />}
     </div>
+  );
+}
+
+/** G-04: o GERENTE aplica no pedido pendente o desconto que passou da alcada do vendedor. */
+function DiscountApproval({ orderId, onDone }: { orderId: number; onDone: (order: z.infer<typeof ApproveOrderDiscountResponse>) => void }) {
+  const [problem, setProblem] = useState('');
+  const approve = useMutation({
+    mutationFn: (body: unknown) => api.request(`/sales/orders/${orderId}/discount-approval`, { method: 'POST', body, schema: ApproveOrderDiscountResponse }),
+    onSuccess: onDone,
+  });
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const body = { percent: Number(String(form.get('percent') ?? '').replace(',', '.')), reason: String(form.get('reason') ?? '').trim() };
+    const check = ApproveOrderDiscountBody.safeParse(body);
+    setProblem(check.success ? '' : 'Informe um percentual de 0,01 a 100 com até 2 casas e um motivo de 5 a 200 caracteres.');
+    if (check.success) approve.mutate(body);
+  }
+  return (
+    <section className="card stack-sm" aria-labelledby="aprovar-desconto">
+      <h2 id="aprovar-desconto">Aprovar desconto (gerente)</h2>
+      <p className="muted">Substitui o desconto manual do pedido; o total e o valor do pagamento são recalculados.</p>
+      <form className="stack-sm" onSubmit={submit} aria-busy={approve.isPending}>
+        <div className="form-grid">
+          <Field id="aprovar-percentual" label="Percentual (%)"><input id="aprovar-percentual" name="percent" className="input" inputMode="decimal" required /></Field>
+          <Field id="aprovar-motivo" label="Motivo" hint="De 5 a 200 caracteres"><input id="aprovar-motivo" name="reason" className="input" required minLength={5} maxLength={200} /></Field>
+        </div>
+        {problem && <p className="notice notice-error" role="alert">{problem}</p>}
+        <ErrorNotice error={approve.error} />
+        <div className="actions"><button type="submit" className="btn btn-primary" disabled={approve.isPending}>{approve.isPending ? 'Aplicando…' : 'Aplicar desconto'}</button></div>
+      </form>
+    </section>
   );
 }
