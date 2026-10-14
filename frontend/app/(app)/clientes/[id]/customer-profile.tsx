@@ -8,7 +8,7 @@ import {
   GetCustomerResponse, GetCustomerSummaryResponse, ListCustomerOrdersResponse, UpdateCustomerBody, UpdateCustomerResponse,
 } from '../../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../../lib/api/http.ts';
-import { daysSince, formatDate, formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../../lib/format.ts';
+import { daysSince, formatDate, formatDateTime, label, MISSING, money, ORDER_STATUS, PAYMENT_TYPE, statusPill } from '../../../../lib/format.ts';
 import { contractResolver, optional } from '../../../../lib/forms.ts';
 import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
@@ -87,7 +87,7 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
                   <td>{visible ? <Link className="mono" href={`/vendas/${order.id}`}>#{order.id}</Link> : <span className="mono">#{order.id}</span>}</td>
                   <td className="num">{formatDateTime(order.moment)}</td>
                   <td>{order.items.map(item => `${item.quantity}× ${item.name}`).join(', ')}</td>
-                  <td>{label(ORDER_STATUS, order.status)}</td>
+                  <td><span className={statusPill(order.status)}>{label(ORDER_STATUS, order.status)}</span></td>
                   <td>{visible && order.sellerFirstName ? order.sellerFirstName : '—'}</td>
                   <td className="num right">{visible && order.total ? money(order.total) : '—'}</td>
                 </tr>
@@ -111,12 +111,12 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
         : <dl className="facts">
             <div><dt>Tipo</dt><dd>{customer.type === 'CORPORATE' ? 'Pessoa jurídica' : 'Pessoa física'}</dd></div>
             {customer.companyName && <div><dt>Razão social</dt><dd>{customer.companyName}</dd></div>}
-            <div><dt>E-mail</dt><dd>{customer.email ?? '—'}</dd></div>
-            <div><dt>Telefone</dt><dd>{customer.phone ?? '—'}</dd></div>
+            <div><dt>E-mail</dt><dd>{customer.email ?? MISSING}</dd></div>
+            <div><dt>Telefone</dt><dd>{customer.phone ?? MISSING}</dd></div>
             {customer.birthDate && <div><dt>Nascimento</dt><dd className="num">{formatDate(customer.birthDate)}</dd></div>}
             <div><dt>Endereço</dt><dd>{customer.address
               ? `${customer.address.street}, ${customer.address.number} · ${customer.address.neighborhood} · ${customer.address.city}/${customer.address.state}`
-              : '—'}</dd></div>
+              : MISSING}</dd></div>
             <div><dt>Cadastrado em</dt><dd className="num">{formatDateTime(customer.createdAt)}{customer.createdBy ? ` por ${customer.createdBy.name}` : ''}</dd></div>
           </dl>}
     </section>

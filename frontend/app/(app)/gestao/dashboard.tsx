@@ -3,17 +3,32 @@
 // formas de pagamento, vendedores, produtos, alerta de estoque e meta do mes. Atualiza a cada 15 s com a aba visivel;
 // erro nunca vira zero.
 import { useMemo, useState } from 'react';
+import type { z } from 'zod';
 import Link from 'next/link';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { GetManagementSummaryResponse, GetRevenueReportResponse, ListStockProductsResponse } from '../../../lib/api/generated/sbi.zod.ts';
 import { api } from '../../../lib/api/http.ts';
-import { formatPercent, label, money, PAYMENT_TYPE } from '../../../lib/format.ts';
+import { formatMonth, formatPercent, formatTime, label, money, PAYMENT_TYPE } from '../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../components/feedback.tsx';
-import { RevenueChart, ShareBars } from '../../../components/charts.tsx';
+import { GoalBar, RevenueChart, ShareBars } from '../../../components/charts.tsx';
+import { Icon } from '../../../components/brand/icons.tsx';
 
 const PERIODS = [['TODAY', 'Hoje'], ['D7', '7 dias'], ['D30', '30 dias'], ['D90', '90 dias']] as const;
 type Period = (typeof PERIODS)[number][0];
 const GOAL_STATE: Readonly<Record<string, string>> = { SEM_META: 'Sem meta', EM_ANDAMENTO: 'Em andamento', META_ATINGIDA: 'Meta atingida' };
+
+/** Valor ausente ("Não informado") sai em texto, nao na fonte de numeros. */
+function valueClass(value: unknown): string {
+  return value === null || value === undefined ? 'value text' : 'value';
+}
+
+/** Titulo do cartao da meta dizendo a conclusao (manual v1.0). */
+function goalTitle(summary: z.infer<typeof GetManagementSummaryResponse> | undefined): string {
+  if (!summary) return 'Meta do mês';
+  if (summary.state === 'META_ATINGIDA') return 'A loja bateu a meta do mês';
+  if (summary.state === 'SEM_META') return 'Meta do mês não definida';
+  return `Faltam ${money(summary.remaining)} para a meta da loja`;
+}
 
 function currentMonth(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza', year: 'numeric', month: '2-digit' }).format(new Date());
@@ -47,18 +62,18 @@ export default function Dashboard() {
     const term = productFilter.trim().toLowerCase();
     return (report?.topProducts ?? []).filter(p => !term || p.name.toLowerCase().includes(term) || p.sku.toLowerCase().includes(term));
   }, [report, productFilter]);
-  const updated = revenue.dataUpdatedAt
-    ? new Intl.DateTimeFormat('pt-BR', { timeStyle: 'medium', timeZone: 'America/Fortaleza' }).format(revenue.dataUpdatedAt) : null;
+  const updated = revenue.dataUpdatedAt ? formatTime(new Date(revenue.dataUpdatedAt).toISOString()) : null;
   const missingCost = report !== undefined && report.grossProfit === null;
 
   return (
     <div className="stack">
       <header className="toolbar">
         <div className="stack-sm">
-          <p className="muted">Gestão / Visão geral</p>
           <h1>Visão geral da loja</h1>
-          <p className="muted">Faturamento confirmado, lucro e metas. {updated && <span aria-live="polite">Atualizado às {updated}.</span>}</p>
+          <p className="muted">{formatMonth(month)} · somente pagamentos confirmados, descontados os estornos.
+            {updated && <span aria-live="polite"> Atualizado às {updated}.</span>}</p>
         </div>
+        <Link className="btn btn-primary" href="/vender"><Icon name="vender" />Nova venda</Link>
         <fieldset className="segmented">
           <legend className="sr-only">Período</legend>
           {PERIODS.map(([value, text]) => (
@@ -77,9 +92,9 @@ export default function Dashboard() {
         <section className="kpis" aria-label="Indicadores do período">
           <div className="card kpi"><span className="label">Faturamento líquido</span><span className="value">{money(report.netRevenue)}</span>
             <span className="note">Bruto {money(report.grossRevenue)} · estornos {money(report.refunds)}</span></div>
-          <div className="card kpi"><span className="label">Lucro bruto</span><span className="value">{money(report.grossProfit)}</span>
+          <div className="card kpi"><span className="label">Lucro bruto</span><span className={valueClass(report.grossProfit)}>{money(report.grossProfit)}</span>
             <span className="note">{missingCost ? 'Há itens vendidos sem custo informado.' : `Cobertura de custo ${formatPercent(report.costCoveragePercent)}`}</span></div>
-          <div className="card kpi"><span className="label">Margem bruta</span><span className="value">{formatPercent(report.grossMarginPercent)}</span>
+          <div className="card kpi"><span className="label">Margem bruta</span><span className={valueClass(report.grossMarginPercent)}>{formatPercent(report.grossMarginPercent)}</span>
             <span className="note">{missingCost ? 'Sem margem enquanto faltar custo.' : 'Lucro sobre o faturamento líquido.'}</span></div>
           <div className="card kpi"><span className="label">Pedidos pagos</span><span className="value">{report.ordersPaid}</span>
             <span className="note">Ticket médio {money(report.averageTicket)} · {report.unitsSold} unidades</span></div>
@@ -124,12 +139,15 @@ export default function Dashboard() {
           </section>
           <div className="stack">
             <section className="card stack-sm" aria-labelledby="meta-titulo">
-              <h2 id="meta-titulo" className="label">Meta do mês</h2>
+              <h2 id="meta-titulo" className="label">{goalTitle(summary.data)}</h2>
               <ErrorNotice error={summary.error} />
               {summary.data && (summary.data.state === 'SEM_META'
-                ? <p className="muted">Sem meta para este mês. Realizado: <span className="num">{money(summary.data.storeRealized)}</span>.</p>
-                : <p><span className="num"><strong>{money(summary.data.storeRealized)}</strong> de {money(summary.data.storeGoal)}</span>
-                    {' '}({formatPercent(summary.data.achievementPercent)}) · {GOAL_STATE[summary.data.state]}</p>)}
+                ? <p className="muted">Sem meta para este mês. Realizado: <span className="money">{money(summary.data.storeRealized)}</span>.</p>
+                : <>
+                    <p><span className="money"><strong>{money(summary.data.storeRealized)}</strong> de {money(summary.data.storeGoal)}</span>
+                      {' '}({formatPercent(summary.data.achievementPercent)}) · {GOAL_STATE[summary.data.state]}</p>
+                    <GoalBar title="Realizado da loja em relação à meta" realized={summary.data.storeRealized.amount} goal={summary.data.storeGoal.amount} />
+                  </>)}
             </section>
             <section className="card stack-sm" aria-labelledby="alerta-titulo">
               <h2 id="alerta-titulo" className="label">Estoque abaixo do mínimo: <span className="num">{report.lowStockCount}</span></h2>

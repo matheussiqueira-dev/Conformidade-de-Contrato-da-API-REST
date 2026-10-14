@@ -3,7 +3,7 @@
 // o teal data-2 nao passa no piso de croma e fica fora. Linha de 2px, grade hairline, legenda sempre, rotulo so no
 // fim da serie, crosshair por ponteiro e teclado, e tabela com os mesmos dados.
 import { useId, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { formatDate, money } from '../lib/format.ts';
+import { compactMoney, formatDate, money } from '../lib/format.ts';
 
 export interface DailyPoint { date: string; net: number; profit: number | null }
 
@@ -67,6 +67,12 @@ export function RevenueChart({ data, title }: { data: readonly DailyPoint[]; tit
   const point = active === null ? null : data[active];
   const lastNet = lines.net[last];
   const lastProfit = lines.profit[last];
+  // Rotulos do fim das series nao se sobrepoem: com menos de 14 px entre eles, o de baixo desce.
+  const labelY = { net: (lastNet?.[1] ?? 0) + 4, profit: (lastProfit?.[1] ?? 0) + 4 };
+  if (lastNet && lastProfit && Math.abs(labelY.net - labelY.profit) < 14) {
+    const top = Math.min(labelY.net, labelY.profit) - 7;
+    if (labelY.net <= labelY.profit) { labelY.net = top; labelY.profit = top + 14; } else { labelY.profit = top; labelY.net = top + 14; }
+  }
 
   return (
     <figure className="chart" aria-labelledby={`${id}-title`}>
@@ -92,8 +98,8 @@ export function RevenueChart({ data, title }: { data: readonly DailyPoint[]; tit
           ))}
           <path d={path(lines.net)} className="series" stroke="var(--data-1)" />
           <path d={path(lines.profit)} className="series" stroke="var(--data-3)" />
-          {lastNet && <text x={lastNet[0] + 8} y={lastNet[1] + 4} className="end-label">Líquido</text>}
-          {lastProfit && <text x={lastProfit[0] + 8} y={lastProfit[1] + 4} className="end-label">Lucro</text>}
+          {lastNet && <text x={lastNet[0] + 8} y={labelY.net} className="end-label">Líquido</text>}
+          {lastProfit && <text x={lastProfit[0] + 8} y={labelY.profit} className="end-label">Lucro</text>}
           {active !== null && point && <>
             <line x1={x(active)} x2={x(active)} y1={PAD.top} y2={PAD.top + plotH} className="crosshair" />
             <circle cx={x(active)} cy={y(point.net)} r={4.5} fill="var(--data-1)" className="dot" />
@@ -146,6 +152,26 @@ export function ShareBars({ items, title }: { items: readonly ShareItem[]; title
           );
         })}
       </ul>
+    </figure>
+  );
+}
+
+/** Realizado contra a meta: barra Indigo e meta como linha ambar tracejada com o valor no rotulo ("Meta R$ 47 mil"). */
+export function GoalBar({ realized, goal, title }: { realized: number; goal: number; title: string }) {
+  const scale = Math.max(goal, realized, 1) * 1.15;
+  const goalX = (goal / scale) * 600;
+  return (
+    <figure className="chart">
+      <figcaption className="label">{title}</figcaption>
+      <svg viewBox="0 0 600 72" role="img" aria-label={`Realizado ${money(realized)}${goal > 0 ? `, meta ${money(goal)}` : ', sem meta'}`}>
+        <rect x="0" y="24" width="600" height="20" rx="4" fill="var(--line)" />
+        <rect x="0" y="24" width={Math.max((realized / scale) * 600, 2)} height="20" rx="4" fill="var(--data-1)" />
+        {goal > 0 && <>
+          <line className="goal" x1={goalX} x2={goalX} y1="14" y2="54" />
+          <text x={goalX} y="10" textAnchor={goalX > 520 ? 'end' : goalX < 80 ? 'start' : 'middle'} className="goal-label">Meta {compactMoney(goal)}</text>
+        </>}
+        <text x="0" y="68" className="tick">Realizado {compactMoney(realized)}</text>
+      </svg>
     </figure>
   );
 }

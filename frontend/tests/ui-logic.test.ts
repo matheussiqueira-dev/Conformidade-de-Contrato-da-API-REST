@@ -39,9 +39,9 @@ test('CPF e CNPJ conferem digito verificador', () => {
 
 test('dinheiro e percentual em pt-BR; ausente vira travessao', () => {
   assert.equal(money({ amount: 1234.5, currency: 'BRL' }), 'R$ 1.234,50');
-  assert.equal(money(null), '—');
+  assert.equal(money(null), 'Não informado');
   assert.equal(formatPercent(85.5), '85,5%');
-  assert.equal(formatPercent(null), '—');
+  assert.equal(formatPercent(null), 'Não informado');
 });
 
 test('mensagens por codigo, com fallback por status e sem codigo HTTP', () => {
