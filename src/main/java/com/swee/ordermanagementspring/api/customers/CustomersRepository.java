@@ -43,8 +43,8 @@ public class CustomersRepository {
     public record Search(String where, String document, String prefix) {
         static Search of(String q) {
             String term = q == null ? "" : q.trim();
-            String digits = DocumentFormat.searchDigits(term);
-            if (digits != null) return new Search("(c.cpf = :document OR c.cnpj = :document)", digits, "");
+            String document = DocumentFormat.searchDocument(term);
+            if (document != null) return new Search("(c.cpf = :document OR c.cnpj = :document)", document, "");
             if (term.isEmpty()) return new Search("true", "", "");
             return new Search("lower(c.name) LIKE :prefix ESCAPE '\\'", "", Refs.prefix(term));
         }
