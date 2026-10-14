@@ -1,0 +1,61 @@
+codigo,tipo,nome,cpf,cnpj,email,cidade,uf,cep_prefixo
+CLI-001,INDIVIDUAL,Larissa Esteves,01295014688,,larissa.cli-001@example.com,Sao Paulo,SP,04045
+CLI-002,INDIVIDUAL,Larissa Nogueira,74133056230,,larissa.cli-002@example.com,Praia Grande,SP,11700
+CLI-003,INDIVIDUAL,Tiago Gusmão,68062319342,,tiago.cli-003@example.com,Recife,PE,51021
+CLI-004,INDIVIDUAL,Bruno Esteves,28788978540,,bruno.cli-004@example.com,Ituiutaba,MG,38301
+CLI-005,INDIVIDUAL,Carla Siqueira,01831144263,,carla.cli-005@example.com,Santos,SP,11065
+CLI-006,INDIVIDUAL,Otávio Macedo,95845828520,,otavio.cli-006@example.com,Jandira,SP,06634
+CLI-007,CORPORATE,Rezende Distribuidora Ltda,,44897729000188,contato.cli-007@example.com,Curitiba,PR,82200
+CLI-008,INDIVIDUAL,Natália Valença,57361522823,,natalia.cli-008@example.com,Garanhuns,PE,55293
+CLI-009,INDIVIDUAL,Otávio Albuquerque,57594790162,,otavio.cli-009@example.com,Rio De Janeiro,RJ,23535
+CLI-010,INDIVIDUAL,Yasmin Lacerda,43315352402,,yasmin.cli-010@example.com,Sao Luis,MA,65075
+CLI-011,INDIVIDUAL,Yasmin Xavier,38389183633,,yasmin.cli-011@example.com,Guaxupe,MG,37800
+CLI-012,INDIVIDUAL,Carla Rezende,66380275495,,carla.cli-012@example.com,Santo Andre,SP,09130
+CLI-013,INDIVIDUAL,Rafael Pacheco,71385702362,,rafael.cli-013@example.com,Feira De Santana,BA,44053
+CLI-014,CORPORATE,Siqueira Papelaria Ltda,,12698452000178,contato.cli-014@example.com,Sao Caetano Do Sul,SP,09531
+CLI-015,INDIVIDUAL,Sofia Nogueira,88348444084,,sofia.cli-015@example.com,Sao Paulo,SP,01453
+CLI-016,INDIVIDUAL,Isabela Macedo,01229401644,,isabela.cli-016@example.com,Vitoria,ES,29050
+CLI-017,INDIVIDUAL,Lucas Gusmão,69125622137,,lucas.cli-017@example.com,Sao Paulo,SP,04363
+CLI-018,INDIVIDUAL,Marcos Esteves,21953575501,,marcos.cli-018@example.com,Petropolis,RJ,25665
+CLI-019,INDIVIDUAL,João Ferraz,18889242507,,joao.cli-019@example.com,Goiania,GO,74440
+CLI-020,INDIVIDUAL,Paula Siqueira,09269200655,,paula.cli-020@example.com,Francisco Morato,SP,07998
+CLI-021,CORPORATE,Holanda Distribuidora Ltda,,17673115000140,contato.cli-021@example.com,Sao Mateus,ES,29930
+CLI-022,INDIVIDUAL,Larissa Rezende,49825726660,,larissa.cli-022@example.com,Canoas,RS,92412
+CLI-023,INDIVIDUAL,Heitor Cavalcanti,89199430363,,heitor.cli-023@example.com,Rio De Janeiro,RJ,20551
+CLI-024,INDIVIDUAL,Paula Siqueira,42247268668,,paula.cli-024@example.com,Niteroi,RJ,24230
+CLI-025,INDIVIDUAL,Bruno Esteves,57728812998,,bruno.cli-025@example.com,Sao Paulo,SP,03162
+CLI-026,INDIVIDUAL,Gabriela Albuquerque,29833428673,,gabriela.cli-026@example.com,Porto Alegre,RS,91510
+CLI-027,INDIVIDUAL,Pedro Teixeira,33085532790,,pedro.cli-027@example.com,Santo Andre,SP,09270
+CLI-028,CORPORATE,Pacheco Serviços Ltda,,57320067000120,contato.cli-028@example.com,Porto Alegre,RS,91210
+CLI-029,INDIVIDUAL,João Esteves,30946729735,,joao.cli-029@example.com,Ribeirao Preto,SP,14027
+CLI-030,INDIVIDUAL,Pedro Cavalcanti,12626033588,,pedro.cli-030@example.com,Curitiba,PR,80030
+CLI-031,INDIVIDUAL,Yasmin Lacerda,63111138801,,yasmin.cli-031@example.com,Manaus,AM,69054
+CLI-032,INDIVIDUAL,Tiago Xavier,74767737729,,tiago.cli-032@example.com,Montanha,ES,29890
+CLI-033,INDIVIDUAL,Heitor Macedo,65891174383,,heitor.cli-033@example.com,Timbo,SC,89120
+CLI-034,INDIVIDUAL,Gabriela Teixeira,49050566243,,gabriela.cli-034@example.com,Juiz De Fora,MG,36070
+CLI-035,CORPORATE,Siqueira Papelaria Ltda,,40521380000124,contato.cli-035@example.com,Joao Pessoa,PB,58043
+CLI-036,INDIVIDUAL,Sofia Barbosa,11584814462,,sofia.cli-036@example.com,Correia Pinto,SC,88535
+CLI-037,INDIVIDUAL,Paula Pacheco,57259047097,,paula.cli-037@example.com,Porto Alegre,RS,91450
+CLI-038,INDIVIDUAL,Pedro Cavalcanti,86314093597,,pedro.cli-038@example.com,Coromandel,MG,38550
+CLI-039,INDIVIDUAL,Natália Siqueira,52558813250,,natalia.cli-039@example.com,Rio De Janeiro,RJ,21931
+CLI-040,INDIVIDUAL,Elisa Valença,21157140408,,elisa.cli-040@example.com,Curitiba,PR,82315
+CLI-041,INDIVIDUAL,Diego Teixeira,24994116350,,diego.cli-041@example.com,Ibiraiaras,RS,95305
+CLI-042,CORPORATE,Nogueira Materiais Ltda,,83125654000179,contato.cli-042@example.com,Rio Claro,SP,13504
+CLI-043,INDIVIDUAL,Camila Teixeira,89037275095,,camila.cli-043@example.com,Santa Cruz Do Rio Pardo,SP,18900
+CLI-044,INDIVIDUAL,Larissa Esteves,41865709816,,larissa.cli-044@example.com,Anapolis,GO,75094
+CLI-045,INDIVIDUAL,Rafael Esteves,77437375192,,rafael.cli-045@example.com,Campinas,SP,13044
+CLI-046,INDIVIDUAL,Fábio Ferraz,94347603720,,fabio.cli-046@example.com,Belo Horizonte,MG,30431
+CLI-047,INDIVIDUAL,Marcos Holanda,72367405190,,marcos.cli-047@example.com,Contagem,MG,32044
+CLI-048,INDIVIDUAL,Larissa Queiroz,06258149839,,larissa.cli-048@example.com,Rio De Janeiro,RJ,21241
+CLI-049,CORPORATE,Xavier Serviços Ltda,,00806355000172,contato.cli-049@example.com,Porto Alegre,RS,91260
+CLI-050,INDIVIDUAL,Isabela Esteves,67654348010,,isabela.cli-050@example.com,Uberlandia,MG,38414
+CLI-051,INDIVIDUAL,Larissa Cavalcanti,66653085023,,larissa.cli-051@example.com,Para De Minas,MG,35662
+CLI-052,INDIVIDUAL,Diego Duarte,03139006713,,diego.cli-052@example.com,Jundiai,SP,13208
+CLI-053,INDIVIDUAL,Paula Nogueira,57624321491,,paula.cli-053@example.com,Aracaju,SE,49010
+CLI-054,INDIVIDUAL,Lucas Cavalcanti,43753818178,,lucas.cli-054@example.com,Sao Paulo,SP,01131
+CLI-055,INDIVIDUAL,Natália Gusmão,39994715658,,natalia.cli-055@example.com,Praia Grande,SP,11703
+CLI-056,CORPORATE,Cavalcanti Papelaria Ltda,,33183160000172,contato.cli-056@example.com,Sao Paulo,SP,04661
+CLI-057,INDIVIDUAL,Elisa Barbosa,69888931644,,elisa.cli-057@example.com,Sao Bernardo Do Campo,SP,09721
+CLI-058,INDIVIDUAL,Vanessa Cavalcanti,23609385090,,vanessa.cli-058@example.com,Porto Alegre,RS,91160
+CLI-059,INDIVIDUAL,Tiago Pacheco,28008505745,,tiago.cli-059@example.com,Sao Paulo,SP,05758
+CLI-060,INDIVIDUAL,Elisa Pacheco,06839039692,,elisa.cli-060@example.com,Itu,SP,13306

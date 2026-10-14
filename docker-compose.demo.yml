@@ -1,5 +1,5 @@
 # Ambiente de demonstracao do SBI em um comando (WP-5.1): banco descartavel em memoria, API no perfil demo
-# (Flyway V1-V7 + contas e massa do seed) e frontend. Nao usa o banco de desenvolvimento postgres-order.
+# (Flyway + contas e massa do seed) e frontend. Massa Olist opcional: scripts/demo-olist.ps1 ou docs/bd/pacote-sql/run_demo_olist.sh. Nao usa o banco de desenvolvimento postgres-order.
 #
 #   SBI_DEMO_PASSWORD=<senha das contas, 8 a 72 caracteres> SBI_DB_PASSWORD=<senha interna do banco> \
 #     docker compose -f docker-compose.demo.yml -p sbi-demo up --build
@@ -12,6 +12,10 @@ services:
       POSTGRES_DB: sbi_demo
       POSTGRES_USER: sbi
       POSTGRES_PASSWORD: ${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao)}
+    # Banco acessivel a um cliente SQL na apresentacao (IntelliJ Database, DBeaver, psql), so nesta maquina:
+    # jdbc:postgresql://127.0.0.1:5433/sbi_demo, usuario sbi, senha de SBI_DB_PASSWORD.
+    ports:
+      - "127.0.0.1:5433:5432"
     tmpfs:
       - /var/lib/postgresql
     healthcheck:
