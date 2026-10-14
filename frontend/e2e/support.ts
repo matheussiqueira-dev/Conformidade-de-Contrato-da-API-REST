@@ -1,5 +1,5 @@
 // Massa propria de cada teste E2E, criada pela API isolada (porta 18080) com a conta do gerente e a do vendedor.
-import { request, type APIRequestContext } from '@playwright/test';
+import { request, type APIRequestContext, type Page } from '@playwright/test';
 
 export const API = 'http://127.0.0.1:18080';
 export const PASSWORD = process.env.A3_TEST_PASSWORD ?? '';
@@ -57,4 +57,40 @@ export async function customerOrderCount(customerId: number): Promise<number> {
   const total = (await response.json() as { totalElements: number }).totalElements;
   await api.dispose();
   return total;
+}
+
+/** Venda paga feita por outra sessao (o painel do gerente precisa enxergar em ate 15 s). */
+export async function paidSale(data: Seed, quantity = 1): Promise<number> {
+  const { api, csrf } = await session('seller@example.test');
+  const created = await api.post('/sales/orders', { headers: { ...csrf, 'Idempotency-Key': crypto.randomUUID() }, data: {
+    customerId: data.customerId, items: [{ productId: data.productId, quantity }], payment: { type: 'PIX' }, fulfillment: 'PICKUP' } });
+  if (created.status() !== 201) throw new Error(`venda: ${created.status()} ${await created.text()}`);
+  const id = (await created.json() as { id: number }).id;
+  const paid = await api.post(`/sales/orders/${id}/payment`, { headers: csrf });
+  if (paid.status() !== 200) throw new Error(`pagamento: ${paid.status()}`);
+  await api.dispose();
+  return id;
+}
+
+/** Elementos que passam da largura da janela (vazio = sem rolagem horizontal). */
+export async function overflowing(page: Page): Promise<string[]> {
+  return page.evaluate(() => {
+    if (document.documentElement.scrollWidth <= window.innerWidth) return [];
+    const culprits = [...document.querySelectorAll('body *')]
+      .filter(el => {
+        if (el.getBoundingClientRect().right <= window.innerWidth + 1 || el.closest('dialog:not([open])')) return false;
+        // Conteudo dentro de um conteiner com rolagem propria (tabela, menu) nao alarga a pagina.
+        for (let node = el.parentElement; node && node !== document.body; node = node.parentElement) {
+          if (['auto', 'scroll', 'hidden'].includes(getComputedStyle(node).overflowX)) return false;
+        }
+        return true;
+      })
+      .slice(0, 8).map(el => `${el.tagName.toLowerCase()}.${(el.className || '').toString().replace(/\s+/g, '.')} ${Math.round(el.getBoundingClientRect().right)}px`);
+    if (culprits.length) return culprits;
+    const name = (el: Element) => `${el.tagName.toLowerCase()}.${(el.className || '').toString().trim().split(/\s+/).join('.')}`;
+    const wide = [...document.querySelectorAll('body *')].filter(el => el.getBoundingClientRect().right > window.innerWidth + 1)
+      .filter(el => !el.parentElement || el.parentElement.getBoundingClientRect().right <= window.innerWidth + 1).slice(0, 6)
+      .map(el => `${name(el)} ${Math.round(el.getBoundingClientRect().right)}px em ${el.parentElement ? name(el.parentElement) : '-'}`);
+    return [`documento com ${document.documentElement.scrollWidth}px em ${window.innerWidth}px`, ...wide];
+  });
 }

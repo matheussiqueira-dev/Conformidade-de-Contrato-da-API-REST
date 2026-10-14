@@ -4496,13 +4496,13 @@
             "type": "string",
             "format": "date-time"
           },
-          "singleScope": {
-            "type": "boolean"
-          },
           "windowValid": {
             "type": "boolean"
           },
           "percentInRange": {
+            "type": "boolean"
+          },
+          "singleScope": {
             "type": "boolean"
           }
         },

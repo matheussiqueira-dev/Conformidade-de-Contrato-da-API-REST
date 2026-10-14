@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { customerOrderCount, PASSWORD, seed } from './support.ts';
+import { customerOrderCount, overflowing, PASSWORD, seed } from './support.ts';
 
 async function login(page: Page, email: string) {
   await page.goto('/entrar');
@@ -62,9 +62,9 @@ test('[CT-WEB-103] vendedor nao ve Gestao no menu nem abre telas do gerente', as
   const nav = page.getByRole('navigation', { name: 'Áreas' });
   await expect(nav.getByRole('link', { name: 'Vender' })).toBeVisible();
   await expect(nav.getByRole('link', { name: 'Gestão' })).toHaveCount(0);
-  const response = await page.goto('/gestao');
-  expect(response?.status()).toBe(404);
-  await expect(page.getByText('Fone E2E')).toHaveCount(0);
+  await page.goto('/gestao');
+  await expect(page.getByRole('heading', { name: 'Sem acesso a esta área' })).toBeVisible();
+  await expect(page.getByText('Faturamento líquido')).toHaveCount(0);
 });
 
 test('[CT-WEB-109] telas do vendedor sem violacao WCAG 2.2 AA e sem rolagem horizontal em 320 px', async ({ page }) => {
@@ -76,7 +76,7 @@ test('[CT-WEB-109] telas do vendedor sem violacao WCAG 2.2 AA e sem rolagem hori
     const result = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
     expect(result.violations.map(v => `${path}: ${v.id} ${v.nodes.length}`)).toEqual([]);
     await page.setViewportSize({ width: 320, height: 720 });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), path).toBe(true);
+    expect(await overflowing(page), path).toEqual([]);
     await page.setViewportSize({ width: 1280, height: 800 });
   }
   await page.goto('/entrar');

@@ -1,6 +1,6 @@
 {
   "scope": "live OpenAPI and responses versus target v4",
-  "timestamp": "2026-10-14T09:05:39.650Z",
+  "timestamp": "2026-10-14T09:27:15.271Z",
   "contract": "target-loja-gestao-openapi-2026-10-14-v4.json",
   "operations": 45,
   "exercised": {
