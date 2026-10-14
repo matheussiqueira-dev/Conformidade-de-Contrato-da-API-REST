@@ -1148,7 +1148,7 @@
           "RF-15",
           "RF-19"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE",
           "VENDEDOR"
@@ -1195,7 +1195,7 @@
         "x-rf": [
           "RF-22"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -1243,7 +1243,7 @@
         "x-rf": [
           "RF-22"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
@@ -1304,7 +1304,7 @@
         "x-rf": [
           "RF-22"
         ],
-        "x-status": "planned",
+        "x-status": "implemented",
         "x-roles": [
           "GERENTE"
         ],
