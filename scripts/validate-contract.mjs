@@ -2,7 +2,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { resolve } from 'node:path';
+import { resolve, basename } from 'node:path';
 
 export const schemaUrl = 'https://spec.openapis.org/oas/3.1/schema/2025-09-15';
 export const officialSchemaPath = new URL('../config/openapi/validation/openapi-3.1-schema.json', import.meta.url);
@@ -96,16 +96,20 @@ export async function loadOfficialSchema() {
   return JSON.parse(readFileSync(officialSchemaPath, 'utf8'));
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const document = JSON.parse(readFileSync(targetPath, 'utf8'));
+  // Optional argument: contract to validate. Without it, the v3 target and its historical report are kept.
+  const file = process.argv[2] ? resolve(process.argv[2]) : fileURLToPath(targetPath);
+  const document = JSON.parse(readFileSync(file, 'utf8'));
   let officialSchema, blocked;
   try { officialSchema = await loadOfficialSchema(); }
   catch (error) { blocked = `Official OpenAPI document validation blocked: ${error.message}`; }
   const revisedBaseline = JSON.parse(readFileSync(new URL('../config/openapi/baseline-errors-openapi-2026-10-06.json', import.meta.url), 'utf8'));
   const result = { ...validateDocument(document, officialSchema),
     revisedBaseline: validateDocument(revisedBaseline, officialSchema), ...(blocked ? { blocked } : {}) };
-  const reportDirectory = new URL('../reports/contrato/spike-2026-10-04/', import.meta.url);
-  mkdirSync(reportDirectory, { recursive: true });
-  writeFileSync(new URL('validation.json', reportDirectory), JSON.stringify(result, null, 2) + '\n');
+  const report = process.argv[2]
+    ? new URL(`../reports/contrato/validacao/${basename(file, '.json')}.json`, import.meta.url)
+    : new URL('../reports/contrato/spike-2026-10-04/validation.json', import.meta.url);
+  mkdirSync(new URL('.', report), { recursive: true });
+  writeFileSync(report, JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result, null, 2));
   process.exitCode = result.findings.length || result.revisedBaseline.findings.length || blocked ? 1 : 0;
 }
