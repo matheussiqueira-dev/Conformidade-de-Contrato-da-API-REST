@@ -7,7 +7,7 @@ import {
   ApproveOrderDiscountBody, ApproveOrderDiscountResponse, CancelOrderResponse, ConfirmSalePaymentResponse, GetSalesOrderResponse,
 } from '../../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../../lib/api/http.ts';
-import { formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../../lib/format.ts';
+import { formatDateTime, label, money, ORDER_STATUS, statusPill, PAYMENT_TYPE } from '../../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
 
@@ -52,7 +52,7 @@ export default function SaleDetail({ orderId, manager = false }: { orderId: numb
           <p><Link href="/vendas">Vendas</Link> / <span className="mono">#{order.id}</span></p>
           <h1>Venda <span className="mono">#{order.id}</span></h1>
         </div>
-        <span className={`pill ${order.status === 'PAID' ? 'pill-ok' : order.status === 'CANCELED' ? 'pill-err' : 'pill-warn'}`}>{label(ORDER_STATUS, order.status)}</span>
+        <span className={statusPill(order.status)}>{label(ORDER_STATUS, order.status)}</span>
       </header>
       <section className="card stack">
         <dl className="facts">
@@ -91,7 +91,7 @@ export default function SaleDetail({ orderId, manager = false }: { orderId: numb
           <button type="button" className="btn btn-primary" disabled={busy} onClick={() => confirm.mutate()}>
             {confirm.isPending ? 'Confirmando…' : 'Confirmar pagamento recebido'}</button>
           <button type="button" className="btn btn-danger" disabled={busy} onClick={() => cancel.mutate()}>
-            {cancel.isPending ? 'Cancelando…' : 'Cancelar venda'}</button>
+            {cancel.isPending ? 'Cancelando…' : 'Cancelar pedido'}</button>
         </div>}
       </section>
       {manager && pending && <DiscountApproval orderId={order.id} onDone={updated => client.setQueryData(key, updated)} />}

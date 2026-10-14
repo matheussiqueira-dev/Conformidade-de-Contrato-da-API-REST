@@ -43,7 +43,7 @@ export default function LoginForm() {
         <input className="input" id="password" name="password" type="password" autoComplete="current-password" required
                minLength={8} maxLength={72} disabled={busy} />
       </div>
-      <button type="submit" className="btn btn-primary btn-block" disabled={busy}>{busy ? 'Entrando…' : 'Entrar na minha conta'}</button>
+      <button type="submit" className="btn btn-primary btn-block" disabled={busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
       <p className="muted login-help">{LOCKOUT_HINT} Precisa de acesso? Fale com o gerente da loja.</p>
     </form>
   );

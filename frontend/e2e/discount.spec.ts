@@ -8,7 +8,7 @@ async function login(page: Page, email: string) {
   await page.goto('/entrar');
   await page.getByLabel('E-mail', { exact: true }).fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(PASSWORD);
-  await page.getByRole('button', { name: 'Entrar na minha conta' }).click();
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page).not.toHaveURL(/\/entrar/);
 }
 
@@ -44,7 +44,7 @@ test('[CT-WEB-114] vendedor da desconto dentro da alcada; acima e barrado; geren
   await page.getByRole('button', { name: 'Continuar para cliente e pagamento' }).click();
   await page.getByLabel('CPF, CNPJ ou nome').fill(data.cpf);
   await page.getByRole('list', { name: 'Clientes encontrados' }).getByRole('button').first().click();
-  await page.getByRole('button', { name: 'Finalizar venda' }).click();
+  await page.getByRole('button', { name: 'Criar pedido' }).click();
   const heading = page.getByRole('heading', { name: /Venda #\d+/ });
   await expect(heading).toBeVisible();
   const orderId = /#(\d+)/.exec((await heading.textContent()) ?? '')?.[1];

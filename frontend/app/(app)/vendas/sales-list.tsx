@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ListSalesOrdersResponse } from '../../../lib/api/generated/sbi.zod.ts';
 import { api } from '../../../lib/api/http.ts';
-import { formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE } from '../../../lib/format.ts';
+import { formatDateTime, label, money, ORDER_STATUS, PAYMENT_TYPE, statusPill } from '../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../components/feedback.tsx';
 import Pager from '../../../components/pager.tsx';
 
@@ -54,7 +54,7 @@ export default function SalesList({ manager }: { manager: boolean }) {
                   <td>{sale.customer.name}</td>
                   {manager && <td>{sale.seller.name}</td>}
                   <td>{label(PAYMENT_TYPE, sale.paymentType)}</td>
-                  <td>{label(ORDER_STATUS, sale.status)}</td>
+                  <td><span className={statusPill(sale.status)}>{label(ORDER_STATUS, sale.status)}</span></td>
                   <td className="num right">{money(sale.total)}</td>
                 </tr>
               ))}</tbody>

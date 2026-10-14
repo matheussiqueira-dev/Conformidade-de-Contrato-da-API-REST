@@ -8,7 +8,7 @@ async function login(page: Page, email: string) {
   await page.goto('/entrar');
   await page.getByLabel('E-mail', { exact: true }).fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(PASSWORD);
-  await page.getByRole('button', { name: 'Entrar na minha conta' }).click();
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page).not.toHaveURL(/\/entrar/);
 }
 

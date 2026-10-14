@@ -6,7 +6,7 @@ async function login(page: Page, email: string) {
   await page.goto('/entrar');
   await page.getByLabel('E-mail', { exact: true }).fill(email);
   await page.getByLabel('Senha', { exact: true }).fill(PASSWORD);
-  await page.getByRole('button', { name: 'Entrar na minha conta' }).click();
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page).not.toHaveURL(/\/entrar/);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 }
@@ -31,7 +31,7 @@ test('[CT-WEB-101] venda com Pix pelo teclado aparece em vendas e no historico d
   const data = await seed();
   await login(page, 'seller@example.test');
   await cartWithCustomer(page, data.sku, data.cpf);
-  await page.getByRole('button', { name: 'Finalizar venda' }).click();
+  await page.getByRole('button', { name: 'Criar pedido' }).click();
   await expect(page.getByRole('heading', { name: /Venda #\d+/ })).toBeVisible();
   const heading = await page.getByRole('heading', { name: /Venda #\d+/ }).textContent();
   const orderId = /#(\d+)/.exec(heading ?? '')?.[1];
@@ -51,7 +51,7 @@ test('[CT-WEB-104] duplo clique e recarga nao criam dois pedidos', async ({ page
   const data = await seed();
   await login(page, 'seller@example.test');
   await cartWithCustomer(page, data.sku, data.cpf);
-  const finish = page.getByRole('button', { name: 'Finalizar venda' });
+  const finish = page.getByRole('button', { name: 'Criar pedido' });
   await finish.dblclick();
   await expect(page.getByRole('heading', { name: /Venda #\d+/ })).toBeVisible();
   expect(await customerOrderCount(data.customerId)).toBe(1);
@@ -61,7 +61,7 @@ test('[CT-WEB-103, CT-UI-002] vendedor nao ve Gestao nem Estoque no menu e nao a
   await login(page, 'seller@example.test');
   const nav = page.getByRole('navigation', { name: 'Áreas' });
   await expect(nav.getByRole('link', { name: 'Vender' })).toBeVisible();
-  await expect(nav.getByRole('link', { name: 'Gestão' })).toHaveCount(0);
+  await expect(nav.getByRole('link', { name: 'Visão geral' })).toHaveCount(0);
   // CT-UI-002: estoque administrativo fora do menu do vendedor.
   await expect(nav.getByRole('link', { name: 'Estoque' })).toHaveCount(0);
   await page.goto('/gestao');
@@ -94,7 +94,7 @@ test('[CT-E2E-002] falta de estoque na finalizacao preserva a tela, avisa o disp
   const adjust = await api.post(`/stock/products/${data.productId}/adjustments`, { headers: csrf, data: { direction: 'OUT', quantity: 1, reason: 'AVARIA' } });
   expect(adjust.status()).toBe(201);
   await api.dispose();
-  await page.getByRole('button', { name: 'Finalizar venda' }).click();
+  await page.getByRole('button', { name: 'Criar pedido' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Estoque insuficiente' })).toContainText(`restam 0 unidades de ${data.productName}`);
   await expect(page.getByRole('heading', { name: 'Buscar produto' })).toBeVisible();
   expect(await customerOrderCount(data.customerId)).toBe(0);
