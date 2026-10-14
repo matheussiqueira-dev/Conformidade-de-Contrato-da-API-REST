@@ -242,6 +242,19 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | Caso | Lacuna | Nivel | Tecnica | Situacao | Evidencia |
 | --- | --- | --- | --- | --- | --- |
 | CT-SEC-120 | G-02 | Integracao | Transicao de estados (concorrencia) | Verde | `security/LoginAttemptConcurrencyTest` (10 falhas em paralelo, 3 rodadas: conta bloqueada uma vez, 10 `LOGIN_FAILED`, 1 `ACCOUNT_LOCKED`); vermelho no codigo anterior (sem bloqueio) |
+| CT-SEC-121 | G-01 | Integracao | Transicao de estados | Verde | `security/SessionRevocationTest` (desativado, inativo sem mudanca de versao, apagado: 401 `SESSION_REVOKED`) e `UsersApiTest.deactivationRevokesTheSession` (pela API) |
+| CT-SEC-122 | G-01 | Integracao | Transicao de estados | Verde | `SessionRevocationTest.demotedManagerLosesManagerAccess` e `UsersApiTest.demotionRevokesTheSession`: 401 e, no novo login, 403 em `/products` |
+| CT-USR-101 | G-03 | Integracao/Unitario | Particionamento, valor limite | Verde | `UsersApiTest.createUserAndRejectDuplicateEmail`, `temporaryPasswordFollowsThePolicy`, `listUpdateAndVersion`; `security/StrongPasswordValidatorTest` (12 a 72 caracteres e 72 bytes, lista comum, repeticao, e-mail) |
+| CT-USR-102 | G-03 | Integracao | Tabela de decisao | Verde | `UsersApiTest.sellerIsForbiddenEverywhere` (8 rotas) e `AccessMatrixTest` (linhas de `/users`) |
+| CT-USR-103 | G-03 | Integracao/BD | Transicao de estados (concorrencia) | Verde | `UsersApiTest.lastManagerIsKeptUnderConcurrency` (dois gerentes se rebaixando ao mesmo tempo: um 200, um 409 `LAST_MANAGER`); gatilho isolado em CT-BD-30 |
+| CT-USR-104 | G-03 | Integracao | Tabela de decisao | Verde | `UsersApiTest.selfChangesAreForbidden` (papel, situacao e redefinicao: 409 `SELF_CHANGE_FORBIDDEN`) |
+| CT-USR-105 | G-03 | Integracao | Transicao de estados | Verde | `UsersApiTest.unlockAllowsImmediateLogin` |
+| CT-USR-106 | G-03 | Integracao | Transicao de estados | Verde | `SessionRevocationTest.temporaryPasswordAllowsOnlyAccountRoutes`, `UsersApiTest.temporaryPasswordMustBeChanged`, `managerResetRevokesAndRequiresChange`, `wrongCurrentPasswordLocksAndRevokes` |
+| CT-USR-107 | G-03 | Integracao | Particionamento | Verde | `UsersApiTest.passwordsNeverLeak` (respostas e `audit_event` sem senha, sem prefixo de hash BCrypt e sem nome da coluna do hash) |
+| CT-BD-30 | G-03 | BD | Tabela de decisao | Verde | `FlywayMigrationTest.v8KeepsOneActiveManager` e `docs/bd/pacote-sql/06d_testes_evolucao.sql` no job `bd` (3 PASS: rebaixar e desativar o ultimo gerente falham; com outro gerente ativo, passa) |
+| CT-CONTRACT-104 | G-01/G-03 | Integracao | - | Verde | `ErrorContractTest.errorCodesMatchTheContract` (enum `ErrorCode` do servidor igual ao do contrato v5) e `frontend/tests/users.test.ts` (todo codigo tem mensagem pt-BR) |
+| CT-WEB-110 | G-01 | E2E | Particionamento | Verde | `e2e/users.spec.ts`: mensagem unica para conta inexistente e senha errada, aviso de bloqueio, `?next=` externo ignorado |
+| CT-WEB-112 | G-01/G-03 | E2E/Acessibilidade | Transicao de estados | Verde | `e2e/users.spec.ts`: cadastro na tela, troca obrigatoria da senha provisoria, foco no campo com erro, desativacao derruba a sessao com aviso; axe WCAG 2.2 AA e 320 px em `/gestao/usuarios` e `/conta/senha` |
 
 ## Selecao inicial da suite
 

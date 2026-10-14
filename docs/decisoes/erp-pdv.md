@@ -12,7 +12,7 @@ Data: 14/10/2026. Registro das decisões da evolução ERP/PDV (RF-17 a RF-23), 
 | DEC-ERP-04 | Cartão no balcão grava só os 4 últimos dígitos e o código de autorização opcional, nunca o número completo. |
 | DEC-ERP-05 | Toda venda exige cliente identificado; o PDV oferece cadastro rápido em painel lateral. |
 | DEC-ERP-06 | O VENDEDOR cancela a própria venda pendente; a de outro vendedor só o GERENTE cancela. |
-| DEC-ERP-07 | Gestão de usuários fica fora do escopo; as contas vêm do seed demo. |
+| DEC-ERP-07 | Gestão de usuários fica fora do escopo; as contas vêm do seed demo. Substituída em 14/10/2026 pela D-EVO-13 (cadastro de usuários no contrato v5, [evolucao.md](evolucao.md)). |
 | DEC-ERP-08 | Dinheiro com 2 casas e HALF_UP até decisão diferente em `docs/decisoes/dinheiro.md`. |
 
 ## Reconciliação do contrato v3 → v4
