@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { auditContract, parseMatrix, targetPath, v4Path, matrixPath } from './audit-contract.mjs';
+import { auditContract, parseMatrix, targetPath, v4Path, v5Path, matrixPath } from './audit-contract.mjs';
 const target = JSON.parse(readFileSync(targetPath, 'utf8'));
 test('planned target has references and profile policies', () => {
   const result = auditContract(target);
@@ -122,4 +122,32 @@ test('v4 sale creation requires Idempotency-Key and protected operations keep se
   const errors = auditV4(open);
   assert.ok(errors.some(e => e.includes('x-roles and security disagree')));
   assert.ok(errors.some(e => e.includes('Missing session')));
+});
+
+const v5 = JSON.parse(readFileSync(v5Path, 'utf8'));
+test('v5 keeps every v4 operation and passes with the executable access matrix', () => {
+  const result = auditContract(v5, { matrix });
+  assert.deepEqual(result.errors, []);
+  const v5Operations = new Set(result.operations.map(o => `${o.method} ${o.path}`));
+  for (const o of auditContract(v4, { matrix }).operations) assert.ok(v5Operations.has(`${o.method} ${o.path}`), `${o.method} ${o.path}`);
+});
+test('v5 user administration stays manager-only and closed', () => {
+  const rows = structuredClone(matrix);
+  const row = rows.find(r => r.method === 'GET' && r.path === '/users');
+  if (row) row.vendedor = 'PERMIT';
+  else rows.push({ method: 'GET', path: '/users', anonymous: '401', vendedor: 'PERMIT', gerente: 'PERMIT' });
+  const implemented = structuredClone(v5);
+  implemented.paths['/users'].get['x-status'] = 'implemented';
+  assert.ok(auditContract(implemented, { matrix: rows }).errors.some(e => e.includes('x-roles differ') && e.includes('/users')));
+  const open = structuredClone(v5);
+  delete open.components.schemas.UserCreateRequest.additionalProperties;
+  assert.ok(auditContract(open, { matrix }).errors.some(e => e.includes('Open v4 schema') && e.includes('UserCreateRequest')));
+});
+test('planned operations wait for their matrix row; implemented ones require it', () => {
+  const doc = structuredClone(v5);
+  doc.paths['/users'].get['x-status'] = 'planned';
+  const rows = matrix.filter(r => r.path !== '/users');
+  assert.ok(!auditContract(doc, { matrix: rows }).errors.some(e => e.includes('GET /users') && e.includes('access matrix')));
+  doc.paths['/users'].get['x-status'] = 'implemented';
+  assert.ok(auditContract(doc, { matrix: rows }).errors.some(e => e.includes('missing from access matrix: GET /users')));
 });

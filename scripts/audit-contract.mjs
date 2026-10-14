@@ -4,11 +4,13 @@ import { resolve } from 'node:path';
 
 export const targetPath = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-04-v3.json', import.meta.url);
 export const v4Path = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v4.json', import.meta.url);
+export const v5Path = new URL('../config/openapi/target-loja-gestao-openapi-2026-10-14-v5.json', import.meta.url);
 export const matrixPath = new URL('../src/test/resources/security/access-matrix.csv', import.meta.url);
 // Contract marker -> accepted per-operation x-status values. v2/v3 stay planning-only documents.
 export const contractMarkers = {
   'target-planned-not-implemented': ['planned'],
   'target-v4': ['planned', 'implemented'],
+  'target-v5': ['planned', 'implemented'],
 };
 const roleNames = ['GERENTE', 'VENDEDOR'];
 const granted = new Set(['PERMIT', 'OWN']);
@@ -46,7 +48,8 @@ export function auditContract(document, { matrix } = {}) {
   }
   if (document.openapi !== '3.1.0') errors.push('Expected OpenAPI 3.1.0');
   const statuses = contractMarkers[document['x-contract-status']];
-  const v4 = document['x-contract-status'] === 'target-v4';
+  // v5 is v4 plus the evolution operations: the same policy applies.
+  const v4 = ['target-v4', 'target-v5'].includes(document['x-contract-status']);
   if (!statuses) errors.push('Missing planned contract marker');
   for (const [path, item] of Object.entries(document.paths ?? {})) {
     for (const [method, operation] of Object.entries(item)) {
@@ -111,7 +114,8 @@ export function auditContract(document, { matrix } = {}) {
         for (const media of Object.values(resolved?.content ?? {})) checkSellerSafe(media.schema, `${name} ${status}`);
       }
     }
-    if (!matrix) return;
+    // Planned operations have no route yet; their matrix row lands in the same commit as the route (C-02).
+    if (!matrix || operation['x-status'] === 'planned') return;
     const row = matrix.find(r => r.method === method.toUpperCase() && r.path === path);
     if (!row) { errors.push(`Operation missing from access matrix: ${name}`); return; }
     const matrixRoles = roleNames.filter(role => granted.has(row[role.toLowerCase()]));
@@ -153,7 +157,7 @@ export function auditContract(document, { matrix } = {}) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const [file = fileURLToPath(targetPath), matrixFile = fileURLToPath(matrixPath)] = process.argv.slice(2).map(arg => resolve(arg));
   const document = JSON.parse(readFileSync(file, 'utf8'));
-  const matrix = document['x-contract-status'] === 'target-v4' ? parseMatrix(readFileSync(matrixFile, 'utf8')) : undefined;
+  const matrix = ['target-v4', 'target-v5'].includes(document['x-contract-status']) ? parseMatrix(readFileSync(matrixFile, 'utf8')) : undefined;
   const result = auditContract(document, { matrix });
   console.log(JSON.stringify(result, null, 2));
   process.exitCode = result.errors.length ? 1 : 0;
