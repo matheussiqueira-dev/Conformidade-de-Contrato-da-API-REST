@@ -51,13 +51,6 @@ class AccessMatrixTest {
     /** Objeto inexistente: PERMIT nao pode virar 401/403; 404, 400 e 405 sao aceitos. */
     private static final String MISSING_ID = "999999";
     private static final List<String> ALL_METHODS = List.of("GET", "POST", "PUT", "PATCH", "DELETE");
-    /**
-     * D-NOITE-05: o /customers legado expoe documento completo. Ate a ETAPA 2C trocar o controlador pelas projecoes
-     * mascaradas, o @PreAuthorize do controlador barra o VENDEDOR que a regra de URL ja libera.
-     */
-    private static final Set<String> SELLER_PENDING_2C = Set.of("GET /customers", "POST /customers",
-            "GET /customers/{id}", "PUT /customers/{id}");
-
     record Row(String method, String path, String anonymous, String vendedor, String gerente) {
         String key() { return method + " " + path; }
     }
@@ -110,7 +103,6 @@ class AccessMatrixTest {
         MockHttpServletRequestBuilder request = request(HttpMethod.valueOf(method), uri)
                 .contentType(MediaType.APPLICATION_JSON).content("{}").with(csrf());
         if (!actor.equals("ANONIMO")) request.with(user(principal(UserRole.valueOf(actor))));
-        if (actor.equals("VENDEDOR") && SELLER_PENDING_2C.contains(key)) expected = "403";
 
         MvcResult result = mvc.perform(request).andReturn();
         int status = result.getResponse().getStatus();

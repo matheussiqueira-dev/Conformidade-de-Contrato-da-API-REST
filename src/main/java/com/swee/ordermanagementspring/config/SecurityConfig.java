@@ -84,14 +84,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/auth/me").authenticated()
                         // Balcao: VENDEDOR e, pela hierarquia, GERENTE. O dono do pedido e conferido no servico (404).
                         .requestMatchers(HttpMethod.GET, "/sales/catalog", "/sales/orders", "/sales/orders/{id}",
-                                "/customers/{id}/orders", "/performance/me", "/promotions/active").hasRole(VENDEDOR)
+                                "/customers", "/customers/{id}", "/customers/{id}/orders", "/performance/me",
+                                "/promotions/active").hasRole(VENDEDOR)
                         .requestMatchers(HttpMethod.POST, "/sales/quote", "/sales/orders", "/sales/orders/{id}/payment",
-                                "/orders/{id}/cancel").hasRole(VENDEDOR)
-                        // D-NOITE-05: o /customers legado devolve o documento completo; ate a ETAPA 2C trocar o
-                        // controlador pelas projecoes mascaradas, estas rotas da matriz ficam so com o GERENTE.
-                        .requestMatchers(HttpMethod.GET, "/customers", "/customers/{id}").hasRole(GERENTE)
-                        .requestMatchers(HttpMethod.POST, "/customers").hasRole(GERENTE)
-                        .requestMatchers(HttpMethod.PUT, "/customers/{id}").hasRole(GERENTE)
+                                "/orders/{id}/cancel", "/customers").hasRole(VENDEDOR)
+                        .requestMatchers(HttpMethod.PUT, "/customers/{id}").hasRole(VENDEDOR)
                         // Backoffice e rotas legadas: somente GERENTE.
                         .requestMatchers(HttpMethod.DELETE, "/customers/{id}").hasRole(GERENTE)
                         .requestMatchers(HttpMethod.POST, "/customers/{id}/address", "/payment/{id}/refund").hasRole(GERENTE)

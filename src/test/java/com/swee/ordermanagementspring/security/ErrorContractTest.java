@@ -76,7 +76,7 @@ class ErrorContractTest {
     @DisplayName("Bean Validation -> 400 VALIDATION_FAILED com details")
     void validationFailureListsDetails() throws Exception {
         JsonNode body = expect(post("/products").with(user(as(UserRole.GERENTE))).with(csrf())
-                .contentType(MediaType.APPLICATION_JSON).content("{}"), 400, "VALIDATION_FAILED");
+                .contentType(MediaType.APPLICATION_JSON).content("{\"type\":\"PHYSICAL\"}"), 400, "VALIDATION_FAILED");
         assertThat(body.get("details").isArray()).isTrue();
         assertThat(body.get("details").size()).isPositive();
     }
