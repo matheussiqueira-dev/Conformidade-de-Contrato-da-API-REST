@@ -1,0 +1,76 @@
+name: Published smoke
+
+# Verificacao manual do ambiente publicado (Vercel -> Render -> Neon), somente leitura: login dos dois papeis,
+# menu, indicadores e meta do /gestao, cliente Olist com documento mascarado e axe WCAG 2.2 AA.
+# Disparo: gh workflow run published-smoke.yml [-f base_url=https://...]
+# Contas: segredos SBI_SMOKE_MANAGER_EMAIL/_PASSWORD e SBI_SMOKE_SELLER_EMAIL/_PASSWORD (D-PUB-08).
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Endereco do frontend publicado
+        required: false
+        default: https://sbi-app-alpha.vercel.app
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  smoke:
+    name: published smoke
+    runs-on: ubuntu-latest
+    env:
+      SBI_SMOKE_BASE_URL: ${{ inputs.base_url || 'https://sbi-app-alpha.vercel.app' }}
+      SBI_SMOKE_MANAGER_EMAIL: ${{ secrets.SBI_SMOKE_MANAGER_EMAIL }}
+      SBI_SMOKE_MANAGER_PASSWORD: ${{ secrets.SBI_SMOKE_MANAGER_PASSWORD }}
+      SBI_SMOKE_SELLER_EMAIL: ${{ secrets.SBI_SMOKE_SELLER_EMAIL }}
+      SBI_SMOKE_SELLER_PASSWORD: ${{ secrets.SBI_SMOKE_SELLER_PASSWORD }}
+    steps:
+      - name: Check secrets
+        shell: bash
+        run: |
+          missing=""
+          for name in SBI_SMOKE_MANAGER_EMAIL SBI_SMOKE_MANAGER_PASSWORD SBI_SMOKE_SELLER_EMAIL SBI_SMOKE_SELLER_PASSWORD; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then echo "::error::Segredos ausentes:$missing"; exit 1; fi
+
+      - name: Warm up the API
+        shell: bash
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$SBI_SMOKE_BASE_URL/api/backend/auth/csrf" || true)"
+            echo "tentativa $attempt: $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 30
+          done
+          echo "::error::A API publicada nao respondeu 200 em /auth/csrf."
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Playwright against the published site
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+          npx playwright test -c playwright.published.config.mjs
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-smoke
+          path: |
+            frontend/playwright-report-published/
+            frontend/test-results-published/
+          if-no-files-found: ignore
