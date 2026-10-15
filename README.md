@@ -59,7 +59,7 @@ Para encerrar e apagar tudo: `docker compose -f docker-compose.demo.yml -p sbi-d
 
 ### Massa de demonstração (Olist) e acesso ao banco por SQL
 
-Para mostrar um histórico de clientes volumoso (60 clientes, 219 pedidos, recorte do conjunto público da Olist, CC BY-NC-SA 4.0), carregue a massa por SQL depois de subir a stack:
+Para mostrar um histórico de clientes volumoso (60 clientes, 219 pedidos, recorte do conjunto público da Olist, CC BY-NC-SA 4.0, com o catálogo trocado por 43 produtos Apple fictícios), carregue a massa por SQL depois de subir a stack:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -Check
