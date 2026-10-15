@@ -40,7 +40,7 @@ A evolução (PRs #23 a #29, empilhados e não integrados) acrescentou cadastro 
 | Contrato ao vivo | contrato v5: 58 de 58 operações, 0 divergências | `scripts\test-contract.ps1 -HttpOnly` (`reports/contrato/live-v5/live-contract.json`) |
 | Frontend: lógica | 36/36 | `cd frontend; npm test` |
 | Frontend: E2E e axe | 24/24, inclusive marca (CT-WEB-120, 121), usuários, cliente, desconto | `scripts\test-contract.ps1 -HttpOnly -Frontend` |
-| Banco (`psql`) | 60 PASS e 10 PASS da massa Olist | job `bd` da CI |
+| Banco (`psql`) | 61 PASS e 11 PASS da massa Olist | job `bd` da CI |
 | CI | run 38584668603 (PR #29, `de887e9`): os quatro jobs com success | `gh run view 38584668603` |
 
 As métricas abaixo (R1) são anteriores à evolução e não foram medidas de novo.

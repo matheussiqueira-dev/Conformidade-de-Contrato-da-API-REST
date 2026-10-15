@@ -75,3 +75,18 @@ test('[CT-WEB-121] rota inexistente mostra a pagina de nao encontrada da marca',
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { name: 'Página não encontrada.' })).toBeVisible();
 });
+
+test('[CT-WEB-127] rodape do login em duas linhas inteiras em 1280 px e 390 px', async ({ page }) => {
+  for (const width of [1280, 390]) {
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 800 });
+    await page.goto('/entrar');
+    const lines = page.locator('.login-footer span');
+    await expect(lines).toHaveText(['Ambiente de demonstração · dados fictícios', 'Projeto A3 · UNIFG 2026']);
+    for (const line of await lines.all()) {
+      const { height, lineHeight } = await line.evaluate(el => ({
+        height: el.getBoundingClientRect().height, lineHeight: parseFloat(getComputedStyle(el).lineHeight) }));
+      expect(height, `largura ${width}`).toBeLessThan(lineHeight * 1.5);
+    }
+    expect(await overflowing(page), `largura ${width}`).toEqual([]);
+  }
+});
