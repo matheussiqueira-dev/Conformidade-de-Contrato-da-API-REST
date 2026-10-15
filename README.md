@@ -78,7 +78,7 @@ As senhas ficam em `.env.local` (fora do git), gerado na primeira execução: `S
 | Perfil | Uso |
 | --- | --- |
 | padrão | Desenvolvimento com o banco `postgres-order` (`docker compose up -d postgres`) e a senha em `SPRING_DATASOURCE_PASSWORD`. |
-| `demo` | Aplica também `db/demo` (V6_1, contas com BCrypt de `SBI_DEMO_PASSWORD`; V6_2, massa sintética; V11_1, promoção de Acessórios até dezembro). Precisa estar ativo desde a primeira migração do banco. |
+| `demo` | Aplica também `db/demo` (V6_1, contas com BCrypt de `SBI_DEMO_PASSWORD`; V6_2, massa sintética; V11_1, promoção de Acessórios até dezembro; V11_2, custo da carga inicial de iPhone e AirPods). Precisa estar ativo desde a primeira migração do banco. |
 | `integration` (testes) | PostgreSQL descartável da porta 15432 (`docker-compose.test.yml`), com as tabelas de negócio esvaziadas por `TRUNCATE`. |
 | `contract` | API isolada dos testes HTTP de contrato, com contas sintéticas e senha gerada por execução. |
 
@@ -99,7 +99,7 @@ node scripts\quality-metrics.mjs reports\metricas\r1 "R1"                       
 
 A CI (`.github/workflows/ci.yml`) roda quatro jobs, cada um com seus relatórios como artefato:
 - `test (backend)`;
-- `bd`: Flyway, seed demo e pacote SQL com 60 PASS, mais 10 PASS da massa Olist;
+- `bd`: Flyway, seed demo e pacote SQL com 61 PASS, mais 11 PASS da massa Olist;
 - `contract`: auditoria estática e verificação ao vivo das 58 operações do contrato v5;
 - `frontend`: typecheck, schemas sem diff, testes unitários, build, E2E e axe.
 
