@@ -126,3 +126,30 @@ O seed demo fica em `db/demo`. Detalhes em [bd/modelo-erp-pdv.md](bd/modelo-erp-
 | Desenvolvimento | `postgres-order` (README) | Uso diário; nunca recebe testes. |
 | Testes de integração e contrato | PostgreSQL 18 descartável via Docker Compose (`docker-compose.test.yml`, porta 15432) | Perfil `integration`; as tabelas de negócio são esvaziadas por `TRUNCATE` entre os testes. A CI usa o mesmo PostgreSQL 18 como serviço. Testcontainers não é usado (D-EVO-38). |
 | Demonstração | PostgreSQL 18 em `tmpfs`, publicado só em `127.0.0.1:5433` (`docker-compose.demo.yml`) | Seed demo mais a massa Olist carregada por SQL puro (`docs/bd/pacote-sql/07_carga_olist.sql`), acessível ao IntelliJ, DBeaver ou `psql` ([bd/massa-demonstracao.md](bd/massa-demonstracao.md)). |
+| Publicado | Neon (PostgreSQL 18), projeto `wispy-glade-88962628`, branch `production` | Perfil `demo` aplicado pelo Flyway a cada deploy do Render; contas renomeadas para a equipe; massa Olist pelo mesmo `07_carga_olist.sql`. Cada PR ganha uma branch Neon própria ([deploy.md](deploy.md)). |
+
+## Ambiente publicado
+
+O navegador só conversa com a Vercel; a API e o banco ficam atrás do rewrite, então o cookie de sessão (`HttpOnly`, `Secure`, `SameSite=Lax`) é da mesma origem do site e não há CORS. Endereços, regiões e variáveis em [deploy.md](deploy.md).
+
+```mermaid
+flowchart LR
+  B["Navegador"] -->|"HTTPS"| V
+  subgraph "Vercel · projeto sbi-app"
+    V["Next.js 16<br/>https://sbi-app-alpha.vercel.app"]
+    RW["rewrite /api/backend/*<br/>BACKEND_ORIGIN"]
+    V --> RW
+  end
+  subgraph "Render · serviço sbi-api (Docker, plano gratuito)"
+    A["API Spring Boot<br/>perfil demo · health check /auth/csrf"]
+  end
+  subgraph "Neon · projeto wispy-glade-88962628"
+    D[("PostgreSQL 18<br/>branch production · banco neondb")]
+    P[("branches preview/pr-N<br/>uma por pull request")]
+  end
+  RW -->|"HTTPS"| A
+  A -->|"JDBC + TLS, host sem pooler<br/>Flyway V1 a V11 + db/demo"| D
+  G["GitHub · main"] -->|"push: deploy automático"| A
+  G -->|"push: build automático"| V
+  G -->|"pull request: workflow neon-preview"| P
+```
