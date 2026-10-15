@@ -13,7 +13,8 @@ env:
 
 jobs:
   hygiene:
-    # Mensagens de commit do PR sem rodape de coautoria nem credito a ferramenta (D-PUB-02).
+    # Mensagens de commit do PR sem rodape de coautoria, credito a ferramenta nem endereco antigo do site
+    # (D-PUB-02, D-PUB-11); arquivos versionados sem endereco antigo do site.
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -31,6 +32,10 @@ jobs:
         run: |
           git log --format=%B "origin/${GITHUB_BASE_REF}..HEAD" > "$RUNNER_TEMP/msgs.txt"
           node scripts/check-commit-messages.mjs "$RUNNER_TEMP/msgs.txt"
+
+      - name: Site address in tracked files
+        # O unico endereco do site e https://sbi-app-alpha.vercel.app (D-PUB-11).
+        run: node scripts/check-commit-messages.mjs --tracked
 
   test:
     name: test (backend)
