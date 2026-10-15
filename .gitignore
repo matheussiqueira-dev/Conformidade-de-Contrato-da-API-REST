@@ -20,3 +20,6 @@ next-env.d.ts
 .cto-toolkit/
 frontend/.npm-cache/
 .npm-cache/
+
+# Arquivo de instrucoes gerado pelo next dev (o frontend/.gitignore cobre os demais da pasta)
+AGENTS.md

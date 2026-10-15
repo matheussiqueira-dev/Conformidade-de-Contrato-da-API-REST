@@ -281,12 +281,15 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-PUB-05 | WP-PUB-3 | Smoke publicado | - | Verde | vendedor: axe em `/vender`; o smoke inteiro so faz GET na API, fora login e logout |
 | CT-DEMO-05 | WP-EVO-8 | API | Particionamento | Verde | `scripts/demo-olist-api.mjs`: VENDEDOR ve CPF e CNPJ da massa mascarados em lista, perfil, historico e resumo; GERENTE ve completo |
 | CT-DEMO-06 | WP-EVO-8 | BD | - | Verde | `run_olist_bd.sh`: roteiro `08_crud_clientes_olist.sql` com exatamente as tres recusas esperadas |
+| CT-DEMO-07 | WP-PUB-2 | BD | - | Verde | `09_testes_olist.sql`: 37 categorias com nome em portugues, produto `<categoria> <codigo>` e nenhuma categoria sem acento |
 | CT-WEB-120 | WP-EVO-9 | E2E | Particionamento | Verde | `e2e/brand.spec.ts`: logo com nome acessivel "SBI — Super Business Intelligence" e um unico item com `aria-current` em todas as rotas do gerente (10) e do vendedor (4) |
 | CT-WEB-121 | WP-EVO-9 | E2E/Acessibilidade | - | Verde | `e2e/brand.spec.ts`: `/icon.svg` e `/apple-icon.png` servidos, login "Entrar no SBI" com axe WCAG 2.2 AA e 320 px, menu recolhivel de 44 px em 320 px, 404 da marca |
 | CT-WEB-122 | WP-EVO-9 | Unitario | - | Verde | `tests/brand.test.ts`: nome acessivel unico e geometria do simbolo igual a `app/icon.svg` |
 | CT-WEB-123 | WP-EVO-9 | Unitario | - | Verde | `tests/brand.test.ts`: seis icones do manual e sete derivados; icone decorativo (`aria-hidden`) por padrao e nomeado com rotulo |
 | CT-WEB-124 | WP-EVO-9 | Unitario | Particionamento | Verde | `tests/brand.test.ts`: hora 14h30, periodo "01/09 a 30/09/2026", "Nao informado", "R$ 47 mil", iniciais do avatar, selos de estado e secoes do menu |
 | CT-WEB-125 | WP-EVO-9 | Unitario | - | Verde | `tests/brand.test.ts`: nenhuma forma proibida do nome (sigla com pontos, so a inicial maiuscula, nome abreviado com ou sem espaco, artigo feminino; lista em `FORBIDDEN`) em `frontend/app`, `components`, `lib` e `docs/` |
+| CT-WEB-126 | WP-PUB-2 | E2E | Valor limite | Verde | `e2e/manager.spec.ts`: com 11 produtos vendidos no dia, "Produtos mais vendidos" mostra 10 linhas, "Mostrando 10 de N" e o link "Ver todos" leva a `/gestao/analises` |
+| CT-WEB-127 | WP-PUB-2 | E2E | - | Verde | `e2e/brand.spec.ts`: rodape do login em duas linhas inteiras ("Ambiente de demonstracao · dados ficticios" e "Projeto A3 · UNIFG 2026") em 1280 px e 390 px, sem rolagem horizontal |
 
 ## Selecao inicial da suite
 
