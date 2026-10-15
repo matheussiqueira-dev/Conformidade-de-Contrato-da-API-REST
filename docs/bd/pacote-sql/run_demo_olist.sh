@@ -7,7 +7,7 @@
 # Banco acessivel depois: jdbc:postgresql://127.0.0.1:5433/sbi_demo (usuario sbi, senha de SBI_DB_PASSWORD).
 # Banco externo (ex.: Neon), sem docker compose: roda 07 (e 09 com --check) com psql do conteiner postgres:18.
 # A URL fica so em variavel de ambiente; o Flyway ja deve ter rodado (API no perfil demo apontada para esse banco):
-#   export SBI_DATABASE_URL='postgresql://<usuario>:<senha>@<host-sem-pooler>/sbi?sslmode=require'
+#   export SBI_DATABASE_URL='postgresql://<usuario>:<senha>@<host-sem-pooler>/neondb?sslmode=require'
 #   bash docs/bd/pacote-sql/run_demo_olist.sh --database-url "$SBI_DATABASE_URL" [--check]
 set -euo pipefail
 export MSYS_NO_PATHCONV=1

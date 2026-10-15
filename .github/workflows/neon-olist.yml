@@ -1,0 +1,44 @@
+name: Neon Olist dataset
+
+# Carga manual da massa Olist (07, duas vezes, e testes 09) num banco Neon ja migrado pela API no perfil demo.
+# Roda pela aba Actions, sem psql nem Docker na maquina de quem dispara. A URL vem do neonctl com a
+# NEON_API_KEY, sem pooler, e so passa por variavel de ambiente; a senha e mascarada no log.
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch Neon (vazio = branch padrao do projeto)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+
+jobs:
+  load:
+    name: Load Olist dataset
+    if: vars.NEON_PROJECT_ID != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Load and check by psql
+        shell: bash
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+          NEON_DATABASE: ${{ vars.NEON_DATABASE || 'neondb' }}
+          NEON_ROLE: ${{ vars.NEON_ROLE || 'neondb_owner' }}
+          NEON_BRANCH: ${{ inputs.branch }}
+        run: |
+          SBI_DATABASE_URL="$(npx --yes neonctl@8.4.5 connection-string ${NEON_BRANCH:+"$NEON_BRANCH"} \
+            --project-id "$NEON_PROJECT_ID" --database-name "$NEON_DATABASE" --role-name "$NEON_ROLE" \
+            --ssl require)"
+          password="$(SBI_DATABASE_URL="$SBI_DATABASE_URL" python3 -c 'import os, urllib.parse; print(urllib.parse.urlsplit(os.environ["SBI_DATABASE_URL"]).password or "")')"
+          [ -n "$password" ] && echo "::add-mask::$password"
+          echo "::add-mask::$SBI_DATABASE_URL"
+          bash docs/bd/pacote-sql/run_demo_olist.sh --database-url "$SBI_DATABASE_URL" --check
