@@ -62,6 +62,8 @@ Em bash: `bash docs/bd/pacote-sql/run_demo_olist.sh --database-url "$SBI_DATABAS
 
 O script confere que o esquema existe, roda `07_carga_olist.sql` (com `-Check`, duas vezes, para provar a idempotência) e os testes `09_testes_olist.sql` (CT-DEMO-01 a 04). A URL chega ao `psql` por variável de ambiente do contêiner, fora da linha de comando do `docker run`. O CT-DEMO-05 (máscara de documento pela API) pode ser conferido com `node scripts/demo-olist-api.mjs https://<sbi-app>.vercel.app/api/backend` e `SBI_DEMO_PASSWORD` definida.
 
+**Contas do ambiente publicado.** No Neon, as quatro contas da `V6_1` foram renomeadas para os integrantes da equipe (nome, e-mail e senha próprios, combinados fora do repositório); papéis, vendas, metas e `db_role` continuam os mesmos. Por isso a carga `07_carga_olist.sql` acha o gerente e os vendedores pelo `db_role` (`gerente_rafael`, `vendedora_ana`, `vendedor_bruno`, `vendedora_carla`), e não pelo e-mail. No CT-DEMO-05 contra esse ambiente, informe as contas com `SBI_DEMO_SELLER_EMAIL`/`SBI_DEMO_SELLER_PASSWORD` e `SBI_DEMO_MANAGER_EMAIL`/`SBI_DEMO_MANAGER_PASSWORD`. As branches Neon criadas antes da troca (preview de PR) ainda têm as contas `@loja.test`.
+
 Para o IntelliJ ou o DBeaver, use a mesma URL do Neon no formato JDBC com o usuário e a senha do painel; o roteiro `docs/bd/pacote-sql/08_crud_clientes_olist.sql` termina sempre em `ROLLBACK`.
 
 ## 4. Vercel (frontend)

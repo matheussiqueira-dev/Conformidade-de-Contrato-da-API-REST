@@ -1,13 +1,17 @@
 // CT-DEMO-05: pela API, o VENDEDOR ve o documento mascarado tambem na massa Olist; o GERENTE ve completo.
 // Uso: SBI_DEMO_PASSWORD=<senha das contas demo> node scripts/demo-olist-api.mjs <origem da API>
 //   ex.: http://127.0.0.1:3000/api/backend (stack demo) ou http://127.0.0.1:18081 (API isolada da CI)
+// Ambiente com contas renomeadas: SBI_DEMO_SELLER_EMAIL/_PASSWORD e SBI_DEMO_MANAGER_EMAIL/_PASSWORD
+// substituem ana@loja.test, rafael@loja.test e SBI_DEMO_PASSWORD.
 // Saida no formato dos testes SQL (PASS/FAIL por linha); termina com codigo 1 se algum caso falhar.
 import { readFileSync } from 'node:fs';
 import { sessionClient } from './session-client.mjs';
 
 const origin = process.argv[2] ?? 'http://127.0.0.1:3000/api/backend';
-const password = process.env.SBI_DEMO_PASSWORD;
-if (!password) throw new Error('Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao).');
+const env = process.env;
+const sellerAccount = [env.SBI_DEMO_SELLER_EMAIL ?? 'ana@loja.test', env.SBI_DEMO_SELLER_PASSWORD ?? env.SBI_DEMO_PASSWORD];
+const managerAccount = [env.SBI_DEMO_MANAGER_EMAIL ?? 'rafael@loja.test', env.SBI_DEMO_MANAGER_PASSWORD ?? env.SBI_DEMO_PASSWORD];
+if (!sellerAccount[1] || !managerAccount[1]) throw new Error('Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao).');
 
 const [header, ...rows] = readFileSync(new URL('../docs/bd/pacote-sql/olist/clientes.csv', import.meta.url), 'utf8').trim().split(/\r?\n/);
 const columns = header.split(',');
@@ -17,15 +21,15 @@ const company = rows.map(record).find(c => c.tipo === 'CORPORATE');
 const results = [];
 const check = (id, ok, info = '') => { results.push(ok); console.log(`${ok ? 'PASS' : 'FAIL'} ${id}${ok ? '' : ` ${info}`}`); };
 
-async function login(email) {
+async function login([email, password]) {
   const client = sessionClient(origin);
   const response = await client.login(email, password);
   if (response.status !== 200) throw new Error(`login ${email}: ${response.status}`);
   return client;
 }
 
-const seller = await login('ana@loja.test');
-const manager = await login('rafael@loja.test');
+const seller = await login(sellerAccount);
+const manager = await login(managerAccount);
 const digits = recurring.cpf;
 const formatted = `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
 
