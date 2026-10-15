@@ -61,15 +61,29 @@ jobs:
           ./mvnw -B -q -DskipTests package
 
       # Host sem pooler: o Flyway e o set_config dos gatilhos precisam de conexao direta (docs/deploy.md).
-      # A senha so chega por variavel de ambiente e nunca e impressa; o log do Flyway nao vira artefato.
+      # A senha NAO vem de steps.neon.outputs.password: output de action nao e mascarado e o GitHub imprime o
+      # bloco env de cada passo no log (publico neste repositorio). O neonctl a entrega dentro do script, que a
+      # mascara antes de qualquer uso; a branch Neon herda a senha da branch pai (producao).
       - name: Migrate with Flyway (demo profile)
         shell: bash
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://${{ steps.neon.outputs.db_host }}/${{ vars.NEON_DATABASE || 'neondb' }}?sslmode=require
-          SPRING_DATASOURCE_USERNAME: ${{ vars.NEON_ROLE || 'neondb_owner' }}
-          SPRING_DATASOURCE_PASSWORD: ${{ steps.neon.outputs.password }}
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+          NEON_DATABASE: ${{ vars.NEON_DATABASE || 'neondb' }}
+          NEON_ROLE: ${{ vars.NEON_ROLE || 'neondb_owner' }}
           SBI_DEMO_PASSWORD: ${{ secrets.SBI_DEMO_PASSWORD }}
         run: |
+          url="$(npx --yes neonctl@8.4.5 connection-string "$NEON_BRANCH" --project-id "$NEON_PROJECT_ID" \
+            --database-name "$NEON_DATABASE" --role-name "$NEON_ROLE" --ssl require)"
+          SPRING_DATASOURCE_PASSWORD="$(URL="$url" python3 -c 'import os, urllib.parse; print(urllib.parse.unquote(urllib.parse.urlsplit(os.environ["URL"]).password or ""))')"
+          [ -n "$SPRING_DATASOURCE_PASSWORD" ] || { echo "neonctl nao devolveu a senha da branch." >&2; exit 1; }
+          echo "::add-mask::$SPRING_DATASOURCE_PASSWORD"
+          echo "::add-mask::$url"
+          host="$(URL="$url" python3 -c 'import os, urllib.parse; print(urllib.parse.urlsplit(os.environ["URL"]).hostname)')"
+          export SPRING_DATASOURCE_PASSWORD
+          export SPRING_DATASOURCE_URL="jdbc:postgresql://$host/$NEON_DATABASE?sslmode=require"
+          export SPRING_DATASOURCE_USERNAME="$NEON_ROLE"
+          unset url
           # V6_1 so le a senha quando a branch pai ainda nao tem as contas demo.
           if [ -z "$SBI_DEMO_PASSWORD" ]; then
             SBI_DEMO_PASSWORD="$(openssl rand -hex 16)"
