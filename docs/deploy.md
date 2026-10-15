@@ -13,11 +13,11 @@ Ordem: Neon → Render (o Flyway cria o esquema e as contas) → carga Olist →
 ## 1. Neon (banco)
 
 1. Crie um projeto com **PostgreSQL 18**, na região mais próxima do Render (AWS US East, Virgínia).
-2. Crie o banco `sbi` (o padrão do Neon é `neondb`; se preferir usá-lo, troque o fim da URL).
+2. Use o banco `neondb`, criado com o projeto (é o que a demonstração publicada usa). Se preferir um banco `sbi`, crie-o e troque o fim da URL e a variável `NEON_DATABASE` dos workflows.
 3. Em *Connection details*, desligue *Connection pooling* e copie o host **sem** `-pooler`. O Flyway e o contexto de sessão que os gatilhos usam (`set_config`) precisam de conexão direta; o pooler em modo transação quebra os dois.
 4. O usuário dono do projeto basta: nenhuma migração precisa de superusuário (não há `CREATE ROLE`, `CREATE EXTENSION` nem `ALTER SYSTEM`).
 
-URL JDBC para o Render: `jdbc:postgresql://<host-sem-pooler>/sbi?sslmode=require`.
+URL JDBC para o Render: `jdbc:postgresql://<host-sem-pooler>/neondb?sslmode=require`.
 
 ## 2. Render (API)
 
@@ -35,7 +35,7 @@ Variáveis de ambiente (os valores reais ficam só no painel do Render):
 | Variável | Valor |
 | --- | --- |
 | `SPRING_PROFILES_ACTIVE` | `demo` |
-| `SPRING_DATASOURCE_URL` | `jdbc:postgresql://<host-do-neon-sem-pooler>/sbi?sslmode=require` |
+| `SPRING_DATASOURCE_URL` | `jdbc:postgresql://<host-do-neon-sem-pooler>/neondb?sslmode=require` |
 | `SPRING_DATASOURCE_USERNAME` | `<usuário do Neon>` |
 | `SPRING_DATASOURCE_PASSWORD` | `<senha do Neon>` |
 | `SBI_DEMO_PASSWORD` | `<senha das contas demo, 12 a 72 bytes>` |
@@ -50,10 +50,12 @@ No primeiro deploy, o log do Render deve mostrar o Flyway aplicando V1 a V11 e a
 
 ## 3. Carga Olist no Neon
 
-Depois que a API subiu (esquema criado pelo Flyway), carregue a massa por SQL puro com o `psql` do contêiner `postgres:18`, sem docker compose. A URL fica só numa variável de ambiente da sessão:
+Depois que a API subiu (esquema criado pelo Flyway), a forma mais simples é pelo GitHub: *Actions → Neon Olist dataset → Run workflow* (`.github/workflows/neon-olist.yml`). O workflow pega a URL sem pooler com a `NEON_API_KEY`, roda `07_carga_olist.sql` duas vezes e os testes `09_testes_olist.sql`, sem nada instalado na máquina de quem dispara. A carga é idempotente, então rodar de novo não duplica dados.
+
+Pela máquina local, a massa entra por SQL puro com o `psql` do contêiner `postgres:18`, sem docker compose. A URL fica só numa variável de ambiente da sessão:
 
 ```powershell
-$env:SBI_DATABASE_URL = 'postgresql://<usuário>:<senha>@<host-sem-pooler>/sbi?sslmode=require'
+$env:SBI_DATABASE_URL = 'postgresql://<usuário>:<senha>@<host-sem-pooler>/neondb?sslmode=require'
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -DatabaseUrl $env:SBI_DATABASE_URL -Check
 Remove-Item Env:SBI_DATABASE_URL
 ```
@@ -83,7 +85,23 @@ Variável de ambiente, marcada para **build** e execução em Production (e Prev
 
 O `next.config.mjs` grava o rewrite `/api/backend/*` → `BACKEND_ORIGIN` no `next build`, e os layouts do servidor usam a mesma variável na execução. Se a URL da API mudar, refaça o deploy (novo build), não basta reiniciar.
 
-## 5. Antes da demonstração: aquecer 5 minutos antes
+## 5. Branch Neon por pull request (opcional)
+
+Se o projeto Neon foi ligado ao GitHub pela integração do Neon, `NEON_PROJECT_ID` e `NEON_API_KEY` já existem no repositório. O workflow `.github/workflows/neon-preview.yml` cria, para cada PR deste repositório, a branch Neon `preview/pr-<número>` a partir da branch padrão do projeto, aplica as migrações do PR com o Flyway (perfil `demo`, host sem pooler) e apaga a branch quando o PR fecha. A branch expira sozinha em 14 dias. Enquanto `NEON_PROJECT_ID` não estiver definida, os jobs são pulados; PRs de fork também, porque não recebem secrets.
+
+Configuração em *Settings → Secrets and variables → Actions* do GitHub:
+
+| Tipo | Nome | Valor |
+| --- | --- | --- |
+| Variable | `NEON_PROJECT_ID` | ID do projeto no Neon (*Settings → General*) |
+| Secret | `NEON_API_KEY` | chave de API do Neon (*Account → API keys*) |
+| Variable (opcional) | `NEON_DATABASE` | padrão `neondb` |
+| Variable (opcional) | `NEON_ROLE` | padrão `neondb_owner` |
+| Secret (opcional) | `SBI_DEMO_PASSWORD` | só é lida se a branch pai ainda não tiver as contas demo; sem ela, o job gera uma aleatória |
+
+A branch pai precisa ter sido migrada com o perfil `demo` (é o caso depois do primeiro deploy no Render): com `out-of-order` desligado, aplicar o perfil `demo` sobre um banco migrado sem ele falha. Se a branch já tiver expirado quando o PR fechar, o job de exclusão falha sem efeito no banco.
+
+## 6. Antes da demonstração: aquecer 5 minutos antes
 
 O plano gratuito do Render dorme o serviço depois de um tempo sem acesso, e o Neon suspende o compute ocioso. A primeira requisição depois disso espera a JVM subir (perto de um minuto) e o banco acordar. Cinco minutos antes de apresentar:
 
