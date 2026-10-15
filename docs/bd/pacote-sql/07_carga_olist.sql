@@ -10,9 +10,10 @@
 BEGIN;
 
 -- Autoria pelo mecanismo do sistema: app_current_user_id() le app.user_id (gerente da demonstracao).
-SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE email = 'matheussiqueira@sbi.tech'), true);
+-- As contas da V6_1 sao achadas pelo db_role, que nao muda quando o ambiente publicado renomeia nome e e-mail.
+SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
 DO $$ BEGIN
-  IF app_current_user_id() IS NULL THEN RAISE EXCEPTION 'carga Olist: conta matheussiqueira@sbi.tech inexistente (rode o Flyway no perfil demo)'; END IF;
+  IF app_current_user_id() IS NULL THEN RAISE EXCEPTION 'carga Olist: conta gerente_matheus inexistente (rode o Flyway no perfil demo)'; END IF;
 END $$;
 
 -- ---------------------------------------------------------------------
@@ -109,9 +110,9 @@ BEGIN
     FOR p IN SELECT * FROM stg_olist.pedidos ORDER BY codigo LOOP
         v_moment := least(v_hoje::date - p.dias_atras + p.hora, v_hoje - interval '1 minute');
         v_seller := (SELECT id FROM app_users
-                      WHERE email = CASE p.vendedor WHEN 'VENDEDOR_1' THEN 'allanbarros@sbi.tech'
-                                                    WHEN 'VENDEDOR_2' THEN 'franciscoferreira@sbi.tech'
-                                                    ELSE 'gabrielsousa@sbi.tech' END);
+                      WHERE db_role = CASE p.vendedor WHEN 'VENDEDOR_1' THEN 'vendedor_allan'
+                                                      WHEN 'VENDEDOR_2' THEN 'vendedor_francisco'
+                                                      ELSE 'gerente_gabriel' END);
         IF v_seller IS NULL THEN RAISE EXCEPTION 'carga Olist: vendedor % sem conta de demonstracao', p.vendedor; END IF;
         v_address := NULL;
         IF p.entrega = 'DELIVERY' THEN
