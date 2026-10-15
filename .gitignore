@@ -9,6 +9,8 @@ node_modules/
 .next/
 playwright-report/
 test-results/
+playwright-report-published/
+test-results-published/
 .env.local
 # Gerados pelo Next.js e pelo TypeScript
 next-env.d.ts
