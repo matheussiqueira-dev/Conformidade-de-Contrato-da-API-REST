@@ -1,0 +1,3 @@
+# Arquivos de instrucoes que o next dev (Next 16) gera na raiz do frontend; nao sao versionados.
+/*.md
+!/README.md
