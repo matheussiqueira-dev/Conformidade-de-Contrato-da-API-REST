@@ -15,6 +15,7 @@ Desde a ETAPA 2A (14/10/2026), o Flyway é a única fonte do esquema em todos os
 | V5 | Pré-checagem dos dados legados; catálogo, estoque, metas, promoções, papéis, bloqueio de login, auditoria, idempotência e funções `fn_*` ([modelo](modelo-erp-pdv.md)). |
 | V6 | 16 views dos painéis, inclusive `v_faturamento_diario`. |
 | V6_1, V6_2 (`db/demo`) | Só no perfil `demo`: contas com BCrypt de `SBI_DEMO_PASSWORD` e massa sintética. |
+| V11_2 (`db/demo`) | Só no perfil `demo`: iPhone e AirPods da V6_2 passam a ter custo na carga inicial (60% do preço), gravado na entrada de 25/08, no custo médio e no custo histórico dos itens vendidos; saldos e reservas não mudam (D-PUB-04). |
 | V11_1 (`db/demo`) | Só no perfil `demo`: a promoção de Acessórios da V6_2 passa a valer até 31/12/2026 (cobre a apresentação de 29/11). Altera só a linha original do seed. |
 
 **Perfil `demo` (A2A-4).** Ele precisa estar ativo desde a primeira migração do banco. Com `out-of-order` desligado, ativá-lo num banco já migrado além da V6 faz o Flyway recusar as versões 6.1 e 6.2; nesse caso o banco é recriado, não completado. Sem `SBI_DEMO_PASSWORD` (12 a 72 bytes), a V6_1 falha e o banco não sobe.

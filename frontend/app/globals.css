@@ -112,7 +112,8 @@ dl.facts dd { margin: 2px 0 0; overflow-wrap: anywhere; }
 .login-panel { background: var(--ink); color: #fff; padding: var(--space-6); display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-4); }
 .login-panel .login-headline { color: #fff; font-size: clamp(26px, 3vw, 36px); line-height: 1.2; font-weight: 600; max-width: 18ch; margin: 0; }
 .login-panel p { color: #C9CEDA; max-width: 44ch; }
-.login-panel .login-footer { font-size: 13px; color: #C9CEDA; }
+.login-panel .login-footer { font-size: 13px; line-height: 18px; color: #C9CEDA; display: grid; gap: 2px; }
+.login-panel .login-footer span { white-space: nowrap; }
 .login-form { display: grid; place-items: center; padding: var(--space-3); }
 .login .card { width: 100%; max-width: 420px; padding: var(--space-4); display: grid; gap: var(--space-2); }
 .login .card h2 { font-size: 24px; line-height: 32px; }
@@ -196,7 +197,8 @@ dl.facts dd { margin: 2px 0 0; overflow-wrap: anywhere; }
   .login { grid-template-columns: minmax(0, 1fr); }
   .login-panel { padding: var(--space-3); gap: var(--space-2); }
   .login-panel .login-headline { font-size: 20px; }
-  .login-panel .login-lead, .login-panel .login-footer { display: none; }
+  .login-panel .login-lead { display: none; }
+  .login-panel .login-footer { font-size: 12px; }
 }
 @media (max-width: 900px) {
   .pdv { grid-template-columns: minmax(0, 1fr); }

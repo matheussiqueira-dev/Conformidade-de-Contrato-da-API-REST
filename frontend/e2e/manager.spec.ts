@@ -56,3 +56,16 @@ test('[CT-UI-001] menu do gerente traz as areas de venda e de gestao', async ({ 
     await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
   }
 });
+
+test('[CT-WEB-126] Produtos mais vendidos mostra 10 linhas e leva a Analises pelo "Ver todos"', async ({ page }) => {
+  for (let i = 0; i < 11; i++) await paidSale(await seed(5));
+  await login(page);
+  await page.goto('/gestao');
+  await page.getByText('Hoje', { exact: true }).click();
+  const section = page.getByRole('region', { name: 'Produtos mais vendidos' });
+  await expect(section.getByRole('table')).toBeVisible();
+  await expect(section.locator('tbody tr')).toHaveCount(10);
+  await expect(section.getByText(/^Mostrando 10 de \d+\./)).toBeVisible();
+  await section.getByRole('link', { name: 'Ver todos' }).click();
+  await expect(page).toHaveURL(/\/gestao\/analises$/);
+});
