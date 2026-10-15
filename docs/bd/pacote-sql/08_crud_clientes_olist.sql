@@ -6,7 +6,8 @@
 -- esperadas e mostradas com SAVEPOINT, para o roteiro seguir depois de cada uma.
 -- =====================================================================
 BEGIN;
-SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE email = 'matheussiqueira@sbi.tech'), true);
+-- Gerente pelo db_role: vale tambem no ambiente publicado, onde as contas foram renomeadas.
+SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
 
 -- ---------------------------------------------------------------------
 -- CREATE: cliente pessoa fisica e pessoa juridica (CNPJ alfanumerico)
