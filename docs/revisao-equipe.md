@@ -22,6 +22,7 @@ Requisitos: Docker Desktop, JDK 25 em `JAVA_HOME`, Node 20.9 ou mais novo. Coman
 
 | O quê | Comando | Resultado esperado (14/10) |
 | --- | --- | --- |
+| Demonstração publicada | Abrir <https://sbi-app-alpha.vercel.app> (aquecer antes: [deploy.md](deploy.md), seção 6) | Contas dos integrantes combinadas com a equipe, fora do repositório; roteiro em [roteiro-demonstracao.md](roteiro-demonstracao.md) |
 | Demonstração | `$env:SBI_DEMO_PASSWORD='<senha>'; $env:SBI_DB_PASSWORD=[guid]::NewGuid().ToString('N'); docker compose -f docker-compose.demo.yml -p sbi-demo up --build -d --wait` e abrir <http://localhost:3000> | Contas no [README](../README.md); roteiro em [roteiro-demonstracao.md](roteiro-demonstracao.md) |
 | Testes Java rápidos | `.\mvnw.cmd -q clean verify` | 233 testes, 0 falhas |
 | Integração completa | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\test.ps1 -Mode Integration` | 544 testes, 0 falhas |

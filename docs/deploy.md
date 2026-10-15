@@ -10,6 +10,24 @@ O navegador fala só com a Vercel. O cookie de sessão da API passa pelo rewrite
 
 Ordem: Neon → Render (o Flyway cria o esquema e as contas) → carga Olist → Vercel.
 
+## Ambiente publicado
+
+| Peça | Onde | Endereço / identificação | Região |
+| --- | --- | --- | --- |
+| Frontend | Vercel, projeto `sbi-app` (raiz `frontend`, produção a partir da `main`) | <https://sbi-app-alpha.vercel.app> (endereço oficial da demonstração) | funções em `iad1` (Washington, D.C.); a borda é a mais próxima de quem acessa (ex.: `gru1`, São Paulo) |
+| API | Render, serviço `sbi-api` (Docker, plano gratuito, deploy automático a cada push na `main`, health check `/auth/csrf`) | <https://sbi-api-puk8.onrender.com> | Virginia (US East) |
+| Banco | Neon, projeto `wispy-glade-88962628`, branch `production`, banco `neondb`, PostgreSQL 18 | host direto (sem `-pooler`) no painel do Neon | AWS US East 2 (Ohio) |
+
+Variáveis, sem valores (os valores ficam só no painel de cada plataforma):
+
+| Plataforma | Variáveis |
+| --- | --- |
+| Render | `SPRING_PROFILES_ACTIVE`, `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, `SBI_DEMO_PASSWORD`, `SESSION_COOKIE_SECURE`, `SPRING_JPA_SHOW_SQL`, `PORT`, `JAVA_TOOL_OPTIONS` (seção 2) |
+| Vercel | `BACKEND_ORIGIN` = `https://sbi-api-puk8.onrender.com` (seção 4); as variáveis `DATABASE_URL*` que a integração do Neon cria não são usadas pelo frontend |
+| GitHub | segredo `NEON_API_KEY` e variável `NEON_PROJECT_ID` (seções 3 e 5); segredos `SBI_SMOKE_*` do smoke (seção 7) |
+
+No banco publicado, as quatro contas do seed foram renomeadas para os integrantes da equipe (seção 3); as metas da loja vão de 09/2026 a 12/2026. Aquecimento: seção 6. Smoke somente leitura: seção 7.
+
 ## 1. Neon (banco)
 
 1. Crie um projeto com **PostgreSQL 18**, na região mais próxima do Render (AWS US East, Virgínia).
@@ -46,7 +64,7 @@ Variáveis de ambiente (os valores reais ficam só no painel do Render):
 
 **`SBI_DEMO_PASSWORD` só vale na primeira migração.** A `V6_1__DemoAccounts` grava o BCrypt das contas `matheussiqueira@sbi.tech`, `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech` e `gabrielsousa@sbi.tech` uma única vez, quando o Flyway aplica o perfil `demo` num banco vazio. Trocar a variável depois não muda a senha: para isso, apague e recrie o banco `sbi` no Neon (e rode a carga Olist de novo) ou troque a senha pela tela de usuários. Como o ambiente é público e os e-mails do seed são conhecidos, use uma senha forte e exclusiva.
 
-No primeiro deploy, o log do Render deve mostrar o Flyway aplicando V1 a V11 e as migrações `db/demo`. Conferência: `https://<serviço>.onrender.com/auth/csrf` responde 200 com o token. Cada chamada a `/auth/csrf` abre uma sessão de até 30 minutos (o token CSRF fica na sessão), então o health check mantém algumas centenas de sessões pequenas em memória, o que cabe na instância.
+No primeiro deploy, o log do Render deve mostrar o Flyway aplicando V1 a V11 e as migrações `db/demo`. Conferência: `https://sbi-api-puk8.onrender.com/auth/csrf` responde 200 com o token. Cada chamada a `/auth/csrf` abre uma sessão de até 30 minutos (o token CSRF fica na sessão), então o health check mantém algumas centenas de sessões pequenas em memória, o que cabe na instância.
 
 ## 3. Carga Olist no Neon
 
@@ -62,7 +80,7 @@ Remove-Item Env:SBI_DATABASE_URL
 
 Em bash: `bash docs/bd/pacote-sql/run_demo_olist.sh --database-url "$SBI_DATABASE_URL" --check`.
 
-O script confere que o esquema existe, roda `07_carga_olist.sql` (com `-Check`, duas vezes, para provar a idempotência) e os testes `09_testes_olist.sql` (CT-DEMO-01 a 04). A URL chega ao `psql` por variável de ambiente do contêiner, fora da linha de comando do `docker run`. O CT-DEMO-05 (máscara de documento pela API) pode ser conferido com `node scripts/demo-olist-api.mjs https://<sbi-app>.vercel.app/api/backend` e `SBI_DEMO_PASSWORD` definida.
+O script confere que o esquema existe, roda `07_carga_olist.sql` (com `-Check`, duas vezes, para provar a idempotência) e os testes `09_testes_olist.sql` (CT-DEMO-01 a 04). A URL chega ao `psql` por variável de ambiente do contêiner, fora da linha de comando do `docker run`. O CT-DEMO-05 (máscara de documento pela API) pode ser conferido com `node scripts/demo-olist-api.mjs https://sbi-app-alpha.vercel.app/api/backend` e `SBI_DEMO_PASSWORD` definida.
 
 **Contas do ambiente publicado.** No Neon, as quatro contas da `V6_1` foram renomeadas para os integrantes da equipe (nome, e-mail e senha próprios, combinados fora do repositório); papéis, vendas, metas e `db_role` continuam os mesmos. Por isso a carga `07_carga_olist.sql` acha o gerente e os vendedores pelo `db_role` (`gerente_matheus`, `vendedor_allan`, `vendedor_francisco`, `gerente_gabriel`), e não pelo e-mail. No CT-DEMO-05 contra esse ambiente, informe as contas com `SBI_DEMO_SELLER_EMAIL`/`SBI_DEMO_SELLER_PASSWORD` e `SBI_DEMO_MANAGER_EMAIL`/`SBI_DEMO_MANAGER_PASSWORD`. As branches Neon criadas antes da troca (preview de PR) ainda têm as contas `@loja.test`.
 
@@ -83,7 +101,7 @@ Variável de ambiente, marcada para **build** e execução em Production (e Prev
 
 | Variável | Valor |
 | --- | --- |
-| `BACKEND_ORIGIN` | `https://<serviço>.onrender.com` (só a origem: sem caminho, sem barra final, sem credenciais) |
+| `BACKEND_ORIGIN` | `https://sbi-api-puk8.onrender.com` (só a origem: sem caminho, sem barra final, sem credenciais) |
 
 O `next.config.mjs` grava o rewrite `/api/backend/*` → `BACKEND_ORIGIN` no `next build`, e os layouts do servidor usam a mesma variável na execução. Se a URL da API mudar, refaça o deploy (novo build), não basta reiniciar.
 
@@ -107,8 +125,8 @@ A branch pai precisa ter sido migrada com o perfil `demo` (é o caso depois do p
 
 O plano gratuito do Render dorme o serviço depois de um tempo sem acesso, e o Neon suspende o compute ocioso. A primeira requisição depois disso espera a JVM subir (perto de um minuto) e o banco acordar. Cinco minutos antes de apresentar:
 
-1. abra `https://<serviço>.onrender.com/auth/csrf` até responder 200;
-2. abra `https://<sbi-app>.vercel.app/entrar`, entre como gerente e visite Visão geral e Clientes (aquece a JVM, o pool de conexões e o banco);
+1. abra `https://sbi-api-puk8.onrender.com/auth/csrf` até responder 200 (a primeira chamada pode levar de 1 a 3 minutos com o serviço dormindo);
+2. abra `https://sbi-app-alpha.vercel.app/entrar`, entre como gerente e visite Visão geral e Clientes (aquece a JVM, o pool de conexões e o banco);
 3. mantenha uma aba aberta em Visão geral: o painel consulta a API a cada 15 segundos com a aba visível, o que impede o serviço de dormir durante a apresentação.
 
 Se algo falhar ao vivo, o plano B do [roteiro de demonstração](roteiro-demonstracao.md) usa a stack local (`docker-compose.demo.yml`) e as capturas de `reports/marca/`.

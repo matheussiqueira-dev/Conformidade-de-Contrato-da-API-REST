@@ -91,9 +91,23 @@ Registro completo em [defeitos.md](defeitos.md).
   - `GET /management/revenue?period=D90` no ambiente `docker-compose.demo.yml` respondeu faturamento líquido de R$ 186.400,00 e 65 pedidos pagos em 14/10/2026;
   - são os mesmos números registrados para `v_faturamento_diario` em [bd/modelo-erp-pdv.md](bd/modelo-erp-pdv.md).
 
-## 7. Pendências reais
+## 7. Ambiente de demonstração publicado
 
-- Revisão humana e integração na ordem #13 → #14 → #15 → #16 → #17 → PR desta etapa (squash merge, feito pela equipe).
+A demonstração roda em <https://sbi-app-alpha.vercel.app>, aberta de qualquer navegador:
+
+```
+navegador ──HTTPS──> Vercel (Next.js, /api/backend/* por rewrite) ──HTTPS──> Render (API Spring Boot, Docker) ──JDBC + TLS──> Neon (PostgreSQL 18)
+```
+
+- **Mesma origem para o navegador.** O navegador fala só com a Vercel; as chamadas à API passam pelo rewrite `/api/backend/*`. O cookie de sessão continua `HttpOnly`, `Secure` e `SameSite=Lax` no domínio da Vercel, sem CORS e sem token no JavaScript, como na stack local.
+- **Mesmo esquema.** O Render roda a imagem Docker do repositório com o perfil `demo`; o Flyway aplica as migrações no Neon a cada deploy automático da `main`. A massa Olist entra pelo mesmo `07_carga_olist.sql` da stack local.
+- **Contas.** No banco publicado, as quatro contas do seed foram renomeadas para os integrantes da equipe (um gerente e três vendedores); e-mails e senhas ficam fora do repositório.
+- **Limitações do plano gratuito.** A API dorme depois de 15 minutos sem acesso e leva de 1 a 3 minutos para acordar na primeira requisição; o Neon suspende o banco ocioso. Antes de cada ensaio e da apresentação, o ambiente é aquecido ([deploy.md](deploy.md), seção 6).
+- **Evidência em 15/10/2026.** O smoke somente leitura (`frontend/e2e/published/`, CT-PUB-01 a 05) passou 5/5 contra o site publicado: login dos dois papéis, menu de cada papel, os quatro indicadores e a meta no `/gestao`, cliente Olist com documento mascarado para o vendedor e axe WCAG 2.2 AA sem violação em `/entrar`, `/gestao` e `/vender`, sem nenhuma escrita na API. Depois do merge, a mesma verificação roda pelo workflow manual `published-smoke.yml`.
+
+## 8. Pendências reais
+
+- Integrar os PRs abertos da publicação na ordem WP-PUB-1 → WP-PUB-2 → WP-PUB-3 → WP-PUB-4, mais o #35 (squash merge, feito pela equipe), e criar os segredos `SBI_SMOKE_*` do smoke.
 - Recriar o banco de desenvolvimento `postgres-order` com `pg_dump` antes (A2A-2): a V7 é nova.
 - Decidir metas de qualidade (PMD, SpotBugs, cobertura) em `docs/decisoes/`.
 - Ensaiar o [roteiro de demonstração](roteiro-demonstracao.md) com a equipe.
