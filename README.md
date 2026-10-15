@@ -26,7 +26,7 @@ Detalhes em [docs/arquitetura.md](docs/arquitetura.md) e versões em [docs/decis
 
 ## Acesso online (sem instalar nada)
 
-A demonstração publicada roda em <https://sbi-app-alpha.vercel.app> (frontend na Vercel, API no Render, banco no Neon) e abre de qualquer navegador. Entre com as contas da tabela da seção seguinte; a senha das contas é combinada com a equipe e não fica no repositório. O plano gratuito do Render dorme o serviço sem acesso: a primeira requisição pode levar cerca de um minuto. Publicação, variáveis e manutenção: [docs/deploy.md](docs/deploy.md).
+A demonstração publicada roda em <https://sbi-app-alpha.vercel.app> (frontend na Vercel, API no Render, banco no Neon) e abre de qualquer navegador. Lá as contas são as dos integrantes da equipe (um gerente e três vendedores), com e-mail e senha combinados com a equipe, fora do repositório; a tabela da seção seguinte vale para a stack local. O plano gratuito do Render dorme o serviço sem acesso: a primeira requisição pode levar cerca de um minuto. Publicação, variáveis e manutenção: [docs/deploy.md](docs/deploy.md).
 
 Cada push na `main` publica sozinho a API (Render) e o frontend (Vercel). Cada pull request ganha uma branch própria do banco no Neon, migrada pelo Flyway, que some quando o PR fecha.
 
