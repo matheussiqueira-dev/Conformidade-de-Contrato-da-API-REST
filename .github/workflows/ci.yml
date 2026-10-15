@@ -12,6 +12,26 @@ env:
   TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD || format('ci-{0}-{1}', github.run_id, github.run_attempt) }}
 
 jobs:
+  hygiene:
+    # Mensagens de commit do PR sem rodape de coautoria nem credito a ferramenta (D-PUB-02).
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Commit messages
+        run: |
+          git log --format=%B "origin/${GITHUB_BASE_REF}..HEAD" > "$RUNNER_TEMP/msgs.txt"
+          node scripts/check-commit-messages.mjs "$RUNNER_TEMP/msgs.txt"
+
   test:
     name: test (backend)
     runs-on: ubuntu-latest
