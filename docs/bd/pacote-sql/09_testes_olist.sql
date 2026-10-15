@@ -9,18 +9,18 @@ LANGUAGE plpgsql AS $$ BEGIN
 END $$;
 
 -- CT-DEMO-01 contagens e soma
-SELECT pg_temp.ok('CT-DEMO-01a 60 clientes (8 PJ), 220 produtos em 37 categorias, 219 pedidos e 238 itens',
+SELECT pg_temp.ok('CT-DEMO-01a 60 clientes (8 PJ), 43 produtos em 7 categorias, 219 pedidos e 237 itens',
        (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes)) = 60
        AND (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes) AND customer_type = 'CORPORATE') = 8
-       AND (SELECT count(*) FROM product WHERE sku LIKE 'OL-%') = 220
-       AND (SELECT count(DISTINCT category_id) FROM product WHERE sku LIKE 'OL-%') = 37
+       AND (SELECT count(*) FROM product WHERE sku LIKE 'OL-%') = 43
+       AND (SELECT count(DISTINCT category_id) FROM product WHERE sku LIKE 'OL-%') = 7
        AND (SELECT count(*) FROM orders o JOIN customer c ON c.id = o.customer_id
              WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND o.status = 'PAID') = 219
-       AND (SELECT count(*) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 238);
-SELECT pg_temp.ok('CT-DEMO-01b faturamento bruto 26.040,01 e pagamentos aprovados com o mesmo total',
-       (SELECT sum(oi.price * oi.quantity) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 26040.01
+       AND (SELECT count(*) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 237);
+SELECT pg_temp.ok('CT-DEMO-01b faturamento bruto 442.714,00 e pagamentos aprovados com o mesmo total',
+       (SELECT sum(oi.price * oi.quantity) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 442714.00
        AND (SELECT sum(pay.amount) FROM payment pay JOIN orders o ON o.id = pay.order_id JOIN customer c ON c.id = o.customer_id
-             WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND pay.status = 'APPROVED') = 26040.01);
+             WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND pay.status = 'APPROVED') = 442714.00);
 
 -- CT-DEMO-02 cliente recorrente com 14 pedidos: historico completo e resumo coerente com o CSV
 SELECT pg_temp.ok('CT-DEMO-02 CLI-001 com 14 pedidos pagos, itens e resumo iguais ao CSV',
@@ -39,7 +39,7 @@ SELECT pg_temp.ok('CT-DEMO-03 carga repetida sem duplicar SKU, cliente, pedido o
        (SELECT count(*) = count(DISTINCT sku) FROM product WHERE sku LIKE 'OL-%')
        AND (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes))
          = (SELECT count(DISTINCT email) FROM stg_olist.clientes)
-       AND (SELECT count(*) FROM stock_entry e JOIN product p ON p.id = e.product_id WHERE p.sku LIKE 'OL-%') = 220);
+       AND (SELECT count(*) FROM stock_entry e JOIN product p ON p.id = e.product_id WHERE p.sku LIKE 'OL-%') = 43);
 
 -- CT-DEMO-04 estoque nunca negativo e sem reserva depois da carga
 SELECT pg_temp.ok('CT-DEMO-04 saldo = entrada - vendido, nunca negativo, reservado 0',
@@ -48,12 +48,12 @@ SELECT pg_temp.ok('CT-DEMO-04 saldo = entrada - vendido, nunca negativo, reserva
                               - coalesce((SELECT sum(quantity) FROM stock_movement m WHERE m.product_id = b.product_id AND m.kind = 'SAIDA'), 0)))
   FROM stock_balance b JOIN product p ON p.id = b.product_id WHERE p.sku LIKE 'OL-%';
 
--- CT-DEMO-07 categorias e produtos da massa com o nome em portugues (nenhum nome original sem acento)
-SELECT pg_temp.ok('CT-DEMO-07 37 categorias com nome em portugues; nenhum produto Olist em categoria sem acento',
-       (SELECT count(DISTINCT c.name) FROM product p JOIN category c ON c.id = p.category_id WHERE p.sku LIKE 'OL-%') = 37
+-- CT-DEMO-07 catalogo so de produtos Apple: nenhuma categoria do catalogo diverso de cargas anteriores
+SELECT pg_temp.ok('CT-DEMO-07 produtos da massa nas 7 categorias Apple, com nome do CSV; nenhuma categoria do catalogo antigo',
+       (SELECT count(DISTINCT c.name) FROM product p JOIN category c ON c.id = p.category_id WHERE p.sku LIKE 'OL-%') = 7
        AND NOT EXISTS (SELECT 1 FROM product p JOIN category c ON c.id = p.category_id
-                        WHERE p.sku LIKE 'OL-%'
-                          AND c.name IN (SELECT origem FROM stg_olist.categoria_pt WHERE origem <> nome))
-       AND NOT EXISTS (SELECT 1 FROM product p JOIN category c ON c.id = p.category_id
-                        WHERE p.sku LIKE 'OL-%' AND p.name <> c.name || ' ' || substr(p.sku, 4))
-       AND NOT EXISTS (SELECT 1 FROM category WHERE name ~ '(Relogios|Bebes|Cama mesa)'));
+                        WHERE p.sku LIKE 'OL-%' AND c.name NOT IN (SELECT nome FROM stg_olist.categoria_apple))
+       AND NOT EXISTS (SELECT 1 FROM product p JOIN stg_olist.produtos s ON s.sku = p.sku
+                        WHERE p.name <> s.nome OR p.price <> s.preco)
+       AND NOT EXISTS (SELECT 1 FROM category WHERE name IN (SELECT origem FROM stg_olist.categoria_antiga)
+                                                OR name IN (SELECT nome FROM stg_olist.categoria_antiga)));
