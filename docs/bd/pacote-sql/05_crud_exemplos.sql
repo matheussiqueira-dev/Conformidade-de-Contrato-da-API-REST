@@ -6,7 +6,8 @@
 BEGIN;
 
 -- CREATE
-INSERT INTO category(name) VALUES ('Tablets') RETURNING id, name;
+-- Num banco com a massa Olist a categoria Tablets ja existe (catalogo Apple): o insert vira nada e o resto segue igual.
+INSERT INTO category(name) VALUES ('Tablets') ON CONFLICT (name) DO NOTHING RETURNING id, name;
 INSERT INTO product(product_type, name, price, weight, sku, category_id)
 VALUES ('PHYSICAL', 'iPad 10a geracao', 3600.00, 0.48, 'IPD-10', (SELECT id FROM category WHERE name = 'Tablets'))
 RETURNING id, sku, name, price;
