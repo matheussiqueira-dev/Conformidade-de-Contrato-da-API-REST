@@ -274,6 +274,11 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-DEMO-02 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: cliente com 14 pedidos, itens e `v_cliente_resumo` iguais ao CSV |
 | CT-DEMO-03 | WP-EVO-8 | BD | Transicao de estados | Verde | `09_testes_olist.sql` depois de duas cargas: nada duplicado |
 | CT-DEMO-04 | WP-EVO-8 | BD | Valor limite | Verde | `09_testes_olist.sql`: saldo = entrada - vendido, nunca negativo, reservado 0 |
+| CT-PUB-01 | WP-PUB-3 | Smoke publicado | - | Verde | `e2e/published/smoke.spec.ts`: `/entrar` do site publicado com axe WCAG 2.2 AA sem violacao |
+| CT-PUB-02 | WP-PUB-3 | Smoke publicado | Particionamento | Verde | gerente: menu completo, 4 indicadores e cartao da meta no `/gestao`, axe em `/gestao` e `/vender`, nenhuma escrita na API |
+| CT-PUB-03 | WP-PUB-3 | Smoke publicado | Particionamento | Verde | vendedor: menu sem gestao e `/gestao` com "Sem acesso a esta area" |
+| CT-PUB-04 | WP-PUB-3 | Smoke publicado | - | Verde | vendedor: cliente Olist recorrente achado pelo CPF, documento mascarado na lista e no perfil, historico de pedidos |
+| CT-PUB-05 | WP-PUB-3 | Smoke publicado | - | Verde | vendedor: axe em `/vender`; o smoke inteiro so faz GET na API, fora login e logout |
 | CT-DEMO-05 | WP-EVO-8 | API | Particionamento | Verde | `scripts/demo-olist-api.mjs`: VENDEDOR ve CPF e CNPJ da massa mascarados em lista, perfil, historico e resumo; GERENTE ve completo |
 | CT-DEMO-06 | WP-EVO-8 | BD | - | Verde | `run_olist_bd.sh`: roteiro `08_crud_clientes_olist.sql` com exatamente as tres recusas esperadas |
 | CT-WEB-120 | WP-EVO-9 | E2E | Particionamento | Verde | `e2e/brand.spec.ts`: logo com nome acessivel "SBI — Super Business Intelligence" e um unico item com `aria-current` em todas as rotas do gerente (10) e do vendedor (4) |
