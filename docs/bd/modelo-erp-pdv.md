@@ -453,7 +453,7 @@ Ambiente: contêiner `postgres:18` descartável, removido ao final. Sequência: 
 | Base com dois CPFs que colidem após normalização | A pré-checagem abortou: `V5: documentos colidem apos normalizacao para digitos: 52998224725`. |
 | Testes 06a/06b/06c do pacote com o bloco D aplicado | 50 PASS, 0 FAIL, 0 ERROR. |
 | CC-01 (duas vendas simultâneas da última unidade) | Reservado/saldo = 1/1; a segunda venda recebeu `estoque insuficiente`. Com os 50, fecha os 51 PASS de 12/10. |
-| `v_faturamento_diario` sobre o seed de setembro | Faturamento bruto 186.400,00, 65 pedidos pagos, 92 unidades; 16 dos 27 dias com `lucro_bruto` nulo (iPhone e AirPods sem custo no seed, como no Guia Visual). |
+| `v_faturamento_diario` sobre o seed de setembro | Faturamento bruto 186.400,00, 65 pedidos pagos, 92 unidades; 16 dos 27 dias com `lucro_bruto` nulo só com a V6_2 (iPhone e AirPods sem custo, como no Guia Visual); com a V11_2 do perfil `demo`, que informa o custo da carga inicial desses dois produtos, nenhum dia fica nulo e o BD-07 usa um produto próprio sem custo. |
 
 O ensaio não exercitou as adaptações P1, P7 e P9 nem o seed com CPFs válidos; elas são entregues e testadas na ETAPA 2A.
 

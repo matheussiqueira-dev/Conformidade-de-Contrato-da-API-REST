@@ -8,7 +8,8 @@ END $$;
 SELECT pg_temp.ok('RG-01 Gerente ve todos os pedidos',
        (SELECT count(*) FROM orders) = (SELECT count(*) FROM v_minhas_vendas)
        AND (SELECT count(DISTINCT seller_id) FROM orders) = 3);
-SELECT pg_temp.ok('RG-02 Gerente le posicao de estoque com custo', count(*) = 6 AND count(custo_medio) = 4)
+-- Os 6 produtos do seed tem custo (iPhone e AirPods desde a V11_2).
+SELECT pg_temp.ok('RG-02 Gerente le posicao de estoque com custo', count(*) = 6 AND count(custo_medio) = 6)
   FROM v_posicao_estoque;
 BEGIN;
 SET LOCAL app.reason = 'Ajuste de tabela';

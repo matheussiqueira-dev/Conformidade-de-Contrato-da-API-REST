@@ -8,7 +8,7 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 CONTAINER="${CONTAINER:?informe CONTAINER}"
 DB="${DB:?informe DB}"
 SUPERUSER="${SUPERUSER:?informe SUPERUSER}"
-EXPECTED_PASS="${EXPECTED_PASS:-60}"
+EXPECTED_PASS="${EXPECTED_PASS:-61}"
 OUT="${OUT:-$DIR/resultado_bd.txt}"
 
 psql_as() { local user="$1"; shift; docker exec -i "$CONTAINER" psql -X -q -U "$user" -d "$DB" "$@"; }

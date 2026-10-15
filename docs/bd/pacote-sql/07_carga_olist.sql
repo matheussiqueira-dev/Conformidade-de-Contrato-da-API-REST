@@ -20,7 +20,7 @@ END $$;
 -- Staging com os mesmos campos dos CSVs
 -- ---------------------------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS stg_olist;
-DROP TABLE IF EXISTS stg_olist.itens_pedido, stg_olist.pedidos, stg_olist.produtos, stg_olist.clientes;
+DROP TABLE IF EXISTS stg_olist.itens_pedido, stg_olist.pedidos, stg_olist.produtos, stg_olist.clientes, stg_olist.categoria_pt;
 CREATE TABLE stg_olist.clientes (codigo text PRIMARY KEY, tipo text, nome text, cpf text, cnpj text, email text,
                                  cidade text, uf text, cep_prefixo text);
 CREATE TABLE stg_olist.produtos (sku text PRIMARY KEY, nome text, categoria text, categoria_en text, preco numeric(12,2),
@@ -33,6 +33,57 @@ CREATE TABLE stg_olist.itens_pedido (pedido text, sku text, quantidade integer, 
 \copy stg_olist.produtos FROM 'olist/produtos.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy stg_olist.pedidos FROM 'olist/pedidos.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy stg_olist.itens_pedido FROM 'olist/itens_pedido.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
+
+-- Nome em portugues de cada categoria do recorte (o CSV traz o nome original da Olist sem acento).
+-- Categoria sem linha aqui faz a carga falhar: nenhum nome sem acento entra no catalogo. "Audio" fica com
+-- a categoria de mesmo nome do seed demo, para nao haver duas categorias de audio (D-PUB-05).
+CREATE TABLE stg_olist.categoria_pt (origem text PRIMARY KEY, nome text NOT NULL UNIQUE);
+INSERT INTO stg_olist.categoria_pt(origem, nome) VALUES
+  ('Alimentos', 'Alimentos'),
+  ('Alimentos bebidas', 'Alimentos e bebidas'),
+  ('Artes e artesanato', 'Artes e artesanato'),
+  ('Audio', 'Audio'),
+  ('Automotivo', 'Automotivo'),
+  ('Bebes', 'Bebês'),
+  ('Bebidas', 'Bebidas'),
+  ('Beleza saude', 'Beleza e saúde'),
+  ('Brinquedos', 'Brinquedos'),
+  ('Cama mesa banho', 'Cama, mesa e banho'),
+  ('Casa construcao', 'Casa e construção'),
+  ('Climatizacao', 'Climatização'),
+  ('Consoles games', 'Consoles e games'),
+  ('Construcao ferramentas construcao', 'Construção e ferramentas: construção'),
+  ('Construcao ferramentas ferramentas', 'Construção e ferramentas: ferramentas'),
+  ('Cool stuff', 'Cool stuff'),
+  ('Dvds blu ray', 'DVDs e Blu-ray'),
+  ('Eletrodomesticos', 'Eletrodomésticos'),
+  ('Eletrodomesticos 2', 'Eletrodomésticos 2'),
+  ('Esporte lazer', 'Esporte e lazer'),
+  ('Fashion bolsas e acessorios', 'Moda: bolsas e acessórios'),
+  ('Fashion roupa feminina', 'Moda: roupa feminina'),
+  ('Ferramentas jardim', 'Ferramentas de jardim'),
+  ('Informatica acessorios', 'Informática e acessórios'),
+  ('La cuisine', 'La Cuisine'),
+  ('Malas acessorios', 'Malas e acessórios'),
+  ('Moveis decoracao', 'Móveis e decoração'),
+  ('Moveis quarto', 'Móveis de quarto'),
+  ('Moveis sala', 'Móveis de sala'),
+  ('Papelaria', 'Papelaria'),
+  ('Pc gamer', 'PC gamer'),
+  ('Perfumaria', 'Perfumaria'),
+  ('Pet shop', 'Pet shop'),
+  ('Relogios presentes', 'Relógios e presentes'),
+  ('Tablets impressao imagem', 'Tablets, impressão e imagem'),
+  ('Telefonia', 'Telefonia'),
+  ('Utilidades domesticas', 'Utilidades domésticas');
+DO $$
+DECLARE v_faltando text;
+BEGIN
+  SELECT string_agg(DISTINCT p.categoria, ', ') INTO v_faltando
+    FROM stg_olist.produtos p LEFT JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
+   WHERE m.origem IS NULL;
+  IF v_faltando IS NOT NULL THEN RAISE EXCEPTION 'carga Olist: categoria sem nome em portugues: %', v_faltando; END IF;
+END $$;
 
 -- ---------------------------------------------------------------------
 -- Limpeza idempotente da carga anterior, na ordem das FKs
@@ -58,19 +109,26 @@ DELETE FROM stock_balance WHERE product_id IN (SELECT id FROM alvo_produto);
 DELETE FROM product WHERE id IN (SELECT id FROM alvo_produto);
 DELETE FROM customer WHERE id IN (SELECT id FROM alvo_cliente);
 DELETE FROM address WHERE id IN (SELECT address_id FROM alvo_cliente WHERE address_id IS NOT NULL);
+-- Categorias da massa sem produto nem promocao: nomes atuais e os sem acento de cargas anteriores.
 DELETE FROM category c
- WHERE c.name IN (SELECT categoria FROM stg_olist.produtos)
+ WHERE (c.name IN (SELECT categoria FROM stg_olist.produtos) OR c.name IN (SELECT nome FROM stg_olist.categoria_pt))
    AND NOT EXISTS (SELECT 1 FROM product p WHERE p.category_id = c.id)
    AND NOT EXISTS (SELECT 1 FROM promotion pr WHERE pr.category_id = c.id);
 
 -- ---------------------------------------------------------------------
 -- Catalogo: categorias, produtos (o gatilho cria stock_balance) e entradas (o gatilho calcula o custo medio)
 -- ---------------------------------------------------------------------
-INSERT INTO category(name) SELECT DISTINCT categoria FROM stg_olist.produtos ON CONFLICT (name) DO NOTHING;
+INSERT INTO category(name)
+SELECT DISTINCT m.nome FROM stg_olist.produtos p JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
+ON CONFLICT (name) DO NOTHING;
 
+-- Nome do produto: "<categoria em portugues> <codigo>", o codigo e o SKU sem o prefixo OL-.
 INSERT INTO product(product_type, name, price, description, weight, sku, category_id)
-SELECT 'PHYSICAL', p.nome, p.preco, 'Massa de demonstracao Olist (CC BY-NC-SA 4.0)', p.peso_g / 1000.0, p.sku, c.id
-  FROM stg_olist.produtos p JOIN category c ON c.name = p.categoria
+SELECT 'PHYSICAL', m.nome || ' ' || substr(p.sku, 4), p.preco, 'Massa de demonstracao Olist (CC BY-NC-SA 4.0)',
+       p.peso_g / 1000.0, p.sku, c.id
+  FROM stg_olist.produtos p
+  JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
+  JOIN category c ON c.name = m.nome
  ORDER BY p.sku;
 
 -- Entrada = quantidade vendida + saldo restante (5 a 20, deterministico pelo SKU), datada antes do primeiro pedido.

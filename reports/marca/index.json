@@ -9,7 +9,8 @@
         "entrar-desktop.png",
         "entrar-mobile.png"
       ],
-      "axe": 0
+      "axe": 0,
+      "violations": []
     },
     {
       "role": "gerente",

@@ -20,7 +20,7 @@ Objetivo: dar à demonstração um histórico de compras realista e volumoso par
 ## Adaptações
 
 - **Pessoas:** a Olist não publica nome nem documento. Os nomes são sintéticos; CPF e CNPJ são gerados a partir de hash, com dígito verificador válido; os e-mails usam o domínio reservado `example.com`. Endereço: cidade, UF e prefixo de CEP do original, com rua e número de demonstração. Nenhum dado pessoal real.
-- **Produtos:** nome `<categoria> <código>`, SKU `OL-<6 hex>`, custo médio sintético de 55% a 70% do preço, só para margem e lucro aparecerem. Estoque inicial = quantidade vendida + saldo restante de 5 a 20 (determinístico pelo SKU), com entrada datada antes do primeiro pedido.
+- **Produtos:** nome `<categoria em português> <código>` (a carga traduz as 37 categorias com acento; categoria sem tradução faz a carga falhar), SKU `OL-<6 hex>`, custo médio sintético de 55% a 70% do preço, só para margem e lucro aparecerem. Estoque inicial = quantidade vendida + saldo restante de 5 a 20 (determinístico pelo SKU), com entrada datada antes do primeiro pedido.
 - **Datas:** comprimidas para os últimos 365 dias; `dias_atras` é relativo à data da carga, então o histórico não envelhece. Nenhum pedido fica no futuro: o horário de hoje é limitado ao instante da carga.
 - **Pagamento:** o de maior valor de cada pedido; cartão de crédito ou débito vira CARD (só os 4 últimos dígitos, sintéticos), boleto vira BOLETO (vencimento em 3 dias) e voucher vira PIX. Só pedidos entregues, todos pagos.
 - **Vendedor:** `VENDEDOR_1..3` viram Allan, Francisco e Gabriel, as contas de demonstração.
@@ -72,5 +72,6 @@ O banco está em `tmpfs`: cada `up` começa limpo e reproduzível. Para recarreg
 | CT-DEMO-04 | `09_testes_olist.sql` | saldo = entrada − vendido, nunca negativo, reservado 0 |
 | CT-DEMO-05 | `scripts/demo-olist-api.mjs` | pela API, o VENDEDOR vê CPF e CNPJ da massa mascarados em lista, perfil, histórico e resumo; o GERENTE vê completo e o resumo com 14 pedidos |
 | CT-DEMO-06 | `run_olist_bd.sh` | o roteiro 08 roda com exatamente as três recusas esperadas |
+| CT-DEMO-07 | `09_testes_olist.sql` | 37 categorias com nome em português e nenhum produto da massa em categoria sem acento |
 
 Na CI, o job `bd` roda essa etapa (`docs/bd/pacote-sql/run_olist_bd.sh`) depois dos testes 06*, então nenhum número do BD-01 ao BD-32 muda. Os perfis padrão, `integration` e `contract` não recebem a massa.

@@ -36,10 +36,22 @@ SELECT pg_temp.ok('BD-06 Saldo, reservado e disponivel',
        bool_and((sku = 'IP-128-PT' AND saldo = 10 AND reservado = 2 AND disponivel = 8)
              OR (sku = 'AP-BR'     AND saldo = 13 AND reservado = 1 AND disponivel = 12)))
   FROM v_posicao_estoque WHERE sku IN ('IP-128-PT','AP-BR');
--- BD-07 Custo nao informado nao vira margem
+-- BD-07 Custo nao informado nao vira margem. O seed demo informa o custo de todos os produtos (V11_2), entao o
+-- caso usa um produto proprio, sem custo, vendido num pedido pago de setembro; tudo volta no ROLLBACK.
+BEGIN;
+INSERT INTO product(product_type, name, price, weight, sku) VALUES ('PHYSICAL', 'Teste sem custo', 100, 1, 'TST-SEM-CUSTO');
+INSERT INTO order_item(quantity, price, order_id, product_id, unit_cost)
+SELECT 1, 100, (SELECT min(o.id) FROM orders o JOIN payment p ON p.order_id = o.id AND p.status = 'APPROVED'
+                 WHERE p.payment_date >= '2026-09-01' AND p.payment_date < '2026-10-01'),
+       id, NULL FROM product WHERE sku = 'TST-SEM-CUSTO';
 SELECT pg_temp.ok('BD-07 Margem NULL quando ha item sem custo',
-       margem_pct IS NULL AND itens_sem_custo > 0)
-  FROM v_margem_produto WHERE periodo = '2026-09-01' AND produto = 'iPhone 128 GB Preto';
+       margem_pct IS NULL AND custo IS NULL AND itens_sem_custo = 1, row(margem_pct, itens_sem_custo)::text)
+  FROM v_margem_produto WHERE periodo = '2026-09-01' AND produto = 'Teste sem custo';
+ROLLBACK;
+-- BD-07b Com o custo da carga inicial (V11_2), iPhone e AirPods de setembro tem margem calculada
+SELECT pg_temp.ok('BD-07b iPhone e AirPods de setembro com custo e margem',
+       count(*) = 2 AND bool_and(margem_pct IS NOT NULL AND itens_sem_custo = 0), count(*)::text)
+  FROM v_margem_produto WHERE periodo = '2026-09-01' AND produto IN ('iPhone 128 GB Preto', 'AirPods Branco');
 SELECT pg_temp.ok('BD-08 Margem calculada quando custo conhecido (Apple Watch 32,1%)',
        margem_pct = 32.1, margem_pct::text)
   FROM v_margem_produto WHERE periodo = '2026-09-01' AND produto = 'Apple Watch 41 mm';

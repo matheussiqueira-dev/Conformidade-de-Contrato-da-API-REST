@@ -8,7 +8,7 @@ Situação em 14/10/2026, depois da evolução (WP-EVO-1 a WP-EVO-9, PRs #23 a #
 - **E2E**: os arquivos ficam em `frontend/e2e/`, com Playwright e axe. Rodam pelo `scripts/test-contract.ps1 -HttpOnly -Frontend` (24 testes, 0 falhas) e no job `frontend` da CI.
 - **Lógica do frontend**: `frontend/tests/` (`npm test`, 36 testes).
 - **Contrato**: `scripts/live-contract.mjs` (contrato v5, 58 operações, 0 divergências, relatório em `reports/contrato/live-v5/`), `scripts/http-contract.mjs` e `scripts/http-session.mjs` (40 verificações no `npm test` da raiz), no job `contract`.
-- **Banco**: `docs/bd/pacote-sql/run_bd.sh`, com 60 PASS no job `bd`, mais 10 PASS da massa Olist (`run_olist_bd.sh`, CT-DEMO).
+- **Banco**: `docs/bd/pacote-sql/run_bd.sh`, com 61 PASS no job `bd`, mais 11 PASS da massa Olist (`run_olist_bd.sh`, CT-DEMO).
 - **CI de referência**: run `38543403142`, com os quatro jobs verdes no commit `8fafed2` da antiga `ci/full-pipeline`; a branch foi integrada à `main` e apagada, e as rodadas seguintes ficam em `gh run list --branch main`. Para a evolução, o run `38584668603` (PR #29, commit `de887e9`) tem os quatro jobs verdes com tudo acima.
 
 ## Matriz
