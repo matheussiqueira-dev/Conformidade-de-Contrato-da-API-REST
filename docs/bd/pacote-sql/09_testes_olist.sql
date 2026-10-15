@@ -1,5 +1,5 @@
 -- =====================================================================
--- Testes da carga Olist (CT-DEMO-01 a CT-DEMO-04). Cada caso imprime PASS ou FAIL.
+-- Testes da carga Olist (CT-DEMO-01 a CT-DEMO-04 e CT-DEMO-07). Cada caso imprime PASS ou FAIL.
 -- Rodar como superusuario depois de 07_carga_olist.sql executado DUAS vezes (CT-DEMO-03).
 -- =====================================================================
 \set QUIET on
@@ -47,3 +47,13 @@ SELECT pg_temp.ok('CT-DEMO-04 saldo = entrada - vendido, nunca negativo, reserva
                 AND b.on_hand = (SELECT sum(quantity) FROM stock_entry e WHERE e.product_id = b.product_id)
                               - coalesce((SELECT sum(quantity) FROM stock_movement m WHERE m.product_id = b.product_id AND m.kind = 'SAIDA'), 0)))
   FROM stock_balance b JOIN product p ON p.id = b.product_id WHERE p.sku LIKE 'OL-%';
+
+-- CT-DEMO-07 categorias e produtos da massa com o nome em portugues (nenhum nome original sem acento)
+SELECT pg_temp.ok('CT-DEMO-07 37 categorias com nome em portugues; nenhum produto Olist em categoria sem acento',
+       (SELECT count(DISTINCT c.name) FROM product p JOIN category c ON c.id = p.category_id WHERE p.sku LIKE 'OL-%') = 37
+       AND NOT EXISTS (SELECT 1 FROM product p JOIN category c ON c.id = p.category_id
+                        WHERE p.sku LIKE 'OL-%'
+                          AND c.name IN (SELECT origem FROM stg_olist.categoria_pt WHERE origem <> nome))
+       AND NOT EXISTS (SELECT 1 FROM product p JOIN category c ON c.id = p.category_id
+                        WHERE p.sku LIKE 'OL-%' AND p.name <> c.name || ' ' || substr(p.sku, 4))
+       AND NOT EXISTS (SELECT 1 FROM category WHERE name ~ '(Relogios|Bebes|Cama mesa)'));

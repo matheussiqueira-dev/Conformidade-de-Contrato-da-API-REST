@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Etapa separada do job bd (WP-EVO-8): roda DEPOIS de run_bd.sh, para nenhum numero dos testes 06* mudar.
 # Carrega a massa Olist duas vezes (CT-DEMO-03), executa o roteiro de CRUD 08 (as tres recusas de integridade sao
-# esperadas), os testes 09 (CT-DEMO-01 a 04) e, com a API no perfil demo, a verificacao CT-DEMO-05.
+# esperadas), os testes 09 (CT-DEMO-01 a 04 e 07) e, com a API no perfil demo, a verificacao CT-DEMO-05.
 # Uso: CONTAINER=<id do PostgreSQL> DB=<banco> SUPERUSER=<dono> JAR=<jar da API> JDBC_URL=<url> \
 #      SPRING_DATASOURCE_PASSWORD=<senha> SBI_DEMO_PASSWORD=<senha das contas> ./run_olist_bd.sh
 set -euo pipefail
@@ -11,7 +11,7 @@ CONTAINER="${CONTAINER:?informe CONTAINER}"
 DB="${DB:?informe DB}"
 SUPERUSER="${SUPERUSER:?informe SUPERUSER}"
 OUT="${OUT:-$DIR/resultado_olist.txt}"
-EXPECTED_PASS=10
+EXPECTED_PASS=11
 
 docker exec "$CONTAINER" rm -rf /tmp/pacote-sql
 # No Windows (Git Bash) o docker.exe precisa do caminho no formato do Windows.
@@ -49,6 +49,6 @@ grep -E "PASS|FAIL|ERROR" "$OUT" | grep -v "ERROR:  update or delete\|ERROR:  ne
 PASS=$(grep -c "PASS" "$OUT" || true)
 FAIL=$(grep -c "FAIL" "$OUT" || true)
 ERRORS=$(grep -c "ERROR" "$OUT" || true)
-echo "PASS: $PASS  FAIL: $FAIL  ERROS: $ERRORS  (esperado: $EXPECTED_PASS PASS com a API, 6 sem)"
-WANT=$EXPECTED_PASS; [ -n "${JAR:-}" ] || WANT=6
+echo "PASS: $PASS  FAIL: $FAIL  ERROS: $ERRORS  (esperado: $EXPECTED_PASS PASS com a API, 7 sem)"
+WANT=$EXPECTED_PASS; [ -n "${JAR:-}" ] || WANT=7
 [ "$FAIL" -eq 0 ] && [ "$ERRORS" -eq 0 ] && [ "$PASS" -eq "$WANT" ]

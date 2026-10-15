@@ -14,6 +14,8 @@ import { GoalBar, RevenueChart, ShareBars } from '../../../components/charts.tsx
 import { Icon } from '../../../components/brand/icons.tsx';
 
 const PERIODS = [['TODAY', 'Hoje'], ['D7', '7 dias'], ['D30', '30 dias'], ['D90', '90 dias']] as const;
+/** Linhas da tabela "Produtos mais vendidos"; a lista completa fica em Análises. */
+const TOP_PRODUCTS = 10;
 type Period = (typeof PERIODS)[number][0];
 const GOAL_STATE: Readonly<Record<string, string>> = { SEM_META: 'Sem meta', EM_ANDAMENTO: 'Em andamento', META_ATINGIDA: 'Meta atingida' };
 
@@ -58,10 +60,11 @@ export default function Dashboard() {
   });
 
   const report = revenue.data;
-  const products = useMemo(() => {
+  const matching = useMemo(() => {
     const term = productFilter.trim().toLowerCase();
     return (report?.topProducts ?? []).filter(p => !term || p.name.toLowerCase().includes(term) || p.sku.toLowerCase().includes(term));
   }, [report, productFilter]);
+  const products = matching.slice(0, TOP_PRODUCTS);
   const updated = revenue.dataUpdatedAt ? formatTime(new Date(revenue.dataUpdatedAt).toISOString()) : null;
   const missingCost = report !== undefined && report.grossProfit === null;
 
@@ -127,7 +130,8 @@ export default function Dashboard() {
                 <input id="filtro-produto" className="input" type="search" placeholder="Buscar produto" value={productFilter}
                        onChange={event => setProductFilter(event.target.value)} /></div>
             </div>
-            {products.length === 0 ? <p className="empty">Nenhum produto vendido no período.</p> : <div className="table-wrap"><table>
+            {products.length === 0 ? <p className="empty">Nenhum produto vendido no período.</p>
+              : <div className="table-wrap" tabIndex={0} role="group" aria-labelledby="produtos-titulo"><table>
               <caption className="sr-only">Produtos mais vendidos</caption>
               <thead><tr><th scope="col">Produto</th><th scope="col" className="right">Unid.</th><th scope="col" className="right">Líquido</th>
                 <th scope="col" className="right">Lucro</th></tr></thead>
@@ -136,6 +140,8 @@ export default function Dashboard() {
                   <td className="num right">{money(p.netRevenue)}</td><td className="num right">{money(p.grossProfit)}</td></tr>
               ))}</tbody>
             </table></div>}
+            {matching.length > TOP_PRODUCTS && <p className="muted">
+              Mostrando {TOP_PRODUCTS} de {matching.length}. <Link href="/gestao/analises">Ver todos</Link></p>}
           </section>
           <div className="stack">
             <section className="card stack-sm" aria-labelledby="meta-titulo">

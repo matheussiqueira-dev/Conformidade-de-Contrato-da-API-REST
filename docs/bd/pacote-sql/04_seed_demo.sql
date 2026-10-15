@@ -150,3 +150,20 @@ SELECT fn_criar_pedido((SELECT id FROM customer WHERE name = 'Pedro Martins'),
        jsonb_build_array(jsonb_build_object('product_id', (SELECT id FROM product WHERE sku = 'IP-128-PT'), 'quantity', 1)), 'CARD');
 UPDATE orders SET moment = '2026-10-01 09:40' WHERE status = 'PENDING_PAYMENT';
 COMMIT;
+
+-- Custo da carga inicial de iPhone e AirPods (mesmo efeito da V11_2 do perfil demo): 60% do preco de venda,
+-- gravado na entrada de 25/08, no custo medio e no custo historico dos itens. Saldos e reservas nao mudam.
+BEGIN;
+UPDATE stock_entry e SET unit_cost = c.custo
+  FROM (VALUES ('IP-128-PT', 2700.00), ('AP-BR', 720.00)) c(sku, custo)
+  JOIN product p ON p.sku = c.sku
+ WHERE e.product_id = p.id AND e.unit_cost IS NULL AND e.note = 'Carga inicial da demonstracao';
+UPDATE stock_balance b SET avg_cost = c.custo, updated_at = now()
+  FROM (VALUES ('IP-128-PT', 2700.00), ('AP-BR', 720.00)) c(sku, custo)
+  JOIN product p ON p.sku = c.sku
+ WHERE b.product_id = p.id AND b.avg_cost IS NULL;
+UPDATE order_item oi SET unit_cost = c.custo
+  FROM (VALUES ('IP-128-PT', 2700.00), ('AP-BR', 720.00)) c(sku, custo)
+  JOIN product p ON p.sku = c.sku
+ WHERE oi.product_id = p.id AND oi.unit_cost IS NULL;
+COMMIT;

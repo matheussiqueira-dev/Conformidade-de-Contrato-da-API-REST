@@ -15,7 +15,7 @@ export default function LoginPage() {
           <p className="display login-headline">A loja inteira em um só lugar: venda, estoque e meta.</p>
           <p className="login-lead">Cada venda baixa o estoque e conta para a meta de quem vendeu, com o mesmo número para gerente e vendedor.</p>
         </div>
-        <p className="login-footer">Ambiente de demonstração · dados fictícios · Projeto A3 · UNIFG 2026</p>
+        <p className="login-footer"><span>Ambiente de demonstração · dados fictícios</span><span>Projeto A3 · UNIFG 2026</span></p>
       </section>
       <div className="login-form">
         <section className="card" aria-labelledby="login-title">

@@ -130,3 +130,24 @@ O plano gratuito do Render dorme o serviço depois de um tempo sem acesso, e o N
 3. mantenha uma aba aberta em Visão geral: o painel consulta a API a cada 15 segundos com a aba visível, o que impede o serviço de dormir durante a apresentação.
 
 Se algo falhar ao vivo, o plano B do [roteiro de demonstração](roteiro-demonstracao.md) usa a stack local (`docker-compose.demo.yml`) e as capturas de `reports/marca/`.
+
+## 7. Smoke do ambiente publicado
+
+O workflow `.github/workflows/published-smoke.yml` confere o site publicado sem escrever nada no banco: login do gerente e do vendedor, menu de cada papel, os quatro indicadores e o cartão da meta no `/gestao`, um cliente da massa Olist com documento mascarado para o vendedor e axe WCAG 2.2 AA em `/entrar`, `/gestao` e `/vender`. Os testes ficam em `frontend/e2e/published/`, fora da suíte normal, e falham se o navegador mandar à API qualquer requisição que não seja GET (fora login e logout).
+
+Disparo manual, depois de aquecer o serviço:
+
+```powershell
+gh workflow run published-smoke.yml
+gh workflow run published-smoke.yml -f base_url=https://sbi-app-alpha.vercel.app
+gh run list --workflow published-smoke.yml --limit 1
+```
+
+O próprio workflow aquece a API (até 6 tentativas em `/api/backend/auth/csrf`, a cada 30 s) e guarda o relatório HTML e as capturas no artefato `published-smoke`. As contas vêm de quatro segredos do repositório, criados pelo responsável em *Settings → Secrets and variables → Actions*: `SBI_SMOKE_MANAGER_EMAIL`, `SBI_SMOKE_MANAGER_PASSWORD`, `SBI_SMOKE_SELLER_EMAIL` e `SBI_SMOKE_SELLER_PASSWORD`. Sem eles, o workflow para no primeiro passo com a lista do que falta.
+
+Pela máquina local, com as mesmas variáveis definidas na sessão (lidas de um arquivo fora do repositório):
+
+```powershell
+cd frontend
+npx playwright test -c playwright.published.config.mjs
+```
