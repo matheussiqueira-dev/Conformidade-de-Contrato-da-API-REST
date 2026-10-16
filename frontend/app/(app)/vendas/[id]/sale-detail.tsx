@@ -10,6 +10,7 @@ import { ApiError, api } from '../../../../lib/api/http.ts';
 import { formatDateTime, label, money, ORDER_STATUS, statusPill, PAYMENT_TYPE } from '../../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
+import ProductThumb from '../../../../components/product-thumb.tsx';
 
 function NotFound() {
   return (
@@ -70,7 +71,7 @@ export default function SaleDetail({ orderId, manager = false }: { orderId: numb
             <th scope="col" className="right">Desconto</th><th scope="col" className="right">Subtotal</th></tr></thead>
           <tbody>{order.items.map(item => (
             <tr key={item.productId}>
-              <td>{item.name}<br /><span className="mono muted">{item.sku}</span></td>
+              <td><div className="product-cell"><ProductThumb sku={item.sku} name={item.name} /><span>{item.name}<br /><span className="mono muted">{item.sku}</span></span></div></td>
               <td className="num right">{item.quantity}</td>
               <td className="num right">{money(item.unitPrice)}</td>
               <td className="num right">{money(item.discount)}</td>

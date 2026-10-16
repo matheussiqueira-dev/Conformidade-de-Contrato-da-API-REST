@@ -12,6 +12,7 @@ import { formatMonth, formatPercent, formatTime, label, money, PAYMENT_TYPE } fr
 import { ErrorNotice, Loading } from '../../../components/feedback.tsx';
 import { GoalBar, RevenueChart, ShareBars } from '../../../components/charts.tsx';
 import { Icon } from '../../../components/brand/icons.tsx';
+import ProductThumb from '../../../components/product-thumb.tsx';
 
 const PERIODS = [['TODAY', 'Hoje'], ['D7', '7 dias'], ['D30', '30 dias'], ['D90', '90 dias']] as const;
 /** Linhas da tabela "Produtos mais vendidos"; a lista completa fica em Análises. */
@@ -136,7 +137,7 @@ export default function Dashboard() {
               <thead><tr><th scope="col">Produto</th><th scope="col" className="right">Unid.</th><th scope="col" className="right">Líquido</th>
                 <th scope="col" className="right">Lucro</th></tr></thead>
               <tbody>{products.map(p => (
-                <tr key={p.productId}><td>{p.name}<br /><span className="mono muted">{p.sku}</span></td><td className="num right">{p.unitsSold}</td>
+                <tr key={p.productId}><td><div className="product-cell"><ProductThumb sku={p.sku} name={p.name} /><span>{p.name}<br /><span className="mono muted">{p.sku}</span></span></div></td><td className="num right">{p.unitsSold}</td>
                   <td className="num right">{money(p.netRevenue)}</td><td className="num right">{money(p.grossProfit)}</td></tr>
               ))}</tbody>
             </table></div>}

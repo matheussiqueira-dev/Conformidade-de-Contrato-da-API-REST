@@ -128,9 +128,9 @@ INSERT INTO category(name)
 SELECT DISTINCT categoria FROM stg_olist.produtos
 ON CONFLICT (name) DO NOTHING;
 
--- Nome e preco do catalogo Apple ficticio do CSV; o SKU mantem o prefixo OL- da carga.
+-- Nome e preco do catalogo Apple do CSV (preco de mercado pesquisado em 15/10/2026); o SKU mantem o prefixo OL- da carga.
 INSERT INTO product(product_type, name, price, description, weight, sku, category_id)
-SELECT 'PHYSICAL', p.nome, p.preco, 'Preco ficticio (massa de demonstracao)', p.peso_g / 1000.0, p.sku, c.id
+SELECT 'PHYSICAL', p.nome, p.preco, 'Preco de mercado em 15/10/2026 (massa de demonstracao)', p.peso_g / 1000.0, p.sku, c.id
   FROM stg_olist.produtos p
   JOIN category c ON c.name = p.categoria
  ORDER BY p.sku;
@@ -227,7 +227,7 @@ BEGIN
       FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%';
     RAISE NOTICE 'carga Olist: clientes=% produtos=% categorias=% pedidos=% itens=% soma=%',
                  v_clientes, v_produtos, v_categorias, v_pedidos, v_itens, v_soma;
-    IF (v_clientes, v_produtos, v_categorias, v_pedidos, v_itens) <> (60, 43, 7, 219, 237) OR v_soma <> 442714.00 THEN
+    IF (v_clientes, v_produtos, v_categorias, v_pedidos, v_itens) <> (60, 42, 7, 219, 237) OR v_soma <> 449690.00 THEN
         RAISE EXCEPTION 'carga Olist: conferencia falhou';
     END IF;
 END $$;
