@@ -124,6 +124,12 @@ dl.facts dd { margin: 2px 0 0; overflow-wrap: anywhere; }
 .sidebar-body { display: flex; flex-direction: column; gap: var(--space-3); flex: 1; min-width: 0; }
 .sidebar-top { display: flex; align-items: center; }
 
+/* ---------- miniatura de produto: foto do catalogo ou icone da linha, sempre ao lado do nome ---------- */
+.product-cell { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.thumb { flex: none; width: 40px; height: 40px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--white); object-fit: contain; }
+.thumb-icon { padding: 6px; background: var(--mist); }
+.sidebar-credits { font-size: 13px; margin: 0; }
+
 /* ---------- PDV ---------- */
 .stepper { display: flex; gap: var(--space-1); list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
 .stepper li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); font-size: 14px; color: var(--slate); }
