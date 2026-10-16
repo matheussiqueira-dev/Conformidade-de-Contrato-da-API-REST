@@ -13,17 +13,26 @@ Objetivo: dar à demonstração um histórico de compras realista e volumoso par
 | Arquivo (`docs/bd/pacote-sql/olist/`) | Conteúdo |
 | --- | --- |
 | `clientes.csv` | 60 clientes: 40 recorrentes (o maior com 14 pedidos) e 20 com um pedido; 8 pessoas jurídicas |
-| `produtos.csv` | 43 produtos Apple em 7 categorias (Smartphones, Tablets, Computadores, Audio, Wearables, Casa inteligente, Acessorios) |
+| `produtos.csv` | 42 produtos Apple em 7 categorias (Smartphones, Tablets, Computadores, Audio, Wearables, Casa inteligente, Acessorios) |
 | `pedidos.csv` | 219 pedidos pagos (CARD 167, BOLETO 48, PIX 4; 148 entregas e 71 retiradas) |
-| `itens_pedido.csv` | 237 itens; faturamento bruto R$ 442.714,00 |
+| `itens_pedido.csv` | 237 itens; faturamento bruto R$ 449.690,00 |
 
 ## Adaptações
 
 - **Pessoas:** a Olist não publica nome nem documento. Os nomes são sintéticos; CPF e CNPJ são gerados a partir de hash, com dígito verificador válido; os e-mails usam o domínio reservado `example.com`. Endereço: cidade, UF e prefixo de CEP do original, com rua e número de demonstração. Nenhum dado pessoal real.
-- **Produtos:** a loja vende só Apple. O recorte Olist misturava 37 categorias (cama e banho, pet shop, ferramentas...); `montar_recorte.py` troca cada produto por um item de um catálogo Apple fictício de 43 SKUs (`OL-<modelo>`): o quantil do preço Olist escolhe a faixa (de película e cabo a iPhone Pro e MacBook Pro) e o hash do produto escolhe o item. O preço é o do catálogo, fictício e na ordem de grandeza do varejo brasileiro, então o pedido mantém cliente, data, quantidade, vendedor e pagamento da Olist, mas não o valor. Smartphones, Audio, Wearables e Acessorios são as categorias do seed (a promoção de Acessorios vale também para os acessórios da massa); Tablets, Computadores e Casa inteligente são novas. Categoria fora dessa lista faz a carga falhar. Custo médio sintético de 30% a 45% do preço nos acessórios e de 62% a 73% nos aparelhos, só para margem e lucro aparecerem. Estoque inicial = quantidade vendida + saldo restante de 5 a 20 (determinístico pelo SKU), com entrada datada antes do primeiro pedido.
+- **Produtos:** a loja vende só Apple. O recorte Olist misturava 37 categorias (cama e banho, pet shop, ferramentas...); `montar_recorte.py` troca cada produto por um item de um catálogo Apple de 42 SKUs (`OL-<modelo>`): o quantil do preço Olist escolhe a faixa (de película e cabo a iPhone 18 Pro e MacBook Pro) e o hash do produto escolhe o item. O preço é o do catálogo, de mercado (tabela abaixo), então o pedido mantém cliente, data, quantidade, vendedor e pagamento da Olist, mas não o valor. Smartphones, Audio, Wearables e Acessorios são as categorias do seed (a promoção de Acessorios vale também para os acessórios da massa); Tablets, Computadores e Casa inteligente são novas. Categoria fora dessa lista faz a carga falhar. Custo médio sintético de 30% a 45% do preço nos acessórios e de 62% a 73% nos aparelhos, só para margem e lucro aparecerem. Estoque inicial = quantidade vendida + saldo restante de 5 a 20 (determinístico pelo SKU), com entrada datada antes do primeiro pedido.
 - **Datas:** comprimidas para os últimos 365 dias; `dias_atras` é relativo à data da carga, então o histórico não envelhece. Nenhum pedido fica no futuro: o horário de hoje é limitado ao instante da carga.
 - **Pagamento:** o de maior valor de cada pedido; cartão de crédito ou débito vira CARD (só os 4 últimos dígitos, sintéticos), boleto vira BOLETO (vencimento em 3 dias) e voucher vira PIX. Só pedidos entregues, todos pagos.
 - **Vendedor:** `VENDEDOR_1..3` viram Ana, Bruno e Carla, as contas de demonstração.
+
+## Preços do catálogo (pesquisa de 15/10/2026)
+
+- **Regra:** preço à vista de revendas autorizadas (Magazine Luiza, Amazon, KaBuM, Fast Shop, via Buscapé e Promobit) quando havia oferta; sem oferta encontrada, o preço da Apple Store Brasil (`apple.com/br/shop`) menos 10%, o desconto à vista usual das revendas. O HomePod mini não é vendido pela Apple no Brasil: R$ 999,00 é estimativa de importado.
+- **Com oferta de mercado:** iPhone 16 (R$ 4.959), 17e (R$ 4.799), 17 (R$ 5.699), Air (R$ 7.299), 18 Pro (R$ 10.799), 18 Pro Max (R$ 11.699); iPad (A16) (R$ 3.899), iPad Air M4 (R$ 7.499); MacBook Air 13 M5 (R$ 11.999), 15 M5 (R$ 16.469), MacBook Pro 14 M5 (R$ 21.599); AirPods 5 (R$ 1.499), AirPods 5 com estojo sem fio (R$ 1.529), AirPods Pro 3 (R$ 1.999), AirPods Max 2 (R$ 5.699); Apple Watch SE 3 (R$ 2.499); AirTag com 4 (R$ 1.199).
+- **Apple menos 10%:** os demais (acessórios, iPad mini, iPad Pro, Mac mini, iMac, Apple Watch Series 12 e Ultra 4, Apple TV 4K).
+- **Linha atual:** os modelos substituídos até outubro de 2026 viraram os sucessores à venda (iPhone 17 Pro → 18 Pro, 16e → 17e, Series 11 → 12, Ultra 3 → 4, AirPods 4 → 5, MacBook Air M4 → M5, Mac mini M4 → M6, AirPods Max → Max 2); o HomePod (2ª geração), sem venda no Brasil, saiu.
+- **Miniaturas:** o frontend mostra a foto de cada produto pelo SKU (`frontend/public/produtos/`, fotos de licença livre do Wikimedia Commons geradas por `scripts/product-thumbnails.py`, créditos em `/creditos`); sem foto livre, o ícone da linha (D-PUB-13).
+- O seed demo (V6_2) mantém os seis produtos e preços do Guia Visual, porque os testes BD-01 a BD-32 e os números de setembro dependem deles.
 
 ## Como a carga funciona (SQL puro)
 
@@ -36,7 +45,7 @@ A carga é ela mesma evidência de SQL para a disciplina de Banco de Dados: `\co
 3. limpeza idempotente da carga anterior (pedidos dos clientes da massa e pedidos com produto `OL-%`, pagamentos, itens, movimentos, endereços, entradas, produtos, clientes e categorias que ficaram vazias, inclusive as 36 do catálogo diverso de cargas anteriores), na ordem das FKs;
 4. categorias, produtos (o gatilho cria `stock_balance`) e entradas de estoque (o gatilho calcula o custo médio);
 5. clientes com endereço próprio e pedidos pagos com itens (custo atribuído do momento), pagamento aprovado, movimento `SAIDA` e baixa de `on_hand`, em ordem crescente de `product_id`;
-6. conferência (60 clientes, 43 produtos, 7 categorias, 219 pedidos, 237 itens, R$ 442.714,00): se algo não bater, a transação é desfeita.
+6. conferência (60 clientes, 42 produtos, 7 categorias, 219 pedidos, 237 itens, R$ 449.690,00): se algo não bater, a transação é desfeita.
 
 `08_crud_clientes_olist.sql` é o roteiro da apresentação, todo em `BEGIN ... ROLLBACK`: cadastro de PF e de PJ com CNPJ alfanumérico; duas recusas do banco (CPF com máscara, tipo incoerente com o documento); histórico completo do cliente recorrente; resumo por `v_cliente_resumo`; ranking dos 10 melhores clientes; ticket médio por UF; atualização de contato com versão; preço com motivo e histórico; exclusão de cliente sem pedidos e recusa da FK para cliente com pedidos.
 
@@ -66,7 +75,7 @@ O banco está em `tmpfs`: cada `up` começa limpo e reproduzível. Para recarreg
 
 | Caso | Onde | O que verifica |
 | --- | --- | --- |
-| CT-DEMO-01 | `09_testes_olist.sql` | contagens (inclusive 8 PJ e 7 categorias) e soma de R$ 442.714,00 nos itens e nos pagamentos |
+| CT-DEMO-01 | `09_testes_olist.sql` | contagens (inclusive 8 PJ e 7 categorias) e soma de R$ 449.690,00 nos itens e nos pagamentos |
 | CT-DEMO-02 | `09_testes_olist.sql` | cliente com 14 pedidos: itens e `v_cliente_resumo` iguais ao CSV |
 | CT-DEMO-03 | `09_testes_olist.sql` | carga executada duas vezes sem duplicar SKU, cliente, pedido ou entrada |
 | CT-DEMO-04 | `09_testes_olist.sql` | saldo = entrada − vendido, nunca negativo, reservado 0 |

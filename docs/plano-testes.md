@@ -270,7 +270,7 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-DISC-107 | G-04 | Integracao | Tabela de decisao | Verde | `ManualDiscountApiTest.policiesAreManagerOnly` (GERENTE consulta e altera com motivo e auditoria; VENDEDOR 403; 101% e papel inexistente 400) |
 | CT-WEB-114 | G-04 | E2E/Acessibilidade | Transicao de estados | Verde | `e2e/discount.spec.ts`: desconto de 5% no carrinho, 10% barrado com o limite, aprovacao de 12% pelo gerente no pedido, alcadas em Promocoes; axe WCAG 2.2 AA e 320 px |
 | BD-32 | G-04 | BD | Tabela de decisao | Verde | `06d_testes_evolucao.sql` no job `bd` (alcadas iniciais, motivo obrigatorio, parte manual nunca maior que o desconto do item) |
-| CT-DEMO-01 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: 60 clientes (8 PJ), 43 produtos em 7 categorias, 219 pedidos, 237 itens, R$ 442.714,00 nos itens e nos pagamentos |
+| CT-DEMO-01 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: 60 clientes (8 PJ), 42 produtos em 7 categorias, 219 pedidos, 237 itens, R$ 449.690,00 nos itens e nos pagamentos |
 | CT-DEMO-02 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: cliente com 14 pedidos, itens e `v_cliente_resumo` iguais ao CSV |
 | CT-DEMO-03 | WP-EVO-8 | BD | Transicao de estados | Verde | `09_testes_olist.sql` depois de duas cargas: nada duplicado |
 | CT-DEMO-04 | WP-EVO-8 | BD | Valor limite | Verde | `09_testes_olist.sql`: saldo = entrada - vendido, nunca negativo, reservado 0 |

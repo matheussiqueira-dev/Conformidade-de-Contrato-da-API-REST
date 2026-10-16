@@ -14,6 +14,7 @@ import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedb
 import { Field } from '../../../../components/customer-form.tsx';
 import Drawer from '../../../../components/drawer.tsx';
 import Pager from '../../../../components/pager.tsx';
+import ProductThumb from '../../../../components/product-thumb.tsx';
 
 type StockProduct = z.infer<typeof ListStockProductsResponse>['content'][number];
 type Panel = { kind: 'entry' | 'adjust' | 'min'; product: StockProduct } | null;
@@ -75,8 +76,9 @@ export default function Stock() {
                 <th scope="col"><span className="sr-only">Ações</span></th></tr></thead>
               <tbody>{data.content.map(p => (
                 <tr key={p.productId}>
-                  <td>{p.name}<br /><span className="mono muted">{p.sku}</span>{!p.sellable && <> · <span className="pill">Insumo</span></>}
-                    {!p.active && <> · <span className="pill">Inativo</span></>}</td>
+                  <td><div className="product-cell"><ProductThumb sku={p.sku} name={p.name} />
+                    <span>{p.name}<br /><span className="mono muted">{p.sku}</span>{!p.sellable && <> · <span className="pill">Insumo</span></>}
+                      {!p.active && <> · <span className="pill">Inativo</span></>}</span></div></td>
                   <td className="num right">{p.onHand}</td>
                   <td className="num right">{p.reserved}</td>
                   <td className="num right">{p.belowMin ? <span className="pill pill-warn">{p.available}</span> : p.available}</td>
