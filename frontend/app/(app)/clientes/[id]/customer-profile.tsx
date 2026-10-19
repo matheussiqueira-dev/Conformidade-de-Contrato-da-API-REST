@@ -14,6 +14,7 @@ import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedb
 import { Field } from '../../../../components/customer-form.tsx';
 import Pager from '../../../../components/pager.tsx';
 import Tabs from '../../../../components/tabs.tsx';
+import ProductThumb from '../../../../components/product-thumb.tsx';
 
 type Customer = z.infer<typeof GetCustomerResponse>;
 type Summary = z.infer<typeof GetCustomerSummaryResponse>;
@@ -178,7 +179,8 @@ function TopProducts({ summary }: { summary: Summary | undefined }) {
         <h2 id="produtos-titulo">Produtos mais comprados</h2>
         {summary.topProducts.length === 0 ? <p className="empty">Nenhuma compra paga ainda.</p>
           : <ol className="rank">{summary.topProducts.map(product => (
-              <li key={product.productId}>{product.name} <span className="muted">· {product.quantity} {product.quantity === 1 ? 'unidade' : 'unidades'}</span></li>
+              <li key={product.productId}><span className="product-cell"><ProductThumb name={product.name} size={32} />
+                <span>{product.name} <span className="muted">· {product.quantity} {product.quantity === 1 ? 'unidade' : 'unidades'}</span></span></span></li>
             ))}</ol>}
       </section>
       <section className="card stack-sm" aria-labelledby="formas-titulo">

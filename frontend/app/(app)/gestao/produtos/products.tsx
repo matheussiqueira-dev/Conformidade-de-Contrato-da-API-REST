@@ -15,6 +15,7 @@ import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedb
 import { Field } from '../../../../components/customer-form.tsx';
 import Drawer from '../../../../components/drawer.tsx';
 import Pager from '../../../../components/pager.tsx';
+import ProductThumb from '../../../../components/product-thumb.tsx';
 
 type Product = z.infer<typeof ListProductsResponse>['content'][number];
 type Panel = { kind: 'new' } | { kind: 'edit' | 'price' | 'history'; product: Product } | { kind: 'categories' } | null;
@@ -69,7 +70,8 @@ export default function Products() {
                 <th scope="col">Situação</th><th scope="col"><span className="sr-only">Ações</span></th></tr></thead>
               <tbody>{data.content.map(p => (
                 <tr key={p.id}>
-                  <td>{p.name}<br /><span className="mono muted">{p.sku}</span> · <span className="muted">{p.type === 'DIGITAL' ? 'Digital' : 'Físico'}</span></td>
+                  <td><div className="product-cell"><ProductThumb sku={p.sku} name={p.name} />
+                    <span>{p.name}<br /><span className="mono muted">{p.sku}</span> · <span className="muted">{p.type === 'DIGITAL' ? 'Digital' : 'Físico'}</span></span></div></td>
                   <td>{p.category?.name ?? '—'}</td>
                   <td className="num right">{money(p.price)}</td>
                   <td>{p.active ? <span className="pill pill-ok">Ativo</span> : <span className="pill">Inativo</span>}</td>

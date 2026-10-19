@@ -10,6 +10,7 @@ import {
   ListSalesCatalogResponse, QuoteSaleResponse,
 } from '../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../lib/api/http.ts';
+import ProductThumb from '../../../components/product-thumb.tsx';
 import {
   addProduct, availableFromDetails, clearCart, emptyCart, loadCart, manualDiscountBody, refreshAvailability, removeProduct, saleItems, saveCart,
   setManualDiscount, setQuantity, withIdempotencyKey, type Cart,
@@ -184,8 +185,9 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
                 <li key={item.id} role="presentation">
                   <button type="button" role="option" id={`resultado-${item.id}`} aria-selected={index === selected}
                           onClick={() => add(item)} disabled={item.available < 1}>
-                    <span><strong>{item.name}</strong><br /><span className="mono muted">{item.sku}</span>
-                      {item.activePromotion && <> · <span className="pill pill-ok">{item.activePromotion.name}</span></>}</span>
+                    <span className="product-cell"><ProductThumb sku={item.sku} name={item.name} />
+                      <span><strong>{item.name}</strong><br /><span className="mono muted">{item.sku}</span>
+                        {item.activePromotion && <> · <span className="pill pill-ok">{item.activePromotion.name}</span></>}</span></span>
                     <span className="num right">{money(item.price)}<br /><span className="muted">{item.available} disp.</span></span>
                   </button>
                 </li>
@@ -201,9 +203,12 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
             const short = price && price.available < line.quantity;
             return (
               <div className="cart-line" key={line.productId}>
-                <div>
-                  <strong>{line.name}</strong><br /><span className="mono muted">{line.sku}</span>
-                  {short && <p className="pill pill-warn">Restam {price.available}</p>}
+                <div className="product-cell">
+                  <ProductThumb sku={line.sku} name={line.name} />
+                  <div>
+                    <strong>{line.name}</strong><br /><span className="mono muted">{line.sku}</span>
+                    {short && <p className="pill pill-warn">Restam {price.available}</p>}
+                  </div>
                 </div>
                 <div className="stack-sm end">
                   <span className="num">{price ? money(price.subtotal) : '—'}</span>

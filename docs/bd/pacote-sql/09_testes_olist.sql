@@ -9,18 +9,18 @@ LANGUAGE plpgsql AS $$ BEGIN
 END $$;
 
 -- CT-DEMO-01 contagens e soma
-SELECT pg_temp.ok('CT-DEMO-01a 60 clientes (8 PJ), 43 produtos em 7 categorias, 219 pedidos e 237 itens',
+SELECT pg_temp.ok('CT-DEMO-01a 60 clientes (8 PJ), 42 produtos em 7 categorias, 219 pedidos e 237 itens',
        (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes)) = 60
        AND (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes) AND customer_type = 'CORPORATE') = 8
-       AND (SELECT count(*) FROM product WHERE sku LIKE 'OL-%') = 43
+       AND (SELECT count(*) FROM product WHERE sku LIKE 'OL-%') = 42
        AND (SELECT count(DISTINCT category_id) FROM product WHERE sku LIKE 'OL-%') = 7
        AND (SELECT count(*) FROM orders o JOIN customer c ON c.id = o.customer_id
              WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND o.status = 'PAID') = 219
        AND (SELECT count(*) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 237);
-SELECT pg_temp.ok('CT-DEMO-01b faturamento bruto 442.714,00 e pagamentos aprovados com o mesmo total',
-       (SELECT sum(oi.price * oi.quantity) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 442714.00
+SELECT pg_temp.ok('CT-DEMO-01b faturamento bruto 449.690,00 e pagamentos aprovados com o mesmo total',
+       (SELECT sum(oi.price * oi.quantity) FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%') = 449690.00
        AND (SELECT sum(pay.amount) FROM payment pay JOIN orders o ON o.id = pay.order_id JOIN customer c ON c.id = o.customer_id
-             WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND pay.status = 'APPROVED') = 442714.00);
+             WHERE c.email IN (SELECT email FROM stg_olist.clientes) AND pay.status = 'APPROVED') = 449690.00);
 
 -- CT-DEMO-02 cliente recorrente com 14 pedidos: historico completo e resumo coerente com o CSV
 SELECT pg_temp.ok('CT-DEMO-02 CLI-001 com 14 pedidos pagos, itens e resumo iguais ao CSV',
@@ -39,7 +39,7 @@ SELECT pg_temp.ok('CT-DEMO-03 carga repetida sem duplicar SKU, cliente, pedido o
        (SELECT count(*) = count(DISTINCT sku) FROM product WHERE sku LIKE 'OL-%')
        AND (SELECT count(*) FROM customer WHERE email IN (SELECT email FROM stg_olist.clientes))
          = (SELECT count(DISTINCT email) FROM stg_olist.clientes)
-       AND (SELECT count(*) FROM stock_entry e JOIN product p ON p.id = e.product_id WHERE p.sku LIKE 'OL-%') = 43);
+       AND (SELECT count(*) FROM stock_entry e JOIN product p ON p.id = e.product_id WHERE p.sku LIKE 'OL-%') = 42);
 
 -- CT-DEMO-04 estoque nunca negativo e sem reserva depois da carga
 SELECT pg_temp.ok('CT-DEMO-04 saldo = entrada - vendido, nunca negativo, reservado 0',

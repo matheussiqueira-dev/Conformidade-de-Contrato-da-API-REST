@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { menuFor, menuGroups, PASSWORD_PATH } from '../../lib/areas.ts';
 import { initials } from '../../lib/format.ts';
@@ -25,6 +26,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           <span><strong>{user.name}</strong><br /><span className="muted">{manager ? 'Gerente' : 'Vendedor'}</span></span>
           <div className="account-actions"><LogoutButton /></div>
         </div>
+        <p className="sidebar-credits"><Link href="/creditos">Créditos das imagens</Link></p>
       </Sidebar>
       <main id="conteudo" className="main" tabIndex={-1}>{children}</main>
     </div>

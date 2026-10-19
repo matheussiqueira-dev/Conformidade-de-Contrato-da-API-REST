@@ -54,7 +54,7 @@ $env:SBI_DB_PASSWORD = [guid]::NewGuid().ToString('N')
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -Check
 ```
 
-O script sobe a stack (`docker-compose.demo.yml`), espera a API aplicar o Flyway, carrega a massa Olist por SQL puro e imprime as contagens (60 clientes, 43 produtos Apple, 219 pedidos). Detalhes em [bd/massa-demonstracao.md](bd/massa-demonstracao.md).
+O script sobe a stack (`docker-compose.demo.yml`), espera a API aplicar o Flyway, carrega a massa Olist por SQL puro e imprime as contagens (60 clientes, 42 produtos Apple, 219 pedidos). Detalhes em [bd/massa-demonstracao.md](bd/massa-demonstracao.md).
 
 O roteiro é o mesmo, com estas trocas:
 - **Endereço:** <http://localhost:3000> no lugar do site publicado.
