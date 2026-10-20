@@ -34,7 +34,7 @@ class StrongPasswordValidatorTest {
     @Test
     @DisplayName("[CT-USR-101] senha igual ao e-mail, ignorando caixa e espacos")
     void detectsPasswordEqualToEmail() {
-        assertThat(StrongPasswordValidator.sameAsEmail(" Allan@Loja.test ", "allanbarros@sbi.tech")).isTrue();
+        assertThat(StrongPasswordValidator.sameAsEmail(" AllanBarros@SBI.tech ", "allanbarros@sbi.tech")).isTrue();
         assertThat(StrongPasswordValidator.sameAsEmail("allanbarros@sbi.tech-2026", "allanbarros@sbi.tech")).isFalse();
         assertThat(StrongPasswordValidator.acceptable(null)).isTrue();
     }

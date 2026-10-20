@@ -2,6 +2,7 @@ package com.swee.ordermanagementspring.services;
 
 import com.swee.ordermanagementspring.dto.PaymentRequestDTO;
 import com.swee.ordermanagementspring.entities.Order;
+import com.swee.ordermanagementspring.entities.StoreTime;
 import com.swee.ordermanagementspring.entities.enums.OrderStatus;
 import com.swee.ordermanagementspring.entities.enums.PaymentStatus;
 import com.swee.ordermanagementspring.entities.payment.BoletoPayment;
@@ -24,7 +25,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -77,7 +77,7 @@ class PaymentServiceTest {
         saveReturnsArgument();
         Order order = pendingOrder();
         BoletoPayment payment = new BoletoPayment(new BigDecimal("100.0"), order, "34191790010104351004791020150008291070026000",
-                LocalDate.now().minusDays(1));
+                StoreTime.today().minusDays(1)); // dia da loja: a CI roda em UTC (B-10)
 
         service.processAndSave(payment);
 

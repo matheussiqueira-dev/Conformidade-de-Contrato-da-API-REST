@@ -48,18 +48,18 @@ export SBI_DB_PASSWORD="$(openssl rand -hex 16)"
 docker compose -f docker-compose.demo.yml -p sbi-demo up --build
 ```
 
-Abra <http://localhost:3000> e entre com uma das contas abaixo, todas com a senha definida em `SBI_DEMO_PASSWORD`:
+Abra <http://localhost:3000> e entre com uma das contas da equipe abaixo. Cada conta usa a senha da sua variável (`SBI_DEMO_PASSWORD_MATHEUS`, `SBI_DEMO_PASSWORD_GABRIEL`, `SBI_DEMO_PASSWORD_ALLAN`, `SBI_DEMO_PASSWORD_FRANCISCO`) ou, sem ela, a de `SBI_DEMO_PASSWORD`. As senhas não ficam no repositório: defina-as no terminal ou num `.env` ao lado do `docker-compose.demo.yml` (ignorado pelo git).
 
 | Conta | Perfil |
 | --- | --- |
-| `matheussiqueira@sbi.tech` | Gerente |
-| `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech`, `gabrielsousa@sbi.tech` | Vendedor |
+| `matheussiqueira@sbi.tech`, `gabrielsousa@sbi.tech` | Gerente |
+| `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech` | Vendedor |
 
 Para encerrar e apagar tudo: `docker compose -f docker-compose.demo.yml -p sbi-demo down`.
 
 ### Massa de demonstração (Olist) e acesso ao banco por SQL
 
-Para mostrar um histórico de clientes volumoso (60 clientes, 219 pedidos, recorte do conjunto público da Olist, CC BY-NC-SA 4.0), carregue a massa por SQL depois de subir a stack:
+Para mostrar um histórico de clientes volumoso (60 clientes, 219 pedidos, recorte do conjunto público da Olist, CC BY-NC-SA 4.0, com o catálogo trocado por 42 produtos Apple a preço de mercado), carregue a massa por SQL depois de subir a stack:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 -Check
@@ -78,7 +78,7 @@ As senhas ficam em `.env.local` (fora do git), gerado na primeira execução: `S
 | Perfil | Uso |
 | --- | --- |
 | padrão | Desenvolvimento com o banco `postgres-order` (`docker compose up -d postgres`) e a senha em `SPRING_DATASOURCE_PASSWORD`. |
-| `demo` | Aplica também `db/demo` (V6_1, contas com BCrypt de `SBI_DEMO_PASSWORD`; V6_2, massa sintética; V11_1, promoção de Acessórios até dezembro; V11_2, custo da carga inicial de iPhone e AirPods). Precisa estar ativo desde a primeira migração do banco. |
+| `demo` | Aplica também `db/demo` (V6_1, contas da equipe com BCrypt de `SBI_DEMO_PASSWORD_<NOME>` ou `SBI_DEMO_PASSWORD`; V6_2, massa sintética; V11_1, promoção de Acessórios até dezembro; V11_2, custo da carga inicial de iPhone e AirPods). Precisa estar ativo desde a primeira migração do banco. |
 | `integration` (testes) | PostgreSQL descartável da porta 15432 (`docker-compose.test.yml`), com as tabelas de negócio esvaziadas por `TRUNCATE`. |
 | `contract` | API isolada dos testes HTTP de contrato, com contas sintéticas e senha gerada por execução. |
 

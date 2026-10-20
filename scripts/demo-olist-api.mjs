@@ -1,16 +1,17 @@
 // CT-DEMO-05: pela API, o VENDEDOR ve o documento mascarado tambem na massa Olist; o GERENTE ve completo.
 // Uso: SBI_DEMO_PASSWORD=<senha das contas demo> node scripts/demo-olist-api.mjs <origem da API>
 //   ex.: http://127.0.0.1:3000/api/backend (stack demo) ou http://127.0.0.1:18081 (API isolada da CI)
-// Ambiente com contas renomeadas: SBI_DEMO_SELLER_EMAIL/_PASSWORD e SBI_DEMO_MANAGER_EMAIL/_PASSWORD
-// substituem allanbarros@sbi.tech, matheussiqueira@sbi.tech e SBI_DEMO_PASSWORD.
+// Contas: allanbarros@sbi.tech (vendedor) e matheussiqueira@sbi.tech (gerente), com SBI_DEMO_PASSWORD_ALLAN e
+// SBI_DEMO_PASSWORD_MATHEUS ou a comum SBI_DEMO_PASSWORD. SBI_DEMO_SELLER_EMAIL/_PASSWORD e
+// SBI_DEMO_MANAGER_EMAIL/_PASSWORD trocam a conta e a senha usadas.
 // Saida no formato dos testes SQL (PASS/FAIL por linha); termina com codigo 1 se algum caso falhar.
 import { readFileSync } from 'node:fs';
 import { sessionClient } from './session-client.mjs';
 
 const origin = process.argv[2] ?? 'http://127.0.0.1:3000/api/backend';
 const env = process.env;
-const sellerAccount = [env.SBI_DEMO_SELLER_EMAIL ?? 'allanbarros@sbi.tech', env.SBI_DEMO_SELLER_PASSWORD ?? env.SBI_DEMO_PASSWORD];
-const managerAccount = [env.SBI_DEMO_MANAGER_EMAIL ?? 'matheussiqueira@sbi.tech', env.SBI_DEMO_MANAGER_PASSWORD ?? env.SBI_DEMO_PASSWORD];
+const sellerAccount = [env.SBI_DEMO_SELLER_EMAIL ?? 'allanbarros@sbi.tech', env.SBI_DEMO_SELLER_PASSWORD ?? env.SBI_DEMO_PASSWORD_ALLAN ?? env.SBI_DEMO_PASSWORD];
+const managerAccount = [env.SBI_DEMO_MANAGER_EMAIL ?? 'matheussiqueira@sbi.tech', env.SBI_DEMO_MANAGER_PASSWORD ?? env.SBI_DEMO_PASSWORD_MATHEUS ?? env.SBI_DEMO_PASSWORD];
 if (!sellerAccount[1] || !managerAccount[1]) throw new Error('Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao).');
 
 const [header, ...rows] = readFileSync(new URL('../docs/bd/pacote-sql/olist/clientes.csv', import.meta.url), 'utf8').trim().split(/\r?\n/);

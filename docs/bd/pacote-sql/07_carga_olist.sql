@@ -1,5 +1,5 @@
 -- =====================================================================
--- Carga da massa de demonstracao Olist (historico de clientes) por SQL puro.
+-- Carga da massa de demonstracao Olist (historico de clientes) por SQL puro, com catalogo so de produtos Apple.
 -- Executar como superusuario do banco demo, DEPOIS do Flyway (perfil demo), a partir desta pasta:
 --   psql -U <superusuario> -d <banco> -v ON_ERROR_STOP=1 -f 07_carga_olist.sql
 -- Fonte: Brazilian E-Commerce Public Dataset by Olist (CC BY-NC-SA 4.0); adaptacoes em olist/NOTICE.md.
@@ -20,11 +20,12 @@ END $$;
 -- Staging com os mesmos campos dos CSVs
 -- ---------------------------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS stg_olist;
-DROP TABLE IF EXISTS stg_olist.itens_pedido, stg_olist.pedidos, stg_olist.produtos, stg_olist.clientes, stg_olist.categoria_pt;
+DROP TABLE IF EXISTS stg_olist.itens_pedido, stg_olist.pedidos, stg_olist.produtos, stg_olist.clientes, stg_olist.categoria_pt,
+                     stg_olist.categoria_apple, stg_olist.categoria_antiga;
 CREATE TABLE stg_olist.clientes (codigo text PRIMARY KEY, tipo text, nome text, cpf text, cnpj text, email text,
                                  cidade text, uf text, cep_prefixo text);
-CREATE TABLE stg_olist.produtos (sku text PRIMARY KEY, nome text, categoria text, categoria_en text, preco numeric(12,2),
-                                 custo_medio_demo numeric(12,2), peso_g integer, origem_olist text);
+CREATE TABLE stg_olist.produtos (sku text PRIMARY KEY, nome text, categoria text, preco numeric(12,2),
+                                 custo_medio_demo numeric(12,2), peso_g integer);
 CREATE TABLE stg_olist.pedidos (codigo text PRIMARY KEY, cliente text, vendedor text, dias_atras integer, hora time, status text,
                                 forma_pagamento text, parcelas integer, cartao_ultimos4 text, entrega text, origem_olist text);
 CREATE TABLE stg_olist.itens_pedido (pedido text, sku text, quantidade integer, preco_unitario numeric(12,2));
@@ -34,15 +35,27 @@ CREATE TABLE stg_olist.itens_pedido (pedido text, sku text, quantidade integer, 
 \copy stg_olist.pedidos FROM 'olist/pedidos.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 \copy stg_olist.itens_pedido FROM 'olist/itens_pedido.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8')
 
--- Nome em portugues de cada categoria do recorte (o CSV traz o nome original da Olist sem acento).
--- Categoria sem linha aqui faz a carga falhar: nenhum nome sem acento entra no catalogo. "Audio" fica com
--- a categoria de mesmo nome do seed demo, para nao haver duas categorias de audio (D-PUB-05).
-CREATE TABLE stg_olist.categoria_pt (origem text PRIMARY KEY, nome text NOT NULL UNIQUE);
-INSERT INTO stg_olist.categoria_pt(origem, nome) VALUES
+-- Categorias do catalogo Apple. Produto em categoria fora desta lista faz a carga falhar: so produto Apple entra
+-- no catalogo. Smartphones, Audio, Wearables e Acessorios sao as categorias do seed demo, reaproveitadas (D-PUB-12).
+CREATE TABLE stg_olist.categoria_apple (nome text PRIMARY KEY);
+INSERT INTO stg_olist.categoria_apple(nome) VALUES
+  ('Smartphones'), ('Tablets'), ('Computadores'), ('Audio'), ('Wearables'), ('Casa inteligente'), ('Acessorios');
+DO $$
+DECLARE v_fora text;
+BEGIN
+  SELECT string_agg(DISTINCT p.categoria, ', ') INTO v_fora
+    FROM stg_olist.produtos p LEFT JOIN stg_olist.categoria_apple a ON a.nome = p.categoria
+   WHERE a.nome IS NULL;
+  IF v_fora IS NOT NULL THEN RAISE EXCEPTION 'carga Olist: categoria fora do catalogo Apple: %', v_fora; END IF;
+END $$;
+
+-- Categorias do catalogo diverso das cargas anteriores (nome original sem acento e nome em portugues), so para a
+-- limpeza apagar as que ficarem vazias num banco que ja recebeu a carga antiga, como o Neon publicado.
+CREATE TABLE stg_olist.categoria_antiga (origem text PRIMARY KEY, nome text NOT NULL UNIQUE);
+INSERT INTO stg_olist.categoria_antiga(origem, nome) VALUES
   ('Alimentos', 'Alimentos'),
   ('Alimentos bebidas', 'Alimentos e bebidas'),
   ('Artes e artesanato', 'Artes e artesanato'),
-  ('Audio', 'Audio'),
   ('Automotivo', 'Automotivo'),
   ('Bebes', 'Bebês'),
   ('Bebidas', 'Bebidas'),
@@ -76,14 +89,6 @@ INSERT INTO stg_olist.categoria_pt(origem, nome) VALUES
   ('Tablets impressao imagem', 'Tablets, impressão e imagem'),
   ('Telefonia', 'Telefonia'),
   ('Utilidades domesticas', 'Utilidades domésticas');
-DO $$
-DECLARE v_faltando text;
-BEGIN
-  SELECT string_agg(DISTINCT p.categoria, ', ') INTO v_faltando
-    FROM stg_olist.produtos p LEFT JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
-   WHERE m.origem IS NULL;
-  IF v_faltando IS NOT NULL THEN RAISE EXCEPTION 'carga Olist: categoria sem nome em portugues: %', v_faltando; END IF;
-END $$;
 
 -- ---------------------------------------------------------------------
 -- Limpeza idempotente da carga anterior, na ordem das FKs
@@ -109,9 +114,10 @@ DELETE FROM stock_balance WHERE product_id IN (SELECT id FROM alvo_produto);
 DELETE FROM product WHERE id IN (SELECT id FROM alvo_produto);
 DELETE FROM customer WHERE id IN (SELECT id FROM alvo_cliente);
 DELETE FROM address WHERE id IN (SELECT address_id FROM alvo_cliente WHERE address_id IS NOT NULL);
--- Categorias da massa sem produto nem promocao: nomes atuais e os sem acento de cargas anteriores.
+-- Categorias da massa sem produto nem promocao: as do catalogo Apple e as do catalogo diverso de cargas anteriores.
 DELETE FROM category c
- WHERE (c.name IN (SELECT categoria FROM stg_olist.produtos) OR c.name IN (SELECT nome FROM stg_olist.categoria_pt))
+ WHERE (c.name IN (SELECT nome FROM stg_olist.categoria_apple)
+        OR c.name IN (SELECT origem FROM stg_olist.categoria_antiga) OR c.name IN (SELECT nome FROM stg_olist.categoria_antiga))
    AND NOT EXISTS (SELECT 1 FROM product p WHERE p.category_id = c.id)
    AND NOT EXISTS (SELECT 1 FROM promotion pr WHERE pr.category_id = c.id);
 
@@ -119,16 +125,14 @@ DELETE FROM category c
 -- Catalogo: categorias, produtos (o gatilho cria stock_balance) e entradas (o gatilho calcula o custo medio)
 -- ---------------------------------------------------------------------
 INSERT INTO category(name)
-SELECT DISTINCT m.nome FROM stg_olist.produtos p JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
+SELECT DISTINCT categoria FROM stg_olist.produtos
 ON CONFLICT (name) DO NOTHING;
 
--- Nome do produto: "<categoria em portugues> <codigo>", o codigo e o SKU sem o prefixo OL-.
+-- Nome e preco do catalogo Apple do CSV (preco de mercado pesquisado em 15/10/2026); o SKU mantem o prefixo OL- da carga.
 INSERT INTO product(product_type, name, price, description, weight, sku, category_id)
-SELECT 'PHYSICAL', m.nome || ' ' || substr(p.sku, 4), p.preco, 'Massa de demonstracao Olist (CC BY-NC-SA 4.0)',
-       p.peso_g / 1000.0, p.sku, c.id
+SELECT 'PHYSICAL', p.nome, p.preco, 'Preco de mercado em 15/10/2026 (massa de demonstracao)', p.peso_g / 1000.0, p.sku, c.id
   FROM stg_olist.produtos p
-  JOIN stg_olist.categoria_pt m ON m.origem = p.categoria
-  JOIN category c ON c.name = m.nome
+  JOIN category c ON c.name = p.categoria
  ORDER BY p.sku;
 
 -- Entrada = quantidade vendida + saldo restante (5 a 20, deterministico pelo SKU), datada antes do primeiro pedido.
@@ -223,7 +227,7 @@ BEGIN
       FROM order_item oi JOIN product p ON p.id = oi.product_id WHERE p.sku LIKE 'OL-%';
     RAISE NOTICE 'carga Olist: clientes=% produtos=% categorias=% pedidos=% itens=% soma=%',
                  v_clientes, v_produtos, v_categorias, v_pedidos, v_itens, v_soma;
-    IF (v_clientes, v_produtos, v_categorias, v_pedidos, v_itens) <> (60, 220, 37, 219, 238) OR v_soma <> 26040.01 THEN
+    IF (v_clientes, v_produtos, v_categorias, v_pedidos, v_itens) <> (60, 42, 7, 219, 237) OR v_soma <> 449690.00 THEN
         RAISE EXCEPTION 'carga Olist: conferencia falhou';
     END IF;
 END $$;

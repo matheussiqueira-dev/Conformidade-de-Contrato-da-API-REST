@@ -1,221 +1,43 @@
-sku,nome,categoria,categoria_en,preco,custo_medio_demo,peso_g,origem_olist
-OL-D83509,Esporte lazer D83509,Esporte lazer,sports_leisure,39.90,21.95,200,d83509907a19c72e1e4cdde78b8177ec
-OL-94CC77,Fashion bolsas e acessorios 94CC77,Fashion bolsas e acessorios,fashion_bags_accessories,13.99,8.25,150,94cc774056d3f2b0dc693486a589025e
-OL-E01BC2,Esporte lazer E01BC2,Esporte lazer,sports_leisure,149.90,82.45,900,e01bc2ad5c6f46c0f53f73379fcd602e
-OL-88159B,Esporte lazer 88159B,Esporte lazer,sports_leisure,39.90,26.33,343,88159bac10e3d4f4b69b157406c7f70f
-OL-9169F7,Esporte lazer 9169F7,Esporte lazer,sports_leisure,29.99,16.49,300,9169f70b7ce1138ac35678432d1e5ff2
-OL-5BCCC8,Esporte lazer 5BCCC8,Esporte lazer,sports_leisure,13.99,8.25,150,5bccc8fe44471df6c7b7e08176837d2f
-OL-5CB96C,Esporte lazer 5CB96C,Esporte lazer,sports_leisure,45.99,29.43,300,5cb96c51c55f57503465e4d2558dc053
-OL-D63541,Esporte lazer D63541,Esporte lazer,sports_leisure,51.80,29.01,1000,d6354128c28cc56532ba7393d9373083
-OL-FE7E33,Fashion bolsas e acessorios FE7E33,Fashion bolsas e acessorios,fashion_bags_accessories,22.99,14.71,150,fe7e33eaa09b5a4a3d3aa477280db875
-OL-41F6CB,Esporte lazer 41F6CB,Esporte lazer,sports_leisure,99.00,68.31,330,41f6cb7c3b1200749326e50106f32d58
-OL-DE7DF8,Esporte lazer DE7DF8,Esporte lazer,sports_leisure,26.99,15.38,200,de7df82eb1e48c456b020c2cfb03aeed
-OL-426F91,Esporte lazer 426F91,Esporte lazer,sports_leisure,72.90,48.84,350,426f910ccd39ae5e7d55013c466fe343
-OL-DF4737,Construcao ferramentas ferramentas DF4737,Construcao ferramentas ferramentas,costruction_tools_tools,23.40,13.10,400,df473738565b52f77b4e22b328b41576
-OL-1269D6,Cama mesa banho 1269D6,Cama mesa banho,bed_bath_table,16.90,11.32,200,1269d60fc5efbcf03e7eea49213091c6
-OL-55363F,Cama mesa banho 55363F,Cama mesa banho,bed_bath_table,16.90,10.98,200,55363f487ca324087a49ddfcfb91b971
-OL-7B49E5,Cama mesa banho 7B49E5,Cama mesa banho,bed_bath_table,16.90,11.32,200,7b49e585ac8c80b14c9b2815d4db465f
-OL-957F6D,Moveis decoracao 957F6D,Moveis decoracao,furniture_decor,97.47,55.56,1450,957f6d6b55b78746f89e976cba785440
-OL-689A9F,Moveis decoracao 689A9F,Moveis decoracao,furniture_decor,50.00,33.00,550,689a9f33ae479ec0d9f68a9b6b0cfcbf
-OL-82254D,Casa construcao 82254D,Casa construcao,home_construction,239.90,160.73,2550,82254d93b897fde054504b15f8fe923c
-OL-446607,Moveis decoracao 446607,Moveis decoracao,furniture_decor,97.00,65.96,700,446607005fbc439a9439caed96867e26
-OL-F58288,Utilidades domesticas F58288,Utilidades domesticas,housewares,119.00,70.21,1950,f582884ed8bb76a4b6317b8c9e966d98
-OL-CEEB8B,Cama mesa banho CEEB8B,Cama mesa banho,bed_bath_table,53.00,36.57,650,ceeb8b2d571b23399910f1b83980c973
-OL-D296D7,Cama mesa banho D296D7,Cama mesa banho,bed_bath_table,53.00,32.86,600,d296d7996d75ec35fcfc75b3a06cae63
-OL-D801CA,Cama mesa banho D801CA,Cama mesa banho,bed_bath_table,53.99,36.71,650,d801caede80d4819d4976e8bfdbc2861
-OL-7FD658,Informatica acessorios 7FD658,Informatica acessorios,computers_accessories,59.99,35.99,700,7fd6586464df3ea9bad637e34580c186
-OL-CE6F74,Cama mesa banho CE6F74,Cama mesa banho,bed_bath_table,109.90,68.14,1300,ce6f74096c84567f22728c84f3d6e7fc
-OL-108DFA,Cool stuff 108DFA,Cool stuff,cool_stuff,269.90,183.53,800,108dfaacffadeceb87032609d340722c
-OL-F7B39D,Utilidades domesticas F7B39D,Utilidades domesticas,housewares,59.90,40.13,600,f7b39dca4a425dcfd4a8b0b0aac4b7c0
-OL-294281,Cama mesa banho 294281,Cama mesa banho,bed_bath_table,125.90,69.25,5500,29428180f6710d477f3c85fb06adb593
-OL-6E41CE,Moveis decoracao 6E41CE,Moveis decoracao,furniture_decor,49.99,33.49,1050,6e41ce53043104a92912099c90215f1e
-OL-1FA419,Moveis decoracao 1FA419,Moveis decoracao,furniture_decor,56.99,36.47,2500,1fa419f430caa58899132fe77917b7b6
-OL-CE497A,Moveis decoracao CE497A,Moveis decoracao,furniture_decor,49.99,34.99,1200,ce497a3d92ec305f5d9ef0c4b6980a95
-OL-554BC9,Moveis decoracao 554BC9,Moveis decoracao,furniture_decor,74.99,44.24,14800,554bc96f8adc27819810a1aacf333535
-OL-D84339,Cool stuff D84339,Cool stuff,cool_stuff,10.99,7.25,325,d84339772d824505b7f19e647f373ec3
-OL-8E0F2A,Utilidades domesticas 8E0F2A,Utilidades domesticas,housewares,74.99,52.49,10150,8e0f2a25d10756a2202d5d7623e03449
-OL-9D0AA8,Papelaria 9D0AA8,Papelaria,stationery,34.23,21.91,550,9d0aa87e8df1bdbe0f79353520a2d538
-OL-8F8333,Perfumaria 8F8333,Perfumaria,perfumery,118.00,79.06,563,8f83335d6508c667813ff14dc437bc81
-OL-FBC148,Perfumaria FBC148,Perfumaria,perfumery,118.00,69.62,560,fbc1488c1a1e72ba175f53ab29a248e8
-OL-C7646A,Moveis decoracao C7646A,Moveis decoracao,furniture_decor,46.00,31.28,5000,c7646a8d47c6414ce8e5770653f3e8b0
-OL-BAD02B,Moveis decoracao BAD02B,Moveis decoracao,furniture_decor,46.00,26.22,1100,bad02bda4c5cc1c81501022f3b06101c
-OL-306599,Utilidades domesticas 306599,Utilidades domesticas,housewares,55.00,36.30,1250,306599a052830af3cfebe42ee7a79dde
-OL-AEFB22,Utilidades domesticas AEFB22,Utilidades domesticas,housewares,69.99,45.49,4250,aefb222adb91095556d8aee8ccd7f97f
-OL-0EC96E,Moveis decoracao 0EC96E,Moveis decoracao,furniture_decor,169.00,108.16,1450,0ec96e6d31a1493b0475805c9ae1a0a2
-OL-C80525,Beleza saude C80525,Beleza saude,health_beauty,152.99,94.85,275,c80525a7dab2df6000ca88a2e7197323
-OL-36C2FB,Cama mesa banho 36C2FB,Cama mesa banho,bed_bath_table,80.00,52.80,6038,36c2fb4fa746273709c373f6d6ec6796
-OL-9359CB,Cama mesa banho 9359CB,Cama mesa banho,bed_bath_table,119.90,65.95,722,9359cb8632f702a16b12ff5464d82d03
-OL-9E4991,Cama mesa banho 9E4991,Cama mesa banho,bed_bath_table,239.90,155.94,16400,9e4991475c72f651bfc73d697bf5ecd4
-OL-C211FF,Cama mesa banho C211FF,Cama mesa banho,bed_bath_table,24.90,13.70,200,c211ff3068fcd2f8898192976d8b3a32
-OL-8A4436,Cama mesa banho 8A4436,Cama mesa banho,bed_bath_table,99.90,60.94,1400,8a443635fdf9759915c9be5be2e3b862
-OL-ECB092,Beleza saude ECB092,Beleza saude,health_beauty,38.00,26.22,725,ecb092c44590e3c5867a4b8bb4f08ce5
-OL-3D3CD6,Cama mesa banho 3D3CD6,Cama mesa banho,bed_bath_table,59.90,35.34,300,3d3cd6379eb6ac4e8e617574a1d0d145
-OL-7F1A77,Cool stuff 7F1A77,Cool stuff,cool_stuff,58.90,32.98,575,7f1a77bec0639e473392e91a504272a5
-OL-E19ED2,Cool stuff E19ED2,Cool stuff,cool_stuff,49.90,31.44,400,e19ed24240b0a59787d78d68f6dded7b
-OL-4638E4,Automotivo 4638E4,Automotivo,auto,378.00,226.80,10700,4638e41e1c53018897e12edbb2815807
-OL-C5CC16,Automotivo C5CC16,Automotivo,auto,199.90,117.94,2750,c5cc16e72344194c359106a8061c83f5
-OL-34DABB,Tablets impressao imagem 34DABB,Tablets impressao imagem,tablets_printing_image,52.00,29.64,300,34dabb8af33b3756cf72df05fb327011
-OL-D8C365,Moveis quarto D8C365,Moveis quarto,furniture_bedroom,9.90,5.54,200,d8c365a069853295a82caf595c2c8c8d
-OL-F5D8F4,Fashion bolsas e acessorios F5D8F4,Fashion bolsas e acessorios,fashion_bags_accessories,10.90,6.10,200,f5d8f4fbc70ca2a0038b9a0010ed5cb0
-OL-743801,Moveis quarto 743801,Moveis quarto,furniture_bedroom,9.90,6.14,200,743801b34cc44776de511ba8eff778e2
-OL-036BCD,Moveis quarto 036BCD,Moveis quarto,furniture_bedroom,6.90,4.14,200,036bcd084feae22f3a997f5080ec30df
-OL-2797D3,Pet shop 2797D3,Pet shop,pet_shop,9.90,6.14,200,2797d3826d386bfda4f347a378b89f4d
-OL-DB1203,Cool stuff DB1203,Cool stuff,cool_stuff,50.00,34.50,575,db12039c7ff4e850d48e0312fa9b3473
-OL-094EFC,Brinquedos 094EFC,Brinquedos,toys,71.99,40.31,600,094efc8b088034585ebda1a32da7181d
-OL-423B46,Relogios presentes 423B46,Relogios presentes,watches_gifts,55.00,34.65,200,423b46d7ff817b1cd19ab195c7b76546
-OL-756791,Brinquedos 756791,Brinquedos,toys,104.90,62.94,1600,756791c03bd72f60ad98162dd69d054c
-OL-B623B7,Brinquedos B623B7,Brinquedos,toys,70.97,40.45,3008,b623b7cb05ee3248fbe4a6ecbeed79a4
-OL-C94D19,Moveis sala C94D19,Moveis sala,furniture_living_room,103.97,70.70,9750,c94d19d021d4a8fbae5a45f904aeea90
-OL-58EFB9,Moveis sala 58EFB9,Moveis sala,furniture_living_room,103.97,62.38,9700,58efb9b638561ce132216a9a612513e2
-OL-F7E5D0,Moveis decoracao F7E5D0,Moveis decoracao,furniture_decor,12.99,8.57,2900,f7e5d0186f539b61586d7ddd247d2996
-OL-D0BE99,Construcao ferramentas construcao D0BE99,Construcao ferramentas construcao,construction_tools_construction,19.00,12.54,200,d0be993a2140a8cfe0a106b6c2d974b6
-OL-73AE8D,Cama mesa banho 73AE8D,Cama mesa banho,bed_bath_table,79.90,44.74,1150,73ae8d8ca7df19a982c92fc1265d9e46
-OL-A2307A,Alimentos bebidas A2307A,Alimentos bebidas,food_drink,38.99,21.44,700,a2307a34b16eb2201ce5206cbd7f9bc7
-OL-064841,Esporte lazer 064841,Esporte lazer,sports_leisure,24.99,16.99,900,06484143f7046fc1c2ec000aba13e28a
-OL-11875B,Esporte lazer 11875B,Esporte lazer,sports_leisure,65.00,44.20,1032,11875b30b49585209e608f40e8082e65
-OL-47B8C7,Beleza saude 47B8C7,Beleza saude,health_beauty,205.00,112.75,600,47b8c79d616369fd222f0bb68ea0293b
-OL-E8C603,Relogios presentes E8C603,Relogios presentes,watches_gifts,19.90,12.14,250,e8c6039a25765995ac7c1ec2cbef5765
-OL-F0BBC1,Malas acessorios F0BBC1,Malas acessorios,luggage_accessories,19.99,12.99,650,f0bbc1bdaf90ddcab4aa862660dfc6d3
-OL-EC9089,Artes e artesanato EC9089,Artes e artesanato,arts_and_craftmanship,129.90,71.45,1200,ec90895370885d025efeb8e72e7fa699
-OL-1B2066,Moveis decoracao 1B2066,Moveis decoracao,furniture_decor,20.89,13.16,1650,1b2066a33aee5851ee3e44b10b36b3c8
-OL-0EC7B6,Cama mesa banho 0EC7B6,Cama mesa banho,bed_bath_table,148.90,83.38,7474,0ec7b6a863e219792bc4d50d3a62a839
-OL-5ADF18,Cama mesa banho 5ADF18,Cama mesa banho,bed_bath_table,143.60,80.42,1650,5adf18557fb630bec009793ac8ae4483
-OL-486401,Esporte lazer 486401,Esporte lazer,sports_leisure,294.00,194.04,2800,48640118918b5bd6454e3fee20ad637b
-OL-9C7CE5,Relogios presentes 9C7CE5,Relogios presentes,watches_gifts,29.00,19.72,250,9c7ce59c96e74dfdfc51f13a4a6c3869
-OL-540352,Relogios presentes 540352,Relogios presentes,watches_gifts,49.00,34.30,250,5403528d987ad26e8d7cb25940411987
-OL-8A5835,Relogios presentes 8A5835,Relogios presentes,watches_gifts,65.00,40.30,250,8a5835aeef83efa6aa947f84f92deb0e
-OL-DC52F0,Relogios presentes DC52F0,Relogios presentes,watches_gifts,49.00,32.34,400,dc52f0f5d3ec37a93eaf956cde4e5d2c
-OL-1E4161,Relogios presentes 1E4161,Relogios presentes,watches_gifts,249.00,171.81,1017,1e41618bcaf005d9f4cba13fb70915bf
-OL-55AEFE,Relogios presentes 55AEFE,Relogios presentes,watches_gifts,399.00,235.41,600,55aefe286a63b5e07f42a63c10371020
-OL-17AD67,Audio 17AD67,Audio,audio,119.90,79.13,620,17ad6786808ab3fedfb261a70a5932d6
-OL-BFC0D0,Relogios presentes BFC0D0,Relogios presentes,watches_gifts,137.00,78.09,950,bfc0d01be79d9038c7720f983bf954e0
-OL-80E7F6,Alimentos 80E7F6,Alimentos,food,89.90,52.14,500,80e7f6c61346d1feb1bca71585ac62e4
-OL-7643F9,Alimentos bebidas 7643F9,Alimentos bebidas,food_drink,21.90,14.67,300,7643f9ef2cbf1bd4202b0b7dcc500cad
-OL-CB03E4,Ferramentas jardim CB03E4,Ferramentas jardim,garden_tools,329.00,184.24,9150,cb03e4f0503f45854e87afe535e0681d
-OL-1716EA,Automotivo 1716EA,Automotivo,auto,3.49,2.09,200,1716ea399ed8ee62ba811e6f55180f45
-OL-39E97F,Consoles games 39E97F,Consoles games,consoles_games,43.20,27.65,300,39e97f6d709c48e6b1cba11db9f0f545
-OL-E2BB00,Relogios presentes E2BB00,Relogios presentes,watches_gifts,56.00,35.28,300,e2bb00220a167d9e60b6776ac33717bc
-OL-AE7937,Cool stuff AE7937,Cool stuff,cool_stuff,71.10,49.77,400,ae7937db16790e94d48df1991877b508
-OL-D35D1F,Cool stuff D35D1F,Cool stuff,cool_stuff,1013.40,689.11,5288,d35d1fa56f3c5a2777f5542a84a085dd
-OL-62B07A,Relogios presentes 62B07A,Relogios presentes,watches_gifts,338.90,237.23,400,62b07aff118f62756ee579afeedc3eb0
-OL-216414,Cama mesa banho 216414,Cama mesa banho,bed_bath_table,227.00,140.74,2325,216414cd4aad908188257071249e0cc3
-OL-FF7C75,Cama mesa banho FF7C75,Cama mesa banho,bed_bath_table,35.90,20.46,1000,ff7c7524d5f9a8386ab27088ec03c1fb
-OL-BF6E9B,Utilidades domesticas BF6E9B,Utilidades domesticas,housewares,43.00,29.24,1300,bf6e9b07b37b073afbd4420d91518a9b
-OL-38D3D8,Utilidades domesticas 38D3D8,Utilidades domesticas,housewares,69.90,41.94,1000,38d3d8beb882d46c0ecbd12cf224753f
-OL-4B9A4B,Cama mesa banho 4B9A4B,Cama mesa banho,bed_bath_table,27.99,15.39,650,4b9a4b0697670351564e07258fa677ee
-OL-E4AA3F,Ferramentas jardim E4AA3F,Ferramentas jardim,garden_tools,34.00,19.38,1600,e4aa3f3e3209009166c6b79afa8204bc
-OL-5C821D,Climatizacao 5C821D,Climatizacao,air_conditioning,89.00,56.96,300,5c821d665e58b08092e830f81c12cc37
-OL-FBA6F8,Eletrodomesticos FBA6F8,Eletrodomesticos,home_appliances,18.00,11.34,1000,fba6f88e10230dd0ba718aec962064ae
-OL-D881B7,Construcao ferramentas construcao D881B7,Construcao ferramentas construcao,construction_tools_construction,24.50,15.68,200,d881b7a2ce3e484f379f751df4c709ce
-OL-0B814A,Moveis quarto 0B814A,Moveis quarto,furniture_bedroom,169.00,103.09,10700,0b814a3c8fa6dbb849df7c28c1bd6831
-OL-60C937,Utilidades domesticas 60C937,Utilidades domesticas,housewares,72.00,44.64,2700,60c93709754c1b56d6fcc7187a4810f3
-OL-FA3881,Utilidades domesticas FA3881,Utilidades domesticas,housewares,72.00,44.64,8050,fa38811cc82d393bddb9ad0b9ad96e2a
-OL-9C64CA,Utilidades domesticas 9C64CA,Utilidades domesticas,housewares,72.00,46.08,1900,9c64cafd9a39441e353cbb545ebb68b6
-OL-468F9E,Utilidades domesticas 468F9E,Utilidades domesticas,housewares,72.00,39.60,1750,468f9e86ce85d599b7f48ddab25f1b42
-OL-2B86FF,Brinquedos 2B86FF,Brinquedos,toys,69.00,37.95,400,2b86ffeae831b59e4fb849565cdc28ca
-OL-A72209,Brinquedos A72209,Brinquedos,toys,59.00,35.40,400,a72209f6ea270769cecf0ed4168d3893
-OL-5B45B9,Brinquedos 5B45B9,Brinquedos,toys,149.90,85.44,400,5b45b90d432972e54f815d543084e6ae
-OL-B5ADF7,Relogios presentes B5ADF7,Relogios presentes,watches_gifts,241.00,134.96,483,b5adf7b72a7eb667aafd446581c35f3f
-OL-0F4D27,Brinquedos 0F4D27,Brinquedos,toys,79.00,46.61,325,0f4d27b820e317c951649da022895e0e
-OL-CEC097,Esporte lazer CEC097,Esporte lazer,sports_leisure,69.90,40.54,2500,cec09725da5ed01471d9a505e7389d37
-OL-82A612,Esporte lazer 82A612,Esporte lazer,sports_leisure,119.80,69.48,4350,82a61259a621866c4ba63743da29a342
-OL-7BA74F,Esporte lazer 7BA74F,Esporte lazer,sports_leisure,119.80,76.67,4350,7ba74f993dca27160dc49880d9ac56b2
-OL-AA2800,Brinquedos AA2800,Brinquedos,toys,39.90,23.14,200,aa280035c50ba62c746480a59045eec4
-OL-FB5192,Fashion bolsas e acessorios FB5192,Fashion bolsas e acessorios,fashion_bags_accessories,35.00,23.45,100,fb5192388e7614dee676e3fcafbd12ee
-OL-00FAA4,Fashion bolsas e acessorios 00FAA4,Fashion bolsas e acessorios,fashion_bags_accessories,270.00,170.10,100,00faa46f36261af8bbf3a4d37fa4841b
-OL-938D2B,Fashion bolsas e acessorios 938D2B,Fashion bolsas e acessorios,fashion_bags_accessories,59.90,34.74,300,938d2bbf637fa7e013e37477da0969c0
-OL-EA9B0B,La cuisine EA9B0B,La cuisine,la_cuisine,193.00,113.87,8800,ea9b0b855335919945731f9368f83dc9
-OL-65266B,Papelaria 65266B,Papelaria,stationery,19.90,13.33,250,65266b2da20d04dbe00c5c2d3bb7859e
-OL-CD48F2,Bebidas CD48F2,Bebidas,drinks,47.49,32.29,175,cd48f265a63e13b762601f5f794c5fca
-OL-5D5288,Esporte lazer 5D5288,Esporte lazer,sports_leisure,46.90,32.83,300,5d5288d3096b9becaa3566f64fe88110
-OL-DCFE76,Esporte lazer DCFE76,Esporte lazer,sports_leisure,290.00,197.20,300,dcfe76be1e1036cb99e5d8bdc2a1b1c9
-OL-F9379F,Telefonia F9379F,Telefonia,telephony,21.99,13.19,50,f9379f60154525fc7b7aab43e4f14651
-OL-2EB72D,Esporte lazer 2EB72D,Esporte lazer,sports_leisure,65.00,40.95,200,2eb72d11643aaae8f92fafc9296674c8
-OL-EC2D43,Cama mesa banho EC2D43,Cama mesa banho,bed_bath_table,45.90,28.46,800,ec2d43cc59763ec91694573b31f1c29a
-OL-E19C52,Fashion bolsas e acessorios E19C52,Fashion bolsas e acessorios,fashion_bags_accessories,270.00,148.50,100,e19c52ba2deb45c56077643f204eda1e
-OL-63094A,Fashion bolsas e acessorios 63094A,Fashion bolsas e acessorios,fashion_bags_accessories,250.00,157.50,150,63094ac128b54dd72d511043411df079
-OL-362052,Fashion bolsas e acessorios 362052,Fashion bolsas e acessorios,fashion_bags_accessories,270.00,148.50,100,362052fcdf7c9e3596a0a6c97536cdc3
-OL-06CE9C,Beleza saude 06CE9C,Beleza saude,health_beauty,92.00,55.20,100,06ce9c3e61c7a07f872f8317a7dc534d
-OL-1F11CA,Esporte lazer 1F11CA,Esporte lazer,sports_leisure,32.96,21.09,180,1f11ca0065518d335b576597c5b7f072
-OL-7D1A66,Esporte lazer 7D1A66,Esporte lazer,sports_leisure,112.00,67.20,150,7d1a667dbc183583078324f912d42c6b
-OL-BFA393,Fashion roupa feminina BFA393,Fashion roupa feminina,fashio_female_clothing,29.99,18.59,350,bfa393df5b4494bea7158660999a921b
-OL-3472B1,Cama mesa banho 3472B1,Cama mesa banho,bed_bath_table,17.90,11.28,250,3472b106bf41b1e7223330cdfb8a3673
-OL-CF6514,Cama mesa banho CF6514,Cama mesa banho,bed_bath_table,17.90,10.92,250,cf6514025ef5d3a93d69d2a7bfa4036b
-OL-0152F6,Cama mesa banho 0152F6,Cama mesa banho,bed_bath_table,13.90,8.90,250,0152f69b6cf919bcdaf117aa8c43e5a2
-OL-1A4ABD,Ferramentas jardim 1A4ABD,Ferramentas jardim,garden_tools,25.59,16.12,600,1a4abdf8e4e0329e516e6e55260bb1d7
-OL-16B06E,Fashion bolsas e acessorios 16B06E,Fashion bolsas e acessorios,fashion_bags_accessories,34.90,21.64,200,16b06ede456b922e56fbb4b3818aa875
-OL-58C975,Fashion bolsas e acessorios 58C975,Fashion bolsas e acessorios,fashion_bags_accessories,50.00,34.50,100,58c975d8b74f2c5a520b580f46456cf5
-OL-8734D9,Dvds blu ray 8734D9,Dvds blu ray,dvds_blu_ray,149.00,93.87,1000,8734d9a13b93f1f8addd0be7c53b6928
-OL-952670,Cama mesa banho 952670,Cama mesa banho,bed_bath_table,205.00,141.45,3300,952670bc019a73f0933157ec82ff6e4f
-OL-553E0E,Cama mesa banho 553E0E,Cama mesa banho,bed_bath_table,39.50,25.28,800,553e0e7590d3116a072507a3635d2877
-OL-80B518,Fashion bolsas e acessorios 80B518,Fashion bolsas e acessorios,fashion_bags_accessories,69.90,40.54,100,80b5182ab2afa5091844c94a0106b843
-OL-1E2841,Pet shop 1E2841,Pet shop,pet_shop,49.90,33.93,200,1e2841e311d4b0bb5cd837dca5ada1c7
-OL-99F5B2,Informatica acessorios 99F5B2,Informatica acessorios,computers_accessories,115.52,73.93,160,99f5b2240b82bf9387e5cf2fc0335b08
-OL-36F60D,Informatica acessorios 36F60D,Informatica acessorios,computers_accessories,67.90,46.17,207,36f60d45225e60c7da4558b070ce4b60
-OL-A1A971,Informatica acessorios A1A971,Informatica acessorios,computers_accessories,67.91,41.43,100,a1a97164f38cfb98511eb68e6b40ad94
-OL-E3323B,Informatica acessorios E3323B,Informatica acessorios,computers_accessories,88.00,58.08,167,e3323b0d3f79bdf85b58561d2218bc12
-OL-AE52EE,Informatica acessorios AE52EE,Informatica acessorios,computers_accessories,72.00,49.68,167,ae52eeb8383b94455f0a08b1f88ad002
-OL-6C04A0,Automotivo 6C04A0,Automotivo,auto,10.90,7.30,200,6c04a068e5ab37749c980c42a036b9e3
-OL-7EAD55,Papelaria 7EAD55,Papelaria,stationery,10.90,6.98,100,7ead55b1f52de17d6dac82001470b2a2
-OL-8FD009,Ferramentas jardim 8FD009,Ferramentas jardim,garden_tools,35.00,21.00,3400,8fd009f43c970fdd7db487475a59cc7a
-OL-955EF0,Cama mesa banho 955EF0,Cama mesa banho,bed_bath_table,84.90,46.70,1700,955ef07f4e61b2033c9d6af6a6b61783
-OL-03BB06,Cama mesa banho 03BB06,Cama mesa banho,bed_bath_table,129.90,81.84,2000,03bb06cda40712fb8473f7962fb7d198
-OL-ECF23A,Utilidades domesticas ECF23A,Utilidades domesticas,housewares,149.90,95.94,1700,ecf23a6c1689e2bed38171ececac6138
-OL-F3DC21,Moveis sala F3DC21,Moveis sala,furniture_living_room,129.90,79.24,5150,f3dc2177cd7a26726dd80204c34dbb48
-OL-E7DB7C,Bebes E7DB7C,Bebes,baby,109.90,64.84,9400,e7db7c40ea6647c808d48581f1308d88
-OL-C2ECE6,Moveis decoracao C2ECE6,Moveis decoracao,furniture_decor,88.34,51.24,2500,c2ece64199af7a53793ed9612a89a8cd
-OL-BC5967,Bebes BC5967,Bebes,baby,259.90,168.94,2000,bc596794d92f7b9959fe0e7430354b52
-OL-A0EEF9,Moveis decoracao A0EEF9,Moveis decoracao,furniture_decor,69.90,39.14,700,a0eef953cb25bc9ae40457e1c3c82946
-OL-09C3D3,Bebes 09C3D3,Bebes,baby,39.90,23.14,300,09c3d39641970009c198caed304ccfc4
-OL-30D184,Eletrodomesticos 2 30D184,Eletrodomesticos 2,home_appliances_2,180.00,108.00,11900,30d1842be9c62546d3fb853119602ac2
-OL-730D34,Eletrodomesticos 2 730D34,Eletrodomesticos 2,home_appliances_2,418.00,267.52,25600,730d34d191892dd7c4fb157daade465e
-OL-3262D9,Eletrodomesticos 2 3262D9,Eletrodomesticos 2,home_appliances_2,269.00,156.02,17600,3262d9ebe7100477209a79c4ed3c76e8
-OL-B5C315,Fashion bolsas e acessorios B5C315,Fashion bolsas e acessorios,fashion_bags_accessories,49.99,28.99,200,b5c315fb01a02190500528edf520883f
-OL-4D8DE1,Fashion bolsas e acessorios 4D8DE1,Fashion bolsas e acessorios,fashion_bags_accessories,49.99,27.49,150,4d8de1d60513d0a0d3665dbde171be1c
-OL-B3C601,Esporte lazer B3C601,Esporte lazer,sports_leisure,45.50,27.30,300,b3c60191c4d756abdf423e5b21eb91dc
-OL-083EA2,Fashion bolsas e acessorios 083EA2,Fashion bolsas e acessorios,fashion_bags_accessories,24.90,16.68,150,083ea24cbab9f8f572fc21a8f63fb282
-OL-6D8096,Relogios presentes 6D8096,Relogios presentes,watches_gifts,319.90,204.74,250,6d8096ca93caea3416a6b24bf411bc86
-OL-30360C,Relogios presentes 30360C,Relogios presentes,watches_gifts,189.90,113.94,350,30360c8b0b2ac6918f53ab66bc3c306f
-OL-052413,Relogios presentes 052413,Relogios presentes,watches_gifts,178.00,101.46,165,052413504e5295cd66ec4ced0b310062
-OL-BA74C6,Relogios presentes BA74C6,Relogios presentes,watches_gifts,178.99,116.34,292,ba74c6b75d2ad7503175809688d5a03c
-OL-D48BB8,Moveis decoracao D48BB8,Moveis decoracao,furniture_decor,149.90,95.94,2800,d48bb8824fcf4720229d970fff608fda
-OL-AD354F,Moveis decoracao AD354F,Moveis decoracao,furniture_decor,144.77,88.31,2000,ad354f777df2a1eee8211950fca142a4
-OL-D4B07C,Cama mesa banho D4B07C,Cama mesa banho,bed_bath_table,129.90,85.73,3250,d4b07c2026024b816cd6685fd312cd19
-OL-327018,Relogios presentes 327018,Relogios presentes,watches_gifts,149.00,81.95,200,327018136fd4a966408df8243383a233
-OL-837030,Relogios presentes 837030,Relogios presentes,watches_gifts,299.90,170.94,250,8370300e444c4394d3c3f878606a9601
-OL-E80144,Relogios presentes E80144,Relogios presentes,watches_gifts,389.00,248.96,275,e801441171ec3eaf3bbb86d6ba6fc9af
-OL-07755A,Relogios presentes 07755A,Relogios presentes,watches_gifts,849.00,475.44,832,07755a0056db849613241c6d91eaf45f
-OL-CA4A58,Fashion bolsas e acessorios CA4A58,Fashion bolsas e acessorios,fashion_bags_accessories,49.99,32.99,100,ca4a58d8a97a4e1c5822292d4cfcb4b6
-OL-4EE087,Fashion bolsas e acessorios 4EE087,Fashion bolsas e acessorios,fashion_bags_accessories,69.99,46.89,100,4ee0872b98a6a08ce8c8b65e2502842d
-OL-07A6E4,Fashion bolsas e acessorios 07A6E4,Fashion bolsas e acessorios,fashion_bags_accessories,69.90,45.44,100,07a6e4e1f838d9d39277d13c9b411dc4
-OL-8E3E30,Fashion bolsas e acessorios 8E3E30,Fashion bolsas e acessorios,fashion_bags_accessories,199.90,123.94,200,8e3e3059aabb0c13679db43619590ad5
-OL-67B0D3,Fashion bolsas e acessorios 67B0D3,Fashion bolsas e acessorios,fashion_bags_accessories,59.90,33.54,300,67b0d38a61d8e4c1c1df7d56276302aa
-OL-0CC18F,Fashion bolsas e acessorios 0CC18F,Fashion bolsas e acessorios,fashion_bags_accessories,59.90,41.33,200,0cc18feec97e534a363ec0b14c632692
-OL-9BB8CA,Beleza saude 9BB8CA,Beleza saude,health_beauty,69.90,43.34,431,9bb8ca338e5588c361e34eae02e8fad6
-OL-F65844,Beleza saude F65844,Beleza saude,health_beauty,89.90,61.13,527,f6584475ef4b8710cec93be723766326
-OL-24C66F,Beleza saude 24C66F,Beleza saude,health_beauty,159.90,99.14,792,24c66f106f642621e524291a895c9032
-OL-E4EEC4,Esporte lazer E4EEC4,Esporte lazer,sports_leisure,46.00,31.74,140,e4eec4a0771ae2297acc444c8f559cfb
-OL-9314E4,Esporte lazer 9314E4,Esporte lazer,sports_leisure,89.90,52.14,443,9314e4d46aeb2c297e05d4ed36365efe
-OL-92503F,Papelaria 92503F,Papelaria,stationery,29.90,17.34,3450,92503fc18ca14a8f32c182ce3f1b9f05
-OL-C04817,Utilidades domesticas C04817,Utilidades domesticas,housewares,41.50,24.49,500,c04817dbf62ce91069b03b151fb6b40e
-OL-0193FC,Bebes 0193FC,Bebes,baby,119.90,80.33,500,0193fc18d9a6e9b9b0b3a41768fefa12
-OL-672705,Pc gamer 672705,Pc gamer,,219.00,151.11,650,6727051471a0fc4a0e7737b57bff2549
-OL-F0A06C,Bebes F0A06C,Bebes,baby,128.80,86.30,6450,f0a06cc25ae22358b10378bf4dafdf0a
-OL-7178DD,Brinquedos 7178DD,Brinquedos,toys,269.99,186.29,20800,7178ddaf7e590ece0dd74143bfc6fd28
-OL-989CAA,Esporte lazer 989CAA,Esporte lazer,sports_leisure,395.00,260.70,300,989caa6177866c67ca1935b442479111
-OL-6D83B3,Moveis decoracao 6D83B3,Moveis decoracao,furniture_decor,257.00,149.06,1500,6d83b30a8dcfb49e62c0a31eb22521fe
-OL-8C591A,Ferramentas jardim 8C591A,Ferramentas jardim,garden_tools,110.00,68.20,6050,8c591ab0ca519558779df02023177f44
-OL-EA5E79,Cama mesa banho EA5E79,Cama mesa banho,bed_bath_table,47.99,30.71,650,ea5e798481ff9bb1edc6823d98d83634
-OL-368C6C,Ferramentas jardim 368C6C,Ferramentas jardim,garden_tools,49.90,29.94,1650,368c6c730842d78016ad823897a372db
-OL-CF6DB7,Moveis decoracao CF6DB7,Moveis decoracao,furniture_decor,29.90,18.24,950,cf6db73155e09a3583117d7dbeeab445
-OL-FE01B6,Perfumaria FE01B6,Perfumaria,perfumery,129.90,88.33,1250,fe01b643060a6446e59f58e3021e66b3
-OL-976738,Cama mesa banho 976738,Cama mesa banho,bed_bath_table,193.99,126.09,2700,976738868bdcc86e959ba2a7b726d4d5
-OL-4615C0,Esporte lazer 4615C0,Esporte lazer,sports_leisure,38.20,23.68,450,4615c086d05b264e9ff7004fcb515e37
-OL-ACA2EB,Moveis decoracao ACA2EB,Moveis decoracao,furniture_decor,75.00,41.25,2600,aca2eb7d00ea1a7b8ebd4e68314663af
-OL-0A5A41,Bebes 0A5A41,Bebes,baby,48.90,33.74,750,0a5a41c678bcf81e041826bb24eb0b01
-OL-17F1ED,Automotivo 17F1ED,Automotivo,auto,38.00,21.66,600,17f1ed2a8b51d7dfdd9fec1ecc1c9abd
-OL-5DEE2C,Esporte lazer 5DEE2C,Esporte lazer,sports_leisure,89.50,51.91,353,5dee2c14e1989141e15d341d4c62d72a
-OL-970174,Telefonia 970174,Telefonia,telephony,27.99,15.95,300,97017430754804328eb9597b7f85da03
-OL-FE95EB,Cama mesa banho FE95EB,Cama mesa banho,bed_bath_table,65.90,38.88,800,fe95eb948375116da759c8ef60295001
-OL-D2EFC6,Automotivo D2EFC6,Automotivo,auto,37.40,23.56,100,d2efc686acbf02ce6200ee423516f0d0
-OL-B8A0D7,Beleza saude B8A0D7,Beleza saude,health_beauty,69.90,44.74,371,b8a0d73b2a06e7910d9864dccdb0cda2
+sku,nome,categoria,preco,custo_medio_demo,peso_g
+OL-ADP-USBC-P2,Adaptador USB-C para P2,Acessorios,89.00,40.05,10
+OL-PEL-IP17,Película Belkin UltraGlass 2 para iPhone 17,Acessorios,359.00,111.29,20
+OL-CABO-USBC-1M,Cabo USB-C de 60 W (1 m),Acessorios,197.00,63.04,30
+OL-CABO-LTN-1M,Cabo USB-C para Lightning (1 m),Acessorios,197.00,84.71,30
+OL-AIRTAG-1,AirTag (2ª geração),Acessorios,332.00,129.48,11
+OL-PUL-ESP-46,Pulseira esportiva para Apple Watch 46 mm,Acessorios,494.00,177.84,30
+OL-CAPA-TRP-IP17,Capa transparente com MagSafe para iPhone 17,Acessorios,476.00,199.92,40
+OL-PUL-LOOP-42,Pulseira loop esportiva para Apple Watch 42 mm,Acessorios,494.00,187.72,20
+OL-CAPA-SIL-IP18P,Capa de silicone com MagSafe para iPhone 18 Pro,Acessorios,476.00,195.16,40
+OL-MAGSAFE-1M,Carregador MagSafe (1 m),Acessorios,431.00,142.23,60
+OL-FONTE-35W,Adaptador de energia USB-C duplo de 35 W,Acessorios,503.00,160.96,90
+OL-FOLIO-IPAD11,Smart Folio para iPad 11 pol.,Acessorios,809.00,266.97,190
+OL-MOUSE-USBC,Magic Mouse (USB-C),Acessorios,746.00,268.56,100
+OL-PENCIL-USBC,Apple Pencil (USB-C),Acessorios,809.00,250.79,20
+OL-AIRTAG-4,"AirTag (2ª geração, 4 unidades)",Acessorios,1199.00,407.66,60
+OL-AIRPODS-5,AirPods 5,Audio,1499.00,989.34,40
+OL-HOMEPOD-MINI,HomePod mini,Casa inteligente,999.00,659.34,345
+OL-PENCIL-PRO,Apple Pencil Pro,Acessorios,1349.00,512.62,20
+OL-TECLADO-TID,Magic Keyboard com Touch ID,Acessorios,1529.00,473.99,240
+OL-AIRPODS-5-SF,AirPods 5 com estojo de recarga sem fio,Audio,1529.00,947.98,40
+OL-APPLETV-4K,Apple TV 4K,Casa inteligente,3239.00,2299.69,210
+OL-AIRPODS-PRO3,AirPods Pro 3,Audio,1999.00,1279.36,50
+OL-AW-SE3-40,Apple Watch SE 3 40 mm GPS,Wearables,2499.00,1699.32,30
+OL-IPAD-11-128,iPad 11 pol. (A16) Wi-Fi 128 GB,Tablets,3899.00,2495.36,480
+OL-AW-S12-42,Apple Watch Series 12 42 mm GPS,Wearables,4949.00,3266.34,30
+OL-IP17E-256,iPhone 17e 256 GB Branco,Smartphones,4799.00,3071.36,167
+OL-AIRPODS-MAX2,AirPods Max 2,Audio,5699.00,3989.30,385
+OL-IPAD-MINI-128,iPad mini Wi-Fi 128 GB,Tablets,7199.00,5183.28,293
+OL-AW-S12-46-CEL,Apple Watch Series 12 46 mm GPS + Cellular,Wearables,6659.00,4727.89,40
+OL-IP16-128,iPhone 16 128 GB Preto,Smartphones,4959.00,3570.48,170
+OL-IPAD-AIR-11,iPad Air 11 pol. M4 Wi-Fi 128 GB,Tablets,7499.00,4874.35,460
+OL-MAC-MINI-M6,Mac mini M6 16 GB 256 GB,Computadores,9719.00,6220.16,670
+OL-IP17-256,iPhone 17 256 GB Azul,Smartphones,5699.00,3818.33,177
+OL-AW-ULTRA4,Apple Watch Ultra 4 49 mm,Wearables,9449.00,6614.30,61
+OL-IPAIR-256,iPhone Air 256 GB,Smartphones,7299.00,4671.36,165
+OL-MBA13-M5,MacBook Air 13 pol. M5 16 GB 512 GB,Computadores,11999.00,8159.32,1240
+OL-IP18P-256,iPhone 18 Pro 256 GB,Smartphones,10799.00,7559.30,204
+OL-IPAD-PRO-11,iPad Pro 11 pol. M5 Wi-Fi 256 GB,Tablets,15299.00,10709.30,444
+OL-IP18PM-256,iPhone 18 Pro Max 256 GB,Smartphones,11699.00,8540.27,233
+OL-IMAC24-M4,iMac 24 pol. M4 16 GB 256 GB,Computadores,16199.00,10853.33,4440
+OL-MBA15-M5,MacBook Air 15 pol. M5 16 GB 512 GB,Computadores,16469.00,11363.61,1510
+OL-MBP14-M5,MacBook Pro 14 pol. M5 16 GB 1 TB,Computadores,21599.00,15551.28,1550

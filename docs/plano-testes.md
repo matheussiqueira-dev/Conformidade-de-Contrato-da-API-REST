@@ -63,9 +63,9 @@ O enunciado exige ao menos tres tecnicas caixa-preta; este plano usa quatro para
 
 | Grupo | Dados propostos |
 | --- | --- |
-| Usuarios | Gerente: `gerente@loja.test`; vendedores: `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech`, `gabrielsousa@sbi.tech`. Credenciais devem ser sinteticas. |
-| Metas | Loja R$ 240.000; Allan/Francisco/Gabriel R$ 80.000 cada; periodo setembro/2026 America/Fortaleza. |
-| Realizado demonstrativo | Allan R$ 68.400; Francisco R$ 62.000; Gabriel R$ 56.000; loja R$ 186.400. |
+| Usuarios | Gerentes: `matheussiqueira@sbi.tech` e `gabrielsousa@sbi.tech`; vendedores: `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech`. Credenciais devem ser sinteticas. |
+| Metas | Loja R$ 240.000; Allan/Francisco R$ 120.000 cada; periodo setembro/2026 America/Fortaleza. |
+| Realizado demonstrativo | Allan R$ 68.400; Francisco R$ 62.000; Gabriel (gerente) R$ 56.000; loja R$ 186.400. |
 | Venda demonstrativa | Marina Costa; iPhone 128 GB Preto R$ 4.500; AirPods Branco R$ 1.200; total R$ 5.700. |
 | Estoque | Produto com saldo 1 para concorrencia; produto sem saldo; produto com custo desconhecido; lote com custo definido. |
 | Baseline | Cliente individual, cliente corporativo, produto fisico, produto digital, pagamento CARD/PIX/BOLETO. |
@@ -270,7 +270,7 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-DISC-107 | G-04 | Integracao | Tabela de decisao | Verde | `ManualDiscountApiTest.policiesAreManagerOnly` (GERENTE consulta e altera com motivo e auditoria; VENDEDOR 403; 101% e papel inexistente 400) |
 | CT-WEB-114 | G-04 | E2E/Acessibilidade | Transicao de estados | Verde | `e2e/discount.spec.ts`: desconto de 5% no carrinho, 10% barrado com o limite, aprovacao de 12% pelo gerente no pedido, alcadas em Promocoes; axe WCAG 2.2 AA e 320 px |
 | BD-32 | G-04 | BD | Tabela de decisao | Verde | `06d_testes_evolucao.sql` no job `bd` (alcadas iniciais, motivo obrigatorio, parte manual nunca maior que o desconto do item) |
-| CT-DEMO-01 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: 60 clientes (8 PJ), 220 produtos em 37 categorias, 219 pedidos, 238 itens, R$ 26.040,01 nos itens e nos pagamentos |
+| CT-DEMO-01 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: 60 clientes (8 PJ), 42 produtos em 7 categorias, 219 pedidos, 237 itens, R$ 449.690,00 nos itens e nos pagamentos |
 | CT-DEMO-02 | WP-EVO-8 | BD | - | Verde | `09_testes_olist.sql`: cliente com 14 pedidos, itens e `v_cliente_resumo` iguais ao CSV |
 | CT-DEMO-03 | WP-EVO-8 | BD | Transicao de estados | Verde | `09_testes_olist.sql` depois de duas cargas: nada duplicado |
 | CT-DEMO-04 | WP-EVO-8 | BD | Valor limite | Verde | `09_testes_olist.sql`: saldo = entrada - vendido, nunca negativo, reservado 0 |
@@ -281,7 +281,7 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-PUB-05 | WP-PUB-3 | Smoke publicado | - | Verde | vendedor: axe em `/vender`; o smoke inteiro so faz GET na API, fora login e logout |
 | CT-DEMO-05 | WP-EVO-8 | API | Particionamento | Verde | `scripts/demo-olist-api.mjs`: VENDEDOR ve CPF e CNPJ da massa mascarados em lista, perfil, historico e resumo; GERENTE ve completo |
 | CT-DEMO-06 | WP-EVO-8 | BD | - | Verde | `run_olist_bd.sh`: roteiro `08_crud_clientes_olist.sql` com exatamente as tres recusas esperadas |
-| CT-DEMO-07 | WP-PUB-2 | BD | - | Verde | `09_testes_olist.sql`: 37 categorias com nome em portugues, produto `<categoria> <codigo>` e nenhuma categoria sem acento |
+| CT-DEMO-07 | WP-PUB-2 | BD | - | Verde | `09_testes_olist.sql`: catalogo so Apple, produtos da massa nas 7 categorias Apple com nome e preco do CSV e nenhuma categoria do catalogo antigo |
 | CT-WEB-120 | WP-EVO-9 | E2E | Particionamento | Verde | `e2e/brand.spec.ts`: logo com nome acessivel "SBI — Super Business Intelligence" e um unico item com `aria-current` em todas as rotas do gerente (10) e do vendedor (4) |
 | CT-WEB-121 | WP-EVO-9 | E2E/Acessibilidade | - | Verde | `e2e/brand.spec.ts`: `/icon.svg` e `/apple-icon.png` servidos, login "Entrar no SBI" com axe WCAG 2.2 AA e 320 px, menu recolhivel de 44 px em 320 px, 404 da marca |
 | CT-WEB-122 | WP-EVO-9 | Unitario | - | Verde | `tests/brand.test.ts`: nome acessivel unico e geometria do simbolo igual a `app/icon.svg` |

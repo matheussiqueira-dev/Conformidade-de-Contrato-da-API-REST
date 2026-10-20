@@ -1,8 +1,9 @@
 -- Massa sintetica de demonstracao do perfil demo (valores e pessoas ficticios).
 -- Fonte: 04_seed_demo.sql do pacote da disciplina (12/10), sem BEGIN/COMMIT (o Flyway ja abre a
 -- transacao), com as contas criadas antes pela V6_1 e CPFs ficticios com digito verificador valido.
--- Reproduz o Guia Visual: setembro/2026, meta R$ 240.000, Allan R$ 68.400 / Francisco R$ 62.000 /
--- Gabriel R$ 56.000 (loja R$ 186.400) e evolucao semanal 38.200 / 41.600 / 36.800 / 42.300 / 27.500.
+-- Reproduz o Guia Visual: setembro/2026, meta R$ 240.000 (R$ 120.000 para cada vendedor), vendas de
+-- Allan R$ 68.400 / Francisco R$ 62.000 / Gabriel (gerente) R$ 56.000 (loja R$ 186.400) e evolucao
+-- semanal 38.200 / 41.600 / 36.800 / 42.300 / 27.500.
 
 SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE email = 'matheussiqueira@sbi.tech'), true);
 
@@ -32,7 +33,7 @@ INSERT INTO customer(customer_type, name, email, cpf) VALUES
 -- Metas de setembro (a soma e verificada no COMMIT).
 INSERT INTO monthly_goal(period, amount) VALUES ('2026-09-01', 240000.00);
 INSERT INTO seller_goal(monthly_goal_id, seller_id, amount)
-SELECT g.id, u.id, 80000.00 FROM monthly_goal g, app_users u
+SELECT g.id, u.id, 120000.00 FROM monthly_goal g, app_users u
  WHERE g.period = '2026-09-01' AND u.role = 'VENDEDOR';
 
 -- Vendas pagas de setembro, decompostas de forma deterministica.
