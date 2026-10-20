@@ -20,6 +20,10 @@ public class BoletoPayment extends Payment{
     private String barCode;
     private LocalDate dueDate;
 
+    /** Exigido pelo JPA para materializar pagamentos por boleto lidos do banco. */
+    protected BoletoPayment() {
+    }
+
     public BoletoPayment(BigDecimal amount, Order order, String barCode, LocalDate dueDate) {
         super(amount, order);
         this.barCode = barCode;
