@@ -3,7 +3,7 @@
 # 07_carga_olist.sql por psql dentro do conteiner do banco e imprime as contagens. Com --check, roda a carga
 # de novo (idempotencia), os testes 09 (CT-DEMO-01 a 04) e a verificacao pela API (CT-DEMO-05).
 # Uso, na raiz do repositorio:
-#   SBI_DEMO_PASSWORD=<senha das contas> SBI_DB_PASSWORD=<senha interna do banco> bash docs/bd/pacote-sql/run_demo_olist.sh [--check]
+#   SBI_DEMO_PASSWORD=<senha comum das contas, ou SBI_DEMO_PASSWORD_<NOME>, ou um .env> SBI_DB_PASSWORD=<senha interna do banco> bash docs/bd/pacote-sql/run_demo_olist.sh [--check]
 # Banco acessivel depois: jdbc:postgresql://127.0.0.1:5433/sbi_demo (usuario sbi, senha de SBI_DB_PASSWORD).
 # Banco externo (ex.: Neon), sem docker compose: roda 07 (e 09 com --check) com psql do conteiner postgres:18.
 # A URL fica so em variavel de ambiente; o Flyway ja deve ter rodado (API no perfil demo apontada para esse banco):
@@ -49,8 +49,13 @@ if [ -n "$DATABASE_URL" ]; then
   exit 0
 fi
 
-: "${SBI_DEMO_PASSWORD:?Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao)}"
-: "${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao)}"
+# O docker compose tambem le o .env da raiz (fora do git); sem ele, as senhas vem do ambiente.
+if [ ! -f .env ]; then
+  if [ -z "${SBI_DEMO_PASSWORD:-}" ] && { [ -z "${SBI_DEMO_PASSWORD_MATHEUS:-}" ] || [ -z "${SBI_DEMO_PASSWORD_GABRIEL:-}" ]        || [ -z "${SBI_DEMO_PASSWORD_ALLAN:-}" ] || [ -z "${SBI_DEMO_PASSWORD_FRANCISCO:-}" ]; }; then
+    echo "Defina SBI_DEMO_PASSWORD ou SBI_DEMO_PASSWORD_<NOME> de cada conta (ou um .env com elas)." >&2; exit 1
+  fi
+  : "${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao)}"
+fi
 COMPOSE=(docker compose -f docker-compose.demo.yml -p sbi-demo)
 
 "${COMPOSE[@]}" up --build -d --wait
