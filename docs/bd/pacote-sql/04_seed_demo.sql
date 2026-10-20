@@ -1,7 +1,7 @@
 -- =====================================================================
 -- Loja Gestao - massa sintetica de demonstracao (valores e pessoas ficticios)
--- Reproduz os numeros do Guia Visual: setembro/2026, meta R$ 240.000,
--- Allan R$ 68.400 / Francisco R$ 62.000 / Gabriel R$ 56.000 (loja R$ 186.400) e
+-- Reproduz os numeros do Guia Visual: setembro/2026, meta R$ 240.000 (R$ 120.000 por vendedor),
+-- vendas de Allan R$ 68.400 / Francisco R$ 62.000 / Gabriel (gerente) R$ 56.000 (loja R$ 186.400) e
 -- evolucao semanal 38.200 / 41.600 / 36.800 / 42.300 / 27.500.
 -- Executar como dono do esquema, uma unica vez, em banco descartavel.
 -- =====================================================================
@@ -10,10 +10,10 @@ BEGIN;
 -- Usuarios (senha propositalmente invalida: contas de login da aplicacao
 -- devem ser criadas no ambiente de demo com senha vinda de variavel de ambiente).
 INSERT INTO app_users(name, email, password_hash, role, db_role) VALUES
- ('Matheus Siqueira', 'matheussiqueira@sbi.tech', 'SEM-SENHA-DEMO', 'GERENTE',  'gerente_matheus'),
- ('Allan Barros',     'allanbarros@sbi.tech',    'SEM-SENHA-DEMO', 'VENDEDOR', 'vendedor_allan'),
- ('Francisco Ferreira',    'franciscoferreira@sbi.tech',  'SEM-SENHA-DEMO', 'VENDEDOR', 'vendedor_francisco'),
- ('Gabriel Sousa',   'gabrielsousa@sbi.tech',  'SEM-SENHA-DEMO', 'VENDEDOR', 'gerente_gabriel');
+ ('Matheus Siqueira',   'matheussiqueira@sbi.tech',   'SEM-SENHA-DEMO', 'GERENTE',  'gerente_matheus'),
+ ('Allan Barros',       'allanbarros@sbi.tech',       'SEM-SENHA-DEMO', 'VENDEDOR', 'vendedor_allan'),
+ ('Francisco Ferreira', 'franciscoferreira@sbi.tech', 'SEM-SENHA-DEMO', 'VENDEDOR', 'vendedor_francisco'),
+ ('Gabriel Sousa',      'gabrielsousa@sbi.tech',      'SEM-SENHA-DEMO', 'GERENTE',  'gerente_gabriel');
 
 SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE email = 'matheussiqueira@sbi.tech'), true);
 
@@ -43,7 +43,7 @@ INSERT INTO customer(customer_type, name, email, cpf) VALUES
 -- Metas de setembro (a soma e verificada no COMMIT).
 INSERT INTO monthly_goal(period, amount) VALUES ('2026-09-01', 240000.00);
 INSERT INTO seller_goal(monthly_goal_id, seller_id, amount)
-SELECT g.id, u.id, 80000.00 FROM monthly_goal g, app_users u
+SELECT g.id, u.id, 120000.00 FROM monthly_goal g, app_users u
  WHERE g.period = '2026-09-01' AND u.role = 'VENDEDOR';
 
 -- Vendas pagas de setembro, decompostas de forma deterministica.

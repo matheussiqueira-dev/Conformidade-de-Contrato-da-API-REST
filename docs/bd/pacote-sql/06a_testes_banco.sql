@@ -9,13 +9,12 @@ LANGUAGE plpgsql AS $$ BEGIN
 END $$;
 
 -- BD-01 Meta e realizado do Allan em setembro (CA-10-01)
-SELECT pg_temp.ok('BD-01 Allan 68.400 / 80.000 = 85,5%',
-       realizado = 68400 AND meta = 80000 AND atingimento_pct = 85.5 AND falta = 11600, row(realizado, atingimento_pct)::text)
+SELECT pg_temp.ok('BD-01 Allan 68.400 / 120.000 = 57,0%',
+       realizado = 68400 AND meta = 120000 AND atingimento_pct = 57.0 AND falta = 51600, row(realizado, atingimento_pct)::text)
   FROM v_desempenho_vendedor WHERE periodo = '2026-09-01' AND vendedor = 'Allan Barros';
--- BD-02 Francisco e Gabriel
-SELECT pg_temp.ok('BD-02 Francisco 77,5% e Gabriel 70,0%',
-       bool_and((vendedor = 'Francisco Ferreira' AND atingimento_pct = 77.5) OR (vendedor = 'Gabriel Sousa' AND atingimento_pct = 70.0)
-                OR vendedor = 'Allan Barros'))
+-- BD-02 Francisco; Gabriel e gerente e nao tem meta individual
+SELECT pg_temp.ok('BD-02 Francisco 51,7% e so dois vendedores com meta',
+       count(*) = 2 AND bool_and((vendedor = 'Francisco Ferreira' AND atingimento_pct = 51.7) OR vendedor = 'Allan Barros'))
   FROM v_desempenho_vendedor WHERE periodo = '2026-09-01';
 -- BD-03 Resumo da loja (CA-12-01)
 SELECT pg_temp.ok('BD-03 Loja 186.400 / 240.000 = 77,7%, falta 53.600',
@@ -79,7 +78,7 @@ EXCEPTION WHEN check_violation THEN RAISE NOTICE 'PASS BD-12 preco 0,00 rejeitad
 END $$;
 DO $$ BEGIN
   INSERT INTO promotion(name, kind, value, starts_at, ends_at, created_by)
-  SELECT 'x', 'PERCENT', 100.01, now(), now() + interval '1 day', id FROM app_users WHERE role = 'GERENTE';
+  SELECT 'x', 'PERCENT', 100.01, now(), now() + interval '1 day', id FROM app_users WHERE db_role = 'gerente_matheus';
   RAISE NOTICE 'FAIL BD-13 desconto de 100,01%% aceito';
 EXCEPTION WHEN check_violation THEN RAISE NOTICE 'PASS BD-13 desconto 100,01%% rejeitado';
 END $$;
@@ -96,16 +95,16 @@ EXCEPTION WHEN check_violation THEN RAISE NOTICE 'PASS BD-15 reservado <= saldo 
 END $$;
 -- BD-16 Soma das metas diferente da meta da loja (CA-09-02)
 DO $$ BEGIN
-  INSERT INTO monthly_goal(period, amount, created_by) SELECT '2026-11-01', 240000, id FROM app_users WHERE role = 'GERENTE';
+  INSERT INTO monthly_goal(period, amount, created_by) SELECT '2026-11-01', 240000, id FROM app_users WHERE db_role = 'gerente_matheus';
   INSERT INTO seller_goal(monthly_goal_id, seller_id, amount)
   SELECT g.id, u.id, 70000 FROM monthly_goal g, app_users u WHERE g.period = '2026-11-01' AND u.role = 'VENDEDOR';
   SET CONSTRAINTS ALL IMMEDIATE;
-  RAISE NOTICE 'FAIL BD-16 distribuicao 210.000 aceita para meta 240.000';
+  RAISE NOTICE 'FAIL BD-16 distribuicao 140.000 aceita para meta 240.000';
 EXCEPTION WHEN check_violation THEN RAISE NOTICE 'PASS BD-16 distribuicao divergente rejeitada';
 END $$;
 -- BD-17 Meta zero exibe "Sem meta" sem dividir por zero (CA-10-02)
 BEGIN;
-INSERT INTO monthly_goal(period, amount, created_by) SELECT '2026-10-01', 0, id FROM app_users WHERE role = 'GERENTE';
+INSERT INTO monthly_goal(period, amount, created_by) SELECT '2026-10-01', 0, id FROM app_users WHERE db_role = 'gerente_matheus';
 INSERT INTO seller_goal(monthly_goal_id, seller_id, amount)
 SELECT g.id, u.id, 0 FROM monthly_goal g, app_users u WHERE g.period = '2026-10-01' AND u.role = 'VENDEDOR';
 SET CONSTRAINTS ALL IMMEDIATE;
@@ -115,7 +114,7 @@ SELECT pg_temp.ok('BD-17 Meta zero -> Sem meta e atingimento NULL',
 ROLLBACK;
 -- BD-18 Custo medio ponderado: 10 x 100 + 10 x 200 = 150
 BEGIN;
-SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE role = 'GERENTE'), true);
+SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
 INSERT INTO product(product_type, name, price, weight, sku) VALUES ('PHYSICAL', 'Teste custo', 500, 1, 'TST-CUSTO');
 INSERT INTO stock_entry(product_id, quantity, unit_cost) SELECT id, 10, 100 FROM product WHERE sku = 'TST-CUSTO';
 INSERT INTO stock_entry(product_id, quantity, unit_cost) SELECT id, 10, 200 FROM product WHERE sku = 'TST-CUSTO';
@@ -144,7 +143,7 @@ SELECT pg_temp.ok('BD-21 Cancelamento libera reserva (iPhone reservado 2 -> 1)',
 ROLLBACK;
 -- BD-22 Estorno reduz o realizado e respeita o limite pago
 BEGIN;
-SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE role = 'GERENTE'), true);
+SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
 SELECT fn_estornar(p.id, 1200, 'Devolucao conferida') FROM payment p JOIN orders o ON o.id = p.order_id
   JOIN customer c ON c.id = o.customer_id WHERE c.name = 'Juliana Rocha' AND p.amount = 1200 LIMIT 1;
 -- Regra adotada (decisao pendente da equipe): o estorno abate o realizado no mes em que e registrado.
@@ -153,14 +152,14 @@ SELECT pg_temp.ok('BD-22 Estorno de 1.200 entra como -1.200 na data do estorno; 
        AND (SELECT realizado FROM v_desempenho_vendedor WHERE periodo = '2026-09-01' AND vendedor = 'Allan Barros') = 68400);
 ROLLBACK;
 DO $$ BEGIN
-  PERFORM set_config('app.user_id', (SELECT id::text FROM app_users WHERE role = 'GERENTE'), true);
+  PERFORM set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
   PERFORM fn_estornar(p.id, p.amount + 0.01, 'acima do pago') FROM payment p WHERE p.status = 'APPROVED' LIMIT 1;
   RAISE NOTICE 'FAIL BD-23 estorno acima do valor pago aceito';
 EXCEPTION WHEN invalid_parameter_value THEN RAISE NOTICE 'PASS BD-23 estorno acima do pago rejeitado';
 END $$;
 -- BD-24 Historico de preco registra autor e valores
 BEGIN;
-SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE role = 'GERENTE'), true);
+SELECT set_config('app.user_id', (SELECT id::text FROM app_users WHERE db_role = 'gerente_matheus'), true);
 UPDATE product SET price = 4300 WHERE sku = 'IP-128-PT';
 SELECT pg_temp.ok('BD-24 Historico de preco com autor gerente',
        old_price = 4500 AND new_price = 4300 AND u.role = 'GERENTE')

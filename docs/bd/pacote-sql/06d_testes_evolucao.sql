@@ -4,8 +4,9 @@
 -- =====================================================================
 \set QUIET on
 
--- BD-30a Rebaixar o unico GERENTE ativo e rejeitado
+-- BD-30a Rebaixar o unico GERENTE ativo e rejeitado (o outro gerente da equipe e rebaixado antes, no mesmo bloco)
 DO $$ BEGIN
+  UPDATE app_users SET role = 'VENDEDOR' WHERE email = 'gabrielsousa@sbi.tech';
   UPDATE app_users SET role = 'VENDEDOR' WHERE email = 'matheussiqueira@sbi.tech';
   SET CONSTRAINTS keep_one_active_manager IMMEDIATE;
   RAISE NOTICE 'FAIL BD-30a ultimo gerente rebaixado';
@@ -17,8 +18,9 @@ EXCEPTION
   WHEN SQLSTATE 'LJ000' THEN NULL;
 END $$;
 
--- BD-30b Desativar o unico GERENTE ativo e rejeitado
+-- BD-30b Desativar o unico GERENTE ativo e rejeitado (o outro gerente da equipe e desativado antes)
 DO $$ BEGIN
+  UPDATE app_users SET active = false WHERE email = 'gabrielsousa@sbi.tech';
   UPDATE app_users SET active = false WHERE email = 'matheussiqueira@sbi.tech';
   SET CONSTRAINTS keep_one_active_manager IMMEDIATE;
   RAISE NOTICE 'FAIL BD-30b ultimo gerente desativado';

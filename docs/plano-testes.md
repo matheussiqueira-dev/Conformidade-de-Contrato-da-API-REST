@@ -63,9 +63,9 @@ O enunciado exige ao menos tres tecnicas caixa-preta; este plano usa quatro para
 
 | Grupo | Dados propostos |
 | --- | --- |
-| Usuarios | Gerente: `gerente@loja.test`; vendedores: `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech`, `gabrielsousa@sbi.tech`. Credenciais devem ser sinteticas. |
-| Metas | Loja R$ 240.000; Allan/Francisco/Gabriel R$ 80.000 cada; periodo setembro/2026 America/Fortaleza. |
-| Realizado demonstrativo | Allan R$ 68.400; Francisco R$ 62.000; Gabriel R$ 56.000; loja R$ 186.400. |
+| Usuarios | Gerentes: `matheussiqueira@sbi.tech` e `gabrielsousa@sbi.tech`; vendedores: `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech`. Credenciais devem ser sinteticas. |
+| Metas | Loja R$ 240.000; Allan/Francisco R$ 120.000 cada; periodo setembro/2026 America/Fortaleza. |
+| Realizado demonstrativo | Allan R$ 68.400; Francisco R$ 62.000; Gabriel (gerente) R$ 56.000; loja R$ 186.400. |
 | Venda demonstrativa | Marina Costa; iPhone 128 GB Preto R$ 4.500; AirPods Branco R$ 1.200; total R$ 5.700. |
 | Estoque | Produto com saldo 1 para concorrencia; produto sem saldo; produto com custo desconhecido; lote com custo definido. |
 | Baseline | Cliente individual, cliente corporativo, produto fisico, produto digital, pagamento CARD/PIX/BOLETO. |

@@ -56,13 +56,13 @@ Variáveis de ambiente (os valores reais ficam só no painel do Render):
 | `SPRING_DATASOURCE_URL` | `jdbc:postgresql://<host-do-neon-sem-pooler>/neondb?sslmode=require` |
 | `SPRING_DATASOURCE_USERNAME` | `<usuário do Neon>` |
 | `SPRING_DATASOURCE_PASSWORD` | `<senha do Neon>` |
-| `SBI_DEMO_PASSWORD` | `<senha das contas demo, 12 a 72 bytes>` |
+| `SBI_DEMO_PASSWORD` | `<senha comum das contas demo, 8 a 72 bytes; cada conta pode ter a sua em SBI_DEMO_PASSWORD_MATHEUS, _GABRIEL, _ALLAN ou _FRANCISCO>` |
 | `SESSION_COOKIE_SECURE` | `true` |
 | `SPRING_JPA_SHOW_SQL` | `false` (o padrão do projeto registra cada consulta no log) |
 | `PORT` | `8080` (opcional: `application.properties` usa `server.port=${PORT:8080}`, então a porta que o Render informar também funciona) |
 | `JAVA_TOOL_OPTIONS` | `-XX:MaxRAMPercentage=70 -XX:+UseSerialGC -Xss512k` |
 
-**`SBI_DEMO_PASSWORD` só vale na primeira migração.** A `V6_1__DemoAccounts` grava o BCrypt das contas `matheussiqueira@sbi.tech`, `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech` e `gabrielsousa@sbi.tech` uma única vez, quando o Flyway aplica o perfil `demo` num banco vazio. Trocar a variável depois não muda a senha: para isso, apague e recrie o banco `sbi` no Neon (e rode a carga Olist de novo) ou troque a senha pela tela de usuários. Como o ambiente é público e os e-mails do seed são conhecidos, use uma senha forte e exclusiva.
+**As senhas das contas só valem na primeira migração.** A `V6_1__DemoAccounts` grava o BCrypt das contas `matheussiqueira@sbi.tech`, `allanbarros@sbi.tech`, `franciscoferreira@sbi.tech` e `gabrielsousa@sbi.tech` uma única vez, quando o Flyway aplica o perfil `demo` num banco vazio. Trocar a variável depois não muda a senha: para isso, apague e recrie o banco `sbi` no Neon (e rode a carga Olist de novo) ou troque a senha pela tela de usuários. Como o ambiente é público e os e-mails do seed são conhecidos, prefira senhas fortes e exclusivas.
 
 No primeiro deploy, o log do Render deve mostrar o Flyway aplicando V1 a V11 e as migrações `db/demo`. Conferência: `https://sbi-api-puk8.onrender.com/auth/csrf` responde 200 com o token. Cada chamada a `/auth/csrf` abre uma sessão de até 30 minutos (o token CSRF fica na sessão), então o health check mantém algumas centenas de sessões pequenas em memória, o que cabe na instância.
 
@@ -82,7 +82,7 @@ Em bash: `bash docs/bd/pacote-sql/run_demo_olist.sh --database-url "$SBI_DATABAS
 
 O script confere que o esquema existe, roda `07_carga_olist.sql` (com `-Check`, duas vezes, para provar a idempotência) e os testes `09_testes_olist.sql` (CT-DEMO-01 a 04). A URL chega ao `psql` por variável de ambiente do contêiner, fora da linha de comando do `docker run`. O CT-DEMO-05 (máscara de documento pela API) pode ser conferido com `node scripts/demo-olist-api.mjs https://sbi-app-alpha.vercel.app/api/backend` e `SBI_DEMO_PASSWORD` definida.
 
-**Contas do ambiente publicado.** No Neon, as quatro contas da `V6_1` foram renomeadas para os integrantes da equipe (nome, e-mail e senha próprios, combinados fora do repositório); papéis, vendas, metas e `db_role` continuam os mesmos. Por isso a carga `07_carga_olist.sql` acha o gerente e os vendedores pelo `db_role` (`gerente_matheus`, `vendedor_allan`, `vendedor_francisco`, `gerente_gabriel`), e não pelo e-mail. No CT-DEMO-05 contra esse ambiente, informe as contas com `SBI_DEMO_SELLER_EMAIL`/`SBI_DEMO_SELLER_PASSWORD` e `SBI_DEMO_MANAGER_EMAIL`/`SBI_DEMO_MANAGER_PASSWORD`. As branches Neon criadas antes da troca (preview de PR) ainda têm as contas `@loja.test`.
+**Contas do ambiente publicado.** São as mesmas quatro contas da `V6_1`: Matheus Siqueira e Gabriel Sousa (gerentes), Allan Barros e Francisco Ferreira (vendedores), com e-mails `@sbi.tech`. As senhas foram combinadas com a equipe e gravadas só como BCrypt no Neon, fora do repositório. A carga `07_carga_olist.sql` acha as contas pelo `db_role` (`gerente_matheus`, `gerente_gabriel`, `vendedor_allan`, `vendedor_francisco`). No CT-DEMO-05 contra esse ambiente, informe as contas com `SBI_DEMO_SELLER_EMAIL`/`SBI_DEMO_SELLER_PASSWORD` e `SBI_DEMO_MANAGER_EMAIL`/`SBI_DEMO_MANAGER_PASSWORD`.
 
 Para o IntelliJ ou o DBeaver, use a mesma URL do Neon no formato JDBC com o usuário e a senha do painel; o roteiro `docs/bd/pacote-sql/08_crud_clientes_olist.sql` termina sempre em `ROLLBACK`.
 
