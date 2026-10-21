@@ -33,8 +33,9 @@ test('[CT-WEB-105] entrada de estoque do gerente aumenta o disponivel no PDV', a
   const panel = page.getByRole('dialog');
   await panel.getByLabel('Quantidade').fill('5');
   await panel.getByLabel(/Custo unitário/).fill('21,50');
-  await panel.getByRole('button', { name: 'Salvar' }).click();
+  await panel.getByRole('button', { name: 'Registrar entrada' }).click();
   await expect(panel).toBeHidden();
+  await expect(page.getByRole('status').filter({ hasText: 'Entrada registrada' })).toBeVisible();
   await expect(row.getByRole('cell').nth(1)).toHaveText('7');
 
   const seller = await sellerPage(browser);

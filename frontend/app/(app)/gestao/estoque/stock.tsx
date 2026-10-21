@@ -15,6 +15,7 @@ import { Field } from '../../../../components/customer-form.tsx';
 import Drawer from '../../../../components/drawer.tsx';
 import Pager from '../../../../components/pager.tsx';
 import ProductThumb from '../../../../components/product-thumb.tsx';
+import { StatusMessage, useStatusMessage } from '../../../../components/status-message.tsx';
 
 type StockProduct = z.infer<typeof ListStockProductsResponse>['content'][number];
 type Panel = { kind: 'entry' | 'adjust' | 'min'; product: StockProduct } | null;
@@ -27,10 +28,18 @@ const REASONS: Readonly<Record<string, string>> = {
   PERDA: 'Perda', AVARIA: 'Avaria', USO_INTERNO: 'Uso interno', INVENTARIO: 'Inventário', DEVOLUCAO_FORNECEDOR: 'Devolução ao fornecedor',
 };
 
-export default function Stock() {
+/** Confirmacao de cada painel, com o produto e o numero que mudou. */
+function savedMessage(panel: NonNullable<Panel>): string {
+  if (panel.kind === 'entry') return `Entrada registrada para ${panel.product.name}. O saldo e o custo médio foram atualizados.`;
+  if (panel.kind === 'adjust') return `Ajuste registrado para ${panel.product.name}. O movimento está no extrato.`;
+  return `Estoque mínimo de ${panel.product.name} atualizado.`;
+}
+
+export default function Stock({ initialBelowMin = false }: { initialBelowMin?: boolean }) {
   const client = useQueryClient();
+  const status = useStatusMessage();
   const [q, setQ] = useState('');
-  const [belowMin, setBelowMin] = useState(false);
+  const [belowMin, setBelowMin] = useState(initialBelowMin);
   const [page, setPage] = useState(0);
   const [panel, setPanel] = useState<Panel>(null);
   const position = useQuery({
@@ -57,6 +66,7 @@ export default function Stock() {
           <h1>Estoque {below.data && <span className="pill pill-warn">{below.data.totalElements} abaixo do mínimo</span>}</h1>
         </div>
       </header>
+      <StatusMessage message={status.message} onClose={status.clear} />
       <section className="card stack" aria-labelledby="posicao-titulo">
         <div className="toolbar">
           <h2 id="posicao-titulo">Posição</h2>
@@ -97,14 +107,18 @@ export default function Stock() {
       <Movements />
       <Drawer open={panel !== null} onClose={() => setPanel(null)}
               title={panel ? `${panel.kind === 'entry' ? 'Entrada' : panel.kind === 'adjust' ? 'Ajuste' : 'Estoque mínimo'} · ${panel.product.name}` : ''}>
-        {panel && <StockForm panel={panel} onDone={() => { void refresh(); setPanel(null); }} />}
+        {panel && <StockForm panel={panel} onDone={() => { void refresh(); status.show(savedMessage(panel)); setPanel(null); }} />}
       </Drawer>
     </div>
   );
 }
 
+const SUBMIT_LABEL: Readonly<Record<NonNullable<Panel>['kind'], string>> = { entry: 'Registrar entrada', adjust: 'Registrar ajuste', min: 'Salvar mínimo' };
+
 function StockForm({ panel, onDone }: { panel: NonNullable<Panel>; onDone: () => void }) {
   const [problem, setProblem] = useState('');
+  // Ajuste de entrada so aceita Inventario: o motivo ja vem escolhido ao trocar o tipo.
+  const [direction, setDirection] = useState<'OUT' | 'IN'>('OUT');
   const id = panel.product.productId;
   const mutation = useMutation({
     mutationFn: async (form: FormData) => {
@@ -153,10 +167,12 @@ function StockForm({ panel, onDone }: { panel: NonNullable<Panel>; onDone: () =>
         <Field id="entrada-nota" label="Observação (opcional)"><input id="entrada-nota" name="note" className="input" maxLength={200} /></Field>
       </div>}
       {panel.kind === 'adjust' && <div className="form-grid">
-        <Field id="ajuste-direcao" label="Tipo"><select id="ajuste-direcao" name="direction" className="select" defaultValue="OUT">
+        <Field id="ajuste-direcao" label="Tipo"><select id="ajuste-direcao" name="direction" className="select" value={direction}
+                                                       onChange={event => setDirection(event.target.value === 'IN' ? 'IN' : 'OUT')}>
           <option value="OUT">Saída</option><option value="IN">Entrada (inventário)</option></select></Field>
         <Field id="ajuste-qtd" label="Quantidade"><input id="ajuste-qtd" name="quantity" className="input" type="number" min={1} max={100000} required /></Field>
-        <Field id="ajuste-motivo" label="Motivo"><select id="ajuste-motivo" name="reason" className="select" required defaultValue="">
+        <Field id="ajuste-motivo" label="Motivo"><select key={direction} id="ajuste-motivo" name="reason" className="select" required
+                                                      defaultValue={direction === 'IN' ? 'INVENTARIO' : ''}>
           <option value="" disabled>Escolha o motivo</option>
           {Object.entries(REASONS).map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
         <Field id="ajuste-nota" label="Observação (opcional)"><input id="ajuste-nota" name="note" className="input" maxLength={200} /></Field>
@@ -164,7 +180,7 @@ function StockForm({ panel, onDone }: { panel: NonNullable<Panel>; onDone: () =>
       {panel.kind === 'min' && <Field id="minimo" label="Estoque mínimo">
         <input id="minimo" name="minLevel" className="input" type="number" min={0} max={100000} defaultValue={panel.product.minLevel} required /></Field>}
       {(problem || mutation.error) && <p className="notice notice-error" role="alert">{problem || stockError || errorMessage(mutation.error)}</p>}
-      <div className="actions"><button type="submit" className="btn btn-primary" disabled={mutation.isPending}>{mutation.isPending ? 'Salvando…' : 'Salvar'}</button></div>
+      <div className="actions"><button type="submit" className="btn btn-primary" disabled={mutation.isPending}>{mutation.isPending ? 'Salvando…' : SUBMIT_LABEL[panel.kind]}</button></div>
     </form>
   );
 }

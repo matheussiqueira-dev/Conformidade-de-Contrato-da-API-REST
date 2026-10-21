@@ -6,7 +6,8 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
   return (
     <main>
       <BrandScreen>
-        <h1>Não foi possível carregar. Tente de novo.</h1>
+        <h1>Não foi possível carregar esta tela.</h1>
+        <p className="muted">Se o sistema acabou de ser aberto, o servidor pode estar iniciando: aguarde um minuto e tente de novo.</p>
         <div className="actions">
           <button type="button" className="btn btn-primary" onClick={reset}>Tentar de novo</button>
           <a className="btn" href="/">Voltar ao início</a>

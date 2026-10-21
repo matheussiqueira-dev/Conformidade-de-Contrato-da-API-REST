@@ -127,6 +127,11 @@ export function loadCart(storage: KeyValueStorage | undefined, userId: number): 
     if (!Array.isArray(parsed.lines)) return emptyCart();
     const cart: Cart = { lines: parsed.lines, idempotencyKey: typeof parsed.idempotencyKey === 'string' ? parsed.idempotencyKey : null };
     if (typeof parsed.pendingBody === 'string') cart.pendingBody = parsed.pendingBody;
+    // O desconto digitado volta com o carrinho; sem isto uma recarga apagava percentual e motivo sem aviso.
+    const discount = parsed.manualDiscount;
+    if (discount && typeof discount.percent === 'string' && typeof discount.reason === 'string') {
+      cart.manualDiscount = { percent: discount.percent, reason: discount.reason };
+    }
     return cart;
   } catch {
     return emptyCart();

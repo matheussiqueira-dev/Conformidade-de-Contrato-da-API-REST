@@ -15,6 +15,8 @@ ENV NODE_ENV=production BACKEND_ORIGIN=${BACKEND_ORIGIN} NEXT_TELEMETRY_DISABLED
 COPY --from=build --chown=node:node /app/package.json /app/next.config.mjs ./
 COPY --from=build --chown=node:node /app/node_modules ./node_modules
 COPY --from=build --chown=node:node /app/.next ./.next
+# Fotos dos produtos, icones das linhas e marca (public/); sem esta copia o next start responde 404 para todos.
+COPY --from=build --chown=node:node /app/public ./public
 USER node
 EXPOSE 3000
 CMD ["node", "node_modules/next/dist/bin/next", "start", "--hostname", "0.0.0.0", "--port", "3000"]

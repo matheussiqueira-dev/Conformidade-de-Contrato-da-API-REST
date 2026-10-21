@@ -4,7 +4,7 @@ import { landingPath, menuFor } from '../lib/areas.ts';
 import { isValidCnpj, isValidCpf } from '../lib/documents.ts';
 import { digits, formatPercent, money, parseDecimal } from '../lib/format.ts';
 import { messageFor } from '../lib/api/messages.ts';
-import { contractResolver } from '../lib/forms.ts';
+import { contractResolver, labeledProblems } from '../lib/forms.ts';
 import { CreateCustomerBody } from '../lib/api/generated/sbi.zod.ts';
 
 const SELLER = ['VENDER', 'VENDAS', 'CLIENTES', 'MEU_DESEMPENHO'];
@@ -64,4 +64,14 @@ test('valor digitado aceita virgula ou ponto decimal', () => {
   assert.equal(parseDecimal('59,90'), 59.9);
   assert.equal(parseDecimal('1.234,56'), 1234.56);
   assert.ok(Number.isNaN(parseDecimal('abc')));
+});
+
+test('problemas do schema saem com o rotulo do campo, nunca com o nome tecnico do corpo', () => {
+  const result = CreateCustomerBody.safeParse({ type: 'INDIVIDUAL', name: '', cpf: '', email: 'x', phone: '' });
+  assert.ok(!result.success);
+  const lines = labeledProblems(result.error.issues, { name: 'Nome', email: 'E-mail', phone: 'Telefone' });
+  assert.ok(lines.includes('Nome: use pelo menos 2 caracteres.'), lines.join(' | '));
+  assert.ok(lines.includes('E-mail: informe um e-mail válido.'), lines.join(' | '));
+  assert.ok(lines.every(line => !/^(name|email|cpf|phone|type)\b/.test(line)));
+  assert.equal(new Set(lines).size, lines.length);
 });

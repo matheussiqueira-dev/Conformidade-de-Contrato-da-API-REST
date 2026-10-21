@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  addProduct, availableFromDetails, emptyCart, loadCart, MAX_LINES, refreshAvailability, saleItems, saveCart, setQuantity,
-  storageKey, withIdempotencyKey, type KeyValueStorage,
+  addProduct, availableFromDetails, emptyCart, loadCart, manualDiscountBody, MAX_LINES, refreshAvailability, saleItems, saveCart,
+  setManualDiscount, setQuantity, storageKey, withIdempotencyKey, type KeyValueStorage,
 } from '../lib/cart.ts';
 
 const mouse = { id: 7, sku: 'MOU-001', name: 'Mouse', available: 3, activePromotion: { id: 9 } };
@@ -62,4 +62,15 @@ test('carrinho e chave ficam no sessionStorage por usuario e sobrevivem a JSON i
   const failing: KeyValueStorage = { getItem: () => { throw new Error('bloqueado'); }, setItem: () => { throw new Error('cheio'); }, removeItem: () => {} };
   assert.deepEqual(loadCart(failing, 1), emptyCart());
   assert.doesNotThrow(() => saveCart(failing, 1, cart));
+});
+
+test('desconto manual digitado volta com o carrinho depois de recarregar a pagina', () => {
+  const storage = memory();
+  const cart = setManualDiscount(addProduct(emptyCart(), mouse), { percent: '5', reason: 'Cliente antigo' });
+  saveCart(storage, 3, cart);
+  const loaded = loadCart(storage, 3);
+  assert.deepEqual(loaded.manualDiscount, { percent: '5', reason: 'Cliente antigo' });
+  assert.deepEqual(manualDiscountBody(loaded), { percent: 5, reason: 'Cliente antigo' });
+  storage.setItem(storageKey(3), JSON.stringify({ lines: [], idempotencyKey: null, manualDiscount: { percent: 5 } }));
+  assert.equal(loadCart(storage, 3).manualDiscount, undefined);
 });
