@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -8,6 +8,7 @@ import { api } from '../../../lib/api/http.ts';
 import { formatDateTime } from '../../../lib/format.ts';
 import { ErrorNotice, Loading } from '../../../components/feedback.tsx';
 import CustomerForm from '../../../components/customer-form.tsx';
+import { useModal } from '../../../components/use-modal.ts';
 import Pager from '../../../components/pager.tsx';
 
 /** Busca por CPF/CNPJ (so digitos) ou prefixo do nome (C-11); documento mascarado para o VENDEDOR (C-12). */
@@ -17,15 +18,12 @@ export default function CustomerList() {
   const [q, setQ] = useState('');
   const [page, setPage] = useState(0);
   const [drawer, setDrawer] = useState(false);
-  const dialog = useRef<HTMLDialogElement>(null);
+  const dialog = useModal(drawer);
 
   useEffect(() => {
     const timer = setTimeout(() => { setQ(term.trim()); setPage(0); }, 250);
     return () => clearTimeout(timer);
   }, [term]);
-  useEffect(() => {
-    if (drawer) dialog.current?.showModal(); else dialog.current?.close();
-  }, [drawer]);
 
   const query = useQuery({
     queryKey: ['customers-list', q, page],

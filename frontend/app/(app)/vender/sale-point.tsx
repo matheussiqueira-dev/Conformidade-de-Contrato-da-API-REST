@@ -13,6 +13,7 @@ import { ApiError, api } from '../../../lib/api/http.ts';
 import { invalidateAfterSale } from '../../../lib/api/invalidate.ts';
 import ProductThumb from '../../../components/product-thumb.tsx';
 import ConfirmDialog from '../../../components/confirm-dialog.tsx';
+import { useModal } from '../../../components/use-modal.ts';
 import {
   addProduct, availableFromDetails, clearCart, emptyCart, loadCart, manualDiscountBody, refreshAvailability, removeProduct, saleItems, saveCart,
   setManualDiscount, setQuantity, withIdempotencyKey, type Cart,
@@ -74,6 +75,15 @@ export default function SalePoint({ userId, userName, initialCustomerId = null }
   // A etapa de pagamento fica montada (oculta) ao voltar aos itens: cliente, pagamento e endereco nao se perdem.
   const [checkoutOpened, setCheckoutOpened] = useState(false);
   const [round, setRound] = useState(0);
+  const firstStep = useRef(true);
+
+  // Ao trocar de etapa o foco vai para o titulo da nova etapa (leitor de tela anuncia onde a pessoa esta);
+  // na etapa de itens a busca ja recebe o foco.
+  useEffect(() => {
+    if (firstStep.current) { firstStep.current = false; return; }
+    const target = step === 1 ? 'cliente-titulo' : step === 2 ? 'confirmacao-titulo' : null;
+    if (target) document.getElementById(target)?.focus();
+  }, [step]);
 
   useEffect(() => {
     setCart(loadCart(storage(), userId));
@@ -190,8 +200,9 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
           <label htmlFor="busca">Nome ou SKU <span className="muted">(atalho: /)</span></label>
           <input id="busca" ref={search} className="input" type="search" autoComplete="off" value={term}
                  role="combobox" aria-expanded={results.length > 0} aria-controls="resultados" aria-autocomplete="list"
-                 aria-activedescendant={results[selected] ? `resultado-${results[selected]?.id}` : undefined}
+                 aria-activedescendant={results[selected] ? `resultado-${results[selected]?.id}` : undefined} aria-describedby="busca-dica"
                  onChange={event => { setTerm(event.target.value); setSelected(0); }} onKeyDown={onSearchKey} />
+          <span className="hint" id="busca-dica">Setas escolhem o produto e Enter adiciona. Com leitor de código, o SKU completo entra direto.</span>
         </div>
         <ErrorNotice error={catalog.error} />
         {catalog.isLoading ? <p role="status" className="muted">Buscando produtos…</p>
@@ -294,15 +305,11 @@ function CheckoutStep({ active, cart, setCart, userId, initialCustomerId, onCrea
   const [address, setAddress] = useState<AddressForm>(EMPTY_ADDRESS);
   const [problems, setProblems] = useState<string[]>([]);
   const client = useQueryClient();
-  const dialog = useRef<HTMLDialogElement>(null);
+  const dialog = useModal(drawer);
   const q = useDebounced(term.trim(), 250);
   // Oculta (de volta aos itens), a etapa nao cota: a etapa de itens ja cota com espera entre as teclas.
   const quote = useQuote(saleItems(cart), manualDiscountBody(cart), active);
   const quoted = new Map((quote.data?.items ?? []).map(item => [item.productId, item]));
-
-  useEffect(() => {
-    if (drawer) dialog.current?.showModal(); else dialog.current?.close();
-  }, [drawer]);
 
   // Cliente vindo do perfil (/vender?cliente=ID): carregado uma vez; "Trocar cliente" continua livre.
   const preset = useQuery({
@@ -374,7 +381,7 @@ function CheckoutStep({ active, cart, setCart, userId, initialCustomerId, onCrea
   return (
     <div className="pdv">
       <section className="card stack" aria-labelledby="cliente-titulo">
-        <h2 id="cliente-titulo">Cliente</h2>
+        <h2 id="cliente-titulo" tabIndex={-1}>Cliente</h2>
         {customer ? <div className="stack-sm">
           <p><strong>{customer.name}</strong> · <span className="mono">{customer.document}</span></p>
           <div><button type="button" className="btn" onClick={() => setCustomer(null)}>Trocar cliente</button></div>
@@ -494,7 +501,7 @@ function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder
   return (
     <section className="card stack" aria-labelledby="confirmacao-titulo">
       <div className="page-head">
-        <h2 id="confirmacao-titulo">Venda <span className="mono">#{order.id}</span></h2>
+        <h2 id="confirmacao-titulo" tabIndex={-1}>Venda <span className="mono">#{order.id}</span></h2>
         <span className={statusPill(order.status)}>{label(ORDER_STATUS, order.status)}</span>
       </div>
       <dl className="facts">

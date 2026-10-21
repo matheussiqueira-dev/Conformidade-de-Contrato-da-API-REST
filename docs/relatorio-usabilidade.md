@@ -23,7 +23,7 @@ Antes das mudanças, as telas já tinham boa base: marca aplicada, WCAG 2.2 AA v
 6. no ambiente publicado, a espera do servidor acordando não tinha explicação, e o 502/504 virava "Algo deu errado do nosso lado";
 7. na demonstração local por Docker (plano B da apresentação), todas as fotos de produto e ícones apareciam quebrados: a imagem do frontend não levava a pasta `public/`.
 
-Foram corrigidos 24 achados; 11 ficam como recomendação (seção 6).
+Foram corrigidos 24 achados e 3 recomendações da primeira rodada (U-25 a U-27); 8 ficam como recomendação (seção 6).
 
 ## 3. Achados e situação
 
@@ -54,6 +54,9 @@ Escala: urgência, risco da correção (chance de quebrar algo), risco sem corre
 | U-21 | Pedido Pix ou cartão pendente: ao clicar "Nova venda", nada dizia que ele continua reservado em Vendas | Baixa | Baixo | Baixo | Bom | 1 | Trivial | Corrigido |
 | U-22 | Meu desempenho sem caminho para as vendas nem para uma nova venda | Baixa | Baixo | Baixo | Bom | 2 | Trivial | Corrigido |
 | U-23 | Exemplo do e-mail no login com domínio diferente das contas (`voce@loja.com`) | Baixa | Baixo | Baixo | Bom | 1 | Trivial | Corrigido |
+| U-25 | Trocar de etapa no PDV deixava o foco no corpo da página; o leitor de tela não anunciava a etapa nova (antes P-03) | Média | Baixo | Médio | Bom | 2 | Pequeno | Corrigido, com E2E |
+| U-26 | Atalhos da busca do PDV (setas, Enter, leitor de código) não apareciam na tela (antes P-05) | Baixa | Baixo | Baixo | Bom | 1 | Trivial | Corrigido |
+| U-27 | Abrir e fechar `<dialog>` repetido em quatro lugares (antes P-10) | Baixa | Baixo | Baixo | Bom | 5 | Pequeno | Corrigido: `components/use-modal.ts` |
 | U-24 | Stack `docker-compose.demo.yml`: `frontend/Dockerfile` não copiava `public/`, e `next start` respondia 404 para fotos, ícones das linhas e marca | Alta | Baixo | Alto | Excelente | 1 | Trivial | Corrigido |
 
 ## 4. O que mudou, por tela
@@ -99,14 +102,11 @@ Regras usadas: botão com verbo e objeto; confirmação com a ação no título 
 | --- | --- | --- |
 | P-01 | Filtrar Vendas por vendedor, período e cliente | Precisa de parâmetros novos em `GET /sales/orders` (contrato v5, verificação ao vivo e matriz de acesso) |
 | P-02 | No cadastro de cliente com documento repetido, oferecer "Usar o cliente já cadastrado" | Precisa que o 409 `DUPLICATE_DOCUMENT` devolva o id; hoje o vendedor busca o cliente de novo |
-| P-03 | Levar o foco ao título de cada etapa do PDV ao trocar de etapa | Mudança de foco pede rodada de teste com leitor de tela |
 | P-04 | Começar a acordar o servidor quando a tela de login abre (uma chamada a `/auth/csrf`) | Reduz a espera em 10 a 20 s, mas acorda Render e Neon mesmo sem login: decisão de cota da equipe |
-| P-05 | Ajuda de atalhos do PDV (`/`, setas, Enter) visível na tela | Baixo impacto; o atalho `/` já aparece no rótulo |
 | P-06 | Linha inteira da tabela como área de clique | Exige cuidado com os botões da própria linha |
 | P-07 | Voltar ao preço anterior direto do histórico | Regra de negócio: toda mudança de preço exige motivo |
 | P-08 | Tema escuro | O manual de marca v1.0 define só o tema claro |
 | P-09 | Teste com pessoas reais | Roteiro na seção 8 |
-| P-10 | Um só gancho para abrir e fechar `<dialog>` (hoje repetido em `Drawer`, `ConfirmDialog`, PDV e Clientes) | Limpeza sem efeito para quem usa |
 | P-11 | Invalidação depois da venda por lista de chaves (`lib/api/invalidate.ts`) | Chave nova de tela precisa entrar na lista; alternativa é prefixar as chaves por domínio |
 
 ## 7. Especificação dos componentes novos
@@ -181,7 +181,7 @@ Rodada de 20/10/2026, na branch `feat/ux-usabilidade`, antes de qualquer commit.
 | Tipos | `tsc --noEmit` sem erros | `cd frontend; npm run typecheck` |
 | Lógica do frontend | 41/41 (3 novos: desconto manual depois da recarga, 502/503/504, rótulo nos erros) | `cd frontend; npm test` |
 | Build de produção | 18 rotas, sem erro | `cd frontend; npm run build` |
-| Contrato ao vivo + E2E + axe | 58 de 58 operações, `divergences: []`; Playwright 26/26, com WCAG 2.2 AA e 320 px nas telas dos dois perfis | `scripts	est-contract.ps1 -HttpOnly -Frontend` (PowerShell 7, JDK 25) |
+| Contrato ao vivo + E2E + axe | 58 de 58 operações, `divergences: []`; Playwright 26/26 (rodado de novo em 21/10 com U-25 a U-27 e o foco das etapas conferido no CT-WEB-101), com WCAG 2.2 AA e 320 px nas telas dos dois perfis | `scripts	est-contract.ps1 -HttpOnly -Frontend` (PowerShell 7, JDK 25) |
 | Validadores do contrato (Node) | 47/47 | mesmo runner |
 | Fluxos alterados no navegador | 36/36 verificações na stack `docker-compose.demo.yml`: mostrar senha, aviso de espera e 504 no login, total igual nas duas etapas, cliente e cartão mantidos ao voltar, desconto mantido na recarga, confirmação com foco em "Manter pedido" e Esc sem cancelar, filtro de Vendas no endereço e na volta do detalhe, links do painel, `?abaixo=1`, Inventário automático, avisos de sucesso, confirmação de inativar, mostrar senha provisória; axe sem violação em `/entrar`, PDV (pagamento e confirmação), `/vendas`, `/gestao`, `/gestao/estoque` e `/gestao/usuarios`; sem rolagem horizontal em 320 px no pagamento | roteiro Playwright fora do repositório |
 | Fotos e ícones na stack Docker | antes 404; depois 200 (`/produtos/airpods.webp`, `/produtos/linhas/acessorio.svg`, `/brand/sbi-512.png`) | `curl -I http://127.0.0.1:3000/produtos/airpods.webp` |

@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { useId, useRef, type ReactNode } from 'react';
+import { useModal } from './use-modal.ts';
 
 /**
  * Confirmacao antes de acao sem volta (cancelar pedido, encerrar promocao, inativar produto): <dialog> nativo em
@@ -9,18 +10,9 @@ export default function ConfirmDialog({ open, title, confirmLabel, cancelLabel, 
   open: boolean; title: string; confirmLabel: string; cancelLabel: string;
   onConfirm: () => void; onCancel: () => void; children: ReactNode;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
   const keep = useRef<HTMLButtonElement>(null);
+  const ref = useModal(open, () => keep.current?.focus());
   const id = useId();
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog) return;
-    if (open && !dialog.open) {
-      dialog.showModal();
-      keep.current?.focus();
-    }
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
   return (
     <dialog ref={ref} className="confirm" role="alertdialog" aria-labelledby={`${id}-titulo`} aria-describedby={`${id}-texto`} onClose={onCancel}>
       <div className="stack-sm">

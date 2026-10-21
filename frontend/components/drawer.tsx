@@ -1,16 +1,11 @@
 'use client';
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { useId, type ReactNode } from 'react';
+import { useModal } from './use-modal.ts';
 
 /** Painel lateral com <dialog> nativo: foco preso, Esc fecha e o foco volta para quem abriu. */
 export default function Drawer({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const ref = useModal(open);
   const id = useId();
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
   return (
     <dialog ref={ref} className="drawer" aria-labelledby={id} onClose={onClose}>
       <div className="stack">
