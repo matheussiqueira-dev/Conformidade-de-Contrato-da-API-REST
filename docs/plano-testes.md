@@ -290,6 +290,7 @@ Lacunas e decisoes em [decisoes/evolucao.md](decisoes/evolucao.md). Um pacote po
 | CT-WEB-125 | WP-EVO-9 | Unitario | - | Verde | `tests/brand.test.ts`: nenhuma forma proibida do nome (sigla com pontos, so a inicial maiuscula, nome abreviado com ou sem espaco, artigo feminino; lista em `FORBIDDEN`) em `frontend/app`, `components`, `lib` e `docs/` |
 | CT-WEB-126 | WP-PUB-2 | E2E | Valor limite | Verde | `e2e/manager.spec.ts`: com 11 produtos vendidos no dia, "Produtos mais vendidos" mostra 10 linhas, "Mostrando 10 de N" e o link "Ver todos" leva a `/gestao/analises` |
 | CT-WEB-127 | WP-PUB-2 | E2E | - | Verde | `e2e/brand.spec.ts`: rodape do login em duas linhas inteiras ("Ambiente de demonstracao · dados ficticios" e "Projeto A3 · UNIFG 2026") em 1280 px e 390 px, sem rolagem horizontal |
+| CT-WEB-128 | D-EVO-40 | E2E | - | Verde | `e2e/customers.spec.ts`: no PDV, cadastrar cliente com CPF já existente mostra "Este documento já pertence a um cliente cadastrado" e "Usar o cliente já cadastrado" coloca o cliente existente na venda |
 
 ## Selecao inicial da suite
 

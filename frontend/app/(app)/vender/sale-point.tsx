@@ -376,6 +376,19 @@ function CheckoutStep({ active, cart, setCart, userId, initialCustomerId, onCrea
     if (local.length === 0) submit.mutate();
   }
 
+  // Documento repetido no cadastro (D-EVO-40): o cliente que ja existe entra na venda no lugar do novo.
+  async function chooseExisting(id: number) {
+    try {
+      const found = await client.fetchQuery({ queryKey: ['customer', id],
+        queryFn: ({ signal }) => api.request(`/customers/${id}`, { signal, schema: GetCustomerResponse }) });
+      setCustomer({ id: found.id, name: found.name, document: found.document });
+      setDrawer(false);
+    } catch (error) {
+      setProblems([errorMessage(error)]);
+      setDrawer(false);
+    }
+  }
+
   const setAddressField = (key: keyof AddressForm) => (value: string) => setAddress(current => ({ ...current, [key]: value }));
 
   return (
@@ -409,7 +422,8 @@ function CheckoutStep({ active, cart, setCart, userId, initialCustomerId, onCrea
           <div className="stack">
             <h2 id="novo-cliente">Cadastrar cliente</h2>
             {drawer && <CustomerForm idPrefix="pdv-cliente" onCancel={() => setDrawer(false)}
-                                     onCreated={created => { setCustomer(created); setDrawer(false); }} />}
+                                     onCreated={created => { setCustomer(created); setDrawer(false); }}
+                                     onExisting={id => { void chooseExisting(id); }} />}
           </div>
         </dialog>
       </section>

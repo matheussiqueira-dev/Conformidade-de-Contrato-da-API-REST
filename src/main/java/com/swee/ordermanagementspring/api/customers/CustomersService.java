@@ -13,6 +13,7 @@ import com.swee.ordermanagementspring.entities.enums.Fulfillment;
 import com.swee.ordermanagementspring.exceptions.ApiException;
 import com.swee.ordermanagementspring.exceptions.ErrorCode;
 import com.swee.ordermanagementspring.security.AuditService;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,13 @@ public class CustomersService {
         Long addressId = request.address() == null ? null : Addresses.insert(jdbc, request.address());
         String cpf = request instanceof IndividualCustomerCreate i ? Documents.digitsOnly(i.cpf()) : null;
         String cnpj = request instanceof CorporateCustomerCreate c ? Documents.cnpjKey(c.cnpj()) : null;
+        // D-EVO-40: documento ja cadastrado devolve o id em details para a tela oferecer o cliente existente;
+        // a constraint UNIQUE continua cobrindo a corrida entre duas inclusoes.
+        jdbc.sql("SELECT id FROM customer WHERE cpf = :cpf OR cnpj = :cnpj").param("cpf", cpf).param("cnpj", cnpj)
+                .query(Long.class).optional().ifPresent(existing -> {
+                    throw new ApiException(HttpStatus.CONFLICT, ErrorCode.DUPLICATE_DOCUMENT, "Document already registered",
+                            List.of("customerId=" + existing));
+                });
         long id = jdbc.sql("""
                 INSERT INTO customer(customer_type, name, company_name, cpf, cnpj, email, phone, birth_date, address_id, created_by)
                 VALUES (:type, :name, :company, :cpf, :cnpj, :email, :phone, :birth, :address, :user) RETURNING id""")

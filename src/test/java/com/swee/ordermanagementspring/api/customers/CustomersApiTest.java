@@ -125,9 +125,12 @@ class CustomersApiTest {
     void duplicateDocumentIsRejected() throws Exception {
         assertError(send(post("/customers"), fx.allan, CORPORATE.replace("11.222.333/0001-81", "11.222.333/0001-82")),
                 400, "VALIDATION_FAILED");
-        create(INDIVIDUAL, fx.allan);
-        assertError(send(post("/customers"), fx.allan, INDIVIDUAL.replace("123.456.789-09", "12345678909")
-                .replace("joana@", "outra@")), 409, "DUPLICATE_DOCUMENT");
+        long existing = create(INDIVIDUAL, fx.allan);
+        MvcResult duplicate = send(post("/customers"), fx.allan, INDIVIDUAL.replace("123.456.789-09", "12345678909")
+                .replace("joana@", "outra@"));
+        assertError(duplicate, 409, "DUPLICATE_DOCUMENT");
+        // D-EVO-40: o id do cliente existente vai em details para a tela oferecer "Usar o cliente ja cadastrado".
+        assertThat(body(duplicate).get("details").get(0).asText()).isEqualTo("customerId=" + existing);
         assertError(send(post("/customers"), fx.allan, INDIVIDUAL.replace("\"INDIVIDUAL\"", "\"CORPORATE\"")), 400, "MALFORMED_REQUEST");
         assertError(send(post("/customers"), fx.allan, INDIVIDUAL.replace("\"phone\":\"(85) 99999-0000\",", "")), 400, "VALIDATION_FAILED");
         assertError(send(post("/customers"), fx.allan, INDIVIDUAL.replace("\"type\":\"INDIVIDUAL\",", "")), 400, "MALFORMED_REQUEST");
