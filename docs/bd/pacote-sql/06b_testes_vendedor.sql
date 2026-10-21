@@ -31,7 +31,7 @@ SELECT pg_temp.ok('RB-10 Vendedor ve somente os proprios pedidos (BOLA)',
        (SELECT count(*) FROM orders WHERE seller_id <> app_current_user_id()) = 0
        AND (SELECT count(*) FROM orders) > 0);
 SELECT pg_temp.ok('RB-11 Meu desempenho retorna somente o Allan',
-       count(*) = 1 AND bool_and(vendedor = 'Allan Barros' AND atingimento_pct = 85.5))
+       count(*) = 1 AND bool_and(vendedor = 'Allan Barros' AND atingimento_pct = 57.0))
   FROM v_meu_desempenho WHERE periodo = '2026-09-01';
 SELECT pg_temp.ok('RB-12 Minha evolucao semanal = 12.000/15.000/13.400/18.000/10.000',
        array_agg(realizado ORDER BY inicio) = ARRAY[12000,15000,13400,18000,10000]::numeric[])

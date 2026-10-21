@@ -10,24 +10,32 @@ import {
 } from '../../../../lib/api/generated/sbi.zod.ts';
 import { api } from '../../../../lib/api/http.ts';
 import { formatDateTime, money, parseDecimal as decimal } from '../../../../lib/format.ts';
-import { issueMessage } from '../../../../lib/forms.ts';
+import { labeledProblems } from '../../../../lib/forms.ts';
 import { ErrorNotice, Loading, errorMessage } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
+import ConfirmDialog from '../../../../components/confirm-dialog.tsx';
 import Drawer from '../../../../components/drawer.tsx';
 import Pager from '../../../../components/pager.tsx';
 import ProductThumb from '../../../../components/product-thumb.tsx';
+import { StatusMessage, useStatusMessage } from '../../../../components/status-message.tsx';
 
 type Product = z.infer<typeof ListProductsResponse>['content'][number];
 type Panel = { kind: 'new' } | { kind: 'edit' | 'price' | 'history'; product: Product } | { kind: 'categories' } | null;
 
-
+/** Rotulos da tela para os campos do corpo (CreateProductBody/UpdateProductBody). */
+const PRODUCT_FIELDS: Readonly<Record<string, string>> = {
+  sku: 'SKU', name: 'Nome', categoryId: 'Categoria', price: 'Preço de venda', 'price.amount': 'Preço de venda', weightKg: 'Peso (kg)',
+  downloadLink: 'Link de download', minLevel: 'Estoque mínimo', description: 'Descrição', type: 'Tipo',
+};
 
 export default function Products() {
   const client = useQueryClient();
+  const message = useStatusMessage();
   const [tab, setTab] = useState<'true' | 'false'>('true');
   const [q, setQ] = useState('');
   const [page, setPage] = useState(0);
   const [panel, setPanel] = useState<Panel>(null);
+  const [deactivating, setDeactivating] = useState<Product | null>(null);
   const list = useQuery({
     queryKey: ['products', tab, q, page],
     queryFn: ({ signal }) => api.request(`/products?${new URLSearchParams({ sellable: tab, q, page: String(page), size: '20' })}`,
@@ -36,9 +44,12 @@ export default function Products() {
   });
   const status = useMutation({
     mutationFn: (product: Product) => api.request(`/products/${product.id}/status`, { method: 'PATCH', body: { active: !product.active }, schema: ChangeProductStatusResponse }),
-    onSuccess: () => client.invalidateQueries({ queryKey: ['products'] }),
+    onSuccess: (_, product) => {
+      message.show(product.active ? `${product.name} foi inativado e saiu do PDV.` : `${product.name} foi ativado e volta a aparecer no PDV.`);
+      return client.invalidateQueries({ queryKey: ['products'] });
+    },
   });
-  const done = () => { void client.invalidateQueries({ queryKey: ['products'] }); setPanel(null); };
+  const done = (text: string) => { void client.invalidateQueries({ queryKey: ['products'] }); message.show(text); setPanel(null); };
   const data = list.data;
   const title = panel === null ? '' : panel.kind === 'new' ? 'Novo produto' : panel.kind === 'categories' ? 'Categorias'
     : `${panel.kind === 'edit' ? 'Editar' : panel.kind === 'price' ? 'Alterar preço' : 'Histórico de preço'} · ${panel.product.name}`;
@@ -52,6 +63,7 @@ export default function Products() {
           <button type="button" className="btn btn-primary" onClick={() => setPanel({ kind: 'new' })}>Novo produto</button>
         </div>
       </header>
+      <StatusMessage message={message.message} onClose={message.clear} />
       <section className="card stack" aria-label="Lista de produtos">
         <div className="toolbar">
           <fieldset className="segmented"><legend className="sr-only">Mostrar</legend>
@@ -79,7 +91,8 @@ export default function Products() {
                     <button type="button" className="btn" onClick={() => setPanel({ kind: 'edit', product: p })}>Editar</button>
                     <button type="button" className="btn" onClick={() => setPanel({ kind: 'price', product: p })}>Preço</button>
                     <button type="button" className="btn btn-ghost" onClick={() => setPanel({ kind: 'history', product: p })}>Histórico</button>
-                    <button type="button" className="btn btn-ghost" disabled={status.isPending} onClick={() => status.mutate(p)}>{p.active ? 'Inativar' : 'Ativar'}</button>
+                    <button type="button" className="btn btn-ghost" disabled={status.isPending}
+                            onClick={() => (p.active ? setDeactivating(p) : status.mutate(p))}>{p.active ? 'Inativar' : 'Ativar'}</button>
                   </div></td>
                 </tr>
               ))}</tbody>
@@ -87,12 +100,18 @@ export default function Products() {
         {data && <Pager page={data.page} size={data.size} total={data.totalElements} onPage={setPage} />}
       </section>
       <Drawer open={panel !== null} title={title} onClose={() => setPanel(null)}>
-        {panel?.kind === 'new' && <ProductForm onDone={done} />}
-        {panel?.kind === 'edit' && <ProductForm product={panel.product} onDone={done} />}
-        {panel?.kind === 'price' && <PriceForm product={panel.product} onDone={done} />}
+        {panel?.kind === 'new' && <ProductForm onDone={name => done(`${name} cadastrado.`)} />}
+        {panel?.kind === 'edit' && <ProductForm product={panel.product} onDone={name => done(`Dados de ${name} salvos.`)} />}
+        {panel?.kind === 'price' && <PriceForm product={panel.product}
+                                               onDone={price => done(`Preço de ${panel.product.name} alterado para ${price}. Vendas já feitas mantêm o preço antigo.`)} />}
         {panel?.kind === 'history' && <PriceHistory product={panel.product} />}
         {panel?.kind === 'categories' && <Categories />}
       </Drawer>
+      <ConfirmDialog open={deactivating !== null} title={`Inativar ${deactivating?.name ?? 'produto'}?`} confirmLabel="Inativar produto"
+                     cancelLabel="Manter ativo" onCancel={() => setDeactivating(null)}
+                     onConfirm={() => { if (deactivating) status.mutate(deactivating); setDeactivating(null); }}>
+        <p>Ele sai da busca do PDV e não pode ser vendido até ser ativado de novo. O histórico de vendas e o estoque continuam.</p>
+      </ConfirmDialog>
     </div>
   );
 }
@@ -101,7 +120,7 @@ function useCategories() {
   return useQuery({ queryKey: ['categories'], queryFn: ({ signal }) => api.request('/categories', { signal, schema: ListCategoriesResponse }) });
 }
 
-function ProductForm({ product, onDone }: { product?: Product; onDone: () => void }) {
+function ProductForm({ product, onDone }: { product?: Product; onDone: (name: string) => void }) {
   const categories = useCategories();
   const [type, setType] = useState<'PHYSICAL' | 'DIGITAL'>(product?.type ?? 'PHYSICAL');
   const [problems, setProblems] = useState<string[]>([]);
@@ -109,7 +128,7 @@ function ProductForm({ product, onDone }: { product?: Product; onDone: () => voi
     mutationFn: (body: unknown) => (product
       ? api.request(`/products/${product.id}`, { method: 'PUT', body, schema: UpdateProductResponse })
       : api.request('/products', { method: 'POST', body, schema: CreateProductResponse })),
-    onSuccess: onDone,
+    onSuccess: saved => onDone(saved.name),
   });
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -125,7 +144,7 @@ function ProductForm({ product, onDone }: { product?: Product; onDone: () => voi
       : { type, ...common, ...specific, price: { amount: decimal(text('price')), currency: 'BRL' }, ...(text('minLevel') ? { minLevel: Number(text('minLevel')) } : {}) };
     const check = (product ? UpdateProductBody : CreateProductBody).safeParse(body);
     if (!check.success) {
-      setProblems(check.error.issues.map(issue => `${issue.path.join('.') || 'formulário'}: ${issueMessage(issue)}`));
+      setProblems(labeledProblems(check.error.issues, PRODUCT_FIELDS));
       return;
     }
     setProblems([]);
@@ -157,10 +176,10 @@ function ProductForm({ product, onDone }: { product?: Product; onDone: () => voi
   );
 }
 
-function PriceForm({ product, onDone }: { product: Product; onDone: () => void }) {
+function PriceForm({ product, onDone }: { product: Product; onDone: (price: string) => void }) {
   const change = useMutation({
     mutationFn: (body: unknown) => api.request(`/products/${product.id}/price`, { method: 'PATCH', body, schema: ChangeProductPriceResponse }),
-    onSuccess: onDone,
+    onSuccess: changed => onDone(money(changed.price)),
   });
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

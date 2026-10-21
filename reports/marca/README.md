@@ -1,6 +1,6 @@
 # Capturas da marca SBI v1.0 (WP-EVO-9, refeitas no WP-PUB-2)
 
-Telas do frontend com o manual de marca v1.0 aplicado, geradas em 14/10/2026 e refeitas em 15/10/2026 (custo do seed, categorias com acento, 10 produtos no painel e rodapé do login) contra a stack de demonstração
+Telas do frontend com o manual de marca v1.0 aplicado, geradas em 14/10/2026 e refeitas em 15/10/2026 (custo do seed, categorias com acento, 10 produtos no painel e rodapé do login) e em 20/10/2026 (contas da equipe: gerente Matheus Siqueira e vendedor Allan Barros) contra a stack de demonstração
 (`docker-compose.demo.yml`, seed demo e massa Olist, nomes fictícios). Nenhum dado real.
 
 - `entrar-*.png`: login sem sessão (1280 × 720 e 390 × 844).

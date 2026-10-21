@@ -1,18 +1,29 @@
 'use client';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { authApi } from '../../lib/api/auth.ts';
 import { ApiError, api } from '../../lib/api/http.ts';
-import { ERROR_MESSAGES, LOCKOUT_HINT, NETWORK_MESSAGE } from '../../lib/api/messages.ts';
+import { ERROR_MESSAGES, LOCKOUT_HINT, NETWORK_MESSAGE, SLOW_START_HINT } from '../../lib/api/messages.ts';
 import { landingPath } from '../../lib/areas.ts';
+import ShowPassword from '../../components/show-password.tsx';
 
 const auth = authApi(api);
+/** Depois disso a espera deixa de ser normal: no ambiente publicado o servidor costuma estar acordando. */
+const SLOW_AFTER_MS = 8_000;
 
 export default function LoginForm() {
   const params = useSearchParams();
   const [busy, setBusy] = useState(false);
+  const [slow, setSlow] = useState(false);
   const [error, setError] = useState('');
+  const [visible, setVisible] = useState(false);
   const revoked = params.get('sessao') === 'encerrada';
+
+  useEffect(() => {
+    if (!busy) { setSlow(false); return; }
+    const timer = setTimeout(() => setSlow(true), SLOW_AFTER_MS);
+    return () => clearTimeout(timer);
+  }, [busy]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,15 +46,17 @@ export default function LoginForm() {
       {error && <p className="notice notice-error" role="alert">{error}</p>}
       <div className="field">
         <label htmlFor="email">E-mail</label>
-        <input className="input" id="email" name="email" type="email" autoComplete="username" required maxLength={254}
-               placeholder="voce@loja.com" disabled={busy} />
+        <input className="input" id="email" name="email" type="email" autoComplete="username" spellCheck={false} required maxLength={254}
+               placeholder="nome@sbi.tech" disabled={busy} />
       </div>
       <div className="field">
         <label htmlFor="password">Senha</label>
-        <input className="input" id="password" name="password" type="password" autoComplete="current-password" required
+        <input className="input" id="password" name="password" type={visible ? 'text' : 'password'} autoComplete="current-password" required
                minLength={8} maxLength={72} disabled={busy} />
+        <ShowPassword checked={visible} onChange={setVisible} disabled={busy} />
       </div>
       <button type="submit" className="btn btn-primary btn-block" disabled={busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
+      <div role="status" className="status-slot">{slow && <p className="notice notice-warn">{SLOW_START_HINT}</p>}</div>
       <p className="muted login-help">{LOCKOUT_HINT} Precisa de acesso? Fale com o gerente da loja.</p>
     </form>
   );

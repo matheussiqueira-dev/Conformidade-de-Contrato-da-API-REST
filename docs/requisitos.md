@@ -77,10 +77,11 @@ Periodo demonstrativo: setembro de 2026, fuso America/Fortaleza. Valores sao fic
 
 | Vendedor | Meta | Realizado | Atingimento |
 | --- | ---: | ---: | ---: |
-| Allan Barros | R$ 80.000 | R$ 68.400 | 85,5% |
-| Francisco Ferreira | R$ 80.000 | R$ 62.000 | 77,5% |
-| Gabriel Sousa | R$ 80.000 | R$ 56.000 | 70,0% |
+| Allan Barros | R$ 120.000 | R$ 68.400 | 57,0% |
+| Francisco Ferreira | R$ 120.000 | R$ 62.000 | 51,7% |
 | Loja | R$ 240.000 | R$ 186.400 | 77,7% |
+
+O gerente Gabriel Sousa também vende (R$ 56.000 no período), sem meta individual.
 
 Venda demonstrativa: Marina Costa, iPhone 128 GB Preto por R$ 4.500 e AirPods Branco por R$ 1.200, total R$ 5.700 sem desconto.
 

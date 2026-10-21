@@ -163,9 +163,11 @@ export default function Dashboard() {
                 {lowStock.data.content.map(p => <li key={p.productId}><span className="pill pill-warn">{p.available} disp.</span> {p.name}
                   <span className="muted"> · mínimo {p.minLevel}</span></li>)}
               </ul>)}
-              <p><Link href="/gestao/estoque">Abrir estoque</Link></p>
+              <p><Link href={report.lowStockCount > 0 ? '/gestao/estoque?abaixo=1' : '/gestao/estoque'}>
+                {report.lowStockCount > 0 ? 'Ver produtos abaixo do mínimo' : 'Abrir estoque'}</Link></p>
             </section>
-            <p className="muted">Pendentes de pagamento: <span className="num">{report.pendingPaymentCount}</span> · {money(report.pendingPaymentAmount)}</p>
+            <p className="muted">Pendentes de pagamento: <span className="num">{report.pendingPaymentCount}</span> · {money(report.pendingPaymentAmount)}
+              {report.pendingPaymentCount > 0 && <> · <Link href="/vendas?situacao=PENDING_PAYMENT">Ver pedidos pendentes</Link></>}</p>
           </div>
         </div>
       </>}

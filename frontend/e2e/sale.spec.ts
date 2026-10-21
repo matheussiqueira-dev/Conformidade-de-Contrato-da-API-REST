@@ -21,6 +21,7 @@ async function cartWithCustomer(page: Page, sku: string, cpf: string) {
   await expect(page.getByRole('group', { name: /Quantidade de/ })).toBeVisible();
   await expect(page.locator('.totals .total')).toContainText('R$ 59,90');
   await page.getByRole('button', { name: 'Continuar para cliente e pagamento' }).click();
+  await expect(page.getByRole('heading', { name: 'Cliente', level: 2 })).toBeFocused();
   await page.getByLabel('CPF, CNPJ ou nome').fill(cpf);
   await page.getByRole('list', { name: 'Clientes encontrados' }).getByRole('button').first().click();
 }
@@ -32,7 +33,7 @@ test('[CT-WEB-101] venda com Pix pelo teclado aparece em vendas e no historico d
   await login(page, 'seller@example.test');
   await cartWithCustomer(page, data.sku, data.cpf);
   await page.getByRole('button', { name: 'Criar pedido' }).click();
-  await expect(page.getByRole('heading', { name: /Venda #\d+/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Venda #\d+/ })).toBeFocused();
   const heading = await page.getByRole('heading', { name: /Venda #\d+/ }).textContent();
   const orderId = /#(\d+)/.exec(heading ?? '')?.[1];
   await page.getByRole('button', { name: 'Confirmar pagamento recebido' }).click();

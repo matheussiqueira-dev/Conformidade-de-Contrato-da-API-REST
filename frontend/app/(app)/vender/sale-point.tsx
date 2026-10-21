@@ -3,20 +3,23 @@
 // setas percorrem os resultados, Enter adiciona; SKU exato + Enter (leitor de codigo de barras) adiciona direto.
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import Link from 'next/link';
-import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { z } from 'zod';
 import {
   CancelOrderResponse, ConfirmSalePaymentResponse, CreateSaleOrderBody, CreateSaleOrderResponse, GetCustomerResponse, ListCustomersResponse,
   ListSalesCatalogResponse, QuoteSaleResponse,
 } from '../../../lib/api/generated/sbi.zod.ts';
 import { ApiError, api } from '../../../lib/api/http.ts';
+import { invalidateAfterSale } from '../../../lib/api/invalidate.ts';
 import ProductThumb from '../../../components/product-thumb.tsx';
+import ConfirmDialog from '../../../components/confirm-dialog.tsx';
+import { useModal } from '../../../components/use-modal.ts';
 import {
   addProduct, availableFromDetails, clearCart, emptyCart, loadCart, manualDiscountBody, refreshAvailability, removeProduct, saleItems, saveCart,
   setManualDiscount, setQuantity, withIdempotencyKey, type Cart,
 } from '../../../lib/cart.ts';
 import { label, money, ORDER_STATUS, statusPill, PAYMENT_TYPE } from '../../../lib/format.ts';
-import { ErrorNotice, errorMessage } from '../../../components/feedback.tsx';
+import { ErrorNotice, Loading, errorMessage } from '../../../components/feedback.tsx';
 import CustomerForm, { Field } from '../../../components/customer-form.tsx';
 import { Icon } from '../../../components/brand/icons.tsx';
 
@@ -49,12 +52,38 @@ function inDays(days: number): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza' }).format(date);
 }
 
+type QuoteItems = ReturnType<typeof saleItems>;
+
+/** Cotacao do servidor; itens e etapa de pagamento usam a mesma chave, entao a segunda leitura vem do cache. */
+function useQuote(items: QuoteItems, manual: ReturnType<typeof manualDiscountBody>, active = true) {
+  return useQuery({
+    queryKey: ['quote', items, manual],
+    queryFn: ({ signal }) => api.request('/sales/quote', { method: 'POST', signal, schema: QuoteSaleResponse,
+      body: { items, ...(manual ? { manualDiscount: manual } : {}) } }),
+    enabled: active && items.length > 0,
+    placeholderData: keepPreviousData,
+    retry: false,
+  });
+}
+
 export default function SalePoint({ userId, userName, initialCustomerId = null }: { userId: number; userName: string; initialCustomerId?: number | null }) {
   const [cart, setCart] = useState<Cart>(emptyCart);
   const [loaded, setLoaded] = useState(false);
   const [step, setStep] = useState(0);
   const [order, setOrder] = useState<SalesOrder | null>(null);
   const [notice, setNotice] = useState('');
+  // A etapa de pagamento fica montada (oculta) ao voltar aos itens: cliente, pagamento e endereco nao se perdem.
+  const [checkoutOpened, setCheckoutOpened] = useState(false);
+  const [round, setRound] = useState(0);
+  const firstStep = useRef(true);
+
+  // Ao trocar de etapa o foco vai para o titulo da nova etapa (leitor de tela anuncia onde a pessoa esta);
+  // na etapa de itens a busca ja recebe o foco.
+  useEffect(() => {
+    if (firstStep.current) { firstStep.current = false; return; }
+    const target = step === 1 ? 'cliente-titulo' : step === 2 ? 'confirmacao-titulo' : null;
+    if (target) document.getElementById(target)?.focus();
+  }, [step]);
 
   useEffect(() => {
     setCart(loadCart(storage(), userId));
@@ -69,6 +98,8 @@ export default function SalePoint({ userId, userName, initialCustomerId = null }
     setCart(emptyCart());
     setOrder(null);
     setNotice('');
+    setCheckoutOpened(false);
+    setRound(value => value + 1);
     setStep(0);
   }
 
@@ -89,10 +120,12 @@ export default function SalePoint({ userId, userName, initialCustomerId = null }
         {step > 0 && step < 2 && <button type="button" className="btn" onClick={() => setStep(step - 1)}>Voltar aos itens</button>}
       </header>
       {notice && <p className="notice notice-warn" role="status">{notice}</p>}
-      {step === 0 && <ItemsStep cart={cart} setCart={setCart} onNext={() => { setNotice(''); setStep(1); }} />}
-      {step === 1 && <CheckoutStep cart={cart} setCart={setCart} userId={userId} initialCustomerId={initialCustomerId}
-                                   onStockProblem={message => { setNotice(message); setStep(0); }}
-                                   onCreated={created => { clearCart(storage(), userId); setCart(emptyCart()); setOrder(created); setStep(2); }} />}
+      {step === 0 && <ItemsStep cart={cart} setCart={setCart} onNext={() => { setNotice(''); setCheckoutOpened(true); setStep(1); }} />}
+      {checkoutOpened && <div hidden={step !== 1}>
+        <CheckoutStep key={round} active={step === 1} cart={cart} setCart={setCart} userId={userId} initialCustomerId={initialCustomerId}
+                      onStockProblem={message => { setNotice(message); setStep(0); }}
+                      onCreated={created => { clearCart(storage(), userId); setCart(emptyCart()); setOrder(created); setStep(2); }} />
+      </div>}
       {step === 2 && order && <ConfirmStep order={order} onOrder={setOrder} onRestart={restart} />}
     </div>
   );
@@ -132,14 +165,7 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
   const manual = useMemo(() => manualDiscountBody(cart), [cart]);
   const debouncedItems = useDebounced(items, 300);
   const debouncedManual = useDebounced(manual, 300);
-  const quote = useQuery({
-    queryKey: ['quote', debouncedItems, debouncedManual],
-    queryFn: ({ signal }) => api.request('/sales/quote', { method: 'POST', signal, schema: QuoteSaleResponse,
-      body: { items: debouncedItems, ...(debouncedManual ? { manualDiscount: debouncedManual } : {}) } }),
-    enabled: debouncedItems.length > 0,
-    placeholderData: keepPreviousData,
-    retry: false,
-  });
+  const quote = useQuote(debouncedItems, debouncedManual);
   const discountProblem = quote.error instanceof ApiError && (quote.error.code === 'DISCOUNT_ABOVE_LIMIT' || quote.error.code === 'BELOW_COST');
   const limit = quote.error instanceof ApiError && quote.error.code === 'DISCOUNT_ABOVE_LIMIT'
     ? quote.error.details.find(d => d.startsWith('limitPercent='))?.split('=')[1]
@@ -174,8 +200,9 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
           <label htmlFor="busca">Nome ou SKU <span className="muted">(atalho: /)</span></label>
           <input id="busca" ref={search} className="input" type="search" autoComplete="off" value={term}
                  role="combobox" aria-expanded={results.length > 0} aria-controls="resultados" aria-autocomplete="list"
-                 aria-activedescendant={results[selected] ? `resultado-${results[selected]?.id}` : undefined}
+                 aria-activedescendant={results[selected] ? `resultado-${results[selected]?.id}` : undefined} aria-describedby="busca-dica"
                  onChange={event => { setTerm(event.target.value); setSelected(0); }} onKeyDown={onSearchKey} />
+          <span className="hint" id="busca-dica">Setas escolhem o produto e Enter adiciona. Com leitor de código, o SKU completo entra direto.</span>
         </div>
         <ErrorNotice error={catalog.error} />
         {catalog.isLoading ? <p role="status" className="muted">Buscando produtos…</p>
@@ -188,7 +215,7 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
                     <span className="product-cell"><ProductThumb sku={item.sku} name={item.name} />
                       <span><strong>{item.name}</strong><br /><span className="mono muted">{item.sku}</span>
                         {item.activePromotion && <> · <span className="pill pill-ok">{item.activePromotion.name}</span></>}</span></span>
-                    <span className="num right">{money(item.price)}<br /><span className="muted">{item.available} disp.</span></span>
+                    <span className="num right">{money(item.price)}<br /><span className="muted">{item.available < 1 ? 'Sem estoque' : `${item.available} disp.`}</span></span>
                   </button>
                 </li>
               ))}
@@ -261,8 +288,8 @@ function ItemsStep({ cart, setCart, onNext }: { cart: Cart; setCart: (cart: Cart
 interface AddressForm { street: string; number: string; complement: string; neighborhood: string; city: string; state: string; zipCode: string }
 const EMPTY_ADDRESS: AddressForm = { street: '', number: '', complement: '', neighborhood: '', city: '', state: 'CE', zipCode: '' };
 
-function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onStockProblem }: {
-  cart: Cart; setCart: (cart: Cart) => void; userId: number; initialCustomerId: number | null;
+function CheckoutStep({ active, cart, setCart, userId, initialCustomerId, onCreated, onStockProblem }: {
+  active: boolean; cart: Cart; setCart: (cart: Cart) => void; userId: number; initialCustomerId: number | null;
   onCreated: (order: SalesOrder) => void; onStockProblem: (message: string) => void;
 }) {
   const [term, setTerm] = useState('');
@@ -277,12 +304,12 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
   const [delivery, setDelivery] = useState(false);
   const [address, setAddress] = useState<AddressForm>(EMPTY_ADDRESS);
   const [problems, setProblems] = useState<string[]>([]);
-  const dialog = useRef<HTMLDialogElement>(null);
+  const client = useQueryClient();
+  const dialog = useModal(drawer);
   const q = useDebounced(term.trim(), 250);
-
-  useEffect(() => {
-    if (drawer) dialog.current?.showModal(); else dialog.current?.close();
-  }, [drawer]);
+  // Oculta (de volta aos itens), a etapa nao cota: a etapa de itens ja cota com espera entre as teclas.
+  const quote = useQuote(saleItems(cart), manualDiscountBody(cart), active);
+  const quoted = new Map((quote.data?.items ?? []).map(item => [item.productId, item]));
 
   // Cliente vindo do perfil (/vender?cliente=ID): carregado uma vez; "Trocar cliente" continua livre.
   const preset = useQuery({
@@ -326,7 +353,7 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
       saveCart(storage(), userId, keyed);
       return api.request('/sales/orders', { method: 'POST', body: payload, idempotencyKey: keyed.idempotencyKey ?? undefined, schema: CreateSaleOrderResponse });
     },
-    onSuccess: onCreated,
+    onSuccess: created => { onCreated(created); void invalidateAfterSale(client); },
     onError: error => {
       if (error instanceof ApiError && error.code === 'STOCK_INSUFFICIENT') {
         const available = availableFromDetails(error.details);
@@ -354,14 +381,16 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
   return (
     <div className="pdv">
       <section className="card stack" aria-labelledby="cliente-titulo">
-        <h2 id="cliente-titulo">Cliente</h2>
+        <h2 id="cliente-titulo" tabIndex={-1}>Cliente</h2>
         {customer ? <div className="stack-sm">
           <p><strong>{customer.name}</strong> · <span className="mono">{customer.document}</span></p>
           <div><button type="button" className="btn" onClick={() => setCustomer(null)}>Trocar cliente</button></div>
         </div> : <>
           <div className="field">
             <label htmlFor="busca-cliente">CPF, CNPJ ou nome</label>
-            <input id="busca-cliente" className="input" type="search" autoComplete="off" value={term} onChange={event => setTerm(event.target.value)} />
+            <input id="busca-cliente" className="input" type="search" autoComplete="off" spellCheck={false} value={term}
+                   aria-describedby="busca-cliente-dica" onChange={event => setTerm(event.target.value)} />
+            <span className="hint" id="busca-cliente-dica">Digite pelo menos 2 letras do nome ou o documento completo.</span>
           </div>
           <ErrorNotice error={customers.error} />
           {q.length >= 2 && customers.data && (customers.data.content.length === 0
@@ -426,6 +455,23 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
             </Field>
           ))}
         </div>}
+        <section className="summary stack-sm" aria-labelledby="resumo-titulo">
+          <h3 id="resumo-titulo">Resumo da venda</h3>
+          <ul className="summary-lines">
+            {cart.lines.map(line => (
+              <li key={line.productId}><span>{line.quantity}× {line.name}</span>
+                <span className="num">{quoted.has(line.productId) ? money(quoted.get(line.productId)?.subtotal) : ''}</span></li>
+            ))}
+          </ul>
+          <ErrorNotice error={quote.error} />
+          {/* Os valores das linhas ja vem com desconto (cotacao do servidor): o total e a soma deles, e o desconto vira nota. */}
+          {quote.data
+            ? <div className="stack-sm" aria-live="polite">
+                <dl className="totals"><div className="total"><dt>Total</dt><dd className="num">{money(quote.data.total)}</dd></div></dl>
+                {quote.data.discountTotal.amount > 0 && <p className="muted">Inclui {money(quote.data.discountTotal)} de desconto.</p>}
+              </div>
+            : !quote.error && <Loading label="Calculando o total…" />}
+        </section>
         {problems.length > 0 && <div className="notice notice-error" role="alert">{problems.map(p => <p key={p}>{p}</p>)}</div>}
         {submit.error && !(submit.error instanceof ApiError && submit.error.code === 'STOCK_INSUFFICIENT') &&
           <p className="notice notice-error" role="alert">{errorMessage(submit.error)}</p>}
@@ -439,20 +485,23 @@ function CheckoutStep({ cart, setCart, userId, initialCustomerId, onCreated, onS
 // ---------------- 3. Confirmacao ----------------
 
 function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder: (order: SalesOrder) => void; onRestart: () => void }) {
+  const client = useQueryClient();
+  const [askCancel, setAskCancel] = useState(false);
+  const done = (updated: SalesOrder) => { onOrder(updated); void invalidateAfterSale(client); };
   const confirm = useMutation({
     mutationFn: () => api.request(`/sales/orders/${order.id}/payment`, { method: 'POST', schema: ConfirmSalePaymentResponse }),
-    onSuccess: onOrder,
+    onSuccess: done,
   });
   const cancel = useMutation({
     mutationFn: () => api.request(`/orders/${order.id}/cancel`, { method: 'POST', schema: CancelOrderResponse }),
-    onSuccess: onOrder,
+    onSuccess: done,
   });
   const pending = order.status === 'PENDING_PAYMENT';
   const busy = confirm.isPending || cancel.isPending;
   return (
     <section className="card stack" aria-labelledby="confirmacao-titulo">
       <div className="page-head">
-        <h2 id="confirmacao-titulo">Venda <span className="mono">#{order.id}</span></h2>
+        <h2 id="confirmacao-titulo" tabIndex={-1}>Venda <span className="mono">#{order.id}</span></h2>
         <span className={statusPill(order.status)}>{label(ORDER_STATUS, order.status)}</span>
       </div>
       <dl className="facts">
@@ -469,10 +518,16 @@ function ConfirmStep({ order, onOrder, onRestart }: { order: SalesOrder; onOrder
         {pending && order.payment.type !== 'BOLETO' &&
           <button type="button" className="btn btn-primary" disabled={busy} onClick={() => confirm.mutate()}>
             {confirm.isPending ? 'Confirmando…' : 'Confirmar pagamento recebido'}</button>}
-        {pending && <button type="button" className="btn btn-danger" disabled={busy} onClick={() => cancel.mutate()}>
+        {pending && <button type="button" className="btn btn-danger" disabled={busy} onClick={() => setAskCancel(true)}>
           {cancel.isPending ? 'Cancelando…' : 'Cancelar pedido'}</button>}
         <button type="button" className="btn" onClick={onRestart} disabled={busy}>Nova venda</button>
       </div>
+      {pending && order.payment.type !== 'BOLETO' &&
+        <p className="muted">Ao iniciar uma nova venda, este pedido continua em Vendas como Aguardando pagamento, com o estoque reservado.</p>}
+      <ConfirmDialog open={askCancel} title={`Cancelar o pedido #${order.id}?`} confirmLabel="Cancelar pedido" cancelLabel="Manter pedido"
+                     onCancel={() => setAskCancel(false)} onConfirm={() => { setAskCancel(false); cancel.mutate(); }}>
+        <p>A reserva de estoque é liberada e o pedido não pode ser reaberto. Para vender de novo, crie outro pedido.</p>
+      </ConfirmDialog>
     </section>
   );
 }

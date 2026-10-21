@@ -5,7 +5,9 @@ import Stock from './stock.tsx';
 
 export const metadata: Metadata = { title: 'Estoque' };
 
-export default async function EstoquePage() {
+/** ?abaixo=1 (alerta do painel) abre a posicao ja filtrada pelos produtos abaixo do minimo. */
+export default async function EstoquePage({ searchParams }: { searchParams: Promise<{ abaixo?: string | string[] }> }) {
   const { allowed } = await sessionFor('ESTOQUE', '/gestao/estoque');
-  return allowed ? <Stock /> : <NoAccess />;
+  const belowMin = (await searchParams).abaixo === '1';
+  return allowed ? <Stock initialBelowMin={belowMin} /> : <NoAccess />;
 }

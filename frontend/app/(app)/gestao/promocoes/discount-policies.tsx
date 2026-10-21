@@ -14,7 +14,7 @@ type Policy = z.infer<typeof ListDiscountPoliciesResponse>[number];
 const ROLE_LABEL: Record<string, string> = { GERENTE: 'Gerente', VENDEDOR: 'Vendedor' };
 const percent = (value: number) => `${value.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`;
 
-export default function DiscountPolicies() {
+export default function DiscountPolicies({ onSaved }: { onSaved: (message: string) => void }) {
   const client = useQueryClient();
   const [editing, setEditing] = useState<Policy | null>(null);
   const list = useQuery({ queryKey: ['discount-policy'], queryFn: ({ signal }) => api.request('/discount-policy', { signal, schema: ListDiscountPoliciesResponse }) });
@@ -40,13 +40,17 @@ export default function DiscountPolicies() {
         ))}</tbody>
       </table></div>}
       <Drawer open={editing !== null} title={editing ? `Alçada · ${ROLE_LABEL[editing.role] ?? editing.role}` : ''} onClose={() => setEditing(null)}>
-        {editing && <PolicyForm policy={editing} onDone={() => { setEditing(null); void client.invalidateQueries({ queryKey: ['discount-policy'] }); }} />}
+        {editing && <PolicyForm policy={editing} onDone={saved => {
+          setEditing(null);
+          onSaved(`Alçada de ${ROLE_LABEL[saved.role] ?? saved.role} salva: até ${percent(saved.maxPercent)} de desconto manual.`);
+          void client.invalidateQueries({ queryKey: ['discount-policy'] });
+        }} />}
       </Drawer>
     </section>
   );
 }
 
-function PolicyForm({ policy, onDone }: { policy: Policy; onDone: () => void }) {
+function PolicyForm({ policy, onDone }: { policy: Policy; onDone: (saved: z.infer<typeof UpdateDiscountPolicyResponse>) => void }) {
   const [problem, setProblem] = useState('');
   const save = useMutation({
     mutationFn: (body: unknown) => api.request(`/discount-policy/${policy.role}`, { method: 'PUT', body, schema: UpdateDiscountPolicyResponse }),

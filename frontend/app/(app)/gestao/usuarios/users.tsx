@@ -10,12 +10,14 @@ import {
 } from '../../../../lib/api/generated/sbi.zod.ts';
 import { api } from '../../../../lib/api/http.ts';
 import { formatDateTime } from '../../../../lib/format.ts';
-import { issueMessage } from '../../../../lib/forms.ts';
+import { labeledProblems } from '../../../../lib/forms.ts';
 import { actionsFor, situation, type UserAction } from '../../../../lib/users.ts';
 import { ErrorNotice, Loading } from '../../../../components/feedback.tsx';
 import { Field } from '../../../../components/customer-form.tsx';
 import Drawer from '../../../../components/drawer.tsx';
 import Pager from '../../../../components/pager.tsx';
+import ShowPassword from '../../../../components/show-password.tsx';
+import { StatusMessage, useStatusMessage } from '../../../../components/status-message.tsx';
 
 type User = z.infer<typeof ListUsersResponse>['content'][number];
 type Panel = { kind: 'new' } | { kind: UserAction; user: User } | null;
@@ -26,8 +28,12 @@ const ACTION_LABEL: Record<UserAction, string> = {
 };
 const PASSWORD_HINT = 'De 12 a 72 caracteres; sem senhas comuns nem o próprio e-mail. A pessoa troca no primeiro acesso.';
 
+const USER_FIELDS: Readonly<Record<string, string>> = {
+  name: 'Nome', email: 'E-mail', role: 'Papel', temporaryPassword: 'Senha provisória', reason: 'Motivo', active: 'Situação',
+};
+
 function problemsOf(result: { success: boolean; error?: { issues: core.$ZodIssue[] } | undefined }): string[] {
-  return result.success || !result.error ? [] : result.error.issues.map(issue => `${issue.path.join('.') || 'formulário'}: ${issueMessage(issue)}`);
+  return result.success || !result.error ? [] : labeledProblems(result.error.issues, USER_FIELDS);
 }
 
 function Problems({ items }: { items: string[] }) {
@@ -42,6 +48,7 @@ export default function Users({ currentUserId }: { currentUserId: number }) {
   const [active, setActive] = useState('');
   const [page, setPage] = useState(0);
   const [panel, setPanel] = useState<Panel>(null);
+  const message = useStatusMessage();
   const list = useQuery({
     queryKey: ['users', q, role, active, page],
     queryFn: ({ signal }) => {
@@ -52,7 +59,7 @@ export default function Users({ currentUserId }: { currentUserId: number }) {
     },
     placeholderData: keepPreviousData,
   });
-  const done = () => { void client.invalidateQueries({ queryKey: ['users'] }); setPanel(null); };
+  const done = (text: string) => () => { void client.invalidateQueries({ queryKey: ['users'] }); message.show(text); setPanel(null); };
   const data = list.data;
   const title = panel === null ? '' : panel.kind === 'new' ? 'Cadastrar usuário' : `${ACTION_LABEL[panel.kind]} · ${panel.user.name}`;
 
@@ -62,6 +69,7 @@ export default function Users({ currentUserId }: { currentUserId: number }) {
         <div className="stack-sm"><p className="muted">Gestão / Usuários</p><h1>Usuários da equipe</h1></div>
         <div className="actions"><button type="button" className="btn btn-primary" onClick={() => setPanel({ kind: 'new' })}>Cadastrar usuário</button></div>
       </header>
+      <StatusMessage message={message.message} onClose={message.clear} />
       <section className="card stack" aria-label="Lista de usuários">
         <div className="toolbar">
           <div className="field"><label htmlFor="busca-usuarios">Nome ou e-mail</label>
@@ -105,12 +113,13 @@ export default function Users({ currentUserId }: { currentUserId: number }) {
         {data && <Pager page={data.page} size={data.size} total={data.totalElements} onPage={setPage} />}
       </section>
       <Drawer open={panel !== null} title={title} onClose={() => setPanel(null)}>
-        {panel?.kind === 'new' && <CreateForm onDone={done} />}
-        {panel?.kind === 'edit' && <EditForm user={panel.user} onDone={done} />}
-        {panel?.kind === 'role' && <RoleForm user={panel.user} onDone={done} />}
-        {panel?.kind === 'status' && <StatusForm user={panel.user} onDone={done} />}
-        {panel?.kind === 'unlock' && <UnlockForm user={panel.user} onDone={done} />}
-        {panel?.kind === 'reset' && <ResetForm user={panel.user} onDone={done} />}
+        {panel?.kind === 'new' && <CreateForm onDone={done('Usuário cadastrado. Entregue a senha provisória pessoalmente; a troca é pedida no primeiro acesso.')} />}
+        {panel?.kind === 'edit' && <EditForm user={panel.user} onDone={done(`Dados de ${panel.user.name} salvos.`)} />}
+        {panel?.kind === 'role' && <RoleForm user={panel.user} onDone={done(`Papel de ${panel.user.name} alterado. As sessões abertas dessa pessoa terminam no próximo acesso.`)} />}
+        {panel?.kind === 'status' && <StatusForm user={panel.user}
+          onDone={done(panel.user.active ? `Acesso de ${panel.user.name} desativado. O histórico de vendas continua.` : `Acesso de ${panel.user.name} reativado.`)} />}
+        {panel?.kind === 'unlock' && <UnlockForm user={panel.user} onDone={done(`Acesso de ${panel.user.name} desbloqueado: já é possível entrar.`)} />}
+        {panel?.kind === 'reset' && <ResetForm user={panel.user} onDone={done(`Senha de ${panel.user.name} redefinida. Entregue a senha provisória pessoalmente.`)} />}
       </Drawer>
     </div>
   );
@@ -122,6 +131,7 @@ function SubmitButton({ busy, label }: { busy: boolean; label: string }) {
 
 function CreateForm({ onDone }: { onDone: () => void }) {
   const [problems, setProblems] = useState<string[]>([]);
+  const [visible, setVisible] = useState(false);
   const save = useMutation({
     mutationFn: (body: unknown) => api.request('/users', { method: 'POST', body, schema: CreateUserResponse }),
     onSuccess: onDone,
@@ -143,7 +153,8 @@ function CreateForm({ onDone }: { onDone: () => void }) {
         <Field id="usuario-papel" label="Papel"><select id="usuario-papel" name="role" className="select" defaultValue="VENDEDOR">
           <option value="VENDEDOR">Vendedor</option><option value="GERENTE">Gerente</option></select></Field>
         <Field id="usuario-senha" label="Senha provisória" hint={PASSWORD_HINT}>
-          <input id="usuario-senha" name="temporaryPassword" className="input" type="password" required minLength={12} maxLength={72} autoComplete="new-password" /></Field>
+          <input id="usuario-senha" name="temporaryPassword" className="input" type={visible ? 'text' : 'password'} required minLength={12} maxLength={72} autoComplete="new-password" />
+          <ShowPassword checked={visible} onChange={setVisible} /></Field>
       </div>
       <Problems items={problems} />
       <ErrorNotice error={save.error} />
@@ -262,6 +273,7 @@ function UnlockForm({ user, onDone }: { user: User; onDone: () => void }) {
 
 function ResetForm({ user, onDone }: { user: User; onDone: () => void }) {
   const [problems, setProblems] = useState<string[]>([]);
+  const [visible, setVisible] = useState(false);
   const reset = useMutation({
     mutationFn: (body: unknown) => api.request(`/users/${user.id}/password-reset`, { method: 'POST', body }),
     onSuccess: onDone,
@@ -278,7 +290,8 @@ function ResetForm({ user, onDone }: { user: User; onDone: () => void }) {
     <form className="stack" onSubmit={submit} aria-busy={reset.isPending}>
       <p className="muted">Entregue a senha provisória pessoalmente. {REVOKES}</p>
       <Field id="redefinir-senha" label="Senha provisória" hint={PASSWORD_HINT}>
-        <input id="redefinir-senha" name="temporaryPassword" className="input" type="password" required minLength={12} maxLength={72} autoComplete="new-password" /></Field>
+        <input id="redefinir-senha" name="temporaryPassword" className="input" type={visible ? 'text' : 'password'} required minLength={12} maxLength={72} autoComplete="new-password" />
+        <ShowPassword checked={visible} onChange={setVisible} /></Field>
       <Problems items={problems} />
       <ErrorNotice error={reset.error} />
       <SubmitButton busy={reset.isPending} label="Redefinir senha" />

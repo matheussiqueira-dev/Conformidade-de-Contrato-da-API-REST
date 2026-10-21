@@ -37,7 +37,7 @@ test('troca de senha: confere tamanho, bytes, e-mail, igualdade e confirmacao an
   assert.deepEqual(passwordProblems(ok, 'allanbarros@sbi.tech'), {});
   assert.ok(passwordProblems({ ...ok, newPassword: 'curta', confirmation: 'curta' }, 'allanbarros@sbi.tech').newPassword);
   assert.ok(passwordProblems({ ...ok, newPassword: 'ç'.repeat(40), confirmation: 'ç'.repeat(40) }, 'allanbarros@sbi.tech').newPassword);
-  assert.ok(passwordProblems({ ...ok, newPassword: 'Allan@Loja.test', confirmation: 'Allan@Loja.test' }, 'allanbarros@sbi.tech').newPassword);
+  assert.ok(passwordProblems({ ...ok, newPassword: 'AllanBarros@SBI.tech', confirmation: 'AllanBarros@SBI.tech' }, 'allanbarros@sbi.tech').newPassword);
   assert.ok(passwordProblems({ ...ok, newPassword: ok.currentPassword, confirmation: ok.currentPassword }, 'allanbarros@sbi.tech').newPassword);
   assert.ok(passwordProblems({ ...ok, confirmation: 'outra coisa qualquer' }, 'allanbarros@sbi.tech').confirmation);
   assert.ok(passwordProblems({ ...ok, currentPassword: '' }, 'allanbarros@sbi.tech').currentPassword);

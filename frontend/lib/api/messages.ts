@@ -23,6 +23,10 @@ export const ERROR_MESSAGES: Readonly<Record<string, string>> = {
 };
 
 export const NETWORK_MESSAGE = 'Sem conexão com o sistema. Verifique a rede e tente novamente.';
+/** 502, 503 e 504 sem ErrorResponse: o servidor esta subindo ou fora do ar, nao e erro do que foi digitado. */
+export const STARTING_MESSAGE = 'O sistema está iniciando ou indisponível no momento. Aguarde um minuto e tente de novo.';
+/** Espera longa na primeira chamada do dia no ambiente publicado (o servidor gratuito dorme sem acesso). */
+export const SLOW_START_HINT = 'O servidor pode levar até 3 minutos para acordar na primeira entrada. Aguarde nesta página.';
 export const LOGIN_FAILED_MESSAGE = 'E-mail ou senha inválidos.';
 export const LOCKOUT_HINT = 'Após 5 tentativas incorretas, o acesso fica bloqueado por 15 minutos.';
 export const WRONG_CURRENT_PASSWORD = 'Senha atual incorreta.';
@@ -32,5 +36,6 @@ export function messageFor(code: string | undefined, status: number): string {
   if (status === 401) return ERROR_MESSAGES.UNAUTHENTICATED ?? NETWORK_MESSAGE;
   if (status === 403) return ERROR_MESSAGES.FORBIDDEN ?? NETWORK_MESSAGE;
   if (status === 404) return ERROR_MESSAGES.NOT_FOUND ?? NETWORK_MESSAGE;
+  if (status === 502 || status === 503 || status === 504) return STARTING_MESSAGE;
   return ERROR_MESSAGES.INTERNAL_ERROR ?? NETWORK_MESSAGE;
 }

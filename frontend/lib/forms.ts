@@ -3,14 +3,20 @@
 import type { FieldError, FieldErrors, FieldValues, Resolver } from 'react-hook-form';
 import type { ZodType, core } from 'zod';
 
+/** Limite numerico em pt-BR ("0,01", "100.000"). */
+function limit(value: number | bigint): string {
+  return value.toLocaleString('pt-BR');
+}
+
 export function issueMessage(issue: core.$ZodIssue): string {
   switch (issue.code) {
     case 'too_small':
-      return issue.origin === 'string' && issue.minimum === 1 ? 'Preencha este campo.' : `Mínimo: ${String(issue.minimum)}.`;
+      if (issue.origin === 'string') return issue.minimum === 1 ? 'Preencha este campo.' : `Use pelo menos ${limit(issue.minimum)} caracteres.`;
+      return `O valor mínimo é ${limit(issue.minimum)}.`;
     case 'too_big':
-      return `Máximo: ${String(issue.maximum)}.`;
+      return issue.origin === 'string' ? `Use no máximo ${limit(issue.maximum)} caracteres.` : `O valor máximo é ${limit(issue.maximum)}.`;
     case 'invalid_format':
-      return issue.format === 'email' ? 'Informe um e-mail válido.' : 'Formato inválido.';
+      return issue.format === 'email' ? 'Informe um e-mail válido.' : 'Confira o formato deste campo.';
     case 'invalid_type':
       return 'Preencha este campo.';
     case 'invalid_union':
@@ -19,6 +25,28 @@ export function issueMessage(issue: core.$ZodIssue): string {
     default:
       return 'Valor inválido.';
   }
+}
+
+/**
+ * Problemas do schema em frases com o rotulo do campo ("Preco de venda: Preencha este campo."), nunca o nome
+ * tecnico do corpo (price.amount). Um problema por campo (o primeiro); campo sem rotulo conhecido sai so com a mensagem.
+ */
+export function labeledProblems(issues: readonly core.$ZodIssue[], labels: Readonly<Record<string, string>>): string[] {
+  const seen = new Set<string>();
+  const first = issues.filter(issue => {
+    const key = issue.path.map(String).join('.');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  const lines = first.map(issue => {
+    const path = issue.path.map(String);
+    const name = labels[path.join('.')] ?? labels[path[0] ?? ''];
+    const message = issueMessage(issue);
+    // Depois dos dois-pontos a frase continua em minuscula ("Nome: preencha este campo.").
+    return name ? `${name}: ${message.charAt(0).toLocaleLowerCase('pt-BR')}${message.slice(1)}` : message;
+  });
+  return [...new Set(lines)];
 }
 
 function setPath(target: Record<string, unknown>, path: readonly PropertyKey[], error: FieldError) {

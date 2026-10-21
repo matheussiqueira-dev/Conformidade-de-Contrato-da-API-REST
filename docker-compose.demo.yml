@@ -1,10 +1,12 @@
 # Ambiente de demonstracao do SBI em um comando (WP-5.1): banco descartavel em memoria, API no perfil demo
 # (Flyway + contas e massa do seed) e frontend. Massa Olist opcional: scripts/demo-olist.ps1 ou docs/bd/pacote-sql/run_demo_olist.sh. Nao usa o banco de desenvolvimento postgres-order.
 #
-#   SBI_DEMO_PASSWORD=<senha das contas, 8 a 72 caracteres> SBI_DB_PASSWORD=<senha interna do banco> \
+#   SBI_DEMO_PASSWORD=<senha comum das contas, 8 a 72 caracteres> SBI_DB_PASSWORD=<senha interna do banco> \
 #     docker compose -f docker-compose.demo.yml -p sbi-demo up --build
 #
-# Abrir http://localhost:3000 e entrar com matheussiqueira@sbi.tech (gerente) ou allanbarros@sbi.tech (vendedora).
+# Abrir http://localhost:3000 e entrar com matheussiqueira@sbi.tech (gerente) ou allanbarros@sbi.tech (vendedor). Senha propria por conta:
+# SBI_DEMO_PASSWORD_MATHEUS, _GABRIEL, _ALLAN e _FRANCISCO (no .env ao lado deste arquivo, fora do git);
+# a conta sem a sua usa SBI_DEMO_PASSWORD.
 services:
   db:
     image: postgres:18
@@ -34,7 +36,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sbi_demo
       SPRING_DATASOURCE_USERNAME: sbi
       SPRING_DATASOURCE_PASSWORD: ${SBI_DB_PASSWORD:?Defina SBI_DB_PASSWORD}
-      SBI_DEMO_PASSWORD: ${SBI_DEMO_PASSWORD:?Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao)}
+      # Sem nenhuma senha para uma conta, a V6_1 falha e a API nao sobe (mensagem no log).
+      SBI_DEMO_PASSWORD: ${SBI_DEMO_PASSWORD:-}
+      SBI_DEMO_PASSWORD_MATHEUS: ${SBI_DEMO_PASSWORD_MATHEUS:-}
+      SBI_DEMO_PASSWORD_GABRIEL: ${SBI_DEMO_PASSWORD_GABRIEL:-}
+      SBI_DEMO_PASSWORD_ALLAN: ${SBI_DEMO_PASSWORD_ALLAN:-}
+      SBI_DEMO_PASSWORD_FRANCISCO: ${SBI_DEMO_PASSWORD_FRANCISCO:-}
       # Demonstracao local por http://localhost: o cookie de sessao segue HttpOnly e SameSite=Lax.
       SESSION_COOKIE_SECURE: "false"
       SPRING_JPA_SHOW_SQL: "false"

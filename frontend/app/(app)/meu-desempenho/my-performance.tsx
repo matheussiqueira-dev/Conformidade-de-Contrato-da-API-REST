@@ -2,6 +2,7 @@
 // Meu desempenho (WP-3.11, DEC-ERP-01): so os dados da sessao. Meta zero = "Sem meta", sem percentual (DOM-08).
 // A meta aparece como linha ambar tracejada e nomeada sobre a barra do realizado.
 import { useState } from 'react';
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { GetMyPerformanceResponse } from '../../../lib/api/generated/sbi.zod.ts';
 import { api } from '../../../lib/api/http.ts';
@@ -23,7 +24,7 @@ function thisMonth(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza', year: 'numeric', month: '2-digit' }).format(new Date());
 }
 
-export default function MyPerformance() {
+export default function MyPerformance({ manager = false }: { manager?: boolean }) {
   const [month, setMonth] = useState(thisMonth());
   const query = useQuery({
     queryKey: ['performance', month],
@@ -55,6 +56,8 @@ export default function MyPerformance() {
           <div className="kpi"><span className="label">Falta</span><span className={`value${data.state === 'SEM_META' ? ' text' : ''}`}>{data.state === 'SEM_META' ? 'Sem meta' : money(data.remaining)}</span></div>
         </div>
         <GoalBar title="Realizado em relação à meta" realized={realized} goal={goal} />
+        <p><Link href="/vendas">{manager ? 'Ver as vendas da loja' : 'Ver as minhas vendas'}</Link>
+          {data.state !== 'META_ATINGIDA' && <> · <Link href="/vender">Nova venda</Link></>}</p>
       </section>}
     </div>
   );

@@ -460,7 +460,7 @@ O ensaio não exercitou as adaptações P1, P7 e P9 nem o seed com CPFs válidos
 ## 8. Seed de demonstração
 
 - CPFs válidos e fictícios que substituem `00000000101`–`00000000106`: `10000000108`, `10000000280`, `10000000361`, `10000000442`, `10000000523`, `10000000604`. CNPJ fictício para um cliente PJ de demonstração: `12345678000195`.
-- Contas (gerente Matheus; vendedores Allan, Francisco, Gabriel) criadas por migração Java no perfil `demo`, com BCrypt(12) de `SBI_DEMO_PASSWORD`; sem a variável, a aplicação não sobe nesse perfil (A8).
+- Contas da equipe (gerentes Matheus e Gabriel; vendedores Allan e Francisco) criadas por migração Java no perfil `demo`, com BCrypt(12) de `SBI_DEMO_PASSWORD_<NOME>` ou, sem ela, de `SBI_DEMO_PASSWORD`; sem senha, a aplicação não sobe nesse perfil (A8).
 - Versões `V6_1` (contas, Java) e `V6_2` (massa SQL) em `classpath:db/demo`: ficam depois da V6 e antes de qualquer V7, com `outOfOrder` desligado. Por isso o perfil `demo` precisa estar ativo desde a primeira migração do banco (A2A-4); um banco migrado sem ele além da V6 é recriado, não completado.
 - Os testes 06 que citam os CPFs antigos são ajustados junto com o seed.
 

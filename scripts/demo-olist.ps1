@@ -2,7 +2,7 @@
 # Sobe a stack demo, espera a API saudavel (Flyway aplicado), carrega 07_carga_olist.sql por psql dentro do
 # conteiner do banco e imprime as contagens. Com -Check: carga repetida (idempotencia), testes 09 (CT-DEMO-01 a 04)
 # e verificacao pela API (CT-DEMO-05).
-#   $env:SBI_DEMO_PASSWORD = '<senha das contas>'; $env:SBI_DB_PASSWORD = [guid]::NewGuid().ToString('N')
+#   $env:SBI_DEMO_PASSWORD = '<senha comum das contas>' (ou SBI_DEMO_PASSWORD_<NOME>, ou um .env); $env:SBI_DB_PASSWORD = [guid]::NewGuid().ToString('N')
 #   powershell -NoProfile -ExecutionPolicy Bypass -File scripts\demo-olist.ps1 [-Check]
 # Banco acessivel depois: jdbc:postgresql://127.0.0.1:5433/sbi_demo (usuario sbi, senha de SBI_DB_PASSWORD).
 # Banco externo (ex.: Neon), sem docker compose: roda 07 (e 09 com -Check) com psql do conteiner postgres:18.
@@ -42,8 +42,13 @@ try {
         Write-Host 'Massa Olist carregada no banco externo. Roteiro SQL: docs/bd/pacote-sql/08_crud_clientes_olist.sql'
         return
     }
-    if (-not $env:SBI_DEMO_PASSWORD) { throw 'Defina SBI_DEMO_PASSWORD (senha das contas de demonstracao).' }
-    if (-not $env:SBI_DB_PASSWORD) { throw 'Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao).' }
+    # O docker compose tambem le o .env ao lado do docker-compose.demo.yml (fora do git).
+    $hasEnvFile = Test-Path '.env'
+    $missing = @('MATHEUS', 'GABRIEL', 'ALLAN', 'FRANCISCO') | Where-Object { -not [Environment]::GetEnvironmentVariable("SBI_DEMO_PASSWORD_$_") }
+    if (-not $hasEnvFile -and -not $env:SBI_DEMO_PASSWORD -and $missing) {
+        throw 'Defina SBI_DEMO_PASSWORD ou SBI_DEMO_PASSWORD_<NOME> de cada conta (ou um .env com elas).'
+    }
+    if (-not $hasEnvFile -and -not $env:SBI_DB_PASSWORD) { throw 'Defina SBI_DB_PASSWORD (senha interna do banco de demonstracao).' }
     $compose = @('compose', '-f', 'docker-compose.demo.yml', '-p', 'sbi-demo')
     & docker @compose up --build -d --wait
     if ($LASTEXITCODE -ne 0) { throw 'Stack de demonstracao nao subiu.' }

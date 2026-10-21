@@ -15,6 +15,7 @@ import { Field } from '../../../../components/customer-form.tsx';
 import Pager from '../../../../components/pager.tsx';
 import Tabs from '../../../../components/tabs.tsx';
 import ProductThumb from '../../../../components/product-thumb.tsx';
+import { StatusMessage, useStatusMessage } from '../../../../components/status-message.tsx';
 
 type Customer = z.infer<typeof GetCustomerResponse>;
 type Summary = z.infer<typeof GetCustomerSummaryResponse>;
@@ -45,6 +46,7 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
   const [editing, setEditing] = useState(false);
   const [page, setPage] = useState(0);
   const [tab, setTab] = useState('pedidos');
+  const message = useStatusMessage();
   const query = useQuery({
     queryKey: ['customer', customerId],
     queryFn: ({ signal }) => api.request(`/customers/${customerId}`, { signal, schema: GetCustomerResponse }),
@@ -103,11 +105,17 @@ export default function CustomerProfile({ customerId, manager }: { customerId: n
     <section className="card stack" aria-labelledby="dados-titulo">
       <div className="page-head">
         <h2 id="dados-titulo">Dados cadastrais</h2>
-        {!editing && <button type="button" className="btn" onClick={() => setEditing(true)}>Editar dados</button>}
+        {!editing && <button type="button" className="btn" onClick={() => { message.clear(); setEditing(true); }}>Editar dados</button>}
       </div>
+      <StatusMessage message={message.message} onClose={message.clear} />
       {editing
         ? <EditForm customer={customer} onCancel={() => setEditing(false)}
-                    onSaved={saved => { client.setQueryData(['customer', customerId], saved); setEditing(false); }}
+                    onSaved={saved => {
+                      client.setQueryData(['customer', customerId], saved);
+                      void client.invalidateQueries({ queryKey: ['customers-list'] });
+                      message.show('Dados do cliente salvos.');
+                      setEditing(false);
+                    }}
                     onReload={() => { void query.refetch(); setEditing(false); }} />
         : <dl className="facts">
             <div><dt>Tipo</dt><dd>{customer.type === 'CORPORATE' ? 'Pessoa jurídica' : 'Pessoa física'}</dd></div>
@@ -241,8 +249,8 @@ function EditForm({ customer, onSaved, onCancel, onReload }: {
         </div>
       </fieldset>
       {save.error && <div className="notice notice-error" role="alert">
-        <p>{conflict ? 'Os dados mudaram; recarregue.' : errorMessage(save.error)}</p>
-        {conflict && <button type="button" className="btn" onClick={onReload}>Recarregar</button>}
+        <p>{conflict ? 'Outra pessoa alterou este cliente enquanto você editava. Recarregue para ver os dados atuais e edite de novo.' : errorMessage(save.error)}</p>
+        {conflict && <button type="button" className="btn" onClick={onReload}>Recarregar dados</button>}
       </div>}
       <div className="actions">
         <button type="submit" className="btn btn-primary" disabled={save.isPending}>{save.isPending ? 'Salvando…' : 'Salvar alterações'}</button>

@@ -13,10 +13,12 @@ BEGIN
             EXECUTE format('CREATE ROLE %I NOLOGIN', r);
         END IF;
     END LOOP;
-    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'gerente_matheus') THEN
-        CREATE ROLE gerente_matheus LOGIN IN ROLE loja_gerente;
-    END IF;
-    FOREACH r IN ARRAY ARRAY['vendedor_allan','vendedor_francisco','gerente_gabriel'] LOOP
+    FOREACH r IN ARRAY ARRAY['gerente_matheus','gerente_gabriel'] LOOP
+        IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
+            EXECUTE format('CREATE ROLE %I LOGIN IN ROLE loja_gerente', r);
+        END IF;
+    END LOOP;
+    FOREACH r IN ARRAY ARRAY['vendedor_allan','vendedor_francisco'] LOOP
         IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
             EXECUTE format('CREATE ROLE %I LOGIN IN ROLE loja_vendedor', r);
         END IF;

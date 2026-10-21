@@ -9,6 +9,7 @@ import { LOCKOUT_HINT, WRONG_CURRENT_PASSWORD } from '../../../lib/api/messages.
 import { landingPath } from '../../../lib/areas.ts';
 import { errorMessage } from '../../../components/feedback.tsx';
 import { passwordProblems, type PasswordField } from '../../../lib/password.ts';
+import ShowPassword from '../../../components/show-password.tsx';
 
 const auth = authApi(api);
 const FIELDS: readonly PasswordField[] = ['currentPassword', 'newPassword', 'confirmation'];
@@ -18,6 +19,8 @@ export default function PasswordForm({ email }: { email: string }) {
   const [error, setError] = useState('');
   const [problems, setProblems] = useState<Partial<Record<PasswordField, string>>>({});
   const [focusTarget, setFocusTarget] = useState<PasswordField | null>(null);
+  const [visible, setVisible] = useState(false);
+  const type = visible ? 'text' : 'password';
   const form = useRef<HTMLFormElement>(null);
 
   // O foco vai para o primeiro campo com erro depois da renderizacao: durante o envio os campos ficam desabilitados.
@@ -63,24 +66,25 @@ export default function PasswordForm({ email }: { email: string }) {
       <div aria-live="polite">{error && <p className="notice notice-error" role="alert">{error}</p>}</div>
       <div className="field">
         <label htmlFor="currentPassword">Senha atual</label>
-        <input className="input" id="currentPassword" name="currentPassword" type="password" autoComplete="current-password"
+        <input className="input" id="currentPassword" name="currentPassword" type={type} autoComplete="current-password"
                required maxLength={72} disabled={busy} aria-invalid={Boolean(problems.currentPassword)} aria-describedby={described('currentPassword', 'senha-bloqueio')} />
         <span className="hint" id="senha-bloqueio">{LOCKOUT_HINT}</span>
         {problems.currentPassword && <span className="field-error" id="currentPassword-erro">{problems.currentPassword}</span>}
       </div>
       <div className="field">
         <label htmlFor="newPassword">Nova senha</label>
-        <input className="input" id="newPassword" name="newPassword" type="password" autoComplete="new-password"
+        <input className="input" id="newPassword" name="newPassword" type={type} autoComplete="new-password"
                required minLength={12} maxLength={72} disabled={busy} aria-invalid={Boolean(problems.newPassword)} aria-describedby={described('newPassword', 'senha-regra')} />
         <span className="hint" id="senha-regra">De 12 a 72 caracteres. Uma frase longa é mais segura e fácil de lembrar.</span>
         {problems.newPassword && <span className="field-error" id="newPassword-erro">{problems.newPassword}</span>}
       </div>
       <div className="field">
         <label htmlFor="confirmation">Repita a nova senha</label>
-        <input className="input" id="confirmation" name="confirmation" type="password" autoComplete="new-password"
+        <input className="input" id="confirmation" name="confirmation" type={type} autoComplete="new-password"
                required maxLength={72} disabled={busy} aria-invalid={Boolean(problems.confirmation)} aria-describedby={described('confirmation')} />
         {problems.confirmation && <span className="field-error" id="confirmation-erro">{problems.confirmation}</span>}
       </div>
+      <ShowPassword checked={visible} onChange={setVisible} label="Mostrar as senhas" disabled={busy} />
       <button type="submit" className="btn btn-primary btn-block" disabled={busy}>{busy ? 'Salvando…' : 'Salvar nova senha'}</button>
     </form>
   );
