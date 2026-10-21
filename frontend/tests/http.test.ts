@@ -88,3 +88,11 @@ test('403 de regra de negocio (DISCOUNT_ABOVE_LIMIT) nao repete a mutacao e devo
     error instanceof ApiError && error.code === 'DISCOUNT_ABOVE_LIMIT' && error.details[0] === 'limitPercent=5.00');
   assert.equal(calls.length, 2);
 });
+
+test('502, 503 e 504 sem ErrorResponse dizem que o sistema esta iniciando, sem codigo HTTP', async () => {
+  for (const status of [502, 503, 504]) {
+    const { fetcher } = fake([{ status, body: 'gateway' }]);
+    await assert.rejects(createClient({ fetcher }).request('/auth/me'), (error: unknown) =>
+      error instanceof ApiError && error.status === status && /iniciando/.test(error.message) && !error.message.includes(String(status)));
+  }
+});

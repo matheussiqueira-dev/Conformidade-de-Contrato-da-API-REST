@@ -6,6 +6,6 @@ import MyPerformance from './my-performance.tsx';
 export const metadata: Metadata = { title: 'Meu desempenho' };
 
 export default async function MeuDesempenhoPage() {
-  const { allowed } = await sessionFor('MEU_DESEMPENHO', '/meu-desempenho');
-  return allowed ? <MyPerformance /> : <NoAccess />;
+  const { user, allowed } = await sessionFor('MEU_DESEMPENHO', '/meu-desempenho');
+  return allowed ? <MyPerformance manager={user.role === 'GERENTE'} /> : <NoAccess />;
 }
