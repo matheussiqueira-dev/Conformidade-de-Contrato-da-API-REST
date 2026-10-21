@@ -90,3 +90,26 @@ test('[CT-WEB-113] vendedor cadastra empresa com CNPJ alfanumerico e ve o docume
   await page.getByLabel('Buscar cliente').fill(cnpj.toLowerCase());
   await expect(page.getByText(masked).first()).toBeVisible();
 });
+
+test('[CT-WEB-128] documento ja cadastrado no PDV oferece o cliente existente em vez de duplicar (D-EVO-40)', async ({ page }) => {
+  const data = await seed();
+  await login(page, 'seller@example.test');
+  await page.goto('/vender');
+  const search = page.getByRole('combobox', { name: /Nome ou SKU/ });
+  await search.fill(data.sku);
+  await expect(page.getByRole('option').first()).toContainText(data.sku);
+  await search.press('Enter');
+  await page.getByRole('button', { name: 'Continuar para cliente e pagamento' }).click();
+  await page.getByRole('button', { name: 'Cadastrar cliente' }).click();
+  const form = page.getByRole('dialog');
+  await form.getByLabel('Nome', { exact: true }).fill('Outro Nome');
+  await form.getByLabel('CPF').fill(data.cpf);
+  await form.getByLabel('E-mail').fill(`outro${Date.now()}@cliente.test`);
+  await form.getByLabel('Telefone').fill('85999990000');
+  await form.getByRole('button', { name: 'Cadastrar cliente' }).click();
+  await expect(form.getByRole('alert')).toContainText('Este documento já pertence a um cliente cadastrado');
+  await form.getByRole('button', { name: 'Usar o cliente já cadastrado' }).click();
+  await expect(form).toBeHidden();
+  await expect(page.getByRole('region', { name: 'Cliente' }).getByText(data.customerName)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Trocar cliente' })).toBeVisible();
+});

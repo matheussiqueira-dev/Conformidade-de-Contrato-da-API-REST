@@ -70,7 +70,8 @@ export default function CustomerList() {
         <div className="stack">
           <h2 id="cadastro-cliente">Cadastrar cliente</h2>
           {drawer && <CustomerForm idPrefix="novo-cliente" onCancel={() => setDrawer(false)}
-                                   onCreated={created => { setDrawer(false); router.push(`/clientes/${created.id}`); }} />}
+                                   onCreated={created => { setDrawer(false); router.push(`/clientes/${created.id}`); }}
+                                   onExisting={id => { setDrawer(false); router.push(`/clientes/${id}`); }} />}
         </div>
       </dialog>
     </div>

@@ -23,7 +23,7 @@ Antes das mudanças, as telas já tinham boa base: marca aplicada, WCAG 2.2 AA v
 6. no ambiente publicado, a espera do servidor acordando não tinha explicação, e o 502/504 virava "Algo deu errado do nosso lado";
 7. na demonstração local por Docker (plano B da apresentação), todas as fotos de produto e ícones apareciam quebrados: a imagem do frontend não levava a pasta `public/`.
 
-Foram corrigidos 24 achados e 3 recomendações da primeira rodada (U-25 a U-27); 8 ficam como recomendação (seção 6).
+Foram corrigidos 24 achados e 5 recomendações da primeira rodada (U-25 a U-29); 6 ficam como recomendação (seção 6). A partida a frio da API também caiu de cerca de 280 s para 67 s em 0,1 CPU com o PR #43 (cache AOT), que vale para o Render e para a stack local.
 
 ## 3. Achados e situação
 
@@ -57,6 +57,8 @@ Escala: urgência, risco da correção (chance de quebrar algo), risco sem corre
 | U-25 | Trocar de etapa no PDV deixava o foco no corpo da página; o leitor de tela não anunciava a etapa nova (antes P-03) | Média | Baixo | Médio | Bom | 2 | Pequeno | Corrigido, com E2E |
 | U-26 | Atalhos da busca do PDV (setas, Enter, leitor de código) não apareciam na tela (antes P-05) | Baixa | Baixo | Baixo | Bom | 1 | Trivial | Corrigido |
 | U-27 | Abrir e fechar `<dialog>` repetido em quatro lugares (antes P-10) | Baixa | Baixo | Baixo | Bom | 5 | Pequeno | Corrigido: `components/use-modal.ts` |
+| U-28 | Cadastro com documento já existente só dizia "Já existe um cliente com este documento." e o vendedor tinha de buscar o cliente de novo (antes P-02) | Média | Baixo | Médio | Bom | 6 | Pequeno | Corrigido: o 409 traz `customerId` (D-EVO-40) e a tela oferece "Usar o cliente já cadastrado"; integração e E2E CT-WEB-128 |
+| U-29 | Sem como acordar o servidor publicado antes de a pessoa terminar de digitar (antes P-04) | Média | Baixo | Médio | Bom | 2 | Trivial | Corrigido atrás de `NEXT_PUBLIC_SBI_AQUECER=1`, desligado por padrão (D-EVO-41, `docs/deploy.md` seção 6) |
 | U-24 | Stack `docker-compose.demo.yml`: `frontend/Dockerfile` não copiava `public/`, e `next start` respondia 404 para fotos, ícones das linhas e marca | Alta | Baixo | Alto | Excelente | 1 | Trivial | Corrigido |
 
 ## 4. O que mudou, por tela
@@ -101,8 +103,6 @@ Regras usadas: botão com verbo e objeto; confirmação com a ação no título 
 | # | Recomendação | Por que ficou para depois |
 | --- | --- | --- |
 | P-01 | Filtrar Vendas por vendedor, período e cliente | Precisa de parâmetros novos em `GET /sales/orders` (contrato v5, verificação ao vivo e matriz de acesso) |
-| P-02 | No cadastro de cliente com documento repetido, oferecer "Usar o cliente já cadastrado" | Precisa que o 409 `DUPLICATE_DOCUMENT` devolva o id; hoje o vendedor busca o cliente de novo |
-| P-04 | Começar a acordar o servidor quando a tela de login abre (uma chamada a `/auth/csrf`) | Reduz a espera em 10 a 20 s, mas acorda Render e Neon mesmo sem login: decisão de cota da equipe |
 | P-06 | Linha inteira da tabela como área de clique | Exige cuidado com os botões da própria linha |
 | P-07 | Voltar ao preço anterior direto do histórico | Regra de negócio: toda mudança de preço exige motivo |
 | P-08 | Tema escuro | O manual de marca v1.0 define só o tema claro |
@@ -186,4 +186,6 @@ Rodada de 20/10/2026, na branch `feat/ux-usabilidade`, antes de qualquer commit.
 | Fluxos alterados no navegador | 36/36 verificações na stack `docker-compose.demo.yml`: mostrar senha, aviso de espera e 504 no login, total igual nas duas etapas, cliente e cartão mantidos ao voltar, desconto mantido na recarga, confirmação com foco em "Manter pedido" e Esc sem cancelar, filtro de Vendas no endereço e na volta do detalhe, links do painel, `?abaixo=1`, Inventário automático, avisos de sucesso, confirmação de inativar, mostrar senha provisória; axe sem violação em `/entrar`, PDV (pagamento e confirmação), `/vendas`, `/gestao`, `/gestao/estoque` e `/gestao/usuarios`; sem rolagem horizontal em 320 px no pagamento | roteiro Playwright fora do repositório |
 | Fotos e ícones na stack Docker | antes 404; depois 200 (`/produtos/airpods.webp`, `/produtos/linhas/acessorio.svg`, `/brand/sbi-512.png`) | `curl -I http://127.0.0.1:3000/produtos/airpods.webp` |
 
-Não validado nesta rodada: suíte Java (a mudança não toca o backend), leitores de tela reais (NVDA, VoiceOver) e o site publicado.
+Rodada de 21/10 (U-28 e U-29): integração Java 655 testes, 0 falhas (`mvnw -Pintegration clean verify`); contrato 58/58 sem divergência; E2E 27/27, incluindo CT-WEB-128.
+
+Não validado: leitores de tela reais (NVDA, VoiceOver) e o site publicado.

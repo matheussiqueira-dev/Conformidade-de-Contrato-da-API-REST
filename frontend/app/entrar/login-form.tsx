@@ -2,7 +2,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { authApi } from '../../lib/api/auth.ts';
-import { ApiError, api } from '../../lib/api/http.ts';
+import { API_PREFIX, ApiError, api } from '../../lib/api/http.ts';
 import { ERROR_MESSAGES, LOCKOUT_HINT, NETWORK_MESSAGE, SLOW_START_HINT } from '../../lib/api/messages.ts';
 import { landingPath } from '../../lib/areas.ts';
 import ShowPassword from '../../components/show-password.tsx';
@@ -10,6 +10,8 @@ import ShowPassword from '../../components/show-password.tsx';
 const auth = authApi(api);
 /** Depois disso a espera deixa de ser normal: no ambiente publicado o servidor costuma estar acordando. */
 const SLOW_AFTER_MS = 8_000;
+/** D-EVO-41: so com NEXT_PUBLIC_SBI_AQUECER=1 no build (dia de apresentacao); desligado nao gasta cota. */
+const WARM_UP = process.env.NEXT_PUBLIC_SBI_AQUECER === '1';
 
 export default function LoginForm() {
   const params = useSearchParams();
@@ -18,6 +20,12 @@ export default function LoginForm() {
   const [error, setError] = useState('');
   const [visible, setVisible] = useState(false);
   const revoked = params.get('sessao') === 'encerrada';
+
+  useEffect(() => {
+    if (!WARM_UP) return;
+    // So acorda a API e o banco enquanto a pessoa digita; o resultado nao importa (o login busca o proprio token).
+    void fetch(`${API_PREFIX}/auth/csrf`, { credentials: 'same-origin', cache: 'no-store' }).catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     if (!busy) { setSlow(false); return; }

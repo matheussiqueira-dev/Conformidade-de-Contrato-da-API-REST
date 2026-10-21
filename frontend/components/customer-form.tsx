@@ -7,6 +7,7 @@ import { CreateCustomerBody, CreateCustomerResponse } from '../lib/api/generated
 import { ApiError, api } from '../lib/api/http.ts';
 import { contractResolver, optional } from '../lib/forms.ts';
 import { cnpjKey, isValidCnpj, isValidCpf } from '../lib/documents.ts';
+import { existingCustomerId } from '../lib/customers.ts';
 import { errorMessage } from './feedback.tsx';
 
 export type CustomerDetail = z.infer<typeof CreateCustomerResponse>;
@@ -38,8 +39,8 @@ function documentCheck(values: CustomerFormValues): Record<string, string> {
 }
 
 /** Cadastro de cliente PF/PJ (DEC-ERP-05): usado no painel lateral do PDV e em /clientes. */
-export default function CustomerForm({ onCreated, onCancel, idPrefix = 'customer' }: {
-  onCreated: (customer: CustomerDetail) => void; onCancel?: () => void; idPrefix?: string;
+export default function CustomerForm({ onCreated, onExisting, onCancel, idPrefix = 'customer' }: {
+  onCreated: (customer: CustomerDetail) => void; onExisting?: (id: number) => void; onCancel?: () => void; idPrefix?: string;
 }) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<CustomerFormValues>({
     defaultValues: { type: 'INDIVIDUAL', name: '', companyName: '', cpf: '', cnpj: '', email: '', phone: '', birthDate: '' },
@@ -51,6 +52,7 @@ export default function CustomerForm({ onCreated, onCancel, idPrefix = 'customer
       api.request('/customers', { method: 'POST', body: toBody(values), schema: CreateCustomerResponse }),
     onSuccess: onCreated,
   });
+  const existing = existingCustomerId(create.error);
   const fieldError = (name: keyof CustomerFormValues) => errors[name]?.message;
   const id = (name: keyof CustomerFormValues) => `${idPrefix}-${name}`;
   const described = (name: keyof CustomerFormValues) => (errors[name] ? { 'aria-invalid': true, 'aria-describedby': `${id(name)}-error` } : {});
@@ -88,8 +90,13 @@ export default function CustomerForm({ onCreated, onCancel, idPrefix = 'customer
           <input className="input" id={id('phone')} type="tel" autoComplete="tel" placeholder="(85) 99999-0000" {...described('phone')} {...register('phone')} />
         </Field>
       </div>
-      {create.error && <p className="notice notice-error" role="alert">{errorMessage(create.error)}
-        {create.error instanceof ApiError && create.error.details.length > 0 && <> {create.error.details.join(' ')}</>}</p>}
+      {create.error && (existing !== null
+        ? <div className="notice notice-warn stack-sm" role="alert">
+            <p>Este documento já pertence a um cliente cadastrado. Use o cadastro existente em vez de criar outro.</p>
+            {onExisting && <p><button type="button" className="btn" onClick={() => onExisting(existing)}>Usar o cliente já cadastrado</button></p>}
+          </div>
+        : <p className="notice notice-error" role="alert">{errorMessage(create.error)}
+            {create.error instanceof ApiError && create.error.details.length > 0 && <> {create.error.details.join(' ')}</>}</p>)}
       <div className="actions">
         <button type="submit" className="btn btn-primary" disabled={create.isPending}>{create.isPending ? 'Salvando…' : 'Cadastrar cliente'}</button>
         {onCancel && <button type="button" className="btn" onClick={onCancel}>Cancelar</button>}
