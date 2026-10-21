@@ -102,6 +102,7 @@ Variável de ambiente, marcada para **build** e execução em Production (e Prev
 | Variável | Valor |
 | --- | --- |
 | `BACKEND_ORIGIN` | `https://sbi-api-puk8.onrender.com` (só a origem: sem caminho, sem barra final, sem credenciais) |
+| `NEXT_PUBLIC_SBI_AQUECER` (opcional) | `1` faz a tela de login chamar `/auth/csrf` ao abrir, para a API e o banco acordarem enquanto a pessoa digita (D-EVO-41). Sem a variável, nada muda. Entra no build: definir ou remover exige novo deploy. |
 
 O `next.config.mjs` grava o rewrite `/api/backend/*` → `BACKEND_ORIGIN` no `next build`, e os layouts do servidor usam a mesma variável na execução. Se a URL da API mudar, refaça o deploy (novo build), não basta reiniciar.
 
@@ -128,6 +129,8 @@ O plano gratuito do Render dorme o serviço depois de um tempo sem acesso, e o N
 1. abra `https://sbi-api-puk8.onrender.com/auth/csrf` até responder 200 (a primeira chamada pode levar de 1 a 3 minutos com o serviço dormindo);
 2. abra `https://sbi-app-alpha.vercel.app/entrar`, entre como gerente e visite Visão geral e Clientes (aquece a JVM, o pool de conexões e o banco);
 3. mantenha uma aba aberta em Visão geral: o painel consulta a API a cada 15 segundos com a aba visível, o que impede o serviço de dormir durante a apresentação.
+
+Com a API em imagem com cache AOT (#43), a partida a frio medida em 0,1 CPU caiu de cerca de 280 s para 67 s. Para encurtar mais a primeira entrada no dia da apresentação, defina `NEXT_PUBLIC_SBI_AQUECER=1` na Vercel e refaça o deploy do frontend; depois da apresentação, remova a variável e refaça o deploy, para não acordar o Render e o Neon a cada visita à tela de login. A tela de login avisa depois de 8 s que o servidor pode estar acordando.
 
 Se algo falhar ao vivo, o plano B do [roteiro de demonstração](roteiro-demonstracao.md) usa a stack local (`docker-compose.demo.yml`) e as capturas de `reports/marca/`.
 
